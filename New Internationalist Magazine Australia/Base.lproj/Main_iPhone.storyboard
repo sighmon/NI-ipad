@@ -86,10 +86,12 @@
                         <outlet property="loginButton" destination="zKw-Ww-8lt" id="Bky-XE-X2e"/>
                         <outlet property="magazineArchiveButton" destination="yAi-yu-vep" id="DFg-tM-L0y"/>
                         <outlet property="subscribeButton" destination="D13-Uv-IQI" id="9IG-Qf-3cj"/>
+                        <segue destination="CSK-Ct-7fh" kind="push" identifier="presentMagazineArchive" id="4eF-wB-YTF"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="-134" y="-289"/>
         </scene>
         <!--Collection View Controller-->
         <scene sceneID="HIp-y4-MZy">
@@ -121,10 +123,11 @@
                         </connections>
                     </collectionView>
                     <extendedEdge key="edgesForExtendedLayout"/>
+                    <navigationItem key="navigationItem" id="Gre-mK-GWh"/>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="O2o-Jf-EuS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="520" y="379"/>
+            <point key="canvasLocation" x="479" y="-289"/>
         </scene>
     </scenes>
     <classes>
