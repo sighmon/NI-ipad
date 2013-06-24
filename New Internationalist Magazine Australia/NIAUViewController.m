@@ -14,11 +14,25 @@
 
 @implementation NIAUViewController
 
+- (IBAction)magazineArchiveButtonTapped:(id)sender {
+    NSLog(@"TODO: Load the UICollectionView of magazine covers.");
+}
+
+- (IBAction)subscribeButtonTapped:(id)sender {
+    NSLog(@"TODO: Load the Subscription options view.");
+}
+
+- (IBAction)loginButtonTapped:(id)sender {
+    NSLog(@"TODO: Load the page to login to rails.");
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
-    self.cover.image = self.issue.image;
+    
+    NSLog(@"TODO: Grab most recent Issue cover.");
+    [self.cover setImage:[UIImage imageNamed:@"default_cover.jpg"]];
 }
 
 - (void)didReceiveMemoryWarning

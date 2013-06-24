@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		053878261777D767001E60F6 /* NIAUIssue.m in Sources */ = {isa = PBXBuildFile; fileRef = 053878251777D767001E60F6 /* NIAUIssue.m */; };
+		05557EAB177820D0002FED4A /* default_cover.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 053878291777E04B001E60F6 /* default_cover.jpg */; };
 		055A8EC6177290CE003D9407 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 055A8EC5177290CE003D9407 /* Foundation.framework */; };
 		055A8EC8177290CE003D9407 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 055A8EC7177290CE003D9407 /* CoreGraphics.framework */; };
 		055A8ECA177290CE003D9407 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 055A8EC9177290CE003D9407 /* UIKit.framework */; };
@@ -282,6 +283,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				055A8EDC177290CF003D9407 /* Main_iPad.storyboard in Resources */,
+				05557EAB177820D0002FED4A /* default_cover.jpg in Resources */,
 				055A8EE1177290CF003D9407 /* Images.xcassets in Resources */,
 				055A8ED9177290CF003D9407 /* Main_iPhone.storyboard in Resources */,
 				055A8ED0177290CE003D9407 /* InfoPlist.strings in Resources */,

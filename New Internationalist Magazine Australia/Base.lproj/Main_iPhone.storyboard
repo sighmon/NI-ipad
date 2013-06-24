@@ -23,6 +23,9 @@
                                     <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="magazineArchiveButtonTapped:" destination="x5A-6p-PRh" eventType="touchUpInside" id="9bM-40-M4a"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="D13-Uv-IQI">
                                 <rect key="frame" x="0.0" y="454" width="320" height="44"/>
@@ -35,6 +38,9 @@
                                     <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="subscribeButtonTapped:" destination="x5A-6p-PRh" eventType="touchUpInside" id="V78-tf-Alq"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zKw-Ww-8lt">
                                 <rect key="frame" x="0.0" y="505" width="320" height="44"/>
@@ -47,8 +53,11 @@
                                     <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="loginButtonTapped:" destination="x5A-6p-PRh" eventType="touchUpInside" id="EZx-2T-r5o"/>
+                                </connections>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0Uh-Tb-k55">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="0Uh-Tb-k55">
                                 <rect key="frame" x="40" y="44" width="240" height="340"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
@@ -56,34 +65,98 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="zKw-Ww-8lt" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="F74-fr-j0M"/>
+                            <constraint firstItem="yAi-yu-vep" firstAttribute="top" secondItem="0Uh-Tb-k55" secondAttribute="bottom" constant="19" id="K3g-vO-9p3"/>
                             <constraint firstItem="D13-Uv-IQI" firstAttribute="top" secondItem="yAi-yu-vep" secondAttribute="bottom" constant="8" symbolic="YES" id="LVR-oB-h0h"/>
                             <constraint firstItem="zKw-Ww-8lt" firstAttribute="leading" secondItem="yAi-yu-vep" secondAttribute="leading" id="PIq-8S-Lp5"/>
+                            <constraint firstItem="0Uh-Tb-k55" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="top" constant="44" id="Tct-yV-9gY"/>
+                            <constraint firstItem="0Uh-Tb-k55" firstAttribute="top" relation="greaterThanOrEqual" secondItem="kh9-bI-dsS" secondAttribute="top" constant="44" id="Tdp-Qi-IpB"/>
                             <constraint firstItem="zKw-Ww-8lt" firstAttribute="trailing" secondItem="yAi-yu-vep" secondAttribute="trailing" id="baR-Ub-lq4"/>
                             <constraint firstItem="zKw-Ww-8lt" firstAttribute="trailing" secondItem="D13-Uv-IQI" secondAttribute="trailing" id="bvy-SO-KvQ"/>
+                            <constraint firstAttribute="trailing" secondItem="0Uh-Tb-k55" secondAttribute="trailing" constant="40" id="d5J-O6-ey6"/>
                             <constraint firstItem="zKw-Ww-8lt" firstAttribute="trailing" secondItem="kh9-bI-dsS" secondAttribute="trailing" id="dRf-Cd-jIs"/>
                             <constraint firstItem="zKw-Ww-8lt" firstAttribute="leading" secondItem="D13-Uv-IQI" secondAttribute="leading" id="fhP-GN-Vgi"/>
                             <constraint firstItem="zKw-Ww-8lt" firstAttribute="top" secondItem="D13-Uv-IQI" secondAttribute="bottom" constant="8" symbolic="YES" id="hlL-pR-FLI"/>
                             <constraint firstAttribute="bottom" secondItem="zKw-Ww-8lt" secondAttribute="bottom" constant="20" symbolic="YES" id="pC6-EP-IEj"/>
+                            <constraint firstItem="0Uh-Tb-k55" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="40" id="z7U-EQ-nqJ"/>
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <connections>
                         <outlet property="cover" destination="0Uh-Tb-k55" id="s2v-o5-j8u"/>
+                        <outlet property="loginButton" destination="zKw-Ww-8lt" id="Bky-XE-X2e"/>
+                        <outlet property="magazineArchiveButton" destination="yAi-yu-vep" id="DFg-tM-L0y"/>
+                        <outlet property="subscribeButton" destination="D13-Uv-IQI" id="9IG-Qf-3cj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
+        </scene>
+        <!--Collection View Controller-->
+        <scene sceneID="HIp-y4-MZy">
+            <objects>
+                <collectionViewController autoresizesArchivedViewToFullSize="NO" id="CSK-Ct-7fh" sceneMemberID="viewController">
+                    <collectionView key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" id="7As-Ly-aWg">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="rU3-cR-gkW">
+                            <size key="itemSize" width="50" height="50"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="0Jo-1A-Urb">
+                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
+                            </collectionViewCell>
+                        </cells>
+                        <connections>
+                            <outlet property="dataSource" destination="CSK-Ct-7fh" id="7Qw-Od-9hb"/>
+                            <outlet property="delegate" destination="CSK-Ct-7fh" id="QDo-Ue-MQY"/>
+                        </connections>
+                    </collectionView>
+                    <extendedEdge key="edgesForExtendedLayout"/>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="O2o-Jf-EuS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="520" y="379"/>
         </scene>
     </scenes>
     <classes>
         <class className="NIAUViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/NIAUViewController.h"/>
             <relationships>
+                <relationship kind="action" name="loginButtonTapped:"/>
+                <relationship kind="action" name="magazineArchiveButtonTapped:"/>
+                <relationship kind="action" name="subscribeButtonTapped:"/>
                 <relationship kind="outlet" name="cover" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="loginButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="magazineArchiveButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="subscribeButton" candidateClass="UIButton"/>
             </relationships>
         </class>
         <class className="NSLayoutConstraint" superclassName="NSObject">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
+        </class>
+        <class className="UICollectionReusableView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionReusableView.h"/>
+        </class>
+        <class className="UICollectionViewCell" superclassName="UICollectionReusableView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewCell.h"/>
+        </class>
+        <class className="UICollectionViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewController.h"/>
+        </class>
+        <class className="UICollectionViewFlowLayout" superclassName="UICollectionViewLayout">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewFlowLayout.h"/>
+        </class>
+        <class className="UICollectionViewLayout" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewLayout.h"/>
         </class>
     </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

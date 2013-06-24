@@ -11,8 +11,12 @@
 
 @interface NIAUViewController : UIViewController
 
-@property(nonatomic, strong) NIAUIssue *issue;
+@property (nonatomic, strong) NIAUIssue *issue;
 
-@property(nonatomic, strong) IBOutlet UIImageView *cover;
+@property (nonatomic, weak) IBOutlet UIButton *magazineArchiveButton;
+@property (nonatomic, weak) IBOutlet UIButton *subscribeButton;
+@property (nonatomic, weak) IBOutlet UIButton *loginButton;
+
+@property (nonatomic, strong) IBOutlet UIImageView *cover;
 
 @end
