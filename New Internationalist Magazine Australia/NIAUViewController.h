@@ -7,7 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "NIAUIssue.h"
 
 @interface NIAUViewController : UIViewController
+
+@property(nonatomic, strong) NIAUIssue *issue;
+
+@property(nonatomic, strong) IBOutlet UIImageView *cover;
 
 @end

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		053878261777D767001E60F6 /* NIAUIssue.m in Sources */ = {isa = PBXBuildFile; fileRef = 053878251777D767001E60F6 /* NIAUIssue.m */; };
 		055A8EC6177290CE003D9407 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 055A8EC5177290CE003D9407 /* Foundation.framework */; };
 		055A8EC8177290CE003D9407 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 055A8EC7177290CE003D9407 /* CoreGraphics.framework */; };
 		055A8ECA177290CE003D9407 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 055A8EC9177290CE003D9407 /* UIKit.framework */; };
@@ -35,6 +36,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		053878241777D767001E60F6 /* NIAUIssue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NIAUIssue.h; sourceTree = "<group>"; };
+		053878251777D767001E60F6 /* NIAUIssue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NIAUIssue.m; sourceTree = "<group>"; };
+		053878291777E04B001E60F6 /* default_cover.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = default_cover.jpg; sourceTree = "<group>"; };
 		055A8EC2177290CE003D9407 /* New Internationalist Magazine Australia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "New Internationalist Magazine Australia.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		055A8EC5177290CE003D9407 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		055A8EC7177290CE003D9407 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -55,6 +59,19 @@
 		055A8EEF177290CF003D9407 /* New Internationalist Magazine AustraliaTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "New Internationalist Magazine AustraliaTests-Info.plist"; sourceTree = "<group>"; };
 		055A8EF1177290CF003D9407 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		055A8EF3177290CF003D9407 /* New_Internationalist_Magazine_AustraliaTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = New_Internationalist_Magazine_AustraliaTests.m; sourceTree = "<group>"; };
+		055A8F021772C72F003D9407 /* 29.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 29.png; sourceTree = "<group>"; };
+		055A8F031772C72F003D9407 /* 50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 50.png; sourceTree = "<group>"; };
+		055A8F041772C72F003D9407 /* 58.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 58.png; sourceTree = "<group>"; };
+		055A8F051772C72F003D9407 /* 72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 72.png; sourceTree = "<group>"; };
+		055A8F061772C72F003D9407 /* 100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 100.png; sourceTree = "<group>"; };
+		055A8F071772C72F003D9407 /* 120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 120.png; sourceTree = "<group>"; };
+		055A8F081772C72F003D9407 /* 144.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 144.png; sourceTree = "<group>"; };
+		055A8F091772CBB4003D9407 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		055A8F0A1772CBB4003D9407 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		055A8F0B1772CF67003D9407 /* iPad-landscape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPad-landscape.png"; sourceTree = "<group>"; };
+		055A8F0C1772CF67003D9407 /* iPad-landscape@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPad-landscape@2x.png"; sourceTree = "<group>"; };
+		055A8F0D1772CF67003D9407 /* iPad-portrait.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPad-portrait.png"; sourceTree = "<group>"; };
+		055A8F0E1772CF67003D9407 /* iPad-portrait@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPad-portrait@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +98,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		053878281777E034001E60F6 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				053878291777E04B001E60F6 /* default_cover.jpg */,
+			);
+			name = Images;
+			sourceTree = "<group>";
+		};
 		055A8EB9177290CE003D9407 = {
 			isa = PBXGroup;
 			children = (
@@ -114,10 +139,14 @@
 		055A8ECB177290CE003D9407 /* New Internationalist Magazine Australia */ = {
 			isa = PBXGroup;
 			children = (
+				055A8F011772C70F003D9407 /* Icons */,
+				053878281777E034001E60F6 /* Images */,
 				055A8ED4177290CF003D9407 /* NIAUAppDelegate.h */,
 				055A8ED5177290CF003D9407 /* NIAUAppDelegate.m */,
 				055A8ED7177290CF003D9407 /* Main_iPhone.storyboard */,
 				055A8EDA177290CF003D9407 /* Main_iPad.storyboard */,
+				053878241777D767001E60F6 /* NIAUIssue.h */,
+				053878251777D767001E60F6 /* NIAUIssue.m */,
 				055A8EDD177290CF003D9407 /* NIAUViewController.h */,
 				055A8EDE177290CF003D9407 /* NIAUViewController.m */,
 				055A8EE0177290CF003D9407 /* Images.xcassets */,
@@ -153,6 +182,26 @@
 				055A8EF0177290CF003D9407 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		055A8F011772C70F003D9407 /* Icons */ = {
+			isa = PBXGroup;
+			children = (
+				055A8F0B1772CF67003D9407 /* iPad-landscape.png */,
+				055A8F0C1772CF67003D9407 /* iPad-landscape@2x.png */,
+				055A8F0D1772CF67003D9407 /* iPad-portrait.png */,
+				055A8F0E1772CF67003D9407 /* iPad-portrait@2x.png */,
+				055A8F091772CBB4003D9407 /* Default-568h@2x.png */,
+				055A8F0A1772CBB4003D9407 /* Default@2x.png */,
+				055A8F021772C72F003D9407 /* 29.png */,
+				055A8F031772C72F003D9407 /* 50.png */,
+				055A8F041772C72F003D9407 /* 58.png */,
+				055A8F051772C72F003D9407 /* 72.png */,
+				055A8F061772C72F003D9407 /* 100.png */,
+				055A8F071772C72F003D9407 /* 120.png */,
+				055A8F081772C72F003D9407 /* 144.png */,
+			);
+			name = Icons;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -254,6 +303,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				053878261777D767001E60F6 /* NIAUIssue.m in Sources */,
 				055A8EDF177290CF003D9407 /* NIAUViewController.m in Sources */,
 				055A8ED2177290CF003D9407 /* main.m in Sources */,
 				055A8ED6177290CF003D9407 /* NIAUAppDelegate.m in Sources */,
@@ -469,6 +519,7 @@
 				055A8EF9177290CF003D9407 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		055A8EFA177290CF003D9407 /* Build configuration list for PBXNativeTarget "New Internationalist Magazine AustraliaTests" */ = {
 			isa = XCConfigurationList;
@@ -477,6 +528,7 @@
 				055A8EFC177290CF003D9407 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

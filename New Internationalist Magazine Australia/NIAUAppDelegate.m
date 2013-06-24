@@ -8,11 +8,15 @@
 
 #import "NIAUAppDelegate.h"
 
+#import "NIAUViewController.h"
+
 @implementation NIAUAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    NIAUIssue *issue = [[NIAUIssue alloc] init];
+    issue.image = [UIImage imageNamed:@"default_cover.jpg"];
     return YES;
 }
 							
