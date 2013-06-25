@@ -32,7 +32,7 @@
 	// Do any additional setup after loading the view, typically from a nib.
     
     NSLog(@"TODO: Grab most recent Issue cover.");
-    [self.cover setImage:[UIImage imageNamed:@"default_cover.jpg"]];
+    [self.cover setImage:[UIImage imageNamed:@"default_cover.png"]];
 }
 
 - (void)didReceiveMemoryWarning

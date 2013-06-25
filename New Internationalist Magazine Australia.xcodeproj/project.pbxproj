@@ -7,8 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		051A72B1177950D600BDD346 /* default_cover.png in Resources */ = {isa = PBXBuildFile; fileRef = 051A72AF177950D600BDD346 /* default_cover.png */; };
+		051A72B2177950D600BDD346 /* default_cover@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 051A72B0177950D600BDD346 /* default_cover@2x.png */; };
 		053878261777D767001E60F6 /* NIAUIssue.m in Sources */ = {isa = PBXBuildFile; fileRef = 053878251777D767001E60F6 /* NIAUIssue.m */; };
-		05557EAB177820D0002FED4A /* default_cover.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 053878291777E04B001E60F6 /* default_cover.jpg */; };
 		055A8EC6177290CE003D9407 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 055A8EC5177290CE003D9407 /* Foundation.framework */; };
 		055A8EC8177290CE003D9407 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 055A8EC7177290CE003D9407 /* CoreGraphics.framework */; };
 		055A8ECA177290CE003D9407 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 055A8EC9177290CE003D9407 /* UIKit.framework */; };
@@ -37,9 +38,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		051A72AF177950D600BDD346 /* default_cover.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = default_cover.png; sourceTree = "<group>"; };
+		051A72B0177950D600BDD346 /* default_cover@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "default_cover@2x.png"; sourceTree = "<group>"; };
 		053878241777D767001E60F6 /* NIAUIssue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NIAUIssue.h; sourceTree = "<group>"; };
 		053878251777D767001E60F6 /* NIAUIssue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NIAUIssue.m; sourceTree = "<group>"; };
-		053878291777E04B001E60F6 /* default_cover.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = default_cover.jpg; sourceTree = "<group>"; };
 		055A8EC2177290CE003D9407 /* New Internationalist Magazine Australia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "New Internationalist Magazine Australia.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		055A8EC5177290CE003D9407 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		055A8EC7177290CE003D9407 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -102,7 +104,8 @@
 		053878281777E034001E60F6 /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				053878291777E04B001E60F6 /* default_cover.jpg */,
+				051A72AF177950D600BDD346 /* default_cover.png */,
+				051A72B0177950D600BDD346 /* default_cover@2x.png */,
 			);
 			name = Images;
 			sourceTree = "<group>";
@@ -283,9 +286,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				055A8EDC177290CF003D9407 /* Main_iPad.storyboard in Resources */,
-				05557EAB177820D0002FED4A /* default_cover.jpg in Resources */,
+				051A72B1177950D600BDD346 /* default_cover.png in Resources */,
 				055A8EE1177290CF003D9407 /* Images.xcassets in Resources */,
 				055A8ED9177290CF003D9407 /* Main_iPhone.storyboard in Resources */,
+				051A72B2177950D600BDD346 /* default_cover@2x.png in Resources */,
 				055A8ED0177290CE003D9407 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

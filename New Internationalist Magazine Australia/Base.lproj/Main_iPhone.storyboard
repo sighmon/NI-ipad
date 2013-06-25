@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4457.6" systemVersion="12E55" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="vXZ-lx-hvc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4457.9" systemVersion="12E55" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="vXZ-lx-hvc">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3682.6"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3682.9"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -9,15 +9,12 @@
             <objects>
                 <viewController id="vXZ-lx-hvc" customClass="NIAUViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yAi-yu-vep">
-                                <rect key="frame" x="0.0" y="403" width="320" height="44"/>
+                                <rect key="frame" x="20" y="312" width="280" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="43" id="uMy-Qp-Ncy"/>
-                                </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="27"/>
                                 <state key="normal" title="Magazine archive">
                                     <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -28,11 +25,8 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="D13-Uv-IQI">
-                                <rect key="frame" x="0.0" y="454" width="320" height="44"/>
+                                <rect key="frame" x="20" y="364" width="280" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="43" id="GTX-Y2-PZL"/>
-                                </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="27"/>
                                 <state key="normal" title="Subscribe">
                                     <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -43,11 +37,8 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zKw-Ww-8lt">
-                                <rect key="frame" x="0.0" y="505" width="320" height="44"/>
+                                <rect key="frame" x="20" y="416" width="280" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="43" id="Xsz-sU-ivd"/>
-                                </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="27"/>
                                 <state key="normal" title="Login">
                                     <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -57,27 +48,25 @@
                                     <action selector="loginButtonTapped:" destination="x5A-6p-PRh" eventType="touchUpInside" id="EZx-2T-r5o"/>
                                 </connections>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="0Uh-Tb-k55">
-                                <rect key="frame" x="40" y="44" width="240" height="340"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0Uh-Tb-k55">
+                                <rect key="frame" x="40" y="52" width="240" height="252"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="zKw-Ww-8lt" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="F74-fr-j0M"/>
-                            <constraint firstItem="yAi-yu-vep" firstAttribute="top" secondItem="0Uh-Tb-k55" secondAttribute="bottom" constant="19" id="K3g-vO-9p3"/>
-                            <constraint firstItem="D13-Uv-IQI" firstAttribute="top" secondItem="yAi-yu-vep" secondAttribute="bottom" constant="8" symbolic="YES" id="LVR-oB-h0h"/>
-                            <constraint firstItem="zKw-Ww-8lt" firstAttribute="leading" secondItem="yAi-yu-vep" secondAttribute="leading" id="PIq-8S-Lp5"/>
-                            <constraint firstItem="0Uh-Tb-k55" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="top" constant="44" id="Tct-yV-9gY"/>
-                            <constraint firstItem="0Uh-Tb-k55" firstAttribute="top" relation="greaterThanOrEqual" secondItem="kh9-bI-dsS" secondAttribute="top" constant="44" id="Tdp-Qi-IpB"/>
-                            <constraint firstItem="zKw-Ww-8lt" firstAttribute="trailing" secondItem="yAi-yu-vep" secondAttribute="trailing" id="baR-Ub-lq4"/>
-                            <constraint firstItem="zKw-Ww-8lt" firstAttribute="trailing" secondItem="D13-Uv-IQI" secondAttribute="trailing" id="bvy-SO-KvQ"/>
-                            <constraint firstAttribute="trailing" secondItem="0Uh-Tb-k55" secondAttribute="trailing" constant="40" id="d5J-O6-ey6"/>
-                            <constraint firstItem="zKw-Ww-8lt" firstAttribute="trailing" secondItem="kh9-bI-dsS" secondAttribute="trailing" id="dRf-Cd-jIs"/>
-                            <constraint firstItem="zKw-Ww-8lt" firstAttribute="leading" secondItem="D13-Uv-IQI" secondAttribute="leading" id="fhP-GN-Vgi"/>
-                            <constraint firstItem="zKw-Ww-8lt" firstAttribute="top" secondItem="D13-Uv-IQI" secondAttribute="bottom" constant="8" symbolic="YES" id="hlL-pR-FLI"/>
-                            <constraint firstAttribute="bottom" secondItem="zKw-Ww-8lt" secondAttribute="bottom" constant="20" symbolic="YES" id="pC6-EP-IEj"/>
-                            <constraint firstItem="0Uh-Tb-k55" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="40" id="z7U-EQ-nqJ"/>
+                            <constraint firstItem="zKw-Ww-8lt" firstAttribute="trailing" secondItem="D13-Uv-IQI" secondAttribute="trailing" id="0c8-0F-1ia"/>
+                            <constraint firstItem="yAi-yu-vep" firstAttribute="trailing" secondItem="D13-Uv-IQI" secondAttribute="trailing" id="3nl-Uf-QuS"/>
+                            <constraint firstItem="zKw-Ww-8lt" firstAttribute="top" secondItem="D13-Uv-IQI" secondAttribute="bottom" constant="8" symbolic="YES" id="6Xy-6l-MjJ"/>
+                            <constraint firstItem="zKw-Ww-8lt" firstAttribute="leading" secondItem="D13-Uv-IQI" secondAttribute="leading" id="GkP-xi-xf9"/>
+                            <constraint firstItem="0Uh-Tb-k55" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="top" constant="52" id="IkE-d1-RgZ"/>
+                            <constraint firstItem="yAi-yu-vep" firstAttribute="top" secondItem="0Uh-Tb-k55" secondAttribute="bottom" constant="8" id="PTA-1j-lcK"/>
+                            <constraint firstItem="D13-Uv-IQI" firstAttribute="leading" secondItem="yAi-yu-vep" secondAttribute="leading" id="PgO-FS-X7M"/>
+                            <constraint firstAttribute="centerX" secondItem="0Uh-Tb-k55" secondAttribute="centerX" id="VLi-Cm-Wop"/>
+                            <constraint firstItem="zKw-Ww-8lt" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="20" id="tv4-ko-7cs"/>
+                            <constraint firstAttribute="bottom" secondItem="zKw-Ww-8lt" secondAttribute="bottom" constant="20" symbolic="YES" id="twv-gc-JPB"/>
+                            <constraint firstItem="D13-Uv-IQI" firstAttribute="top" secondItem="yAi-yu-vep" secondAttribute="bottom" constant="8" id="uR5-6R-5n3"/>
+                            <constraint firstItem="zKw-Ww-8lt" firstAttribute="trailing" secondItem="kh9-bI-dsS" secondAttribute="trailing" constant="-20" id="xoC-SY-4Kz"/>
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
@@ -98,7 +87,7 @@
             <objects>
                 <collectionViewController autoresizesArchivedViewToFullSize="NO" id="CSK-Ct-7fh" sceneMemberID="viewController">
                     <collectionView key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" id="7As-Ly-aWg">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="rU3-cR-gkW">
                             <size key="itemSize" width="50" height="50"/>
@@ -158,13 +147,10 @@
         <class className="UICollectionViewFlowLayout" superclassName="UICollectionViewLayout">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewFlowLayout.h"/>
         </class>
-        <class className="UICollectionViewLayout" superclassName="NSObject">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewLayout.h"/>
-        </class>
     </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
-        <simulatedScreenMetrics key="destination" type="retina4"/>
+        <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
 </document>
