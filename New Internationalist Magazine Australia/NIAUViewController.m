@@ -7,6 +7,7 @@
 //
 
 #import "NIAUViewController.h"
+#import "NIAUMagazineArchiveViewController.h"
 
 @interface NIAUViewController ()
 
@@ -14,15 +15,28 @@
 
 @implementation NIAUViewController
 
-- (IBAction)magazineArchiveButtonTapped:(id)sender {
-    NSLog(@"TODO: Load the UICollectionView of magazine covers.");
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([[segue identifier] isEqualToString:@"presentMagazineArchive"])
+    {        
+        // NIAUMagazineArchiveViewController *magazineArchiveViewController = [segue destinationViewController];
+        // [magazineArchiveViewController class];
+    }
 }
 
-- (IBAction)subscribeButtonTapped:(id)sender {
+- (IBAction)magazineArchiveButtonTapped:(id)sender
+{
+    NSLog(@"TODO: Load the UICollectionView of magazine covers.");
+    [self performSegueWithIdentifier:@"presentMagazineArchive" sender:self];
+}
+
+- (IBAction)subscribeButtonTapped:(id)sender
+{
     NSLog(@"TODO: Load the Subscription options view.");
 }
 
-- (IBAction)loginButtonTapped:(id)sender {
+- (IBAction)loginButtonTapped:(id)sender
+{
     NSLog(@"TODO: Load the page to login to rails.");
 }
 
