@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0507DB6A177AA0F60099540D /* NIAUTableOfContentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0507DB69177AA0F60099540D /* NIAUTableOfContentsViewController.m */; };
 		051A72B1177950D600BDD346 /* default_cover.png in Resources */ = {isa = PBXBuildFile; fileRef = 051A72AF177950D600BDD346 /* default_cover.png */; };
 		051A72B2177950D600BDD346 /* default_cover@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 051A72B0177950D600BDD346 /* default_cover@2x.png */; };
 		05287A23177983AD00501F5F /* NIAUMagazineArchiveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05BD7F131779656300820EF3 /* NIAUMagazineArchiveViewController.m */; };
@@ -76,6 +77,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0507DB68177AA0F60099540D /* NIAUTableOfContentsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NIAUTableOfContentsViewController.h; sourceTree = "<group>"; };
+		0507DB69177AA0F60099540D /* NIAUTableOfContentsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NIAUTableOfContentsViewController.m; sourceTree = "<group>"; };
 		051A72AF177950D600BDD346 /* default_cover.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = default_cover.png; sourceTree = "<group>"; };
 		051A72B0177950D600BDD346 /* default_cover@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "default_cover@2x.png"; sourceTree = "<group>"; };
 		053878241777D767001E60F6 /* NIAUIssue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NIAUIssue.h; sourceTree = "<group>"; };
@@ -234,6 +237,8 @@
 				055A8EDE177290CF003D9407 /* NIAUViewController.m */,
 				05BD7F121779656300820EF3 /* NIAUMagazineArchiveViewController.h */,
 				05BD7F131779656300820EF3 /* NIAUMagazineArchiveViewController.m */,
+				0507DB68177AA0F60099540D /* NIAUTableOfContentsViewController.h */,
+				0507DB69177AA0F60099540D /* NIAUTableOfContentsViewController.m */,
 				05BD7F141779671900820EF3 /* NIAUCell.h */,
 				05BD7F151779671900820EF3 /* NIAUCell.m */,
 				055A8EE0177290CF003D9407 /* Images.xcassets */,
@@ -474,6 +479,7 @@
 				053878261777D767001E60F6 /* NIAUIssue.m in Sources */,
 				055A8EDF177290CF003D9407 /* NIAUViewController.m in Sources */,
 				05287A24177983E400501F5F /* NIAUCell.m in Sources */,
+				0507DB6A177AA0F60099540D /* NIAUTableOfContentsViewController.m in Sources */,
 				055A8ED2177290CF003D9407 /* main.m in Sources */,
 				05287A23177983AD00501F5F /* NIAUMagazineArchiveViewController.m in Sources */,
 				055A8ED6177290CF003D9407 /* NIAUAppDelegate.m in Sources */,

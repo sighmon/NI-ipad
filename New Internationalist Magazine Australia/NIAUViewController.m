@@ -8,6 +8,7 @@
 
 #import "NIAUViewController.h"
 #import "NIAUMagazineArchiveViewController.h"
+#import "NIAUTableOfContentsViewController.h"
 
 @interface NIAUViewController ()
 

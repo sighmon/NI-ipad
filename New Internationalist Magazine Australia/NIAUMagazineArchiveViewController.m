@@ -8,6 +8,7 @@
 
 #import "NIAUMagazineArchiveViewController.h"
 #import "NIAUCell.h"
+#import "NIAUTableOfContentsViewController.h"
 
 NSString *kCellID = @"magazineCellID";              // UICollectionViewCell storyboard id
 
@@ -36,6 +37,23 @@ NSString *kCellID = @"magazineCellID";              // UICollectionViewCell stor
     cell.image.image = [UIImage imageNamed:imageToLoad];
     
     return cell;
+}
+
+// the user tapped a collection item, load and set the image on the detail view controller
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([[segue identifier] isEqualToString:@"showTableOfContents"])
+    {
+        NSIndexPath *selectedIndexPath = [[self.collectionView indexPathsForSelectedItems] objectAtIndex:0];
+        
+        // load the image, to prevent it from being cached we use 'initWithContentsOfFile'
+        NSString *imageNameToLoad = [NSString stringWithFormat:@"%d", selectedIndexPath.row];
+        NSString *pathToImage = [[NSBundle mainBundle] pathForResource:imageNameToLoad ofType:@"png"];
+        UIImage *image = [[UIImage alloc] initWithContentsOfFile:pathToImage];
+        NIAUTableOfContentsViewController *tableOfContentsViewController = [segue destinationViewController];
+        tableOfContentsViewController.cover = image;
+    }
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
