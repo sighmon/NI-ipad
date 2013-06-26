@@ -19,15 +19,13 @@
 {
     if ([[segue identifier] isEqualToString:@"presentMagazineArchive"])
     {        
-        // NIAUMagazineArchiveViewController *magazineArchiveViewController = [segue destinationViewController];
-        // [magazineArchiveViewController class];
+        // Do any extra setup here if needed.
     }
 }
 
 - (IBAction)magazineArchiveButtonTapped:(id)sender
 {
     NSLog(@"TODO: Load the UICollectionView of magazine covers.");
-    [self performSegueWithIdentifier:@"presentMagazineArchive" sender:self];
 }
 
 - (IBAction)subscribeButtonTapped:(id)sender

@@ -1,19 +1,35 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4457.9" systemVersion="12E55" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="vXZ-lx-hvc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4457.9" systemVersion="12E55" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="eQs-ol-VW7">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3682.9"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Navigation Controller-->
+        <scene sceneID="YMq-D1-rEA">
+            <objects>
+                <navigationController definesPresentationContext="YES" id="eQs-ol-VW7" sceneMemberID="viewController">
+                    <extendedEdge key="edgesForExtendedLayout"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="5bl-H1-iVG">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="vXZ-lx-hvc" kind="relationship" relationship="rootViewController" id="NUO-AT-lt7"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xEv-Yj-ZhU" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-577" y="-290"/>
+        </scene>
+        <!--View Controller - New Internationalist-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
                 <viewController id="vXZ-lx-hvc" customClass="NIAUViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yAi-yu-vep">
-                                <rect key="frame" x="20" y="400" width="280" height="44"/>
+                                <rect key="frame" x="20" y="336" width="280" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="27"/>
                                 <state key="normal" title="Magazine archive">
@@ -22,11 +38,11 @@
                                 </state>
                                 <connections>
                                     <action selector="magazineArchiveButtonTapped:" destination="x5A-6p-PRh" eventType="touchUpInside" id="9bM-40-M4a"/>
-                                    <segue destination="vJP-ec-lwP" kind="modal" identifier="presentMagazineArchive" modalTransitionStyle="flipHorizontal" id="3gm-TM-Bat"/>
+                                    <segue destination="vJP-ec-lwP" kind="push" identifier="presentMagazineArchive" id="3gm-TM-Bat"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="D13-Uv-IQI">
-                                <rect key="frame" x="20" y="452" width="280" height="44"/>
+                                <rect key="frame" x="20" y="388" width="280" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="27"/>
                                 <state key="normal" title="Subscribe">
@@ -38,7 +54,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zKw-Ww-8lt">
-                                <rect key="frame" x="20" y="504" width="280" height="44"/>
+                                <rect key="frame" x="20" y="440" width="280" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="27"/>
                                 <state key="normal" title="Login">
@@ -50,7 +66,7 @@
                                 </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0Uh-Tb-k55">
-                                <rect key="frame" x="40" y="52" width="240" height="324"/>
+                                <rect key="frame" x="40" y="42" width="240" height="270"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                         </subviews>
@@ -60,7 +76,7 @@
                             <constraint firstItem="yAi-yu-vep" firstAttribute="trailing" secondItem="D13-Uv-IQI" secondAttribute="trailing" id="3nl-Uf-QuS"/>
                             <constraint firstItem="zKw-Ww-8lt" firstAttribute="top" secondItem="D13-Uv-IQI" secondAttribute="bottom" constant="8" symbolic="YES" id="6Xy-6l-MjJ"/>
                             <constraint firstItem="zKw-Ww-8lt" firstAttribute="leading" secondItem="D13-Uv-IQI" secondAttribute="leading" id="GkP-xi-xf9"/>
-                            <constraint firstItem="0Uh-Tb-k55" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="top" constant="52" id="IkE-d1-RgZ"/>
+                            <constraint firstItem="0Uh-Tb-k55" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="top" constant="42" id="IkE-d1-RgZ"/>
                             <constraint firstItem="yAi-yu-vep" firstAttribute="top" secondItem="0Uh-Tb-k55" secondAttribute="bottom" constant="24" id="PTA-1j-lcK"/>
                             <constraint firstItem="D13-Uv-IQI" firstAttribute="leading" secondItem="yAi-yu-vep" secondAttribute="leading" id="PgO-FS-X7M"/>
                             <constraint firstAttribute="centerX" secondItem="0Uh-Tb-k55" secondAttribute="centerX" id="VLi-Cm-Wop"/>
@@ -71,6 +87,9 @@
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
+                    <navigationItem key="navigationItem" title="New Internationalist" id="bdJ-NW-z5x">
+                        <barButtonItem key="backBarButtonItem" title="Home" id="bQ8-Ce-zmc"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="cover" destination="0Uh-Tb-k55" id="s2v-o5-j8u"/>
                         <outlet property="loginButton" destination="zKw-Ww-8lt" id="Bky-XE-X2e"/>
@@ -90,21 +109,21 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="YQH-rM-BD4">
-                            <size key="itemSize" width="50" height="50"/>
+                            <size key="itemSize" width="100" height="142"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="magazineCellID" id="7ZL-x0-7NN" customClass="NIAUCell">
-                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                <rect key="frame" x="0.0" y="64" width="100" height="142"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="100" height="142"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8yQ-69-2Yi">
-                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8yQ-69-2Yi">
+                                            <rect key="frame" x="0.0" y="0.0" width="100" height="142"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         </imageView>
                                     </subviews>
@@ -120,7 +139,8 @@
                             <outlet property="delegate" destination="vJP-ec-lwP" id="ylP-xf-Ghn"/>
                         </connections>
                     </collectionView>
-                    <extendedEdge key="edgesForExtendedLayout"/>
+                    <extendedEdge key="edgesForExtendedLayout" top="YES"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZVk-Oe-uBU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

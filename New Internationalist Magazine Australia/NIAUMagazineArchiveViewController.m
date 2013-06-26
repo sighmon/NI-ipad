@@ -38,7 +38,6 @@ NSString *kCellID = @"magazineCellID";              // UICollectionViewCell stor
     return cell;
 }
 
-
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
