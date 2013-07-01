@@ -10,6 +10,12 @@
 
 @interface NIAUIssue : NSObject
 
-@property(nonatomic, strong) UIImage *image;
+@property(nonatomic, strong) UIImage *cover;
+
+@property(nonatomic, weak) NSString *title;
+@property(nonatomic, weak) NSString *number;
+@property(nonatomic, weak) NSDate *publication;
+@property(nonatomic, weak) NSString *editor;
+@property(nonatomic, weak) NSString *editorsLetter;
 
 @end
