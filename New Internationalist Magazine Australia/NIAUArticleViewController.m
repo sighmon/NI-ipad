@@ -60,7 +60,16 @@
 - (void)viewDidLayoutSubviews
 {
     [super viewDidLayoutSubviews];
-    [self.scrollView setContentSize:CGSizeMake(320, 800)];
+    
+    float heightOfContent = 0;
+    UIView *lLast = [self.scrollView.subviews lastObject];
+    NSInteger origin = lLast.frame.origin.y;
+    NSInteger height = lLast.frame.size.height;
+    heightOfContent = origin + height;
+    
+    NSLog(@"%@", [NSString stringWithFormat:@"Origin: %ld, height: %ld, total: %f", (long)origin, (long)height, heightOfContent]);
+    
+    [self.scrollView setContentSize:CGSizeMake(self.scrollView.frame.size.width, heightOfContent)];
 }
 
 - (void)didReceiveMemoryWarning
