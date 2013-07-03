@@ -33,12 +33,14 @@
     
 }
 
-// Solution to scrolling?
-// http://stackoverflow.com/questions/14077367/why-wont-uiscrollview-scroll-fully-after-adding-objects-using-storyboard-arc
+//    Solution to scrolling?
+//    http://stackoverflow.com/questions/14077367/why-wont-uiscrollview-scroll-fully-after-adding-objects-using-storyboard-arc
 
 - (void)viewDidLayoutSubviews
 {
     [super viewDidLayoutSubviews];
+    
+    // Not used.. manually setting the scrollView to the height of the lowest content.
     
     float heightOfContent = 0;
     UIView *lLast = [self.scrollView.subviews lastObject];

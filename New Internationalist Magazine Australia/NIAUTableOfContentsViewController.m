@@ -27,7 +27,16 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    
     self.imageView.image = self.cover;
+    
+    // Shadow for the cover
+    
+    self.imageView.layer.shadowColor = [UIColor blackColor].CGColor;
+    self.imageView.layer.shadowOffset = CGSizeMake(0, 2);
+    self.imageView.layer.shadowOpacity = 0.3;
+    self.imageView.layer.shadowRadius = 3.0;
+    self.imageView.clipsToBounds = NO;
 }
 
 - (void)didReceiveMemoryWarning
