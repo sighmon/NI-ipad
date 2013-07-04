@@ -30,6 +30,9 @@
     
     self.imageView.image = self.cover;
     
+    NSLog(@"TODO: Get the real editor's image.");
+    [self.editorImageView setImage:[UIImage imageNamed:@"default_editors_photo.png"]];
+    
     // Shadow for the cover
     
     self.imageView.layer.shadowColor = [UIColor blackColor].CGColor;
@@ -37,6 +40,20 @@
     self.imageView.layer.shadowOpacity = 0.3;
     self.imageView.layer.shadowRadius = 3.0;
     self.imageView.clipsToBounds = NO;
+    
+    // Draw a round mask for the editor's photo
+    
+    self.editorImageView.layer.masksToBounds = YES;
+    self.editorImageView.layer.cornerRadius = self.editorImageView.bounds.size.width / 2.;
+    
+    // Wrap the text around the editor's photo
+    
+    CGRect editorImageViewRect = [self.editorsLetterTextView convertRect:self.editorImageView.frame fromView:self.view];
+    
+    // self.editorsLetterTextView.textContainer.exclusionPaths = @[[UIBezierPath bezierPathWithRoundedRect:editorImageViewRect cornerRadius:self.editorImageView.layer.cornerRadius]];
+    // TODO: Work out how to only exclude words not characters. For now I'll just use a square exclusionPath.
+    
+    self.editorsLetterTextView.textContainer.exclusionPaths = @[[UIBezierPath bezierPathWithRect:editorImageViewRect]];
 }
 
 - (void)didReceiveMemoryWarning

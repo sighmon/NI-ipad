@@ -14,6 +14,11 @@
 		052167E7177BDF8900A4A81A /* NIAUArticleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 052167E6177BDF8900A4A81A /* NIAUArticleViewController.m */; };
 		05287A23177983AD00501F5F /* NIAUMagazineArchiveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05BD7F131779656300820EF3 /* NIAUMagazineArchiveViewController.m */; };
 		05287A24177983E400501F5F /* NIAUCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 05BD7F151779671900820EF3 /* NIAUCell.m */; };
+		0528EC3717850989000175AB /* default_editors_photo.png in Resources */ = {isa = PBXBuildFile; fileRef = 0528EC3617850989000175AB /* default_editors_photo.png */; };
+		0528EC3C17853C1F000175AB /* default_article_image.png in Resources */ = {isa = PBXBuildFile; fileRef = 0528EC3817853C1F000175AB /* default_article_image.png */; };
+		0528EC3D17853C1F000175AB /* default_article_image@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0528EC3917853C1F000175AB /* default_article_image@2x.png */; };
+		0528EC3E17853C1F000175AB /* default_featured_image.png in Resources */ = {isa = PBXBuildFile; fileRef = 0528EC3A17853C1F000175AB /* default_featured_image.png */; };
+		0528EC3F17853C1F000175AB /* default_featured_image@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0528EC3B17853C1F000175AB /* default_featured_image@2x.png */; };
 		053878261777D767001E60F6 /* NIAUIssue.m in Sources */ = {isa = PBXBuildFile; fileRef = 053878251777D767001E60F6 /* NIAUIssue.m */; };
 		055A8EC6177290CE003D9407 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 055A8EC5177290CE003D9407 /* Foundation.framework */; };
 		055A8EC8177290CE003D9407 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 055A8EC7177290CE003D9407 /* CoreGraphics.framework */; };
@@ -87,6 +92,11 @@
 		052167E3177BD6DF00A4A81A /* NIAUArticle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NIAUArticle.m; sourceTree = "<group>"; };
 		052167E5177BDF8900A4A81A /* NIAUArticleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NIAUArticleViewController.h; sourceTree = "<group>"; };
 		052167E6177BDF8900A4A81A /* NIAUArticleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NIAUArticleViewController.m; sourceTree = "<group>"; };
+		0528EC3617850989000175AB /* default_editors_photo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = default_editors_photo.png; sourceTree = "<group>"; };
+		0528EC3817853C1F000175AB /* default_article_image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = default_article_image.png; sourceTree = "<group>"; };
+		0528EC3917853C1F000175AB /* default_article_image@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "default_article_image@2x.png"; sourceTree = "<group>"; };
+		0528EC3A17853C1F000175AB /* default_featured_image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = default_featured_image.png; sourceTree = "<group>"; };
+		0528EC3B17853C1F000175AB /* default_featured_image@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "default_featured_image@2x.png"; sourceTree = "<group>"; };
 		053878241777D767001E60F6 /* NIAUIssue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NIAUIssue.h; sourceTree = "<group>"; };
 		053878251777D767001E60F6 /* NIAUIssue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NIAUIssue.m; sourceTree = "<group>"; };
 		055A8EC2177290CE003D9407 /* New Internationalist Magazine Australia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "New Internationalist Magazine Australia.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -191,6 +201,11 @@
 		053878281777E034001E60F6 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				0528EC3817853C1F000175AB /* default_article_image.png */,
+				0528EC3917853C1F000175AB /* default_article_image@2x.png */,
+				0528EC3A17853C1F000175AB /* default_featured_image.png */,
+				0528EC3B17853C1F000175AB /* default_featured_image@2x.png */,
+				0528EC3617850989000175AB /* default_editors_photo.png */,
 				05BD7F1617796B7000820EF3 /* Covers */,
 				051A72AF177950D600BDD346 /* default_cover.png */,
 				051A72B0177950D600BDD346 /* default_cover@2x.png */,
@@ -428,6 +443,7 @@
 			files = (
 				05BD7F5517796B9F00820EF3 /* 8.png in Resources */,
 				05BD7F5E17796B9F00820EF3 /* 17.png in Resources */,
+				0528EC3C17853C1F000175AB /* default_article_image.png in Resources */,
 				05BD7F3817796B8F00820EF3 /* 15@2x.png in Resources */,
 				05BD7F2B17796B8F00820EF3 /* 2@2x.png in Resources */,
 				055A8EDC177290CF003D9407 /* Main_iPad.storyboard in Resources */,
@@ -437,6 +453,7 @@
 				05BD7F2C17796B8F00820EF3 /* 3@2x.png in Resources */,
 				05BD7F3A17796B8F00820EF3 /* 17@2x.png in Resources */,
 				05BD7F5A17796B9F00820EF3 /* 13.png in Resources */,
+				0528EC3717850989000175AB /* default_editors_photo.png in Resources */,
 				05BD7F5617796B9F00820EF3 /* 9.png in Resources */,
 				05BD7F5917796B9F00820EF3 /* 12.png in Resources */,
 				05BD7F3417796B8F00820EF3 /* 11@2x.png in Resources */,
@@ -451,8 +468,10 @@
 				05BD7F5317796B9F00820EF3 /* 6.png in Resources */,
 				05BD7F2E17796B8F00820EF3 /* 5@2x.png in Resources */,
 				05BD7F5417796B9F00820EF3 /* 7.png in Resources */,
+				0528EC3F17853C1F000175AB /* default_featured_image@2x.png in Resources */,
 				05BD7F2917796B8F00820EF3 /* 0@2x.png in Resources */,
 				05BD7F4F17796B9F00820EF3 /* 2.png in Resources */,
+				0528EC3D17853C1F000175AB /* default_article_image@2x.png in Resources */,
 				055A8ED9177290CF003D9407 /* Main_iPhone.storyboard in Resources */,
 				051A72B2177950D600BDD346 /* default_cover@2x.png in Resources */,
 				05BD7F3017796B8F00820EF3 /* 7@2x.png in Resources */,
@@ -464,6 +483,7 @@
 				05BD7F3117796B8F00820EF3 /* 8@2x.png in Resources */,
 				05BD7F3317796B8F00820EF3 /* 10@2x.png in Resources */,
 				05BD7F5817796B9F00820EF3 /* 11.png in Resources */,
+				0528EC3E17853C1F000175AB /* default_featured_image.png in Resources */,
 				05BD7F4D17796B9F00820EF3 /* 0.png in Resources */,
 				055A8ED0177290CE003D9407 /* InfoPlist.strings in Resources */,
 				05BD7F3217796B8F00820EF3 /* 9@2x.png in Resources */,

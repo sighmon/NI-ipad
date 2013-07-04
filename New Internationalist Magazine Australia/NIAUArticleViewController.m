@@ -28,8 +28,9 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
-    self.featuredImage.image = [UIImage imageNamed:@"default_cover.png"];
-    self.secondTestImage.image = [UIImage imageNamed:@"default_cover.png"];
+    NSLog(@"TODO: Get the real article images.");
+    [self.featuredImage setImage:[UIImage imageNamed:@"default_featured_image.png"]];
+    [self.secondTestImage setImage:[UIImage imageNamed:@"default_article_image.png"]];
     
 }
 
@@ -42,16 +43,25 @@
     
     // Not used.. manually setting the scrollView to the height of the lowest content.
     
-    float heightOfContent = 0;
-    UIView *lLast = [self.scrollView.subviews lastObject];
-    NSLog(@"%@", lLast);
-    NSInteger origin = lLast.frame.origin.y;
-    NSInteger height = lLast.frame.size.height;
-    heightOfContent = origin + height;
-    
-    NSLog(@"%@", [NSString stringWithFormat:@"Origin: %ld, height: %ld, total: %f", (long)origin, (long)height, heightOfContent]);
+//    float heightOfContent = 0;
+//    UIView *lLast = [self.scrollView.subviews lastObject];
+//    NSLog(@"%@", lLast);
+//    NSInteger origin = lLast.frame.origin.y;
+//    NSInteger height = lLast.frame.size.height;
+//    heightOfContent = origin + height;
+//    
+//    NSLog(@"%@", [NSString stringWithFormat:@"Origin: %ld, height: %ld, total: %f", (long)origin, (long)height, heightOfContent]);
     
 //    [self.scrollView setContentSize:CGSizeMake(self.scrollView.frame.size.width, heightOfContent)];
+    
+    // Set the scrollView content height to the bodyTextView.
+    
+    [self.scrollView setContentSize:CGSizeMake(self.scrollView.frame.size.width, self.bodyTextView.frame.origin.y + self.bodyTextView.frame.size.height)];
+    
+    // Wrap the text around the editor's photo
+    
+    CGRect secondTestImageRect = [self.bodyTextView convertRect:CGRectMake(self.secondTestImage.frame.origin.x-10, self.secondTestImage.frame.origin.y-10, self.secondTestImage.frame.size.width+20, self.secondTestImage.frame.size.height+20) fromView:self.scrollView];
+    self.bodyTextView.textContainer.exclusionPaths = @[[UIBezierPath bezierPathWithRect:secondTestImageRect]];
 }
 
 - (void)didReceiveMemoryWarning
