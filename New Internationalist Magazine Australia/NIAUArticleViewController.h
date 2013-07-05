@@ -15,4 +15,6 @@
 @property (nonatomic, strong) IBOutlet UIImageView *featuredImage;
 @property (nonatomic, strong) IBOutlet UIImageView *secondTestImage;
 
+@property (nonatomic, weak) IBOutlet UITextView *bodyTextView;
+
 @end
