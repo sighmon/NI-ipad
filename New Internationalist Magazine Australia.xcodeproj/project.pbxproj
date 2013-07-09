@@ -35,6 +35,7 @@
 		055A8EEA177290CF003D9407 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 055A8EC9177290CE003D9407 /* UIKit.framework */; };
 		055A8EF2177290CF003D9407 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 055A8EF0177290CF003D9407 /* InfoPlist.strings */; };
 		055A8EF4177290CF003D9407 /* New_Internationalist_Magazine_AustraliaTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 055A8EF3177290CF003D9407 /* New_Internationalist_Magazine_AustraliaTests.m */; };
+		058F738E178BBA3E002CA40C /* NIAUImageZoomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 058F738D178BBA3E002CA40C /* NIAUImageZoomViewController.m */; };
 		05BD7F2917796B8F00820EF3 /* 0@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 05BD7F1717796B8F00820EF3 /* 0@2x.png */; };
 		05BD7F2A17796B8F00820EF3 /* 1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 05BD7F1817796B8F00820EF3 /* 1@2x.png */; };
 		05BD7F2B17796B8F00820EF3 /* 2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 05BD7F1917796B8F00820EF3 /* 2@2x.png */; };
@@ -132,6 +133,8 @@
 		055A8F0C1772CF67003D9407 /* iPad-landscape@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPad-landscape@2x.png"; sourceTree = "<group>"; };
 		055A8F0D1772CF67003D9407 /* iPad-portrait.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPad-portrait.png"; sourceTree = "<group>"; };
 		055A8F0E1772CF67003D9407 /* iPad-portrait@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPad-portrait@2x.png"; sourceTree = "<group>"; };
+		058F738C178BBA3E002CA40C /* NIAUImageZoomViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NIAUImageZoomViewController.h; sourceTree = "<group>"; };
+		058F738D178BBA3E002CA40C /* NIAUImageZoomViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NIAUImageZoomViewController.m; sourceTree = "<group>"; };
 		05BD7F121779656300820EF3 /* NIAUMagazineArchiveViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NIAUMagazineArchiveViewController.h; sourceTree = "<group>"; };
 		05BD7F131779656300820EF3 /* NIAUMagazineArchiveViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NIAUMagazineArchiveViewController.m; sourceTree = "<group>"; };
 		05BD7F141779671900820EF3 /* NIAUCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NIAUCell.h; sourceTree = "<group>"; };
@@ -264,6 +267,8 @@
 				0507DB69177AA0F60099540D /* NIAUTableOfContentsViewController.m */,
 				052167E5177BDF8900A4A81A /* NIAUArticleViewController.h */,
 				052167E6177BDF8900A4A81A /* NIAUArticleViewController.m */,
+				058F738C178BBA3E002CA40C /* NIAUImageZoomViewController.h */,
+				058F738D178BBA3E002CA40C /* NIAUImageZoomViewController.m */,
 				05BD7F141779671900820EF3 /* NIAUCell.h */,
 				05BD7F151779671900820EF3 /* NIAUCell.m */,
 				055A8EE0177290CF003D9407 /* Images.xcassets */,
@@ -506,6 +511,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				058F738E178BBA3E002CA40C /* NIAUImageZoomViewController.m in Sources */,
 				053878261777D767001E60F6 /* NIAUIssue.m in Sources */,
 				052167E4177BD6DF00A4A81A /* NIAUArticle.m in Sources */,
 				055A8EDF177290CF003D9407 /* NIAUViewController.m in Sources */,

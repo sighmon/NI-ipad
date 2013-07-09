@@ -7,12 +7,31 @@
 //
 
 #import "NIAUArticleViewController.h"
+#import "NIAUImageZoomViewController.h"
 
 @interface NIAUArticleViewController ()
 
 @end
 
 @implementation NIAUArticleViewController
+
+// Handle image being tapped
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([[segue identifier] isEqualToString:@"showImageZoom"])
+    {        
+        // TODO: Load the large version of the image to be zoomed.
+        // load the image, to prevent it from being cached we use 'initWithContentsOfFile'
+        NIAUImageZoomViewController *imageZoomViewController = [segue destinationViewController];
+        imageZoomViewController.imageToLoad = [UIImage imageNamed:@"default_article_image.png"];
+    }
+}
+
+- (IBAction)imageTapped:(id)sender
+{
+    [self performSegueWithIdentifier:@"showImageZoom" sender:self];
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
