@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface NIAUImageZoomViewController : UIViewController
+@interface NIAUImageZoomViewController : UIViewController <UIGestureRecognizerDelegate, UIScrollViewDelegate>
 
 @property (nonatomic, weak) IBOutlet UIScrollView *scrollView;
 

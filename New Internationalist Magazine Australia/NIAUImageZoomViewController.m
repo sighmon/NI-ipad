@@ -31,6 +31,16 @@
     self.image.image = self.imageToLoad;
 }
 
+#pragma mark -
+#pragma mark Responding to gestures
+
+- (IBAction)showGestureForPinchRecognizer:(UIPinchGestureRecognizer *)gestureRecognizer
+{    
+    // Test gestures.
+    NSLog(@"Pinched!");
+}
+
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

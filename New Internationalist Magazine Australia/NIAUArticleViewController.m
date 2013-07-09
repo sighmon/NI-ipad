@@ -15,22 +15,16 @@
 
 @implementation NIAUArticleViewController
 
-// Handle image being tapped
-
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([[segue identifier] isEqualToString:@"showImageZoom"])
-    {        
+    {
+        // Nothing to do yet.
         // TODO: Load the large version of the image to be zoomed.
         // load the image, to prevent it from being cached we use 'initWithContentsOfFile'
         NIAUImageZoomViewController *imageZoomViewController = [segue destinationViewController];
         imageZoomViewController.imageToLoad = [UIImage imageNamed:@"default_article_image.png"];
     }
-}
-
-- (IBAction)imageTapped:(id)sender
-{
-    [self performSegueWithIdentifier:@"showImageZoom" sender:self];
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -51,6 +45,21 @@
     [self.featuredImage setImage:[UIImage imageNamed:@"default_featured_image.png"]];
     [self.secondTestImage setImage:[UIImage imageNamed:@"default_article_image.png"]];
     
+}
+
+#pragma mark -
+#pragma mark Responding to gestures
+
+- (IBAction)handleFeaturedImageSingleTap:(UITapGestureRecognizer *)recognizer
+{
+    // Handle image being tapped
+    [self performSegueWithIdentifier:@"showImageZoom" sender:self];
+}
+
+- (IBAction)handleSecondTestImageSingleTap:(UITapGestureRecognizer *)recognizer
+{
+    // Handle image being tapped
+    [self performSegueWithIdentifier:@"showImageZoom" sender:self];
 }
 
 //    Solution to scrolling?

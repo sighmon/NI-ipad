@@ -268,12 +268,16 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="PAM-Qv-IM5">
+                                    <imageView multipleTouchEnabled="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="PAM-Qv-IM5">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="135"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <gestureRecognizers/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="135" id="hwV-2q-KVD"/>
                                         </constraints>
+                                        <connections>
+                                            <outletCollection property="gestureRecognizers" destination="HgU-zu-L5t" appends="YES" id="5Hb-t7-UvC"/>
+                                        </connections>
                                     </imageView>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Article title" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fuM-gI-7Bu">
                                         <rect key="frame" x="0.0" y="143" width="320" height="21"/>
@@ -319,40 +323,14 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Wh8-Th-Gh8">
+                                    <imageView multipleTouchEnabled="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Wh8-Th-Gh8">
                                         <rect key="frame" x="122" y="473" width="198" height="164"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <gestureRecognizers/>
+                                        <connections>
+                                            <outletCollection property="gestureRecognizers" destination="eSN-qn-lkW" appends="YES" id="sNW-6O-0OS"/>
+                                        </connections>
                                     </imageView>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ugN-Un-bSh">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="135"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                        <state key="normal">
-                                            <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <state key="highlighted">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="imageTapped:" destination="nmL-1b-WQV" eventType="touchUpInside" id="HUt-qN-l3u"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iqV-ZG-XXO">
-                                        <rect key="frame" x="122" y="473" width="198" height="164"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                        <state key="normal">
-                                            <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <state key="highlighted">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="imageTapped:" destination="nmL-1b-WQV" eventType="touchUpInside" id="Jw5-BG-eP7"/>
-                                        </connections>
-                                    </button>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="ulX-QY-4Wv" firstAttribute="top" secondItem="fuM-gI-7Bu" secondAttribute="bottom" constant="8" symbolic="YES" id="15m-c8-Cfs"/>
@@ -393,6 +371,16 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nmL-1b-WQV" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="HgU-zu-L5t">
+                    <connections>
+                        <action selector="handleFeaturedImageSingleTap:" destination="T5k-23-5nF" id="DWN-cH-QYh"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <tapGestureRecognizer id="eSN-qn-lkW">
+                    <connections>
+                        <action selector="handleSecondTestImageSingleTap:" destination="T5k-23-5nF" id="PiL-Fj-wmG"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1298" y="-290"/>
         </scene>
@@ -408,11 +396,23 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
-                                    <imageView multipleTouchEnabled="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XOZ-NO-5Yp">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                    <imageView multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="XOZ-NO-5Yp">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                        <gestureRecognizers/>
+                                        <connections>
+                                            <outletCollection property="gestureRecognizers" destination="f1G-cK-36I" appends="YES" id="f1W-Yz-Ftg"/>
+                                        </connections>
                                     </imageView>
                                 </subviews>
+                                <constraints>
+                                    <constraint firstItem="XOZ-NO-5Yp" firstAttribute="centerX" secondItem="4p2-6R-IMq" secondAttribute="centerX" id="3dY-yf-aW4"/>
+                                    <constraint firstItem="XOZ-NO-5Yp" firstAttribute="bottom" secondItem="4p2-6R-IMq" secondAttribute="bottom" id="PUp-T3-9Ff"/>
+                                    <constraint firstItem="XOZ-NO-5Yp" firstAttribute="leading" secondItem="4p2-6R-IMq" secondAttribute="leading" id="eKI-94-Pam"/>
+                                    <constraint firstItem="XOZ-NO-5Yp" firstAttribute="trailing" secondItem="4p2-6R-IMq" secondAttribute="trailing" id="fTN-8T-NsM"/>
+                                    <constraint firstItem="XOZ-NO-5Yp" firstAttribute="top" secondItem="4p2-6R-IMq" secondAttribute="top" id="gnu-SD-eDO"/>
+                                    <constraint firstItem="XOZ-NO-5Yp" firstAttribute="centerY" secondItem="4p2-6R-IMq" secondAttribute="centerY" id="wtT-7z-CeG"/>
+                                </constraints>
                             </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -431,6 +431,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yW5-7P-xCk" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <pinchGestureRecognizer id="f1G-cK-36I">
+                    <connections>
+                        <action selector="showGestureForPinchRecognizer:" destination="GGn-sZ-3sw" id="CE1-fA-JGc"/>
+                    </connections>
+                </pinchGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1750" y="-164"/>
         </scene>
@@ -439,7 +444,6 @@
         <class className="NIAUArticleViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/NIAUArticleViewController.h"/>
             <relationships>
-                <relationship kind="action" name="imageTapped:"/>
                 <relationship kind="outlet" name="bodyTextView" candidateClass="UITextView"/>
                 <relationship kind="outlet" name="featuredImage" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
@@ -497,9 +501,6 @@
         </class>
         <class className="UICollectionViewFlowLayout" superclassName="UICollectionViewLayout">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewFlowLayout.h"/>
-        </class>
-        <class className="UICollectionViewLayout" superclassName="NSObject">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewLayout.h"/>
         </class>
     </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
