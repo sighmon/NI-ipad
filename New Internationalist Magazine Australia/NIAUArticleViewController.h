@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface NIAUArticleViewController : UIViewController <UIScrollViewDelegate>
+@interface NIAUArticleViewController : UIViewController <UIScrollViewDelegate, UIGestureRecognizerDelegate>
 
 @property (nonatomic, weak) IBOutlet UIScrollView *scrollView;
 
