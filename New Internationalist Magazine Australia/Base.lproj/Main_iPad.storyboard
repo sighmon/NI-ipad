@@ -71,16 +71,16 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="QGH-kd-WQM" firstAttribute="centerX" secondItem="sGR-UI-43W" secondAttribute="centerX" id="24n-Mb-v3V"/>
+                            <constraint firstItem="QGH-kd-WQM" firstAttribute="top" secondItem="4cE-wm-UVR" secondAttribute="bottom" constant="8" symbolic="YES" id="Ada-U8-O05"/>
                             <constraint firstItem="sCG-7l-LMd" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="ER2-1f-S5D"/>
                             <constraint firstItem="4cE-wm-UVR" firstAttribute="centerX" secondItem="sGR-UI-43W" secondAttribute="centerX" id="GM4-H7-jT7"/>
-                            <constraint firstAttribute="bottom" secondItem="QGH-kd-WQM" secondAttribute="bottom" constant="67" id="Mv7-Qb-Nx7"/>
+                            <constraint firstItem="QGH-kd-WQM" firstAttribute="trailing" secondItem="4cE-wm-UVR" secondAttribute="trailing" id="Iie-xg-ncG"/>
+                            <constraint firstItem="QGH-kd-WQM" firstAttribute="leading" secondItem="4cE-wm-UVR" secondAttribute="leading" id="MEC-df-rK5"/>
                             <constraint firstItem="sCG-7l-LMd" firstAttribute="centerX" secondItem="sGR-UI-43W" secondAttribute="centerX" id="TfD-ff-KJa"/>
                             <constraint firstItem="sCG-7l-LMd" firstAttribute="leading" secondItem="4cE-wm-UVR" secondAttribute="leading" id="UBk-tW-1qc"/>
                             <constraint firstItem="sCG-7l-LMd" firstAttribute="top" secondItem="sGR-UI-43W" secondAttribute="bottom" constant="52" id="VQu-mb-0to"/>
-                            <constraint firstItem="4cE-wm-UVR" firstAttribute="leading" secondItem="QGH-kd-WQM" secondAttribute="leading" id="ZR5-9i-kCe"/>
-                            <constraint firstItem="QGH-kd-WQM" firstAttribute="top" secondItem="4cE-wm-UVR" secondAttribute="bottom" constant="8" symbolic="YES" id="bhK-oX-bsg"/>
                             <constraint firstItem="4cE-wm-UVR" firstAttribute="top" secondItem="sCG-7l-LMd" secondAttribute="bottom" constant="8" symbolic="YES" id="qdI-7W-qWa"/>
+                            <constraint firstItem="8kw-PJ-HHn" firstAttribute="top" secondItem="QGH-kd-WQM" secondAttribute="bottom" constant="67" id="zEp-ef-LDS"/>
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>

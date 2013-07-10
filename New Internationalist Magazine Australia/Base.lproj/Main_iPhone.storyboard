@@ -76,9 +76,6 @@
                                     <accessibilityTraits key="traits" none="YES" button="YES" image="YES"/>
                                 </accessibility>
                                 <gestureRecognizers/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="270" id="ezc-qd-L6N"/>
-                                </constraints>
                                 <connections>
                                     <outletCollection property="gestureRecognizers" destination="aXj-VP-InK" appends="YES" id="T3O-uv-o0O"/>
                                 </connections>
@@ -91,7 +88,7 @@
                             <constraint firstItem="zKw-Ww-8lt" firstAttribute="top" secondItem="D13-Uv-IQI" secondAttribute="bottom" constant="8" symbolic="YES" id="6Xy-6l-MjJ"/>
                             <constraint firstItem="zKw-Ww-8lt" firstAttribute="leading" secondItem="D13-Uv-IQI" secondAttribute="leading" id="GkP-xi-xf9"/>
                             <constraint firstItem="0Uh-Tb-k55" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="top" constant="42" id="IkE-d1-RgZ"/>
-                            <constraint firstItem="yAi-yu-vep" firstAttribute="top" secondItem="0Uh-Tb-k55" secondAttribute="bottom" constant="24" id="PTA-1j-lcK"/>
+                            <constraint firstItem="UGn-Ob-J5l" firstAttribute="top" secondItem="0Uh-Tb-k55" secondAttribute="bottom" constant="192" id="NF4-Cj-dMM"/>
                             <constraint firstItem="D13-Uv-IQI" firstAttribute="leading" secondItem="yAi-yu-vep" secondAttribute="leading" id="PgO-FS-X7M"/>
                             <constraint firstItem="0Uh-Tb-k55" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="40" id="TKv-x5-nop"/>
                             <constraint firstAttribute="centerX" secondItem="0Uh-Tb-k55" secondAttribute="centerX" id="VLi-Cm-Wop"/>
