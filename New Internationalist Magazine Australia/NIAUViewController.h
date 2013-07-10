@@ -10,7 +10,7 @@
 #import "NIAUIssue.h"
 #import "NIAUPublisher.h"
 
-@interface NIAUViewController : UIViewController
+@interface NIAUViewController : UIViewController <UIGestureRecognizerDelegate>
 
 @property (nonatomic, strong) NIAUIssue *issue;
 
