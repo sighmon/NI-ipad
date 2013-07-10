@@ -50,7 +50,7 @@ static NIAUPublisher *instance =nil;
     NSLog(@"getIssuesList");
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0),
                    ^{
-                       NSData* data = [NSData dataWithContentsOfURL:[NSURL URLWithString:@"http://digital.newint.com.au/issues.json"]];
+                       NSData* data = [NSData dataWithContentsOfURL:[NSURL URLWithString:(SITE_URL @"issues.json")]];
                        NSError* error;
                        NSArray *tmpIssues = [NSJSONSerialization
                                              JSONObjectWithData:data //1

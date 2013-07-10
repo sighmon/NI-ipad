@@ -17,3 +17,5 @@
 
 // from viggio/Newsstand
 #define CacheDirectory [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0]
+
+#import "local.h"

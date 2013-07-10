@@ -178,6 +178,7 @@
 		05BD7F4C17796B9F00820EF3 /* 17.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 17.png; sourceTree = "<group>"; };
 		52090A60178CF7D1002D5162 /* NIAUPublisher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NIAUPublisher.h; sourceTree = "<group>"; };
 		52090A61178CF7D1002D5162 /* NIAUPublisher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NIAUPublisher.m; sourceTree = "<group>"; };
+		52090A65178D4291002D5162 /* local.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = local.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -286,6 +287,7 @@
 			isa = PBXGroup;
 			children = (
 				055A8ECD177290CE003D9407 /* New Internationalist Magazine Australia-Info.plist */,
+				52090A65178D4291002D5162 /* local.h */,
 				055A8ECE177290CE003D9407 /* InfoPlist.strings */,
 				055A8ED1177290CF003D9407 /* main.m */,
 				055A8ED3177290CF003D9407 /* New Internationalist Magazine Australia-Prefix.pch */,
