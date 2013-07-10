@@ -8,6 +8,7 @@
 
 #import "NIAUPublisher.h"
 #import <NewsstandKit/NewsstandKit.h>
+#import "local.h"
 
 NSString *PublisherDidUpdateNotification = @"PublisherDidUpdate";
 NSString *PublisherFailedUpdateNotification = @"PublisherFailedUpdate";
