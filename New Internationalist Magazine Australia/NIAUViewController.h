@@ -8,8 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "NIAUIssue.h"
+#import "NIAUPublisher.h"
 
-@interface NIAUViewController : UIViewController
+@interface NIAUViewController : UIViewController {
+    NIAUPublisher *publisher;
+}
 
 @property (nonatomic, strong) NIAUIssue *issue;
 

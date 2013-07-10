@@ -72,6 +72,7 @@
 		05BD7F5C17796B9F00820EF3 /* 15.png in Resources */ = {isa = PBXBuildFile; fileRef = 05BD7F4A17796B9F00820EF3 /* 15.png */; };
 		05BD7F5D17796B9F00820EF3 /* 16.png in Resources */ = {isa = PBXBuildFile; fileRef = 05BD7F4B17796B9F00820EF3 /* 16.png */; };
 		05BD7F5E17796B9F00820EF3 /* 17.png in Resources */ = {isa = PBXBuildFile; fileRef = 05BD7F4C17796B9F00820EF3 /* 17.png */; };
+		52090A62178CF7D1002D5162 /* NIAUPublisher.m in Sources */ = {isa = PBXBuildFile; fileRef = 52090A61178CF7D1002D5162 /* NIAUPublisher.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -175,6 +176,8 @@
 		05BD7F4A17796B9F00820EF3 /* 15.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 15.png; sourceTree = "<group>"; };
 		05BD7F4B17796B9F00820EF3 /* 16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 16.png; sourceTree = "<group>"; };
 		05BD7F4C17796B9F00820EF3 /* 17.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 17.png; sourceTree = "<group>"; };
+		52090A60178CF7D1002D5162 /* NIAUPublisher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NIAUPublisher.h; sourceTree = "<group>"; };
+		52090A61178CF7D1002D5162 /* NIAUPublisher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NIAUPublisher.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -266,6 +269,8 @@
 				0507DB68177AA0F60099540D /* NIAUTableOfContentsViewController.h */,
 				0507DB69177AA0F60099540D /* NIAUTableOfContentsViewController.m */,
 				052167E5177BDF8900A4A81A /* NIAUArticleViewController.h */,
+				52090A60178CF7D1002D5162 /* NIAUPublisher.h */,
+				52090A61178CF7D1002D5162 /* NIAUPublisher.m */,
 				052167E6177BDF8900A4A81A /* NIAUArticleViewController.m */,
 				058F738C178BBA3E002CA40C /* NIAUImageZoomViewController.h */,
 				058F738D178BBA3E002CA40C /* NIAUImageZoomViewController.m */,
@@ -514,6 +519,7 @@
 				058F738E178BBA3E002CA40C /* NIAUImageZoomViewController.m in Sources */,
 				053878261777D767001E60F6 /* NIAUIssue.m in Sources */,
 				052167E4177BD6DF00A4A81A /* NIAUArticle.m in Sources */,
+				52090A62178CF7D1002D5162 /* NIAUPublisher.m in Sources */,
 				055A8EDF177290CF003D9407 /* NIAUViewController.m in Sources */,
 				05287A24177983E400501F5F /* NIAUCell.m in Sources */,
 				0507DB6A177AA0F60099540D /* NIAUTableOfContentsViewController.m in Sources */,

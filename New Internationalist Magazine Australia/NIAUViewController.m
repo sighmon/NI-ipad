@@ -16,6 +16,8 @@
 
 @implementation NIAUViewController
 
+
+
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([[segue identifier] isEqualToString:@"homeCoverToContentsView"])
@@ -63,6 +65,16 @@
     self.cover.layer.shadowOpacity = 0.5;
     self.cover.layer.shadowRadius = 3.0;
     self.cover.clipsToBounds = NO;
+    
+    publisher = [[NIAUPublisher alloc] init];
+    
+    if([publisher isReady]) {
+        [self showIssues];
+    } else {
+        [self loadIssues];
+    }
+
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -70,5 +82,40 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+#pragma - mark NIAUPublisher interaction
+
+-(void)loadIssues {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(publisherReady:) name:PublisherDidUpdateNotification object:publisher];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(publisherFailed:) name:PublisherFailedUpdateNotification object:publisher];
+    [publisher getIssuesList];
+}
+
+-(void)publisherReady:(NSNotification *)not {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:PublisherDidUpdateNotification object:publisher];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:PublisherFailedUpdateNotification object:publisher];
+    [self showIssues];
+}
+
+-(void)showIssues {
+    //[self.navigationItem setRightBarButtonItem:refreshButton];
+    //table_.alpha=1.0;
+    //[table_ reloadData];
+}
+
+-(void)publisherFailed:(NSNotification *)not {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:PublisherDidUpdateNotification object:publisher];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:PublisherFailedUpdateNotification object:publisher];
+    NSLog(@"%@",not);
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                    message:@"Cannot get issues from publisher server."
+                                                   delegate:nil
+                                          cancelButtonTitle:@"Close"
+                                          otherButtonTitles:nil];
+    [alert show];
+    //[alert release];
+    //[self.navigationItem setRightBarButtonItem:refreshButton];
+}
+
 
 @end
