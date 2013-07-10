@@ -31,8 +31,9 @@
     }
 }
 
-- (IBAction)coverTapped:(id)sender
+- (IBAction)coverTapped:(UITapGestureRecognizer *)recognizer
 {
+    NSLog(@"Cover tapped!");
     [self performSegueWithIdentifier:@"homeCoverToContentsView" sender:self];
 }
 
