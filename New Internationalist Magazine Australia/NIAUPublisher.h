@@ -19,6 +19,8 @@ extern  NSString *PublisherFailedUpdateNotification;
 
 @property (nonatomic,readonly,getter = isReady) BOOL ready;
 
++(NIAUPublisher*)getInstance;
+
 -(void)addIssuesInNewsstand;
 -(void)getIssuesList;
 -(NSInteger)numberOfIssues;

@@ -66,9 +66,9 @@
     self.cover.layer.shadowRadius = 3.0;
     self.cover.clipsToBounds = NO;
     
-    publisher = [[NIAUPublisher alloc] init];
+    //publisher = [[NIAUPublisher alloc] init];
     
-    if([publisher isReady]) {
+    if([[NIAUPublisher getInstance] isReady]) {
         [self showIssues];
     } else {
         [self loadIssues];
@@ -86,14 +86,14 @@
 #pragma - mark NIAUPublisher interaction
 
 -(void)loadIssues {
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(publisherReady:) name:PublisherDidUpdateNotification object:publisher];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(publisherFailed:) name:PublisherFailedUpdateNotification object:publisher];
-    [publisher getIssuesList];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(publisherReady:) name:PublisherDidUpdateNotification object:[NIAUPublisher getInstance]];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(publisherFailed:) name:PublisherFailedUpdateNotification object:[NIAUPublisher getInstance]];
+    [[NIAUPublisher getInstance] getIssuesList];
 }
 
 -(void)publisherReady:(NSNotification *)not {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:PublisherDidUpdateNotification object:publisher];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:PublisherFailedUpdateNotification object:publisher];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:PublisherDidUpdateNotification object:[NIAUPublisher getInstance]];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:PublisherFailedUpdateNotification object:[NIAUPublisher getInstance]];
     [self showIssues];
 }
 
@@ -104,8 +104,8 @@
 }
 
 -(void)publisherFailed:(NSNotification *)not {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:PublisherDidUpdateNotification object:publisher];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:PublisherFailedUpdateNotification object:publisher];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:PublisherDidUpdateNotification object:[NIAUPublisher getInstance]];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:PublisherFailedUpdateNotification object:[NIAUPublisher getInstance]];
     NSLog(@"%@",not);
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
                                                     message:@"Cannot get issues from publisher server."

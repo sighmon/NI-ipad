@@ -9,6 +9,7 @@
 #import "NIAUMagazineArchiveViewController.h"
 #import "NIAUCell.h"
 #import "NIAUTableOfContentsViewController.h"
+#import "NIAUPublisher.h"
 
 NSString *kCellID = @"magazineCellID";              // UICollectionViewCell storyboard id
 
@@ -20,7 +21,7 @@ NSString *kCellID = @"magazineCellID";              // UICollectionViewCell stor
 
 - (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section;
 {
-    return 18;
+    return [[NIAUPublisher getInstance] numberOfIssues];
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)cv cellForItemAtIndexPath:(NSIndexPath *)indexPath;
@@ -32,9 +33,20 @@ NSString *kCellID = @"magazineCellID";              // UICollectionViewCell stor
     // make the cell's title the actual NSIndexPath value
     // cell.label.text = [NSString stringWithFormat:@"{%ld,%ld}", (long)indexPath.row, (long)indexPath.section];
     
+    
+    
     // load the image for this cell
-    NSString *imageToLoad = [NSString stringWithFormat:@"%d.png", indexPath.row];
-    cell.image.image = [UIImage imageNamed:imageToLoad];
+    [[NIAUPublisher getInstance] setCoverOfIssueAtIndex:indexPath.row completionBlock:^(UIImage *img) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            //UITableViewCell *cell = [table_ cellForRowAtIndexPath:[NSIndexPath indexPathForRow:indexPath.row inSection:0]];
+            //UIImageView *imageView = (UIImageView *)[cell viewWithTag:100];
+            //imageView.image=img;
+            cell.image.image = img;
+        });
+    }];
+
+    //NSString *imageToLoad = [NSString stringWithFormat:@"%d.png", indexPath.row];
+    //cell.image.image = [UIImage imageNamed:imageToLoad];
     
     // Shadow for the cell (slows performance!)
 //    cell.layer.shadowColor = [UIColor blackColor].CGColor;

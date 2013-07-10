@@ -10,9 +10,7 @@
 #import "NIAUIssue.h"
 #import "NIAUPublisher.h"
 
-@interface NIAUViewController : UIViewController {
-    NIAUPublisher *publisher;
-}
+@interface NIAUViewController : UIViewController
 
 @property (nonatomic, strong) NIAUIssue *issue;
 

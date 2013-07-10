@@ -22,11 +22,23 @@ NSString *PublisherFailedUpdateNotification = @"PublisherFailedUpdate";
 
 @synthesize ready;
 
+static NIAUPublisher *instance =nil;
++(NIAUPublisher *)getInstance
+{
+    @synchronized(self)
+    {
+        if(instance==nil)
+        {
+            
+            instance= [NIAUPublisher new];
+        }
+    }
+    return instance;
+}
+
 -(id)init {
     self = [super init];
     
-    NSLog(@"NIAUPublisher/init");
-
     if(self) {
         ready = NO;
         issues = nil;
@@ -101,7 +113,8 @@ NSString *PublisherFailedUpdateNotification = @"PublisherFailedUpdate";
 }
 
 -(void)setCoverOfIssueAtIndex:(NSInteger)index  completionBlock:(void(^)(UIImage *img))block {
-    NSURL *coverURL = [NSURL URLWithString:[[self issueAtIndex:index] objectForKey:@"Cover"]];
+    NSDictionary *dict = [[[self issueAtIndex:index] objectForKey:@"cover"] objectForKey:@"thumb2x"];
+    NSURL *coverURL = [NSURL URLWithString:[dict objectForKey:@"url"]];
     NSString *coverFileName = [coverURL lastPathComponent];
     NSString *coverFilePath = [CacheDirectory stringByAppendingPathComponent:coverFileName];
     UIImage *image = [UIImage imageWithContentsOfFile:coverFilePath];
@@ -137,6 +150,7 @@ NSString *PublisherFailedUpdateNotification = @"PublisherFailedUpdate";
 -(NSURL *)contentURLForIssueWithName:(NSString *)name {
     __block NSURL *contentURL=nil;
     [issues enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        // TODO: append issue number to keep this unique (or only use issue number maybe)
         NSString *aName = [(NSDictionary *)obj objectForKey:@"Name"];
         if([aName isEqualToString:name]) {
             contentURL = [NSURL URLWithString:[(NSDictionary *)obj objectForKey:@"Content"]];
