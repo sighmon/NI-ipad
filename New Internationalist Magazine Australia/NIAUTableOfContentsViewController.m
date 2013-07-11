@@ -7,6 +7,7 @@
 //
 
 #import "NIAUTableOfContentsViewController.h"
+#import "NIAUImageZoomViewController.h"
 
 @interface NIAUTableOfContentsViewController ()
 
@@ -54,6 +55,40 @@
     // TODO: Work out how to only exclude words not characters. For now I'll just use a square exclusionPath.
     
     self.editorsLetterTextView.textContainer.exclusionPaths = @[[UIBezierPath bezierPathWithRect:editorImageViewRect]];
+}
+
+#pragma mark -
+#pragma mark Prepare for Segue
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([[segue identifier] isEqualToString:@"showImageZoom"])
+    {
+        // TODO: Load the large version of the image to be zoomed.
+        NIAUImageZoomViewController *imageZoomViewController = [segue destinationViewController];
+        
+        if ([sender isKindOfClass:[UIImageView class]]) {
+            UIImageView *imageTapped = (UIImageView *)sender;
+            imageZoomViewController.imageToLoad = imageTapped.image;
+        } else {
+            imageZoomViewController.imageToLoad = [UIImage imageNamed:@"default_article_image.png"];
+        }
+    }
+}
+
+#pragma mark -
+#pragma mark Responding to gestures
+
+- (IBAction)handleCoverSingleTap:(UITapGestureRecognizer *)recognizer
+{
+    // Handle image being tapped
+    [self performSegueWithIdentifier:@"showImageZoom" sender:recognizer.view];
+}
+
+- (IBAction)handleEditorSingleTap:(UITapGestureRecognizer *)recognizer
+{
+    // Handle image being tapped
+    [self performSegueWithIdentifier:@"showImageZoom" sender:recognizer.view];
 }
 
 - (void)didReceiveMemoryWarning

@@ -178,9 +178,13 @@
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XBT-LF-UKS">
+                            <imageView multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XBT-LF-UKS">
                                 <rect key="frame" x="20" y="20" width="132" height="188"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="srz-x3-vx1" appends="YES" id="8Fc-Bz-lnf"/>
+                                </connections>
                             </imageView>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Magazine title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vcO-aH-kkm">
                                 <rect key="frame" x="162" y="20" width="138" height="21"/>
@@ -230,9 +234,13 @@
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zUP-pp-27x">
+                            <imageView multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zUP-pp-27x">
                                 <rect key="frame" x="162" y="216" width="138" height="128"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="aoi-04-NVy" appends="YES" id="hap-dv-hqR"/>
+                                </connections>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -245,9 +253,20 @@
                         <outlet property="editorImageView" destination="zUP-pp-27x" id="eoj-ST-X07"/>
                         <outlet property="editorsLetterTextView" destination="smq-UL-Oxn" id="gg3-EP-9mq"/>
                         <outlet property="imageView" destination="XBT-LF-UKS" id="mOA-z4-05p"/>
+                        <segue destination="GGn-sZ-3sw" kind="push" identifier="showImageZoom" id="fI5-Du-KTZ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5Ob-iX-ukg" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="srz-x3-vx1">
+                    <connections>
+                        <action selector="handleCoverSingleTap:" destination="4fR-wf-HfG" id="P8J-qT-WQW"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <tapGestureRecognizer id="aoi-04-NVy">
+                    <connections>
+                        <action selector="handleEditorSingleTap:" destination="4fR-wf-HfG" id="zcJ-Q0-guj"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="818" y="-164"/>
         </scene>
@@ -444,5 +463,6 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="fFr-gL-mDW"/>
+        <segue reference="fI5-Du-KTZ"/>
     </inferredMetricsTieBreakers>
 </document>
