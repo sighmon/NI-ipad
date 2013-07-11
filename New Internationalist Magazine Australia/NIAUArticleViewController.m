@@ -19,11 +19,15 @@
 {
     if ([[segue identifier] isEqualToString:@"showImageZoom"])
     {
-        // Nothing to do yet.
         // TODO: Load the large version of the image to be zoomed.
-        // load the image, to prevent it from being cached we use 'initWithContentsOfFile'
         NIAUImageZoomViewController *imageZoomViewController = [segue destinationViewController];
-        imageZoomViewController.imageToLoad = [UIImage imageNamed:@"default_article_image.png"];
+        
+        if ([sender isKindOfClass:[UIImageView class]]) {
+            UIImageView *imageTapped = (UIImageView *)sender;
+            imageZoomViewController.imageToLoad = imageTapped.image;
+        } else {
+            imageZoomViewController.imageToLoad = [UIImage imageNamed:@"default_article_image.png"];
+        }
     }
 }
 
@@ -53,13 +57,13 @@
 - (IBAction)handleFeaturedImageSingleTap:(UITapGestureRecognizer *)recognizer
 {
     // Handle image being tapped
-    [self performSegueWithIdentifier:@"showImageZoom" sender:self];
+    [self performSegueWithIdentifier:@"showImageZoom" sender:recognizer.view];
 }
 
 - (IBAction)handleSecondTestImageSingleTap:(UITapGestureRecognizer *)recognizer
 {
     // Handle image being tapped
-    [self performSegueWithIdentifier:@"showImageZoom" sender:self];
+    [self performSegueWithIdentifier:@"showImageZoom" sender:recognizer.view];
 }
 
 //    Solution to scrolling?

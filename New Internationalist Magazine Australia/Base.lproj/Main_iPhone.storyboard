@@ -318,7 +318,7 @@
                                         <constraints>
                                             <constraint firstAttribute="height" constant="1000" id="z7M-UY-ddY"/>
                                         </constraints>
-                                        <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                        <mutableString key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.  Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</mutableString>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
@@ -395,35 +395,29 @@
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4p2-6R-IMq">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" maximumZoomScale="10" translatesAutoresizingMaskIntoConstraints="NO" id="4p2-6R-IMq">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
-                                    <imageView multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="XOZ-NO-5Yp">
+                                    <imageView multipleTouchEnabled="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XOZ-NO-5Yp">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <gestureRecognizers/>
-                                        <connections>
-                                            <outletCollection property="gestureRecognizers" destination="f1G-cK-36I" appends="YES" id="f1W-Yz-Ftg"/>
-                                        </connections>
                                     </imageView>
                                 </subviews>
-                                <constraints>
-                                    <constraint firstItem="XOZ-NO-5Yp" firstAttribute="centerX" secondItem="4p2-6R-IMq" secondAttribute="centerX" id="3dY-yf-aW4"/>
-                                    <constraint firstItem="XOZ-NO-5Yp" firstAttribute="bottom" secondItem="4p2-6R-IMq" secondAttribute="bottom" id="PUp-T3-9Ff"/>
-                                    <constraint firstItem="XOZ-NO-5Yp" firstAttribute="leading" secondItem="4p2-6R-IMq" secondAttribute="leading" id="eKI-94-Pam"/>
-                                    <constraint firstItem="XOZ-NO-5Yp" firstAttribute="trailing" secondItem="4p2-6R-IMq" secondAttribute="trailing" id="fTN-8T-NsM"/>
-                                    <constraint firstItem="XOZ-NO-5Yp" firstAttribute="top" secondItem="4p2-6R-IMq" secondAttribute="top" id="gnu-SD-eDO"/>
-                                    <constraint firstItem="XOZ-NO-5Yp" firstAttribute="centerY" secondItem="4p2-6R-IMq" secondAttribute="centerY" id="wtT-7z-CeG"/>
-                                </constraints>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outlet property="delegate" destination="GGn-sZ-3sw" id="Y7X-5g-ifg"/>
+                                    <outletCollection property="gestureRecognizers" destination="aPD-Kz-khq" appends="YES" id="RuQ-WU-zsT"/>
+                                </connections>
                             </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="4p2-6R-IMq" firstAttribute="top" secondItem="BGl-uZ-IGi" secondAttribute="top" id="XjG-Nd-zGS"/>
-                            <constraint firstItem="4p2-6R-IMq" firstAttribute="leading" secondItem="BGl-uZ-IGi" secondAttribute="leading" id="q6T-nN-ftp"/>
-                            <constraint firstItem="4p2-6R-IMq" firstAttribute="trailing" secondItem="BGl-uZ-IGi" secondAttribute="trailing" id="qe9-wg-LrK"/>
-                            <constraint firstItem="4p2-6R-IMq" firstAttribute="bottom" secondItem="BGl-uZ-IGi" secondAttribute="bottom" id="qsU-xg-7Ig"/>
+                            <constraint firstItem="4p2-6R-IMq" firstAttribute="trailing" secondItem="BGl-uZ-IGi" secondAttribute="trailing" id="EJ5-ZM-6Dq"/>
+                            <constraint firstItem="4p2-6R-IMq" firstAttribute="top" secondItem="BGl-uZ-IGi" secondAttribute="top" id="chS-0c-DtQ"/>
+                            <constraint firstItem="4p2-6R-IMq" firstAttribute="bottom" secondItem="BGl-uZ-IGi" secondAttribute="bottom" id="goq-pk-iPM"/>
+                            <constraint firstItem="4p2-6R-IMq" firstAttribute="leading" secondItem="BGl-uZ-IGi" secondAttribute="leading" id="zAb-UO-hO7"/>
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
@@ -434,11 +428,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yW5-7P-xCk" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <pinchGestureRecognizer id="f1G-cK-36I">
+                <tapGestureRecognizer id="aPD-Kz-khq">
                     <connections>
-                        <action selector="showGestureForPinchRecognizer:" destination="GGn-sZ-3sw" id="CE1-fA-JGc"/>
+                        <action selector="tapToHideNavigation:" destination="GGn-sZ-3sw" id="Mro-Jb-aGJ"/>
                     </connections>
-                </pinchGestureRecognizer>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1750" y="-164"/>
         </scene>

@@ -29,15 +29,33 @@
 	// Do any additional setup after loading the view.
     
     self.image.image = self.imageToLoad;
+    
+//    // calculate minimum scale to perfectly fit image width, and begin at that scale
+//    float minimumScale = [self.scrollView frame].size.width  / [self.image frame].size.width;
+//    [self.scrollView setMinimumZoomScale:minimumScale];
+//    [self.scrollView setZoomScale:minimumScale];
+}
+
+- (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView
+{
+    return self.image;
 }
 
 #pragma mark -
 #pragma mark Responding to gestures
 
-- (IBAction)showGestureForPinchRecognizer:(UIPinchGestureRecognizer *)gestureRecognizer
+- (IBAction)tapToHideNavigation:(UITapGestureRecognizer *)gestureRecognizer
 {    
-    // Test gestures.
-    NSLog(@"Pinched!");
+    // Tap once to show/hide navigation
+    if (!self.navigationController.navigationBarHidden) {
+        NSLog(@"Tapped to hide");
+        [[self navigationController] setNavigationBarHidden:YES animated:YES];
+        [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
+    } else {
+        NSLog(@"Tapped to show");
+        [[self navigationController] setNavigationBarHidden:NO animated:YES];
+        [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
+    }
 }
 
 

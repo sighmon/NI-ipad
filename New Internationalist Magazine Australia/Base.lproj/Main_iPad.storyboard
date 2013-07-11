@@ -250,12 +250,16 @@
                                 <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="XxT-mo-NcD">
+                                    <imageView multipleTouchEnabled="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="XxT-mo-NcD">
                                         <rect key="frame" x="0.0" y="0.0" width="768" height="325"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                        <gestureRecognizers/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="325" id="tlU-V9-mup"/>
                                         </constraints>
+                                        <connections>
+                                            <outletCollection property="gestureRecognizers" destination="Xvs-bj-sBo" appends="YES" id="1z7-oQ-alL"/>
+                                        </connections>
                                     </imageView>
                                     <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Article title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GVh-7U-naF">
                                         <rect key="frame" x="96" y="340" width="576" height="21"/>
@@ -298,9 +302,13 @@
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FNv-Ru-pN2">
+                                    <imageView multipleTouchEnabled="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FNv-Ru-pN2">
                                         <rect key="frame" x="353" y="564" width="415" height="316"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                        <gestureRecognizers/>
+                                        <connections>
+                                            <outletCollection property="gestureRecognizers" destination="0YW-HX-Xg0" appends="YES" id="TOd-RW-W1j"/>
+                                        </connections>
                                     </imageView>
                                 </subviews>
                                 <constraints>
@@ -338,11 +346,73 @@
                         <outlet property="featuredImage" destination="XxT-mo-NcD" id="ei8-eP-36V"/>
                         <outlet property="scrollView" destination="6wQ-vV-iqH" id="P1y-pP-paF"/>
                         <outlet property="secondTestImage" destination="FNv-Ru-pN2" id="bUW-QM-k5f"/>
+                        <segue destination="p7L-KM-t4i" kind="push" identifier="showImageZoom" id="JBV-bs-efO"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="a5Y-94-kse" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="Xvs-bj-sBo">
+                    <connections>
+                        <action selector="handleFeaturedImageSingleTap:" destination="tZW-bR-n1M" id="5fR-Mh-UB9"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <tapGestureRecognizer id="0YW-HX-Xg0">
+                    <connections>
+                        <action selector="handleSecondTestImageSingleTap:" destination="tZW-bR-n1M" id="5ah-5u-nYb"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="3174" y="-323"/>
+            <point key="canvasLocation" x="3146" y="-409"/>
+        </scene>
+        <!--Image Zoom View Controller-->
+        <scene sceneID="vNm-R5-kbx">
+            <objects>
+                <viewController id="p7L-KM-t4i" customClass="NIAUImageZoomViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Vic-Hx-rrj"/>
+                        <viewControllerLayoutGuide type="bottom" id="Teb-MT-e5N"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="9vS-Ny-f7F">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" maximumZoomScale="10" translatesAutoresizingMaskIntoConstraints="NO" id="Vsj-bd-CrP">
+                                <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <subviews>
+                                    <imageView multipleTouchEnabled="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gQN-3f-mic">
+                                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    </imageView>
+                                </subviews>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outlet property="delegate" destination="p7L-KM-t4i" id="FLr-ZO-JPn"/>
+                                    <outletCollection property="gestureRecognizers" destination="e3T-Gt-aoB" appends="YES" id="Jzk-aU-OX3"/>
+                                </connections>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Vsj-bd-CrP" firstAttribute="trailing" secondItem="9vS-Ny-f7F" secondAttribute="trailing" id="49N-zD-zAU"/>
+                            <constraint firstItem="Vsj-bd-CrP" firstAttribute="bottom" secondItem="9vS-Ny-f7F" secondAttribute="bottom" id="SEb-Yx-OBg"/>
+                            <constraint firstItem="Vsj-bd-CrP" firstAttribute="leading" secondItem="9vS-Ny-f7F" secondAttribute="leading" id="VAW-u7-ZhH"/>
+                            <constraint firstItem="Vsj-bd-CrP" firstAttribute="top" secondItem="9vS-Ny-f7F" secondAttribute="top" id="nl3-YR-baQ"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="BUU-gG-EMI"/>
+                    <connections>
+                        <outlet property="image" destination="gQN-3f-mic" id="vrd-3K-kz5"/>
+                        <outlet property="scrollView" destination="Vsj-bd-CrP" id="BkQ-RQ-EbN"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0gm-Ym-ecm" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="e3T-Gt-aoB">
+                    <connections>
+                        <action selector="tapToHideNavigation:" destination="p7L-KM-t4i" id="UY6-V4-GIQ"/>
+                    </connections>
+                </tapGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="4143" y="-517"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="swM-DU-i2d">
