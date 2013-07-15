@@ -52,28 +52,56 @@ static NIAUPublisher *instance =nil;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0),
                    ^{
                        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:(SITE_URL @"issues.json")]];
-                       NSError *error;
-                       NSArray *tmpIssues = [NSJSONSerialization
+                       if (!data) {
+                           NKLibrary *nkLibrary = [NKLibrary sharedLibrary];
+                           NSMutableArray *tmpIssues = [NSMutableArray arrayWithCapacity:[[nkLibrary issues] count]];
+                           [[nkLibrary issues] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                               NKIssue *issue = (NKIssue *)obj;
+                               NSError *error;
+                               NSURL *jsonURL = [NSURL URLWithString:@"issue.json" relativeToURL:[issue contentURL]];
+                               NSLog(@"%@",[jsonURL absoluteString]);
+                               NSData *data = [NSData dataWithContentsOfURL:jsonURL];
+                               [tmpIssues addObject:[NSJSONSerialization JSONObjectWithData:data options:kNilOptions
+                                                                                      error:&error]];
+                           }];
+                           
+                           issues = [[NSArray alloc] initWithArray:tmpIssues];
+                           ready = YES;
+                           NSLog(@"cached issues: %@",issues);
+                           dispatch_async(dispatch_get_main_queue(), ^{
+                               [[NSNotificationCenter defaultCenter] postNotificationName:PublisherDidUpdateNotification object:self];
+                           });
+
+                       } else {
+                           NSError *error;
+                           NSArray *tmpIssues;
+                           
+                           tmpIssues = [NSJSONSerialization
                                              JSONObjectWithData:data //1
                                              
                                              options:kNilOptions 
                                              error:&error];
-                       //NSArray *tmpIssues = [NSArray arrayWithContentsOfURL:[NSURL URLWithString:@"http://www.viggiosoft.com/media/data/blog/newsstand/issues.plist"]];
-                       if(!tmpIssues) {
-                           dispatch_async(dispatch_get_main_queue(), ^{
-                               [[NSNotificationCenter defaultCenter] postNotificationName:PublisherFailedUpdateNotification object:self];
-                           });
-                          
-                       } else {
-                           issues = [[NSArray alloc] initWithArray:tmpIssues];
-                           ready = YES;
-                           [self addIssuesInNewsstand];
-                           NSLog(@"%@",issues);
-                           dispatch_async(dispatch_get_main_queue(), ^{
-                               [[NSNotificationCenter defaultCenter] postNotificationName:PublisherDidUpdateNotification object:self];
-                           });
+                       
+                           //NSArray *tmpIssues = [NSArray arrayWithContentsOfURL:[NSURL URLWithString:@"http://www.	viggiosoft.com/media/data/blog/newsstand/issues.plist"]];
+                    
+                           if(!tmpIssues) {
+                               NSLog(@"null tmpIssues");
+                               dispatch_async(dispatch_get_main_queue(), ^{
+                                   [[NSNotificationCenter defaultCenter] postNotificationName:PublisherFailedUpdateNotification object:self];
+                               });
+                              
+                           } else {
+                               issues = [[NSArray alloc] initWithArray:tmpIssues];
+                               ready = YES;
+                               [self addIssuesInNewsstand];
+                               NSLog(@"%@",issues);
+                               dispatch_async(dispatch_get_main_queue(), ^{
+                                   [[NSNotificationCenter defaultCenter] postNotificationName:PublisherDidUpdateNotification object:self];
+                               });
+                           }
                        }
-                   });
+                       
+                    });
 }
 
 -(void)addIssuesInNewsstand {
@@ -83,11 +111,22 @@ static NIAUPublisher *instance =nil;
     [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZZZ"];
 
     [issues enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        NSString *name = [(NSDictionary *)obj objectForKey:@"title"];
+        NSString *name = [self nameOfIssue:(NSDictionary *)obj];
         NKIssue *nkIssue = [nkLib issueWithName:name];
         if(!nkIssue) {
             NSDate *date = [dateFormatter dateFromString:[(NSDictionary *)obj objectForKey:@"release"]];
             nkIssue = [nkLib addIssueWithName:name date:date];
+            
+            // write the relevant issue metadata into cache directory
+            NSURL *jsonURL = [NSURL URLWithString:@"issue.json" relativeToURL:nkIssue.contentURL];
+            NSLog(@"%@",[jsonURL absoluteString]);
+            NSOutputStream *os = [NSOutputStream outputStreamWithURL:jsonURL append:FALSE];
+            [os open];
+            NSError *error;
+            if ([NSJSONSerialization writeJSONObject:obj toStream:os options:0 error:&error]<=0) {
+                NSLog(@"Error writing JSON file");
+            }
+            [os close];
         }
         NSLog(@"Issue: %@",nkIssue);
     }];
@@ -105,20 +144,31 @@ static NIAUPublisher *instance =nil;
     return [issues objectAtIndex:index];
 }
 
+-(NSString *)titleOfIssue:(NSDictionary *)issue {
+    return [issue objectForKey:@"title"];
+}
+
 -(NSString *)titleOfIssueAtIndex:(NSInteger)index {
-    return [[self issueAtIndex:index] objectForKey:@"Title"];
+    return [self titleOfIssue:[self issueAtIndex:index]];
+}
+
+-(NSString *)nameOfIssue:(NSDictionary *)issue {
+    return [NSString stringWithFormat:@"%@",[issue objectForKey:@"number"]];
 }
 
 -(NSString *)nameOfIssueAtIndex:(NSInteger)index {
-   return [[self issueAtIndex:index] objectForKey:@"Name"];    
+    return [self nameOfIssue:[self issueAtIndex:index]];
 }
 
 -(void)setCoverOfIssueAtIndex:(NSInteger)index  completionBlock:(void(^)(UIImage *img))block {
-    NSDictionary *dict = [[[self issueAtIndex:index] objectForKey:@"cover"] objectForKey:@"thumb2x"];
-    NSURL *coverURL = [NSURL URLWithString:[dict objectForKey:@"url"]];
+    NSDictionary *issue = [self issueAtIndex:index];
+    NKIssue *nkIssue = [[NKLibrary sharedLibrary] issueWithName:[self nameOfIssue:issue]];
+    
+    NSDictionary *dict = [[issue objectForKey:@"cover"] objectForKey:@"thumb2x"];
+    NSURL *coverURL = [NSURL URLWithString:[dict objectForKey:@"url"] relativeToURL:[NSURL URLWithString:SITE_URL]];
     NSString *coverFileName = [coverURL lastPathComponent];
-    NSString *coverFilePath = [CacheDirectory stringByAppendingPathComponent:coverFileName];
-    UIImage *image = [UIImage imageWithContentsOfFile:coverFilePath];
+    NSURL *coverCacheURL = [NSURL URLWithString:coverFileName relativeToURL:[nkIssue contentURL]];
+    UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:coverCacheURL]];
     if(image) {
         block(image);
     } else {
@@ -127,7 +177,7 @@ static NIAUPublisher *instance =nil;
                            NSData *imageData = [NSData dataWithContentsOfURL:coverURL];
                            UIImage *image = [UIImage imageWithData:imageData];
                            if(image) {
-                               [imageData writeToFile:coverFilePath atomically:YES];
+                               [imageData writeToURL:coverCacheURL atomically:YES];
                                block(image);
                            }
                        });
