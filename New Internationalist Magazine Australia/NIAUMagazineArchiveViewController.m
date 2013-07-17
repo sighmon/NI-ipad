@@ -42,7 +42,7 @@ NSString *kCellID = @"magazineCellID";              // UICollectionViewCell stor
     
     
     // load the image for this cell
-    [[NIAUPublisher getInstance] setCoverOfIssueAtIndex:indexPath.row completionBlock:^(UIImage *img) {
+    [[NIAUPublisher getInstance] getCoverOfIssueAtIndex:indexPath.row completionBlock:^(UIImage *img) {
         dispatch_async(dispatch_get_main_queue(), ^{
             //UITableViewCell *cell = [table_ cellForRowAtIndexPath:[NSIndexPath indexPathForRow:indexPath.row inSection:0]];
             //UIImageView *imageView = (UIImageView *)[cell viewWithTag:100];
@@ -76,7 +76,7 @@ NSString *kCellID = @"magazineCellID";              // UICollectionViewCell stor
     {
         NSIndexPath *selectedIndexPath = [[self.collectionView indexPathsForSelectedItems] objectAtIndex:0];
         
-        [[NIAUPublisher getInstance] setCoverOfIssueAtIndex:selectedIndexPath.row completionBlock:^(UIImage *img) {
+        [[NIAUPublisher getInstance] getCoverOfIssueAtIndex:selectedIndexPath.row completionBlock:^(UIImage *img) {
                 NIAUTableOfContentsViewController *tableOfContentsViewController = [segue destinationViewController];
                 tableOfContentsViewController.cover = img;
         }];

@@ -155,7 +155,7 @@ static NIAUPublisher *instance =nil;
     return [self nameOfIssue:[self issueAtIndex:index]];
 }
 
--(void)setCoverOfIssueAtIndex:(NSInteger)index  completionBlock:(void(^)(UIImage *img))block {
+-(void)getCoverOfIssueAtIndex:(NSInteger)index  completionBlock:(void(^)(UIImage *img))block {
     NSDictionary *issue = [self issueAtIndex:index];
     NKIssue *nkIssue = [[NKLibrary sharedLibrary] issueWithName:[self nameOfIssue:issue]];
     

@@ -26,7 +26,7 @@ extern  NSString *PublisherFailedUpdateNotification;
 -(NSInteger)numberOfIssues;
 -(NSString *)titleOfIssueAtIndex:(NSInteger)index;
 -(NSString *)nameOfIssueAtIndex:(NSInteger)index;
--(void)setCoverOfIssueAtIndex:(NSInteger)index completionBlock:(void(^)(UIImage *img))block;
+-(void)getCoverOfIssueAtIndex:(NSInteger)index completionBlock:(void(^)(UIImage *img))block;
 -(NSURL *)contentURLForIssueWithName:(NSString *)name;
 -(NSString *)downloadPathForIssue:(NKIssue *)nkIssue;
 -(UIImage *)coverImageForIssue:(NKIssue *)nkIssue;
