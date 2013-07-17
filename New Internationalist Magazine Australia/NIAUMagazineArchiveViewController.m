@@ -19,11 +19,17 @@ NSString *kCellID = @"magazineCellID";              // UICollectionViewCell stor
 
 @implementation NIAUMagazineArchiveViewController
 
+- (void)dealloc {
+    // to avoid potential crashes
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 - (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section;
 {
     return [[NIAUPublisher getInstance] numberOfIssues];
 }
 
+// AHA: UICollectionViewController implements UICollectionViewDataSource where this method is defined.
 - (UICollectionViewCell *)collectionView:(UICollectionView *)cv cellForItemAtIndexPath:(NSIndexPath *)indexPath;
 {
     // we're going to use a custom UICollectionViewCell, which will hold an image and its label
@@ -91,7 +97,48 @@ NSString *kCellID = @"magazineCellID";              // UICollectionViewCell stor
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    
+    if([[NIAUPublisher getInstance] isReady]) {
+        [self showIssues];
+    } else {
+        [self loadIssues];
+    }
+
+    
 }
+
+// doublehandling from NIAUViewController...
+-(void)loadIssues {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(publisherReady:) name:PublisherDidUpdateNotification object:[NIAUPublisher getInstance]];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(publisherFailed:) name:PublisherFailedUpdateNotification object:[NIAUPublisher getInstance]];
+    [[NIAUPublisher getInstance] getIssuesList];
+}
+
+-(void)publisherReady:(NSNotification *)not {
+    // might recieve this more than once
+    //[[NSNotificationCenter defaultCenter] removeObserver:self name:PublisherDidUpdateNotification object:[NIAUPublisher getInstance]];
+    //[[NSNotificationCenter defaultCenter] removeObserver:self name:PublisherFailedUpdateNotification object:[NIAUPublisher getInstance]];
+    [self showIssues];
+}
+
+-(void)showIssues {
+    [self.collectionView reloadData];
+}
+
+-(void)publisherFailed:(NSNotification *)not {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:PublisherDidUpdateNotification object:[NIAUPublisher getInstance]];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:PublisherFailedUpdateNotification object:[NIAUPublisher getInstance]];
+    NSLog(@"%@",not);
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                    message:@"Cannot get issues from publisher server."
+                                                   delegate:nil
+                                          cancelButtonTitle:@"Close"
+                                          otherButtonTitles:nil];
+    [alert show];
+    //[alert release];
+    //[self.navigationItem setRightBarButtonItem:refreshButton];
+}
+
 
 - (void)didReceiveMemoryWarning
 {
