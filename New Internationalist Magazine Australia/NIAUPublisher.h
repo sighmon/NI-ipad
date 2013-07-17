@@ -24,6 +24,7 @@ extern  NSString *PublisherFailedUpdateNotification;
 -(void)addIssuesInNewsstand;
 -(void)getIssuesList;
 -(NSInteger)numberOfIssues;
+-(NSDictionary *)issueMetaDataAtIndex:(NSInteger)index;
 -(NSString *)titleOfIssueAtIndex:(NSInteger)index;
 -(NSString *)nameOfIssueAtIndex:(NSInteger)index;
 -(void)getCoverOfIssueAtIndex:(NSInteger)index completionBlock:(void(^)(UIImage *img))block;

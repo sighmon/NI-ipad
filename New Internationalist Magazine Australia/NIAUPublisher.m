@@ -135,7 +135,7 @@ static NIAUPublisher *instance =nil;
     }
 }
 
--(NSDictionary *)issueAtIndex:(NSInteger)index {
+-(NSDictionary *)issueMetaDataAtIndex:(NSInteger)index {
     return [issues objectAtIndex:index];
 }
 
@@ -144,7 +144,7 @@ static NIAUPublisher *instance =nil;
 }
 
 -(NSString *)titleOfIssueAtIndex:(NSInteger)index {
-    return [self titleOfIssue:[self issueAtIndex:index]];
+    return [self titleOfIssue:[self issueMetaDataAtIndex:index]];
 }
 
 -(NSString *)nameOfIssue:(NSDictionary *)issue {
@@ -152,11 +152,11 @@ static NIAUPublisher *instance =nil;
 }
 
 -(NSString *)nameOfIssueAtIndex:(NSInteger)index {
-    return [self nameOfIssue:[self issueAtIndex:index]];
+    return [self nameOfIssue:[self issueMetaDataAtIndex:index]];
 }
 
 -(void)getCoverOfIssueAtIndex:(NSInteger)index  completionBlock:(void(^)(UIImage *img))block {
-    NSDictionary *issue = [self issueAtIndex:index];
+    NSDictionary *issue = [self issueMetaDataAtIndex:index];
     NKIssue *nkIssue = [[NKLibrary sharedLibrary] issueWithName:[self nameOfIssue:issue]];
     
     NSDictionary *dict = [[issue objectForKey:@"cover"] objectForKey:@"thumb2x"];
