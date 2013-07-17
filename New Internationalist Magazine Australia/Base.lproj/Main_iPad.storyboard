@@ -419,6 +419,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="BUU-gG-EMI"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="image" destination="gQN-3f-mic" id="vrd-3K-kz5"/>
                         <outlet property="scrollView" destination="Vsj-bd-CrP" id="BkQ-RQ-EbN"/>
