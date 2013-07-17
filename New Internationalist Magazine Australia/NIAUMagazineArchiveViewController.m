@@ -70,13 +70,12 @@ NSString *kCellID = @"magazineCellID";              // UICollectionViewCell stor
     {
         NSIndexPath *selectedIndexPath = [[self.collectionView indexPathsForSelectedItems] objectAtIndex:0];
         
-        // load the image, to prevent it from being cached we use 'initWithContentsOfFile'
-        NSString *imageNameToLoad = [NSString stringWithFormat:@"%d", selectedIndexPath.row];
-        NSString *pathToImage = [[NSBundle mainBundle] pathForResource:imageNameToLoad ofType:@"png"];
-        UIImage *image = [[UIImage alloc] initWithContentsOfFile:pathToImage];
-        NIAUTableOfContentsViewController *tableOfContentsViewController = [segue destinationViewController];
-        tableOfContentsViewController.cover = image;
+        [[NIAUPublisher getInstance] setCoverOfIssueAtIndex:selectedIndexPath.row completionBlock:^(UIImage *img) {
+                NIAUTableOfContentsViewController *tableOfContentsViewController = [segue destinationViewController];
+                tableOfContentsViewController.cover = img;
+        }];
     }
+
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
