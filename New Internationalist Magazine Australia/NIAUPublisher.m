@@ -51,54 +51,49 @@ static NIAUPublisher *instance =nil;
     NSLog(@"getIssuesList");
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0),
                    ^{
-                       NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:(SITE_URL @"issues.json")]];
+                       bool cached = false;
+                       NSURL *issuesURL = [NSURL URLWithString:@"issues.json" relativeToURL:[NSURL URLWithString:SITE_URL]];
+                       NSLog(@"try to download issues.json from %@", issuesURL);
+                       NSMutableArray *tmpIssues;
+                       NSData *data = [NSData dataWithContentsOfURL:issuesURL];
                        if (!data) {
+                           NSLog(@"download failed, building from NKLibrary");
                            NKLibrary *nkLibrary = [NKLibrary sharedLibrary];
-                           NSMutableArray *tmpIssues = [NSMutableArray arrayWithCapacity:[[nkLibrary issues] count]];
+                           tmpIssues = [NSMutableArray arrayWithCapacity:[[nkLibrary issues] count]];
                            [[nkLibrary issues] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
                                NKIssue *issue = (NKIssue *)obj;
                                NSError *error;
+                               // local json URL
                                NSURL *jsonURL = [NSURL URLWithString:@"issue.json" relativeToURL:[issue contentURL]];
-                               NSLog(@"%@",[jsonURL absoluteString]);
                                NSData *data = [NSData dataWithContentsOfURL:jsonURL];
                                [tmpIssues addObject:[NSJSONSerialization JSONObjectWithData:data options:kNilOptions
                                                                                       error:&error]];
                            }];
                            
+                           cached = true;
+                       } else {
+                           NSError *error;
+                           tmpIssues = [NSJSONSerialization
+                                        JSONObjectWithData:data //1
+                                        
+                                        options:kNilOptions
+                                        error:&error];
+                       }
+                       
+                       if(!tmpIssues) {
+                           NSLog(@"null tmpIssues");
+                           dispatch_async(dispatch_get_main_queue(), ^{
+                               [[NSNotificationCenter defaultCenter] postNotificationName:PublisherFailedUpdateNotification object:self];
+                           });
+                       } else {
                            issues = [[NSArray alloc] initWithArray:tmpIssues];
                            ready = YES;
-                           NSLog(@"cached issues: %@",issues);
+                           if (!cached)
+                               [self addIssuesInNewsstand];
+                           NSLog(@"%@",issues);
                            dispatch_async(dispatch_get_main_queue(), ^{
                                [[NSNotificationCenter defaultCenter] postNotificationName:PublisherDidUpdateNotification object:self];
                            });
-
-                       } else {
-                           NSError *error;
-                           NSArray *tmpIssues;
-                           
-                           tmpIssues = [NSJSONSerialization
-                                             JSONObjectWithData:data //1
-                                             
-                                             options:kNilOptions 
-                                             error:&error];
-                       
-                           //NSArray *tmpIssues = [NSArray arrayWithContentsOfURL:[NSURL URLWithString:@"http://www.	viggiosoft.com/media/data/blog/newsstand/issues.plist"]];
-                    
-                           if(!tmpIssues) {
-                               NSLog(@"null tmpIssues");
-                               dispatch_async(dispatch_get_main_queue(), ^{
-                                   [[NSNotificationCenter defaultCenter] postNotificationName:PublisherFailedUpdateNotification object:self];
-                               });
-                              
-                           } else {
-                               issues = [[NSArray alloc] initWithArray:tmpIssues];
-                               ready = YES;
-                               [self addIssuesInNewsstand];
-                               NSLog(@"%@",issues);
-                               dispatch_async(dispatch_get_main_queue(), ^{
-                                   [[NSNotificationCenter defaultCenter] postNotificationName:PublisherDidUpdateNotification object:self];
-                               });
-                           }
                        }
                        
                     });
@@ -165,16 +160,25 @@ static NIAUPublisher *instance =nil;
     NKIssue *nkIssue = [[NKLibrary sharedLibrary] issueWithName:[self nameOfIssue:issue]];
     
     NSDictionary *dict = [[issue objectForKey:@"cover"] objectForKey:@"thumb2x"];
+    // online location of cover
     NSURL *coverURL = [NSURL URLWithString:[dict objectForKey:@"url"] relativeToURL:[NSURL URLWithString:SITE_URL]];
     NSString *coverFileName = [coverURL lastPathComponent];
+    // local URL to where the cover is/would be stored
     NSURL *coverCacheURL = [NSURL URLWithString:coverFileName relativeToURL:[nkIssue contentURL]];
+    NSLog(@"trying to read cached image from %@",coverCacheURL);
     UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:coverCacheURL]];
+
     if(image) {
+        // cache hit
         block(image);
     } else {
+        // cache miss, download
+        NSLog(@"cache miss, downloading image from %@",coverURL);
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0),
                        ^{
+                           // download image data
                            NSData *imageData = [NSData dataWithContentsOfURL:coverURL];
+                           // what if imageData is nil? - seems to cope
                            UIImage *image = [UIImage imageWithData:imageData];
                            if(image) {
                                [imageData writeToURL:coverCacheURL atomically:YES];
