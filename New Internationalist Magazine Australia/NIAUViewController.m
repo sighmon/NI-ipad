@@ -16,7 +16,9 @@
 
 @implementation NIAUViewController
 
-
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
@@ -93,12 +95,15 @@
 }
 
 -(void)publisherReady:(NSNotification *)not {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:PublisherDidUpdateNotification object:[NIAUPublisher getInstance]];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:PublisherFailedUpdateNotification object:[NIAUPublisher getInstance]];
+    // might recieve this more than once
+    //[[NSNotificationCenter defaultCenter] removeObserver:self name:PublisherDidUpdateNotification object:[NIAUPublisher getInstance]];
+    //[[NSNotificationCenter defaultCenter] removeObserver:self name:PublisherFailedUpdateNotification object:[NIAUPublisher getInstance]];
     [self showIssues];
 }
 
 -(void)showIssues {
+    // maybe un-grey magazinearchive button here?
+    
     //[self.navigationItem setRightBarButtonItem:refreshButton];
     //table_.alpha=1.0;
     //[table_ reloadData];
