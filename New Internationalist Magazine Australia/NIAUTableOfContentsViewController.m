@@ -29,7 +29,16 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
-    self.imageView.image = self.cover;
+    [self.issue getCoverWithCompletionBlock:^(UIImage *img) {
+        self.imageView.image = img;
+    }];
+    self.labelTitle.text = self.issue.title;
+    self.labelNumber.text = self.issue.name;
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"MMMM yyyy"];
+    self.labelDate.text = [dateFormatter stringFromDate:self.issue.publication];
+    self.labelEditor.text = self.issue.editorsName;
+    self.editorsLetterTextView.text = self.issue.editorsLetter;
     
     NSLog(@"TODO: Get the real editor's image.");
     [self.editorImageView setImage:[UIImage imageNamed:@"default_editors_photo.png"]];

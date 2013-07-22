@@ -7,12 +7,21 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "NIAUIssue.h"
 
 @interface NIAUTableOfContentsViewController : UIViewController
+
+@property (nonatomic, strong) NIAUIssue *issue;
 
 @property (nonatomic, strong) UIImage *cover;
 @property (nonatomic, weak) IBOutlet UIImageView *imageView;
 @property (nonatomic, weak) IBOutlet UITextView *editorsLetterTextView;
 @property (nonatomic, weak) IBOutlet UIImageView *editorImageView;
+
+@property (weak, nonatomic) IBOutlet UILabel *labelTitle;
+@property (weak, nonatomic) IBOutlet UILabel *labelNumber;
+@property (weak, nonatomic) IBOutlet UILabel *labelDate;
+@property (weak, nonatomic) IBOutlet UILabel *labelEditor;
+
 
 @end
