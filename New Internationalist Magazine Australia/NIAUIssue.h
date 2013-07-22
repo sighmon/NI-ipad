@@ -21,7 +21,6 @@
 -(NSString *)editorsName;
 
 +(NSArray *)issuesFromNKLibrary;
-+(NIAUIssue *)issueWithNKIssue:(NKIssue *)issue;
 +(NIAUIssue *)issueWithDictionary:(NSDictionary *)dict;
 
 -(void)getCoverWithCompletionBlock:(void(^)(UIImage *img))block;
