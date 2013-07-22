@@ -13,13 +13,12 @@
     NSDictionary *dictionary;
 }
 
-@property(nonatomic, strong) UIImage *cover;
-@property(nonatomic, weak) NSString *name;
-@property(nonatomic, weak) NSString *title;
-@property(nonatomic, weak) NSString *number;
-@property(nonatomic, weak) NSDate *publication;
-@property(nonatomic, weak) NSString *editor;
-@property(nonatomic, weak) NSString *editorsLetter;
+-(NSString *)name;
+-(NSDate *)publication;
+
+-(NSString *)title;
+-(NSString *)editorsLetter;
+-(NSString *)editorsName;
 
 +(NSArray *)issuesFromNKLibrary;
 +(NIAUIssue *)issueWithNKIssue:(NKIssue *)issue;

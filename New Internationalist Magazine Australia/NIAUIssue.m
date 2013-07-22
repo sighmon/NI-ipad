@@ -101,6 +101,18 @@
     return [NSString stringWithFormat:@"%@",[dictionary objectForKey:@"number"]];
 }
 
+-(NSString *)title {
+    return [dictionary objectForKey:@"title"];
+}
+
+-(NSString *)editorsLetter {
+    return [dictionary objectForKey:@"editors_letter"];
+}
+
+-(NSString *)editorsName {
+    return [dictionary objectForKey:@"editors_name"];
+}
+
 // TODO: how would we do getCover w/o completion block?
 -(void)getCoverWithCompletionBlock:(void(^)(UIImage *img))block {
     
