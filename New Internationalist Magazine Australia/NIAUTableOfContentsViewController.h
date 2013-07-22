@@ -9,11 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "NIAUIssue.h"
 
-@interface NIAUTableOfContentsViewController : UIViewController
+@interface NIAUTableOfContentsViewController : UIViewController <UIScrollViewDelegate>
 
 @property (nonatomic, strong) NIAUIssue *issue;
 
 @property (nonatomic, strong) UIImage *cover;
+
+@property (nonatomic, weak) IBOutlet UIScrollView *scrollView;
 @property (nonatomic, weak) IBOutlet UIImageView *imageView;
 @property (nonatomic, weak) IBOutlet UITextView *editorsLetterTextView;
 @property (nonatomic, weak) IBOutlet UIImageView *editorImageView;

@@ -67,6 +67,13 @@
     self.editorsLetterTextView.textContainer.exclusionPaths = @[[UIBezierPath bezierPathWithRect:editorImageViewRect]];
 }
 
+- (void)viewDidLayoutSubviews
+{
+    // Set the scrollView content height to the editorsLetterTextView.
+    
+    [self.scrollView setContentSize:CGSizeMake(self.scrollView.frame.size.width, self.editorsLetterTextView.frame.origin.y + self.editorsLetterTextView.frame.size.height)];
+}
+
 #pragma mark -
 #pragma mark Prepare for Segue
 
