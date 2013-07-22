@@ -19,9 +19,7 @@
 @property (nonatomic, weak) IBOutlet UIImageView *editorImageView;
 
 @property (weak, nonatomic) IBOutlet UILabel *labelTitle;
-@property (weak, nonatomic) IBOutlet UILabel *labelNumber;
-@property (weak, nonatomic) IBOutlet UILabel *labelDate;
+@property (weak, nonatomic) IBOutlet UILabel *labelNumberAndDate;
 @property (weak, nonatomic) IBOutlet UILabel *labelEditor;
-
 
 @end
