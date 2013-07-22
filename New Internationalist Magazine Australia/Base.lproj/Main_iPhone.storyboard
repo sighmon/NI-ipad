@@ -194,19 +194,19 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Number" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tpj-tl-sET">
-                                <rect key="frame" x="162" y="49" width="60" height="21"/>
+                                <rect key="frame" x="162" y="49" width="138" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead1"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Date" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Zv-o3-SBx">
-                                <rect key="frame" x="162" y="78" width="42" height="21"/>
+                                <rect key="frame" x="162" y="78" width="138" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead2"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Editor" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vj2-0b-v5W">
-                                <rect key="frame" x="162" y="107" width="43" height="21"/>
+                                <rect key="frame" x="162" y="107" width="138" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead2"/>
                                 <nil key="highlightedColor"/>
@@ -253,6 +253,10 @@
                         <outlet property="editorImageView" destination="zUP-pp-27x" id="eoj-ST-X07"/>
                         <outlet property="editorsLetterTextView" destination="smq-UL-Oxn" id="gg3-EP-9mq"/>
                         <outlet property="imageView" destination="XBT-LF-UKS" id="mOA-z4-05p"/>
+                        <outlet property="labelDate" destination="8Zv-o3-SBx" id="MfG-os-Dql"/>
+                        <outlet property="labelEditor" destination="vj2-0b-v5W" id="yiv-aD-Xzw"/>
+                        <outlet property="labelNumber" destination="tpj-tl-sET" id="Bdt-W2-5tK"/>
+                        <outlet property="labelTitle" destination="vcO-aH-kkm" id="4wD-CR-Xzl"/>
                         <segue destination="GGn-sZ-3sw" kind="push" identifier="showImageZoom" id="fI5-Du-KTZ"/>
                     </connections>
                 </viewController>

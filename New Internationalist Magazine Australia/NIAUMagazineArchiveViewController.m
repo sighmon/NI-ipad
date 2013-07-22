@@ -73,10 +73,8 @@ NSString *kCellID = @"magazineCellID";              // UICollectionViewCell stor
     {
         NSIndexPath *selectedIndexPath = [[self.collectionView indexPathsForSelectedItems] objectAtIndex:0];
         
-        [[[NIAUPublisher getInstance] issueAtIndex:selectedIndexPath.row] getCoverWithCompletionBlock:^(UIImage *img) {
-            NIAUTableOfContentsViewController *tableOfContentsViewController = [segue destinationViewController];
-            tableOfContentsViewController.cover = img;
-        }];
+        NIAUTableOfContentsViewController *tableOfContentsViewController = [segue destinationViewController];
+        tableOfContentsViewController.issue = [[NIAUPublisher getInstance] issueAtIndex:selectedIndexPath.row];
     }
 
 }
