@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <NewsstandKit/NewsstandKit.h>
+#import "NIAUIssue.h"
 
 extern  NSString *PublisherDidUpdateNotification;
 extern  NSString *PublisherFailedUpdateNotification;
@@ -21,15 +22,8 @@ extern  NSString *PublisherFailedUpdateNotification;
 
 +(NIAUPublisher*)getInstance;
 
--(void)addIssuesInNewsstand;
 -(void)getIssuesList;
 -(NSInteger)numberOfIssues;
--(NSDictionary *)issueMetaDataAtIndex:(NSInteger)index;
--(NSString *)titleOfIssueAtIndex:(NSInteger)index;
--(NSString *)nameOfIssueAtIndex:(NSInteger)index;
--(void)getCoverOfIssueAtIndex:(NSInteger)index completionBlock:(void(^)(UIImage *img))block;
--(NSURL *)contentURLForIssueWithName:(NSString *)name;
--(NSString *)downloadPathForIssue:(NKIssue *)nkIssue;
--(UIImage *)coverImageForIssue:(NKIssue *)nkIssue;
+-(NIAUIssue *)issueAtIndex:(NSInteger)index;
 
 @end

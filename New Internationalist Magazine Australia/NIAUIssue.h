@@ -7,15 +7,28 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <NewsstandKit/NewsstandKit.h>
 
-@interface NIAUIssue : NSObject
+@interface NIAUIssue : NSObject {
+    NSDictionary *dictionary;
+}
 
 @property(nonatomic, strong) UIImage *cover;
-
+@property(nonatomic, weak) NSString *name;
 @property(nonatomic, weak) NSString *title;
 @property(nonatomic, weak) NSString *number;
 @property(nonatomic, weak) NSDate *publication;
 @property(nonatomic, weak) NSString *editor;
 @property(nonatomic, weak) NSString *editorsLetter;
+
++(NSArray *)issuesFromNKLibrary;
++(NIAUIssue *)issueWithNKIssue:(NKIssue *)issue;
++(NIAUIssue *)issueWithDictionary:(NSDictionary *)dict;
+
+-(void)addToNewsstand;
+-(void)writeToCache;
+-(void)getCoverWithCompletionBlock:(void(^)(UIImage *img))block;
+
+
 
 @end
