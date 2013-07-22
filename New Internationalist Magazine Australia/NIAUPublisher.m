@@ -73,7 +73,9 @@ static NIAUPublisher *instance =nil;
                             error:&error];
                [tmpIssues enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
                    
-                   NIAUIssue *issue = [NIAUIssue issueWithDictionary:obj];
+                   // we could add each of these to our issues array
+                   // but instead we re-read the nklibrary after building all of the issues
+                   [NIAUIssue issueWithDictionary:obj];
                    
                }];
                
