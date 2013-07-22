@@ -17,8 +17,8 @@
 -(NIAUIssue *)initWithDictionary:(NSDictionary *)dict {
     dictionary = dict;
     
-    
-    // Q: who writes to cache?
+    [self addToNewsstand];
+    [self writeToCache];
     
     return self;
 }

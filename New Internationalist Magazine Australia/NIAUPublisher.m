@@ -74,11 +74,6 @@ static NIAUPublisher *instance =nil;
                [tmpIssues enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
                    
                    NIAUIssue *issue = [NIAUIssue issueWithDictionary:obj];
-                   // maybe this too?
-                   [issue addToNewsstand];
-                   // TODO: this should be managed by the issue object itself
-                   [issue writeToCache];
-                   
                    
                }];
                
