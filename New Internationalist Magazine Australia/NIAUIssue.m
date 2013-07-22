@@ -70,7 +70,6 @@
 }
 
 -(void)addToNewsstand {
-    // TODO: something about getter not overriding property... use synthesize?
     if(!self.nkIssue) {
         [[NKLibrary sharedLibrary] addIssueWithName:self.name date:self.publication];
     }

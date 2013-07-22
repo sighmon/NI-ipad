@@ -11,6 +11,7 @@
 
 @interface NIAUIssue : NSObject {
     NSDictionary *dictionary;
+    NSArray *articles;
 }
 
 -(NSString *)name;

@@ -8,13 +8,18 @@
 
 #import <Foundation/Foundation.h>
 
-@interface NIAUArticle : NSObject
+@interface NIAUArticle : NSObject {
+    NSDictionary *dictionary;
+}
 
-@property(nonatomic, strong) UIImage *image;
+@property(nonatomic,readonly,getter = isComplete) BOOL complete;
 
-@property(nonatomic, weak) NSString *title;
-@property(nonatomic, weak) NSString *teaser;
-@property(nonatomic, weak) NSString *author;
-@property(nonatomic, weak) NSString *body;
+-(NSString *)title;
+-(NSString *)teaser;
+-(NSString *)author;
+-(NSString *)body;
+
+-(NIAUArticle *)initWithDictionary:(NSDictionary *)dict;
+
 
 @end
