@@ -37,11 +37,12 @@
     NSURL *jsonURL = [NSURL URLWithString:@"issue.json" relativeToURL:[issue contentURL]];
     NSData *data = [NSData dataWithContentsOfURL:jsonURL];
     
-    dictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-    
-    //cached = true;
-    
-    return self;
+    if (data) {
+        dictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+        return self;
+    } else {
+        return nil;
+    }
 }
 
 +(NIAUIssue *)issueWithNKIssue:(NKIssue *)issue {
@@ -53,8 +54,11 @@
     // Q: since we know the size at creation can this be a normal NSArray?
     NSMutableArray *tmpIssues = [NSMutableArray arrayWithCapacity:[[nkLibrary issues] count]];
     [[nkLibrary issues] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        NKIssue *issue = (NKIssue *)obj;
-        [tmpIssues addObject: [NIAUIssue issueWithNKIssue:issue]];
+        NKIssue *nkIssue = (NKIssue *)obj;
+        NIAUIssue *issue = [NIAUIssue issueWithNKIssue:nkIssue];
+        if (issue) {
+            [tmpIssues addObject:issue];
+        }
         
     }];
     return tmpIssues;
