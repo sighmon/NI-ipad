@@ -24,10 +24,7 @@
 +(NIAUIssue *)issueWithNKIssue:(NKIssue *)issue;
 +(NIAUIssue *)issueWithDictionary:(NSDictionary *)dict;
 
--(void)addToNewsstand;
--(void)writeToCache;
 -(void)getCoverWithCompletionBlock:(void(^)(UIImage *img))block;
-
 
 
 @end
