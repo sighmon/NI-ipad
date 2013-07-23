@@ -7,8 +7,12 @@
 //
 
 #import "NIAUArticle.h"
-
+
 @implementation NIAUArticle
+
+// AHA: this makes getters/setters for these readonly properties without exposing them publically
+@synthesize complete;
+@synthesize issue;
 
 -(NSString *)author {
     return [dictionary objectForKey:@"author"];
@@ -32,15 +36,21 @@
     }
 }
 
--(NIAUArticle *)initWithDictionary:(NSDictionary *)dict {
+-(NIAUArticle *)initWithIssue:(NIAUIssue *)_issue andDictionary:(NSDictionary *)_dictionary {
     
-    self->_complete = false;
+    issue = _issue;
     
-    dictionary = dict;
+    complete = false;
+    
+    dictionary = _dictionary;
     
     [self writeToCache];
     
     return self;
+}
+
++(NIAUArticle *)articleWithIssue:(NIAUIssue *)_issue andDictionary:(NSDictionary *)_dictionary {
+    return [[NIAUArticle alloc] initWithIssue:_issue andDictionary: _dictionary];
 }
 
 -(void)writeToCache {

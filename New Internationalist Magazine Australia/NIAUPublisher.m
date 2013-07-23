@@ -21,7 +21,11 @@ NSString *PublisherFailedUpdateNotification = @"PublisherFailedUpdate";
 
 @implementation NIAUPublisher
 
-@synthesize ready;
+BOOL requestingIssues;
+
+-(BOOL)isReady {
+    return (issues != nil);
+}
 
 static NIAUPublisher *instance =nil;
 +(NIAUPublisher *)getInstance
@@ -30,7 +34,6 @@ static NIAUPublisher *instance =nil;
     {
         if(instance==nil)
         {
-            
             instance= [NIAUPublisher new];
         }
     }
@@ -41,67 +44,71 @@ static NIAUPublisher *instance =nil;
     self = [super init];
     
     if(self) {
-        ready = NO;
         issues = nil;
+        requestingIssues = FALSE;
     }
     return self;
 }
 
--(void)getIssuesList {
+-(void)requestIssues {
     NSLog(@"getIssuesList");
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0),
-       ^{
-           issues = [NIAUIssue issuesFromNKLibrary];
-           
-           ready = YES;
-           
-           // send notification
-           dispatch_async(dispatch_get_main_queue(), ^{
-               [[NSNotificationCenter defaultCenter] postNotificationName:PublisherDidUpdateNotification object:self];
-           });
-           
-           
-           NSURL *issuesURL = [NSURL URLWithString:@"issues.json" relativeToURL:[NSURL URLWithString:SITE_URL]];
-           NSLog(@"try to download issues.json from %@", issuesURL);
-           NSData *data = [NSData dataWithContentsOfURL:issuesURL];
-           NSError *error;
-           if(data) {
-               NSArray *tmpIssues = [NSJSONSerialization
-                            JSONObjectWithData:data //1
-                            
-                            options:kNilOptions
-                            error:&error];
-               [tmpIssues enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-                   
-                   // we could add each of these to our issues array
-                   // but instead we re-read the nklibrary after building all of the issues
-                   [NIAUIssue issueWithDictionary:obj];
-                   
-               }];
-               
-               // re-read issues
+    
+    //guard against being called multiple times by impatient people
+    if(!requestingIssues) {
+        requestingIssues = TRUE;
+    
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0),
+           ^{
                issues = [NIAUIssue issuesFromNKLibrary];
                
-               // TODO: make fancy diff of data for collection view
-               // send second notification
+               // send notification
                dispatch_async(dispatch_get_main_queue(), ^{
                    [[NSNotificationCenter defaultCenter] postNotificationName:PublisherDidUpdateNotification object:self];
                });
                
-           } else {
-               // TODO: what to do here?
-               dispatch_async(dispatch_get_main_queue(), ^{
-                   [[NSNotificationCenter defaultCenter] postNotificationName:PublisherFailedUpdateNotification object:self];
-               });
+               
+               NSURL *issuesURL = [NSURL URLWithString:@"issues.json" relativeToURL:[NSURL URLWithString:SITE_URL]];
+               NSLog(@"try to download issues.json from %@", issuesURL);
+               NSData *data = [NSData dataWithContentsOfURL:issuesURL];
+               if(data) {
+                   NSError *error;
+                   NSArray *tmpIssues = [NSJSONSerialization
+                                JSONObjectWithData:data //1
+                                
+                                options:kNilOptions
+                                error:&error];
+                   [tmpIssues enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                       
+                       // we could add each of these to our issues array
+                       // but instead we re-read the nklibrary after building all of the issues
+                       [NIAUIssue issueWithDictionary:obj];
+                       
+                   }];
+                   
+                   // re-read issues
+                   issues = [NIAUIssue issuesFromNKLibrary];
+                   
+                   // TODO: make fancy diff of data for collection view
+                   // send second notification
+                   dispatch_async(dispatch_get_main_queue(), ^{
+                       [[NSNotificationCenter defaultCenter] postNotificationName:PublisherDidUpdateNotification object:self];
+                   });
+                   
+               } else {
+                   // TODO: what to do here?
+                   dispatch_async(dispatch_get_main_queue(), ^{
+                       [[NSNotificationCenter defaultCenter] postNotificationName:PublisherFailedUpdateNotification object:self];
+                   });
 
-            
-           }
-       
-       });
+                
+               }
+               requestingIssues = FALSE;
+           });
+    }
 }
 
 -(NSInteger)numberOfIssues {
-    if([self isReady] && issues) {
+    if(issues) {
         return [issues count];
     } else {
         return 0;

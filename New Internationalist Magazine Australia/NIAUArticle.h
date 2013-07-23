@@ -8,18 +8,21 @@
 
 #import <Foundation/Foundation.h>
 
+@class NIAUIssue;
+
 @interface NIAUArticle : NSObject {
     NSDictionary *dictionary;
 }
 
 @property(nonatomic,readonly,getter = isComplete) BOOL complete;
 
+@property(nonatomic, strong) NIAUIssue *issue;
+
 -(NSString *)title;
 -(NSString *)teaser;
 -(NSString *)author;
 -(NSString *)body;
 
--(NIAUArticle *)initWithDictionary:(NSDictionary *)dict;
-
++(NIAUArticle *)articleWithIssue:(NIAUIssue *)issue andDictionary:(NSDictionary *)dict;
 
 @end

@@ -8,6 +8,10 @@
 
 #import <Foundation/Foundation.h>
 #import <NewsstandKit/NewsstandKit.h>
+#import "NIAUArticle.h"
+
+extern NSString *ArticlesDidUpdateNotification;
+extern NSString *ArticlesFailedUpdateNotification;
 
 @interface NIAUIssue : NSObject {
     NSDictionary *dictionary;
@@ -17,6 +21,7 @@
 -(NSString *)name;
 -(NSDate *)publication;
 
+-(NSNumber *)index;
 -(NSString *)title;
 -(NSString *)editorsLetter;
 -(NSString *)editorsName;
@@ -25,6 +30,11 @@
 +(NIAUIssue *)issueWithDictionary:(NSDictionary *)dict;
 
 -(void)getCoverWithCompletionBlock:(void(^)(UIImage *img))block;
+
+-(void)requestArticles;
+-(NSInteger)numberOfArticles;
+-(NIAUArticle *)articleAtIndex:(NSInteger)index;
+
 
 
 @end
