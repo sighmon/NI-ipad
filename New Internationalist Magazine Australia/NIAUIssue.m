@@ -9,17 +9,31 @@
 #import "NIAUIssue.h"
 #import "local.h"
 
+NSString *ArticlesDidUpdateNotification = @"ArticlesDidUpdate";
+NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
+
+
 @implementation NIAUIssue
+
+BOOL requestingArticles;
+
+-(id)init {
+    if (self = [super init]) {
+        requestingArticles = false;
+    }
+    return self;
+}
 
 //build from dictionary (and write to cache)
 // called when downloading issues.json from website
 
 -(NIAUIssue *)initWithDictionary:(NSDictionary *)dict {
-    dictionary = dict;
-    
-    [self addToNewsstand];
-    [self writeToCache];
-    
+    if (self = [self init]) {
+        dictionary = dict;
+        
+        [self addToNewsstand];
+        [self writeToCache];
+    }
     return self;
 }
 
@@ -31,18 +45,20 @@
 // called when building from cache
 
 -(NIAUIssue *)initWithNKIssue:(NKIssue *)issue {
-    
-    NSError *error;
-    // local json URL
-    NSURL *jsonURL = [NSURL URLWithString:@"issue.json" relativeToURL:[issue contentURL]];
-    NSData *data = [NSData dataWithContentsOfURL:jsonURL];
-    
-    if (data) {
-        dictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-        return self;
-    } else {
-        return nil;
+    if (self = [self init]) {
+        NSError *error;
+        // local json URL
+        NSURL *jsonURL = [NSURL URLWithString:@"issue.json" relativeToURL:[issue contentURL]];
+        NSData *data = [NSData dataWithContentsOfURL:jsonURL];
+        
+        if (data) {
+            dictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+            return self;
+        } else {
+            return nil;
+        }
     }
+    return self;
 }
 
 +(NIAUIssue *)issueWithNKIssue:(NKIssue *)issue {
@@ -112,6 +128,11 @@
     return [dictionary objectForKey:@"editors_name"];
 }
 
+// Q: will a property called "id" cause us woe? yes
+-(NSNumber *)index {
+    return [dictionary objectForKey:@"id"];
+}
+
 // TODO: how would we do getCover w/o completion block?
 -(void)getCoverWithCompletionBlock:(void(^)(UIImage *img))block {
     
@@ -144,6 +165,44 @@
     }
 }
 
+-(void)requestArticles {
+    if(!requestingArticles) {
+        requestingArticles = TRUE;
+        // put dispatch magic here
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+            //TODO: read from cache first and issue our first update
+            NSURL *issueURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/issue.json", [self index]] relativeToURL:[NSURL URLWithString:SITE_URL]];
+            NSData *data = [NSData dataWithContentsOfURL:issueURL];
+            if(data) {
+                NSError *error;
+                NSArray *dicts = [NSJSONSerialization
+                                      JSONObjectWithData:data
+                                      options:kNilOptions
+                                      error:&error];
+                NSMutableArray *tmpArticles = [NSMutableArray arrayWithCapacity:[dicts count]];
+                [dicts enumerateObjectsUsingBlock:^(id dict, NSUInteger idx, BOOL *stop) {
+                    
+                    // TODO: discard these objects and re-read cache after adding them (will preserve locally cached but remotely deleted data)
+                    [tmpArticles addObject:[NIAUArticle articleWithIssue:self andDictionary:dict]];
+                    
+                }];
+                articles = [NSArray arrayWithArray:tmpArticles];
+                
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [[NSNotificationCenter defaultCenter] postNotificationName:ArticlesDidUpdateNotification object:self];
+                });
+                
+            } else {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [[NSNotificationCenter defaultCenter] postNotificationName:ArticlesFailedUpdateNotification object:self];
+                });
 
+                // failure notification
+            }
+            
+            requestingArticles = FALSE;
+        });
+    }
+}
 
 @end
