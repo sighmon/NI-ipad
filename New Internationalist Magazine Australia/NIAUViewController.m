@@ -91,7 +91,7 @@
 -(void)loadIssues {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(publisherReady:) name:PublisherDidUpdateNotification object:[NIAUPublisher getInstance]];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(publisherFailed:) name:PublisherFailedUpdateNotification object:[NIAUPublisher getInstance]];
-    [[NIAUPublisher getInstance] getIssuesList];
+    [[NIAUPublisher getInstance] requestIssues];
 }
 
 -(void)publisherReady:(NSNotification *)not {
