@@ -18,8 +18,7 @@ extern  NSString *PublisherFailedUpdateNotification;
     
 }
 
-@property (nonatomic,readonly,getter = isReady) BOOL ready;
-
+-(BOOL)isReady;
 +(NIAUPublisher*)getInstance;
 
 -(void)requestIssues;

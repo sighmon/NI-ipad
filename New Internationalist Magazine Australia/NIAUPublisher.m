@@ -21,9 +21,11 @@ NSString *PublisherFailedUpdateNotification = @"PublisherFailedUpdate";
 
 @implementation NIAUPublisher
 
-@synthesize ready;
-
 BOOL requestingIssues;
+
+-(BOOL)isReady {
+    return (issues != nil);
+}
 
 static NIAUPublisher *instance =nil;
 +(NIAUPublisher *)getInstance
@@ -32,7 +34,6 @@ static NIAUPublisher *instance =nil;
     {
         if(instance==nil)
         {
-            
             instance= [NIAUPublisher new];
         }
     }
@@ -43,7 +44,6 @@ static NIAUPublisher *instance =nil;
     self = [super init];
     
     if(self) {
-        ready = NO;
         issues = nil;
         requestingIssues = FALSE;
     }
@@ -53,15 +53,13 @@ static NIAUPublisher *instance =nil;
 -(void)requestIssues {
     NSLog(@"getIssuesList");
     
-    //TODO: guard against being called multiple times by impatient people
+    //guard against being called multiple times by impatient people
     if(!requestingIssues) {
         requestingIssues = TRUE;
     
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0),
            ^{
                issues = [NIAUIssue issuesFromNKLibrary];
-               
-               ready = YES;
                
                // send notification
                dispatch_async(dispatch_get_main_queue(), ^{
@@ -110,7 +108,7 @@ static NIAUPublisher *instance =nil;
 }
 
 -(NSInteger)numberOfIssues {
-    if([self isReady] && issues) {
+    if(issues) {
         return [issues count];
     } else {
         return 0;
