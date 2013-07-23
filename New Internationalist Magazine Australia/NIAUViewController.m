@@ -62,12 +62,12 @@
     NSLog(@"TODO: Grab most recent Issue cover.");
     [self.cover setImage:[UIImage imageNamed:@"default_cover.png"]];
     
-    // Shadow for the latest magazine cover
-    self.cover.layer.shadowColor = [UIColor blackColor].CGColor;
-    self.cover.layer.shadowOffset = CGSizeMake(0, 2);
-    self.cover.layer.shadowOpacity = 0.5;
-    self.cover.layer.shadowRadius = 3.0;
-    self.cover.clipsToBounds = NO;
+//    // Shadow for the latest magazine cover
+//    self.cover.layer.shadowColor = [UIColor blackColor].CGColor;
+//    self.cover.layer.shadowOffset = CGSizeMake(0, 2);
+//    self.cover.layer.shadowOpacity = 0.5;
+//    self.cover.layer.shadowRadius = 3.0;
+//    self.cover.clipsToBounds = NO;
     
     //publisher = [[NIAUPublisher alloc] init];
     

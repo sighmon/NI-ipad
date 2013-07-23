@@ -33,20 +33,19 @@
         self.imageView.image = img;
     }];
     
-    // Shadow for the cover
-    
-    self.imageView.layer.shadowColor = [UIColor blackColor].CGColor;
-    self.imageView.layer.shadowOffset = CGSizeMake(0, 2);
-    self.imageView.layer.shadowOpacity = 0.3;
-    self.imageView.layer.shadowRadius = 3.0;
-    self.imageView.clipsToBounds = NO;
+//    // Shadow for the cover
+//    self.imageView.layer.shadowColor = [UIColor blackColor].CGColor;
+//    self.imageView.layer.shadowOffset = CGSizeMake(0, 2);
+//    self.imageView.layer.shadowOpacity = 0.3;
+//    self.imageView.layer.shadowRadius = 3.0;
+//    self.imageView.clipsToBounds = NO;
     
     self.labelTitle.text = self.issue.title;
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"MMMM yyyy"];
     self.labelNumberAndDate.text = [NSString stringWithFormat: @"%@ - %@", self.issue.name, [dateFormatter stringFromDate:self.issue.publication]];
     // self.labelDate.text = [dateFormatter stringFromDate:self.issue.publication];
-    self.labelEditor.text = self.issue.editorsName;
+    self.labelEditor.text = [NSString stringWithFormat:@"Editor's letter by %@", self.issue.editorsName];
     self.editorsLetterTextView.text = self.issue.editorsLetter;
     
     NSLog(@"TODO: Get the real editor's image.");
