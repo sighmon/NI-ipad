@@ -133,6 +133,19 @@ BOOL requestingArticles;
     return [dictionary objectForKey:@"id"];
 }
 
+-(NSInteger)numberOfArticles {
+    // might not be set yet...
+    if(articles) {
+        return [articles count];
+    } else {
+        return 0;
+    }
+}
+
+-(NIAUArticle *)articleAtIndex:(NSInteger)index {
+    return [articles objectAtIndex:index];
+}
+
 // TODO: how would we do getCover w/o completion block?
 -(void)getCoverWithCompletionBlock:(void(^)(UIImage *img))block {
     
