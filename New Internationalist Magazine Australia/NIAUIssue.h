@@ -32,5 +32,9 @@ extern NSString *ArticlesFailedUpdateNotification;
 -(void)getCoverWithCompletionBlock:(void(^)(UIImage *img))block;
 
 -(void)requestArticles;
+-(NSInteger)numberOfArticles;
+-(NIAUArticle *)articleAtIndex:(NSInteger)index;
+
+
 
 @end
