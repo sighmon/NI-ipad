@@ -55,22 +55,56 @@
     
     self.editorImageView.layer.masksToBounds = YES;
     self.editorImageView.layer.cornerRadius = self.editorImageView.bounds.size.width / 2.;
+   
+    // Set the exclusion path around the editors letter
     
+    [self updateEditorsLetterTextViewExclusionPath];
+    
+    // Set the editorsLetterTextView height to its content.
+    
+    [self updateEditorsLetterTextViewHeightToContent];
+    
+    // Set the scrollView content height to the editorsLetterTextView.
+    
+    [self updateScrollViewContentHeight];
+}
+
+- (void)updateEditorsLetterTextViewExclusionPath
+{
     // Wrap the text around the editor's photo
     
-    CGRect editorImageViewRect = [self.editorsLetterTextView convertRect:self.editorImageView.frame fromView:self.view];
-    
-    // self.editorsLetterTextView.textContainer.exclusionPaths = @[[UIBezierPath bezierPathWithRoundedRect:editorImageViewRect cornerRadius:self.editorImageView.layer.cornerRadius]];
     // TODO: Work out how to only exclude words not characters. For now I'll just use a square exclusionPath.
+    // self.editorsLetterTextView.textContainer.exclusionPaths = @[[UIBezierPath bezierPathWithRoundedRect:editorImageViewRect cornerRadius:self.editorImageView.layer.cornerRadius]];
     
+    CGRect editorImageViewRect = [self.editorsLetterTextView convertRect:self.editorImageView.frame fromView:self.view];
     self.editorsLetterTextView.textContainer.exclusionPaths = @[[UIBezierPath bezierPathWithRect:editorImageViewRect]];
+}
+
+- (void)updateEditorsLetterTextViewHeightToContent
+{
+    CGRect frame = self.editorsLetterTextView.frame;
+    frame.size.height = self.editorsLetterTextView.contentSize.height;
+    NSLog(@"Frame: %@", NSStringFromCGRect(frame));
+    self.editorsLetterTextView.frame = frame;
+    NSLog(@"Ed Frame: %@", NSStringFromCGRect(self.editorsLetterTextView.frame));
+}
+
+- (void)updateScrollViewContentHeight
+{
+    [self.scrollView setContentSize:CGSizeMake(self.scrollView.frame.size.width, self.editorsLetterTextView.frame.origin.y + self.editorsLetterTextView.frame.size.height)];
+    NSLog(@"ScrollView: %@", NSStringFromCGSize(self.scrollView.contentSize));
 }
 
 - (void)viewDidLayoutSubviews
 {
-    // Set the scrollView content height to the editorsLetterTextView.
     
-    [self.scrollView setContentSize:CGSizeMake(self.scrollView.frame.size.width, self.editorsLetterTextView.frame.origin.y + self.editorsLetterTextView.frame.size.height)];
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    [self updateEditorsLetterTextViewExclusionPath];
+    [self updateEditorsLetterTextViewHeightToContent];
+    [self updateScrollViewContentHeight];
 }
 
 #pragma mark -

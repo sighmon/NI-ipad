@@ -192,36 +192,52 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <subviews>
-                                    <imageView multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XBT-LF-UKS">
-                                        <rect key="frame" x="60" y="20" width="200" height="284"/>
+                                    <imageView multipleTouchEnabled="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="XBT-LF-UKS">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="284"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <gestureRecognizers/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="284" id="2ob-Pq-ZT5"/>
+                                        </constraints>
                                         <connections>
                                             <outletCollection property="gestureRecognizers" destination="srz-x3-vx1" appends="YES" id="8Fc-Bz-lnf"/>
                                         </connections>
                                     </imageView>
-                                    <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Magazine title" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" translatesAutoresizingMaskIntoConstraints="NO" id="vcO-aH-kkm">
-                                        <rect key="frame" x="20" y="316" width="280" height="21"/>
+                                    <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Magazine title" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" translatesAutoresizingMaskIntoConstraints="NO" id="vcO-aH-kkm">
+                                        <rect key="frame" x="20" y="292" width="280" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="21" id="UPd-f7-Dh0"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline1"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Number - Date" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tpj-tl-sET">
-                                        <rect key="frame" x="20" y="343" width="280" height="21"/>
+                                    <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Number - Date" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tpj-tl-sET">
+                                        <rect key="frame" x="20" y="321" width="280" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="21" id="rZX-XK-DDN"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead1"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Editor" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vj2-0b-v5W">
-                                        <rect key="frame" x="20" y="438" width="280" height="21"/>
+                                    <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Editor" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vj2-0b-v5W">
+                                        <rect key="frame" x="20" y="402" width="280" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="21" id="Hcv-my-grf"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline2"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Iux-Ra-Yc5">
-                                        <rect key="frame" x="20" y="372" width="280" height="44"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Iux-Ra-Yc5">
+                                        <rect key="frame" x="20" y="350" width="280" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" red="0.89249320649999997" green="0.89249320649999997" blue="0.89249320649999997" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="D3A-xv-UWC"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline2"/>
                                         <state key="normal" title="Article">
                                             <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -234,23 +250,53 @@
                                             <segue destination="T5k-23-5nF" kind="push" identifier="showArticle" id="w2d-g5-dn0"/>
                                         </connections>
                                     </button>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" scrollEnabled="NO" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="smq-UL-Oxn">
-                                        <rect key="frame" x="20" y="467" width="280" height="1000"/>
+                                    <textView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" text="Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et d" translatesAutoresizingMaskIntoConstraints="NO" id="smq-UL-Oxn">
+                                        <rect key="frame" x="20" y="431" width="280" height="1000"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                        <constraints>
+                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="1000" id="gNm-cD-49C"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
-                                    <imageView multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zUP-pp-27x">
-                                        <rect key="frame" x="162" y="467" width="138" height="128"/>
+                                    <imageView multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="zUP-pp-27x">
+                                        <rect key="frame" x="162" y="431" width="138" height="138"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <gestureRecognizers/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="138" id="UED-F6-cNy"/>
+                                            <constraint firstAttribute="width" constant="138" id="bW3-B1-jtt"/>
+                                        </constraints>
                                         <connections>
                                             <outletCollection property="gestureRecognizers" destination="aoi-04-NVy" appends="YES" id="hap-dv-hqR"/>
                                         </connections>
                                     </imageView>
                                 </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="Iux-Ra-Yc5" secondAttribute="trailing" symbolic="YES" id="6BP-ij-W8p"/>
+                                    <constraint firstItem="tpj-tl-sET" firstAttribute="top" secondItem="vcO-aH-kkm" secondAttribute="bottom" constant="8" symbolic="YES" id="7dm-5C-FsC"/>
+                                    <constraint firstItem="XBT-LF-UKS" firstAttribute="leading" secondItem="V1G-f5-VFc" secondAttribute="leading" id="Adp-SZ-PBK"/>
+                                    <constraint firstItem="zUP-pp-27x" firstAttribute="top" secondItem="smq-UL-Oxn" secondAttribute="top" id="DL4-57-1If"/>
+                                    <constraint firstItem="Iux-Ra-Yc5" firstAttribute="top" secondItem="tpj-tl-sET" secondAttribute="bottom" symbolic="YES" id="E9W-3m-IyB"/>
+                                    <constraint firstItem="vj2-0b-v5W" firstAttribute="top" secondItem="Iux-Ra-Yc5" secondAttribute="bottom" symbolic="YES" id="Ia1-AU-Sul"/>
+                                    <constraint firstAttribute="trailing" secondItem="vj2-0b-v5W" secondAttribute="trailing" symbolic="YES" id="JiA-Mv-SEZ"/>
+                                    <constraint firstAttribute="bottom" secondItem="smq-UL-Oxn" secondAttribute="bottom" id="LEl-bz-cY6"/>
+                                    <constraint firstItem="smq-UL-Oxn" firstAttribute="top" secondItem="vj2-0b-v5W" secondAttribute="bottom" symbolic="YES" id="RmK-tu-XT5"/>
+                                    <constraint firstItem="XBT-LF-UKS" firstAttribute="top" secondItem="V1G-f5-VFc" secondAttribute="top" id="S75-XP-jKf"/>
+                                    <constraint firstItem="XBT-LF-UKS" firstAttribute="trailing" secondItem="V1G-f5-VFc" secondAttribute="trailing" id="UOH-dr-OGW"/>
+                                    <constraint firstAttribute="trailing" secondItem="smq-UL-Oxn" secondAttribute="trailing" symbolic="YES" id="WIt-dn-Tx6"/>
+                                    <constraint firstItem="Iux-Ra-Yc5" firstAttribute="leading" secondItem="V1G-f5-VFc" secondAttribute="leading" symbolic="YES" id="Yun-X1-XVI"/>
+                                    <constraint firstAttribute="trailing" secondItem="vcO-aH-kkm" secondAttribute="trailing" symbolic="YES" id="cez-sS-NsD"/>
+                                    <constraint firstItem="vj2-0b-v5W" firstAttribute="leading" secondItem="V1G-f5-VFc" secondAttribute="leading" symbolic="YES" id="dZJ-1T-FWS"/>
+                                    <constraint firstItem="tpj-tl-sET" firstAttribute="leading" secondItem="vcO-aH-kkm" secondAttribute="leading" id="gId-l1-OFN"/>
+                                    <constraint firstItem="vcO-aH-kkm" firstAttribute="leading" secondItem="V1G-f5-VFc" secondAttribute="leading" symbolic="YES" id="lLg-ay-x0s"/>
+                                    <constraint firstAttribute="centerX" secondItem="XBT-LF-UKS" secondAttribute="centerX" id="meB-Z8-en0"/>
+                                    <constraint firstItem="vcO-aH-kkm" firstAttribute="top" secondItem="XBT-LF-UKS" secondAttribute="bottom" symbolic="YES" id="rQu-LQ-5lE"/>
+                                    <constraint firstItem="smq-UL-Oxn" firstAttribute="leading" secondItem="V1G-f5-VFc" secondAttribute="leading" symbolic="YES" id="wgU-R5-5oR"/>
+                                    <constraint firstItem="tpj-tl-sET" firstAttribute="trailing" secondItem="vcO-aH-kkm" secondAttribute="trailing" id="ww3-1U-Fik"/>
+                                    <constraint firstItem="zUP-pp-27x" firstAttribute="trailing" secondItem="smq-UL-Oxn" secondAttribute="trailing" id="zxI-3C-5Xl"/>
+                                </constraints>
                                 <connections>
                                     <outlet property="delegate" destination="4fR-wf-HfG" id="Irm-4R-bVG"/>
                                 </connections>
@@ -491,7 +537,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="fFr-gL-mDW"/>
         <segue reference="fI5-Du-KTZ"/>
+        <segue reference="Q4o-ys-N5E"/>
     </inferredMetricsTieBreakers>
 </document>
