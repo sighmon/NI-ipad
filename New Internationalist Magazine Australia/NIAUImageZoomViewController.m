@@ -29,18 +29,6 @@
 	// Do any additional setup after loading the view.
     
     self.image.image = self.imageToLoad;
-    
-//    // calculate minimum scale to perfectly fit image width, and begin at that scale
-//    float minimumScale = [self.scrollView frame].size.width  / [self.image frame].size.width;
-//    [self.scrollView setMinimumZoomScale:minimumScale];
-//    [self.scrollView setZoomScale:minimumScale];
-    
-//    // centre vertically
-//    if (self.image.frame.size.height <= self.scrollView.frame.size.height)
-//    {
-//        NSLog(@"%@, %@", NSStringFromCGPoint(self.image.center), NSStringFromCGPoint(self.scrollView.center));
-//        [self.image setCenter:[self.scrollView center]];
-//    }
 }
 
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView

@@ -15,6 +15,8 @@
 
 @property (nonatomic, strong) UIImage *cover;
 
+@property (nonatomic, strong) IBOutlet UITableView *tableView;
+
 @property (nonatomic, weak) IBOutlet UIScrollView *scrollView;
 @property (nonatomic, weak) IBOutlet UIImageView *imageView;
 @property (nonatomic, weak) IBOutlet UITextView *editorsLetterTextView;

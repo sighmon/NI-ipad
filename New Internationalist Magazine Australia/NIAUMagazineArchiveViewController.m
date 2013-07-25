@@ -47,18 +47,8 @@ NSString *kCellID = @"magazineCellID";              // UICollectionViewCell stor
             cell.image.image = img;
         });
     }];
-
-    //NSString *imageToLoad = [NSString stringWithFormat:@"%d.png", indexPath.row];
-    //cell.image.image = [UIImage imageNamed:imageToLoad];
     
-    // Shadow for the cell (slows performance!)
-//    cell.layer.shadowColor = [UIColor blackColor].CGColor;
-//    cell.layer.shadowOffset = CGSizeMake(0, 2);
-//    cell.layer.shadowOpacity = 0.5;
-//    cell.layer.shadowRadius = 3.0;
-//    cell.clipsToBounds = NO;
-    
-    // Using a border instead for smoother scrolling.
+    // Set a border for the magazine covers
     cell.layer.borderColor = [UIColor colorWithRed:242/255.0f green:242/255.0f blue:242/255.0f alpha:1.0f].CGColor;
     cell.layer.borderWidth = 1.0;
     

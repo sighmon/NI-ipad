@@ -184,16 +184,16 @@ BOOL requestingArticles;
         // put dispatch magic here
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
             //TODO: read from cache first and issue our first update
-            NSURL *issueURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/issue.json", [self index]] relativeToURL:[NSURL URLWithString:SITE_URL]];
+            NSURL *issueURL = [NSURL URLWithString:[NSString stringWithFormat:@"issues/%@.json", [self index]] relativeToURL:[NSURL URLWithString:SITE_URL]];
             NSData *data = [NSData dataWithContentsOfURL:issueURL];
             if(data) {
                 NSError *error;
-                NSArray *dicts = [NSJSONSerialization
+                NSDictionary *dict = [NSJSONSerialization
                                       JSONObjectWithData:data
                                       options:kNilOptions
                                       error:&error];
-                NSMutableArray *tmpArticles = [NSMutableArray arrayWithCapacity:[dicts count]];
-                [dicts enumerateObjectsUsingBlock:^(id dict, NSUInteger idx, BOOL *stop) {
+                NSMutableArray *tmpArticles = [NSMutableArray arrayWithCapacity:1];
+                [[dict objectForKey:@"articles"] enumerateObjectsUsingBlock:^(id dict, NSUInteger idx, BOOL *stop) {
                     
                     // TODO: discard these objects and re-read cache after adding them (will preserve locally cached but remotely deleted data)
                     [tmpArticles addObject:[NIAUArticle articleWithIssue:self andDictionary:dict]];
