@@ -29,44 +29,77 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(publisherReady:) name:ArticlesDidUpdateNotification object:self.issue];
+    
+    [self.issue requestArticles];
+    
+    // Add the data for the view
+    [self setupData];
+    
+    // Set the editorsLetterTextView height to its content.
+    [self updateEditorsLetterTextViewHeightToContent];
+    
+    // Set the scrollView content height to the editorsLetterTextView.
+    [self updateScrollViewContentHeight];
+    
+    // Set the exclusion path around the editors letter
+    [self updateEditorsLetterTextViewExclusionPath];
+}
+
+-(void)publisherReady:(NSNotification *)not
+{
+    [self showArticles];
+}
+
+-(void)showArticles
+{
+    [self.tableView reloadData];
+}
+
+#pragma mark - Table view data source
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return [self.issue numberOfArticles];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    static NSString *CellIdentifier = @"articleCell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    cell.textLabel.text = [self.issue articleAtIndex:indexPath.row].title;
+    return cell;
+}
+
+#pragma mark -
+#pragma mark Setup Data
+
+- (void)setupData
+{
+    // Set the cover from the issue cover tapped
     [self.issue getCoverWithCompletionBlock:^(UIImage *img) {
         self.imageView.image = img;
     }];
-    
-//    // Shadow for the cover
-//    self.imageView.layer.shadowColor = [UIColor blackColor].CGColor;
-//    self.imageView.layer.shadowOffset = CGSizeMake(0, 2);
-//    self.imageView.layer.shadowOpacity = 0.3;
-//    self.imageView.layer.shadowRadius = 3.0;
-//    self.imageView.clipsToBounds = NO;
     
     self.labelTitle.text = self.issue.title;
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"MMMM yyyy"];
     self.labelNumberAndDate.text = [NSString stringWithFormat: @"%@ - %@", self.issue.name, [dateFormatter stringFromDate:self.issue.publication]];
-    // self.labelDate.text = [dateFormatter stringFromDate:self.issue.publication];
     self.labelEditor.text = [NSString stringWithFormat:@"Editor's letter by %@", self.issue.editorsName];
     self.editorsLetterTextView.text = self.issue.editorsLetter;
     
     NSLog(@"TODO: Get the real editor's image.");
     [self.editorImageView setImage:[UIImage imageNamed:@"default_editors_photo.png"]];
-    
-    // Draw a round mask for the editor's photo
-    
-    self.editorImageView.layer.masksToBounds = YES;
-    self.editorImageView.layer.cornerRadius = self.editorImageView.bounds.size.width / 2.;
-   
-    // Set the exclusion path around the editors letter
-    
-    [self updateEditorsLetterTextViewExclusionPath];
-    
-    // Set the editorsLetterTextView height to its content.
-    
-    [self updateEditorsLetterTextViewHeightToContent];
-    
-    // Set the scrollView content height to the editorsLetterTextView.
-    
-    [self updateScrollViewContentHeight];
+    [self applyRoundMask:self.editorImageView];
+}
+
+- (void)applyRoundMask:(UIImageView *)imageView
+{
+    // Draw a round mask for images.. i.e. the editor's photo
+    imageView.layer.masksToBounds = YES;
+    imageView.layer.cornerRadius = self.editorImageView.bounds.size.width / 2.;
 }
 
 - (void)updateEditorsLetterTextViewExclusionPath
@@ -102,9 +135,19 @@
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
-    [self updateEditorsLetterTextViewExclusionPath];
-    [self updateEditorsLetterTextViewHeightToContent];
-    [self updateScrollViewContentHeight];
+//    [self updateEditorsLetterTextViewHeightToContent];
+//    [self updateScrollViewContentHeight];
+//    [self updateEditorsLetterTextViewExclusionPath];
+}
+
+- (void)addShadowToImageView:(UIImageView *)imageView
+{
+    // Shadow for any images, i.e. the cover
+    imageView.layer.shadowColor = [UIColor blackColor].CGColor;
+    imageView.layer.shadowOffset = CGSizeMake(0, 2);
+    imageView.layer.shadowOpacity = 0.3;
+    imageView.layer.shadowRadius = 3.0;
+    imageView.clipsToBounds = NO;
 }
 
 #pragma mark -
