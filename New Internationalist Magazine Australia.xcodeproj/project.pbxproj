@@ -179,6 +179,8 @@
 		52090A60178CF7D1002D5162 /* NIAUPublisher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NIAUPublisher.h; sourceTree = "<group>"; };
 		52090A61178CF7D1002D5162 /* NIAUPublisher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NIAUPublisher.m; sourceTree = "<group>"; };
 		52090A65178D4291002D5162 /* local.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = local.h; sourceTree = "<group>"; };
+		52EFA528179F877A00C93943 /* XCTestCase+MethodSwizzling.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "XCTestCase+MethodSwizzling.h"; sourceTree = "<group>"; };
+		52EFA529179F877A00C93943 /* XCTestCase+MethodSwizzling.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "XCTestCase+MethodSwizzling.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -299,6 +301,8 @@
 			isa = PBXGroup;
 			children = (
 				055A8EF3177290CF003D9407 /* New_Internationalist_Magazine_AustraliaTests.m */,
+				52EFA528179F877A00C93943 /* XCTestCase+MethodSwizzling.h */,
+				52EFA529179F877A00C93943 /* XCTestCase+MethodSwizzling.m */,
 				055A8EEE177290CF003D9407 /* Supporting Files */,
 			);
 			path = "New Internationalist Magazine AustraliaTests";
@@ -689,14 +693,10 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
-					"$(SYSTEM_APPS_DIR)/Xcode5-DP.app/Contents/Developer/Library/Frameworks",
+					"$(SYSTEM_APPS_DIR)/Xcode5-DP3.app/Contents/Developer/Library/Frameworks",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "New Internationalist Magazine Australia/New Internationalist Magazine Australia-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
 				INFOPLIST_FILE = "New Internationalist Magazine AustraliaTests/New Internationalist Magazine AustraliaTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
@@ -711,7 +711,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
-					"$(SYSTEM_APPS_DIR)/Xcode5-DP.app/Contents/Developer/Library/Frameworks",
+					"$(SYSTEM_APPS_DIR)/Xcode5-DP3.app/Contents/Developer/Library/Frameworks",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "New Internationalist Magazine Australia/New Internationalist Magazine Australia-Prefix.pch";

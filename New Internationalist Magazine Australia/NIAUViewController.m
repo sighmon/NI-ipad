@@ -71,12 +71,18 @@
     
     //publisher = [[NIAUPublisher alloc] init];
     
+#ifdef DEBUG
+    if ([[[NSProcessInfo processInfo] environment] objectForKey:@"TESTING"]) {
+        NSLog(@"suppressing load during test");
+        return;
+    }
+#endif
+    
     if([[NIAUPublisher getInstance] isReady]) {
         [self showIssues];
     } else {
         [self loadIssues];
     }
-
     
 }
 
