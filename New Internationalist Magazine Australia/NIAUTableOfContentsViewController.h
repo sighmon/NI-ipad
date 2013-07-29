@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "NIAUIssue.h"
+#import "NIAUArticleViewController.h"
+#import "NIAUPublisher.h"
 
 @interface NIAUTableOfContentsViewController : UIViewController <UIScrollViewDelegate>
 

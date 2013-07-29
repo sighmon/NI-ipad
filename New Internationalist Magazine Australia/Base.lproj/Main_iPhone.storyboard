@@ -269,7 +269,7 @@
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </tableViewCellContentView>
                                                 <connections>
-                                                    <segue destination="T5k-23-5nF" kind="push" id="W9z-A8-KEC"/>
+                                                    <segue destination="T5k-23-5nF" kind="push" identifier="tappedArticle" id="W9z-A8-KEC"/>
                                                 </connections>
                                             </tableViewCell>
                                         </prototypes>
@@ -410,46 +410,29 @@
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kci-1W-jqV">
-                                        <rect key="frame" x="20" y="230" width="280" height="1000"/>
+                                    <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PoX-gg-8cE">
+                                        <rect key="frame" x="0.0" y="230" width="320" height="1000"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="1000" id="z7M-UY-ddY"/>
+                                            <constraint firstAttribute="height" constant="1000" id="Zu2-h1-NqP"/>
                                         </constraints>
-                                        <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.  Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                    </textView>
-                                    <imageView multipleTouchEnabled="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Wh8-Th-Gh8">
-                                        <rect key="frame" x="122" y="473" width="198" height="164"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <gestureRecognizers/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="164" id="3vn-63-GTT"/>
-                                            <constraint firstAttribute="width" constant="198" id="dQ0-7F-lel"/>
-                                        </constraints>
-                                        <connections>
-                                            <outletCollection property="gestureRecognizers" destination="eSN-qn-lkW" appends="YES" id="sNW-6O-0OS"/>
-                                        </connections>
-                                    </imageView>
+                                    </webView>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="ulX-QY-4Wv" firstAttribute="top" secondItem="fuM-gI-7Bu" secondAttribute="bottom" constant="8" symbolic="YES" id="15m-c8-Cfs"/>
+                                    <constraint firstItem="PoX-gg-8cE" firstAttribute="top" secondItem="loG-BX-0f8" secondAttribute="bottom" symbolic="YES" id="2vs-9x-lTj"/>
                                     <constraint firstItem="PAM-Qv-IM5" firstAttribute="top" secondItem="ftA-uH-mfj" secondAttribute="top" id="8sk-8V-xJQ"/>
-                                    <constraint firstItem="kci-1W-jqV" firstAttribute="centerX" secondItem="loG-BX-0f8" secondAttribute="centerX" id="FkW-sV-jri"/>
-                                    <constraint firstItem="Wh8-Th-Gh8" firstAttribute="trailing" secondItem="ftA-uH-mfj" secondAttribute="trailing" id="Gmh-2l-ysI"/>
+                                    <constraint firstItem="PoX-gg-8cE" firstAttribute="bottom" secondItem="ftA-uH-mfj" secondAttribute="bottom" id="G1B-GT-nfP"/>
                                     <constraint firstItem="PAM-Qv-IM5" firstAttribute="leading" secondItem="ftA-uH-mfj" secondAttribute="leading" id="JcH-Gi-QUd"/>
-                                    <constraint firstItem="kci-1W-jqV" firstAttribute="leading" secondItem="ftA-uH-mfj" secondAttribute="leading" constant="20" symbolic="YES" id="KQ2-u8-qvR"/>
-                                    <constraint firstAttribute="bottom" secondItem="PAM-Qv-IM5" secondAttribute="bottom" constant="433" id="OmJ-3V-L44"/>
                                     <constraint firstItem="fuM-gI-7Bu" firstAttribute="top" secondItem="PAM-Qv-IM5" secondAttribute="bottom" constant="8" id="R0u-3D-hpf"/>
+                                    <constraint firstItem="PoX-gg-8cE" firstAttribute="leading" secondItem="ftA-uH-mfj" secondAttribute="leading" id="YyS-cI-Zqm"/>
                                     <constraint firstItem="fuM-gI-7Bu" firstAttribute="centerX" secondItem="ulX-QY-4Wv" secondAttribute="centerX" id="Z3g-X6-ewO"/>
                                     <constraint firstItem="fuM-gI-7Bu" firstAttribute="centerX" secondItem="PAM-Qv-IM5" secondAttribute="centerX" id="abs-ms-OdZ"/>
                                     <constraint firstItem="ulX-QY-4Wv" firstAttribute="centerX" secondItem="loG-BX-0f8" secondAttribute="centerX" id="fX1-DR-E7M"/>
-                                    <constraint firstItem="Wh8-Th-Gh8" firstAttribute="top" secondItem="ftA-uH-mfj" secondAttribute="top" constant="473" id="i34-6f-Gow"/>
                                     <constraint firstItem="PAM-Qv-IM5" firstAttribute="trailing" secondItem="ftA-uH-mfj" secondAttribute="trailing" id="k68-sx-VHl"/>
                                     <constraint firstItem="PAM-Qv-IM5" firstAttribute="centerX" secondItem="ftA-uH-mfj" secondAttribute="centerX" id="kP7-FK-aeF"/>
-                                    <constraint firstItem="kci-1W-jqV" firstAttribute="top" secondItem="loG-BX-0f8" secondAttribute="bottom" constant="8" symbolic="YES" id="vUt-WT-9Od"/>
+                                    <constraint firstItem="PoX-gg-8cE" firstAttribute="trailing" secondItem="ftA-uH-mfj" secondAttribute="trailing" id="mCw-oi-6nn"/>
                                     <constraint firstItem="loG-BX-0f8" firstAttribute="top" secondItem="ulX-QY-4Wv" secondAttribute="bottom" constant="8" symbolic="YES" id="wzL-sS-ehf"/>
                                 </constraints>
                             </scrollView>
@@ -467,10 +450,12 @@
                         <barButtonItem key="backBarButtonItem" title="Article" id="LvR-bf-hEH"/>
                     </navigationItem>
                     <connections>
-                        <outlet property="bodyTextView" destination="kci-1W-jqV" id="Yuh-uT-JUk"/>
+                        <outlet property="authorLabel" destination="loG-BX-0f8" id="lt6-34-Qgw"/>
+                        <outlet property="bodyWebView" destination="PoX-gg-8cE" id="QH5-Cn-hTF"/>
                         <outlet property="featuredImage" destination="PAM-Qv-IM5" id="Lui-Dn-Ag7"/>
                         <outlet property="scrollView" destination="ftA-uH-mfj" id="uaw-RL-w11"/>
-                        <outlet property="secondTestImage" destination="Wh8-Th-Gh8" id="AI4-dk-MoQ"/>
+                        <outlet property="teaserLabel" destination="ulX-QY-4Wv" id="P0C-Ef-Bvb"/>
+                        <outlet property="titleLabel" destination="fuM-gI-7Bu" id="Hyr-De-3YJ"/>
                         <segue destination="GGn-sZ-3sw" kind="push" identifier="showImageZoom" id="mdp-6r-s59"/>
                     </connections>
                 </viewController>

@@ -185,6 +185,15 @@
         } else {
             imageZoomViewController.imageToLoad = [UIImage imageNamed:@"default_article_image.png"];
         }
+    } else if ([[segue identifier] isEqualToString:@"tappedArticle"])
+    {
+        // Load the article tapped.
+        
+        NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
+        
+        NIAUArticleViewController *articleViewController = [segue destinationViewController];
+        articleViewController.article = [self.issue articleAtIndex:selectedIndexPath.row];
+        
     }
 }
 
