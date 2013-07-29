@@ -261,13 +261,16 @@
                                             <constraint firstAttribute="height" constant="115" id="tD5-hQ-aG5"/>
                                         </constraints>
                                         <prototypes>
-                                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="articleCell" id="Lnf-CI-DTC">
+                                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="articleCell" id="Lnf-CI-DTC">
                                                 <rect key="frame" x="0.0" y="22" width="320" height="44"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Lnf-CI-DTC" id="DHD-CO-mrV">
-                                                    <rect key="frame" x="0.0" y="0.0" width="322" height="43"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="289" height="43"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </tableViewCellContentView>
+                                                <connections>
+                                                    <segue destination="T5k-23-5nF" kind="push" id="W9z-A8-KEC"/>
+                                                </connections>
                                             </tableViewCell>
                                         </prototypes>
                                         <connections>
@@ -285,8 +288,8 @@
                                     <constraint firstItem="smq-UL-Oxn" firstAttribute="top" secondItem="vj2-0b-v5W" secondAttribute="bottom" constant="8" symbolic="YES" id="LZ0-rK-jen"/>
                                     <constraint firstItem="tJH-G9-L0y" firstAttribute="leading" secondItem="XBT-LF-UKS" secondAttribute="leading" id="MA2-b9-CQ2"/>
                                     <constraint firstItem="XBT-LF-UKS" firstAttribute="top" secondItem="V1G-f5-VFc" secondAttribute="top" id="S75-XP-jKf"/>
+                                    <constraint firstAttribute="bottom" secondItem="smq-UL-Oxn" secondAttribute="bottom" id="THW-Xd-6hS"/>
                                     <constraint firstItem="XBT-LF-UKS" firstAttribute="trailing" secondItem="V1G-f5-VFc" secondAttribute="trailing" id="UOH-dr-OGW"/>
-                                    <constraint firstAttribute="bottom" secondItem="tJH-G9-L0y" secondAttribute="bottom" constant="535" id="Ysg-iv-Bl8"/>
                                     <constraint firstAttribute="trailing" secondItem="vcO-aH-kkm" secondAttribute="trailing" symbolic="YES" id="cez-sS-NsD"/>
                                     <constraint firstItem="vj2-0b-v5W" firstAttribute="leading" secondItem="V1G-f5-VFc" secondAttribute="leading" symbolic="YES" id="dZJ-1T-FWS"/>
                                     <constraint firstItem="tpj-tl-sET" firstAttribute="leading" secondItem="vcO-aH-kkm" secondAttribute="leading" id="gId-l1-OFN"/>
@@ -322,12 +325,14 @@
                     <connections>
                         <outlet property="editorImageView" destination="zUP-pp-27x" id="eoj-ST-X07"/>
                         <outlet property="editorsLetterTextView" destination="smq-UL-Oxn" id="rcI-gR-2aK"/>
+                        <outlet property="editorsLetterTextViewHeightConstraint" destination="2zy-Fj-an4" id="Gwm-fV-Osz"/>
                         <outlet property="imageView" destination="XBT-LF-UKS" id="mOA-z4-05p"/>
                         <outlet property="labelEditor" destination="vj2-0b-v5W" id="yiv-aD-Xzw"/>
                         <outlet property="labelNumberAndDate" destination="tpj-tl-sET" id="yzw-dE-Ept"/>
                         <outlet property="labelTitle" destination="vcO-aH-kkm" id="4wD-CR-Xzl"/>
                         <outlet property="scrollView" destination="V1G-f5-VFc" id="Rlv-qZ-C7L"/>
-                        <outlet property="tableView" destination="tJH-G9-L0y" id="fwo-en-ySO"/>
+                        <outlet property="tableView" destination="tJH-G9-L0y" id="4hc-uk-IUa"/>
+                        <outlet property="tableViewHeightConstraint" destination="tD5-hQ-aG5" id="qhY-bw-PPZ"/>
                         <segue destination="GGn-sZ-3sw" kind="push" identifier="showImageZoom" id="fI5-Du-KTZ"/>
                     </connections>
                 </viewController>

@@ -39,11 +39,11 @@
     // Set the editorsLetterTextView height to its content.
     [self updateEditorsLetterTextViewHeightToContent];
     
-    // Set the scrollView content height to the editorsLetterTextView.
-    [self updateScrollViewContentHeight];
-    
     // Set the exclusion path around the editors letter
     [self updateEditorsLetterTextViewExclusionPath];
+    
+    // Set the scrollView content height to the editorsLetterTextView.
+    [self updateScrollViewContentHeight];
 }
 
 -(void)publisherReady:(NSNotification *)not
@@ -54,6 +54,19 @@
 -(void)showArticles
 {
     [self.tableView reloadData];
+    [self adjustHeightOfTableview];
+}
+
+- (void)adjustHeightOfTableview
+{
+    CGFloat height = self.tableView.contentSize.height;
+    
+    // now set the height constraint accordingly
+    
+    [UIView animateWithDuration:0.25 animations:^{
+        self.tableViewHeightConstraint.constant = height;
+        [self.view needsUpdateConstraints];
+    }];
 }
 
 #pragma mark - Table view data source
@@ -115,17 +128,23 @@
 
 - (void)updateEditorsLetterTextViewHeightToContent
 {
-    CGRect frame = self.editorsLetterTextView.frame;
-    frame.size.height = self.editorsLetterTextView.contentSize.height;
-    NSLog(@"Frame: %@", NSStringFromCGRect(frame));
-    self.editorsLetterTextView.frame = frame;
-    NSLog(@"Ed Frame: %@", NSStringFromCGRect(self.editorsLetterTextView.frame));
+    CGFloat height = self.editorsLetterTextView.contentSize.height;
+    
+    // now set the height constraint accordingly
+    
+    [UIView animateWithDuration:0.25 animations:^{
+        self.editorsLetterTextViewHeightConstraint.constant = height;
+        [self.view needsUpdateConstraints];
+    }];
 }
 
 - (void)updateScrollViewContentHeight
-{
-    [self.scrollView setContentSize:CGSizeMake(self.scrollView.frame.size.width, self.editorsLetterTextView.frame.origin.y + self.editorsLetterTextView.frame.size.height)];
-    NSLog(@"ScrollView: %@", NSStringFromCGSize(self.scrollView.contentSize));
+{    
+    CGRect contentRect = CGRectZero;
+    for (UIView *view in self.scrollView.subviews) {
+        contentRect = CGRectUnion(contentRect, view.frame);
+    }
+    self.scrollView.contentSize = contentRect.size;
 }
 
 - (void)viewDidLayoutSubviews
