@@ -86,6 +86,7 @@ BOOL requestingBody;
                     [[NSNotificationCenter defaultCenter] postNotificationName:ArticleFailedUpdateNotification object:self];
                 });
             }
+            requestingBody = FALSE;
         });
 
     }
