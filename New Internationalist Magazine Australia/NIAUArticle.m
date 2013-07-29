@@ -7,11 +7,17 @@
 //
 
 #import "NIAUArticle.h"
-
+#import "NIAUIssue.h"
+#import "local.h"
+
+
+NSString *ArticleDidUpdateNotification = @"ArticleDidUpdate";
+NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
+
+
 @implementation NIAUArticle
 
 // AHA: this makes getters/setters for these readonly properties without exposing them publically
-@synthesize complete;
 @synthesize issue;
 
 -(NSString *)author {
@@ -26,21 +32,17 @@
     return [dictionary objectForKey:@"title"];
 }
 
+-(NSNumber *)index {
+    return [dictionary objectForKey:@"id"];
+}
 
 -(NSString *)body {
-    // TODO: the body will be stored as a file in the cache dir
-    if (self.isComplete) {
-        return [dictionary objectForKey:@"body"];
-    } else {
-        return nil;
-    }
+    return body;
 }
 
 -(NIAUArticle *)initWithIssue:(NIAUIssue *)_issue andDictionary:(NSDictionary *)_dictionary {
     
     issue = _issue;
-    
-    complete = false;
     
     dictionary = _dictionary;
     
@@ -56,5 +58,38 @@
 -(void)writeToCache {
     NSLog(@"TODO: %s", __PRETTY_FUNCTION__);
 }
+
+-(void)writeBodyToCache {
+    NSLog(@"TODO: %s", __PRETTY_FUNCTION__);
+}
+
+BOOL requestingBody;
+
+-(void)requestBody {
+    if(!requestingBody) {
+        requestingBody = TRUE;
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+            //TODO: read from cache first and issue our first update
+            NSURL *articleURL = [NSURL URLWithString:[NSString stringWithFormat:@"issues/%@/article/%@/body", [[self issue] index], [self index]] relativeToURL:[NSURL URLWithString:SITE_URL]];
+            NSData *data = [NSData dataWithContentsOfURL:articleURL];
+            if(data) {
+                body = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                
+                [self writeBodyToCache];
+                
+                //notify
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [[NSNotificationCenter defaultCenter] postNotificationName:ArticleDidUpdateNotification object:self];
+                });
+            } else {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [[NSNotificationCenter defaultCenter] postNotificationName:ArticleFailedUpdateNotification object:self];
+                });
+            }
+        });
+
+    }
+}
+
 
 @end

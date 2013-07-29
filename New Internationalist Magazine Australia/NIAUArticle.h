@@ -10,11 +10,13 @@
 
 @class NIAUIssue;
 
+extern NSString *ArticleDidUpdateNotification;
+extern NSString *ArticleFailedUpdateNotification;
+
 @interface NIAUArticle : NSObject {
+    NSString *body;
     NSDictionary *dictionary;
 }
-
-@property(nonatomic,readonly,getter = isComplete) BOOL complete;
 
 @property(nonatomic, strong) NIAUIssue *issue;
 
@@ -24,5 +26,7 @@
 -(NSString *)body;
 
 +(NIAUArticle *)articleWithIssue:(NIAUIssue *)issue andDictionary:(NSDictionary *)dict;
+
+-(void)requestBody;
 
 @end
