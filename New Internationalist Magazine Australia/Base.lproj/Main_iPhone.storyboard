@@ -327,7 +327,8 @@
                         <outlet property="labelNumberAndDate" destination="tpj-tl-sET" id="yzw-dE-Ept"/>
                         <outlet property="labelTitle" destination="vcO-aH-kkm" id="4wD-CR-Xzl"/>
                         <outlet property="scrollView" destination="V1G-f5-VFc" id="Rlv-qZ-C7L"/>
-                        <outlet property="tableView" destination="tJH-G9-L0y" id="fwo-en-ySO"/>
+                        <outlet property="tableView" destination="tJH-G9-L0y" id="4hc-uk-IUa"/>
+                        <outlet property="tableViewHeightConstraint" destination="tD5-hQ-aG5" id="qhY-bw-PPZ"/>
                         <segue destination="GGn-sZ-3sw" kind="push" identifier="showImageZoom" id="fI5-Du-KTZ"/>
                     </connections>
                 </viewController>
