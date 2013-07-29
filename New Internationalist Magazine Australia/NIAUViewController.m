@@ -24,12 +24,10 @@
 {
     if ([[segue identifier] isEqualToString:@"homeCoverToContentsView"])
     {        
-        // Do any extra setup here if needed.
-        
-        NSLog(@"TODO: Send the latest magazine ID to the tableOfContentsViewController");
+        // Send you to the latest issue
         
         NIAUTableOfContentsViewController *tableOfContentsViewController = [segue destinationViewController];
-        tableOfContentsViewController.cover = [UIImage imageNamed:@"default_cover.png"];
+        tableOfContentsViewController.issue = [[NIAUPublisher getInstance] issueAtIndex:0];
     }
 }
 
@@ -59,16 +57,6 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     
-    NSLog(@"TODO: Grab most recent Issue cover.");
-    [self.cover setImage:[UIImage imageNamed:@"default_cover.png"]];
-    
-//    // Shadow for the latest magazine cover
-//    self.cover.layer.shadowColor = [UIColor blackColor].CGColor;
-//    self.cover.layer.shadowOffset = CGSizeMake(0, 2);
-//    self.cover.layer.shadowOpacity = 0.5;
-//    self.cover.layer.shadowRadius = 3.0;
-//    self.cover.clipsToBounds = NO;
-    
     //publisher = [[NIAUPublisher alloc] init];
     
 #ifdef DEBUG
@@ -83,7 +71,13 @@
     } else {
         [self loadIssues];
     }
-    
+}
+
+- (void)loadLatestMagazineCover
+{
+    [[[NIAUPublisher getInstance] issueAtIndex:0] getCoverWithCompletionBlock:^(UIImage *img) {
+        [self.cover setImage:img];
+    }];
 }
 
 - (void)didReceiveMemoryWarning
@@ -105,6 +99,7 @@
     //[[NSNotificationCenter defaultCenter] removeObserver:self name:PublisherDidUpdateNotification object:[NIAUPublisher getInstance]];
     //[[NSNotificationCenter defaultCenter] removeObserver:self name:PublisherFailedUpdateNotification object:[NIAUPublisher getInstance]];
     [self showIssues];
+    [self loadLatestMagazineCover];
 }
 
 -(void)showIssues {

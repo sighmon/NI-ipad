@@ -285,8 +285,8 @@
                                     <constraint firstItem="smq-UL-Oxn" firstAttribute="top" secondItem="vj2-0b-v5W" secondAttribute="bottom" constant="8" symbolic="YES" id="LZ0-rK-jen"/>
                                     <constraint firstItem="tJH-G9-L0y" firstAttribute="leading" secondItem="XBT-LF-UKS" secondAttribute="leading" id="MA2-b9-CQ2"/>
                                     <constraint firstItem="XBT-LF-UKS" firstAttribute="top" secondItem="V1G-f5-VFc" secondAttribute="top" id="S75-XP-jKf"/>
+                                    <constraint firstAttribute="bottom" secondItem="smq-UL-Oxn" secondAttribute="bottom" id="THW-Xd-6hS"/>
                                     <constraint firstItem="XBT-LF-UKS" firstAttribute="trailing" secondItem="V1G-f5-VFc" secondAttribute="trailing" id="UOH-dr-OGW"/>
-                                    <constraint firstAttribute="bottom" secondItem="tJH-G9-L0y" secondAttribute="bottom" constant="535" id="Ysg-iv-Bl8"/>
                                     <constraint firstAttribute="trailing" secondItem="vcO-aH-kkm" secondAttribute="trailing" symbolic="YES" id="cez-sS-NsD"/>
                                     <constraint firstItem="vj2-0b-v5W" firstAttribute="leading" secondItem="V1G-f5-VFc" secondAttribute="leading" symbolic="YES" id="dZJ-1T-FWS"/>
                                     <constraint firstItem="tpj-tl-sET" firstAttribute="leading" secondItem="vcO-aH-kkm" secondAttribute="leading" id="gId-l1-OFN"/>
@@ -322,6 +322,7 @@
                     <connections>
                         <outlet property="editorImageView" destination="zUP-pp-27x" id="eoj-ST-X07"/>
                         <outlet property="editorsLetterTextView" destination="smq-UL-Oxn" id="rcI-gR-2aK"/>
+                        <outlet property="editorsLetterTextViewHeightConstraint" destination="2zy-Fj-an4" id="Gwm-fV-Osz"/>
                         <outlet property="imageView" destination="XBT-LF-UKS" id="mOA-z4-05p"/>
                         <outlet property="labelEditor" destination="vj2-0b-v5W" id="yiv-aD-Xzw"/>
                         <outlet property="labelNumberAndDate" destination="tpj-tl-sET" id="yzw-dE-Ept"/>
