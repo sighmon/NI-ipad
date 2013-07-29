@@ -62,10 +62,11 @@ static NIAUPublisher *instance =nil;
                issues = [NIAUIssue issuesFromNKLibrary];
                
                // send notification
-               dispatch_async(dispatch_get_main_queue(), ^{
-                   [[NSNotificationCenter defaultCenter] postNotificationName:PublisherDidUpdateNotification object:self];
-               });
-               
+               if ([issues count] > 0) {
+                   dispatch_async(dispatch_get_main_queue(), ^{
+                       [[NSNotificationCenter defaultCenter] postNotificationName:PublisherDidUpdateNotification object:self];
+                   });
+               }
                
                NSURL *issuesURL = [NSURL URLWithString:@"issues.json" relativeToURL:[NSURL URLWithString:SITE_URL]];
                NSLog(@"try to download issues.json from %@", issuesURL);

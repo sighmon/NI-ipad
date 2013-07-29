@@ -261,13 +261,16 @@
                                             <constraint firstAttribute="height" constant="115" id="tD5-hQ-aG5"/>
                                         </constraints>
                                         <prototypes>
-                                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="articleCell" id="Lnf-CI-DTC">
+                                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="articleCell" id="Lnf-CI-DTC">
                                                 <rect key="frame" x="0.0" y="22" width="320" height="44"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Lnf-CI-DTC" id="DHD-CO-mrV">
-                                                    <rect key="frame" x="0.0" y="0.0" width="322" height="43"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="289" height="43"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </tableViewCellContentView>
+                                                <connections>
+                                                    <segue destination="T5k-23-5nF" kind="push" id="W9z-A8-KEC"/>
+                                                </connections>
                                             </tableViewCell>
                                         </prototypes>
                                         <connections>
