@@ -49,6 +49,82 @@
     [self.featuredImage setImage:[UIImage imageNamed:@"default_featured_image.png"]];
     [self.secondTestImage setImage:[UIImage imageNamed:@"default_article_image.png"]];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(publisherReady:) name:ArticleDidUpdateNotification object:self.article];
+    
+    [self.article requestBody];
+    
+    [self setupData];
+    
+    [self updateScrollViewContentHeight];
+}
+
+-(void)publisherReady:(NSNotification *)notification
+{
+    [self setupData];
+    [self showArticle];
+}
+
+-(void)showArticle
+{
+    [self adjustHeightOfWebView];
+}
+
+- (void)adjustHeightOfWebView
+{
+    // TODO: work out how to find the height of a UIWebView
+    
+//    CGFloat height = self.bodyWebView.contentSize.height;
+//    
+//    // now set the height constraint accordingly
+//    
+//    [UIView animateWithDuration:0.25 animations:^{
+//        self.tableViewHeightConstraint.constant = height;
+//        [self.view needsUpdateConstraints];
+//    }];
+}
+
+- (void)setupData
+{
+    self.titleLabel.text = self.article.title;
+    self.teaserLabel.text = self.article.teaser;
+    self.authorLabel.text = self.article.author;
+    [self.bodyWebView loadHTMLString:self.article.body baseURL:nil];
+}
+
+- (void)updateScrollViewContentHeight
+{
+    CGRect contentRect = CGRectZero;
+    for (UIView *view in self.scrollView.subviews) {
+        contentRect = CGRectUnion(contentRect, view.frame);
+    }
+    self.scrollView.contentSize = contentRect.size;
+}
+
+#pragma mark -
+#pragma mark WebView delegate
+
+- (void)webViewDidStartLoad:(UIWebView *)webView
+{
+    [self.webViewLoadingIndicator startAnimating];
+}
+
+- (void)webViewDidFinishLoad:(UIWebView *)webView
+{
+    [self.webViewLoadingIndicator stopAnimating];
+    
+    // Set the webview size
+    CGSize size = [webView sizeThatFits: CGSizeMake(320., 1.)];
+    CGRect frame = webView.frame;
+    frame.size.height = size.height;
+    webView.frame = frame;
+    
+    // Update the constraints.
+    CGFloat contentHeight = webView.frame.size.height + 20;
+    
+    [UIView animateWithDuration:0.25 animations:^{
+        self.bodyWebViewHeightConstraint.constant = contentHeight;
+        [self.view needsUpdateConstraints];
+    }];
 }
 
 #pragma mark -
@@ -64,36 +140,6 @@
 {
     // Handle image being tapped
     [self performSegueWithIdentifier:@"showImageZoom" sender:recognizer.view];
-}
-
-//    Solution to scrolling?
-//    http://stackoverflow.com/questions/14077367/why-wont-uiscrollview-scroll-fully-after-adding-objects-using-storyboard-arc
-
-- (void)viewDidLayoutSubviews
-{
-    [super viewDidLayoutSubviews];
-    
-    // Not used.. manually setting the scrollView to the height of the lowest content.
-    
-//    float heightOfContent = 0;
-//    UIView *lLast = [self.scrollView.subviews lastObject];
-//    NSLog(@"%@", lLast);
-//    NSInteger origin = lLast.frame.origin.y;
-//    NSInteger height = lLast.frame.size.height;
-//    heightOfContent = origin + height;
-//    
-//    NSLog(@"%@", [NSString stringWithFormat:@"Origin: %ld, height: %ld, total: %f", (long)origin, (long)height, heightOfContent]);
-    
-//    [self.scrollView setContentSize:CGSizeMake(self.scrollView.frame.size.width, heightOfContent)];
-    
-    // Set the scrollView content height to the bodyTextView.
-    
-    [self.scrollView setContentSize:CGSizeMake(self.scrollView.frame.size.width, self.bodyTextView.frame.origin.y + self.bodyTextView.frame.size.height)];
-    
-    // Wrap the text around the editor's photo
-    
-    CGRect secondTestImageRect = [self.bodyTextView convertRect:CGRectMake(self.secondTestImage.frame.origin.x-10, self.secondTestImage.frame.origin.y-10, self.secondTestImage.frame.size.width+20, self.secondTestImage.frame.size.height+20) fromView:self.scrollView];
-    self.bodyTextView.textContainer.exclusionPaths = @[[UIBezierPath bezierPathWithRect:secondTestImageRect]];
 }
 
 - (void)didReceiveMemoryWarning
