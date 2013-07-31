@@ -101,6 +101,33 @@
 }
 
 #pragma mark -
+#pragma mark WebView delegate
+
+- (void)webViewDidStartLoad:(UIWebView *)webView
+{
+    [self.webViewLoadingIndicator startAnimating];
+}
+
+- (void)webViewDidFinishLoad:(UIWebView *)webView
+{
+    [self.webViewLoadingIndicator stopAnimating];
+    
+    // Set the webview size
+    CGSize size = [webView sizeThatFits: CGSizeMake(320., 1.)];
+    CGRect frame = webView.frame;
+    frame.size.height = size.height;
+    webView.frame = frame;
+    
+    // Update the constraints.
+    CGFloat contentHeight = webView.frame.size.height + 20;
+    
+    [UIView animateWithDuration:0.25 animations:^{
+        self.bodyWebViewHeightConstraint.constant = contentHeight;
+        [self.view needsUpdateConstraints];
+    }];
+}
+
+#pragma mark -
 #pragma mark Responding to gestures
 
 - (IBAction)handleFeaturedImageSingleTap:(UITapGestureRecognizer *)recognizer
