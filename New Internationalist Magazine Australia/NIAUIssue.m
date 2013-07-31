@@ -183,6 +183,7 @@ BOOL requestingArticles;
         requestingArticles = TRUE;
         // put dispatch magic here
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+            
             //TODO: read from cache first and issue our first update
             NSURL *issueURL = [NSURL URLWithString:[NSString stringWithFormat:@"issues/%@.json", [self index]] relativeToURL:[NSURL URLWithString:SITE_URL]];
             NSData *data = [NSData dataWithContentsOfURL:issueURL];

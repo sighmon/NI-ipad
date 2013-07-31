@@ -20,6 +20,8 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
 // AHA: this makes getters/setters for these readonly properties without exposing them publically
 @synthesize issue;
 
+
+
 -(NSString *)author {
     return [dictionary objectForKey:@"author"];
 }
@@ -36,8 +38,9 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
     return [dictionary objectForKey:@"id"];
 }
 
--(NSString *)body {
-    return body;
+-(void)setBody:(NSString *)body {
+    _body = body;
+    [self writeBodyToCache];
 }
 
 -(NIAUArticle *)initWithIssue:(NIAUIssue *)_issue andDictionary:(NSDictionary *)_dictionary {
@@ -46,21 +49,85 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
     
     dictionary = _dictionary;
     
-    [self writeToCache];
     
     return self;
 }
 
 +(NIAUArticle *)articleWithIssue:(NIAUIssue *)_issue andDictionary:(NSDictionary *)_dictionary {
-    return [[NIAUArticle alloc] initWithIssue:_issue andDictionary: _dictionary];
+    
+    NIAUArticle *article = [[NIAUArticle alloc] initWithIssue:_issue andDictionary: _dictionary];
+
+    [article writeToCache];
+
+    return article;
 }
+
+
+// Q: is providing all of these class methods evil?
++(NSURL *) cacheURLWithIssue:(NIAUIssue *)issue andId:(NSNumber *)index {
+    return [NSURL URLWithString:[NSString stringWithFormat:@"%@", index] relativeToURL:issue.nkIssue.contentURL];
+}
+
+-(NSURL *) cacheURL {
+    return [NIAUArticle cacheURLWithIssue:[self issue] andId:[self index]];
+}
+
++(NSURL *) metadataURLWithIssue:(NIAUIssue *)issue andId:(NSNumber *)index {
+    return [NSURL URLWithString:@"article.json" relativeToURL:[NIAUArticle cacheURLWithIssue:issue andId:index]];
+}
+
+-(NSURL *) metadataURL {
+    return [NIAUArticle metadataURLWithIssue:[self issue] andId:[self index]];
+}
+
+-(NSURL *) bodyURL {
+    return [NSURL URLWithString:@"body.html" relativeToURL:[self cacheURL]];
+}
+
+//TODO: call this once for each article in the issue metadata
++(NIAUArticle *)articleFromCacheWithIssue:(NIAUIssue *)_issue andId:(NSNumber *)_id {
+   
+    NSData *data = [NSData dataWithContentsOfURL:[self metadataURLWithIssue:_issue andId:_id]];
+    NSError *error;
+    NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+
+    // call the init directly to avoid saving back to cache
+    return [[NIAUArticle alloc] initWithIssue:_issue andDictionary: dictionary];
+
+}
+
 
 -(void)writeToCache {
     NSLog(@"TODO: %s", __PRETTY_FUNCTION__);
+    NSError *error;
+    if ([[NSFileManager defaultManager] createDirectoryAtURL:[self cacheURL] withIntermediateDirectories:TRUE attributes:nil error:&error]) {
+        
+        NSLog(@"writing article to %@",[[self metadataURL] absoluteString]);
+        
+        NSOutputStream *os = [NSOutputStream outputStreamWithURL:[self metadataURL] append:FALSE];
+        
+        [os open];
+        NSError *error;
+        if ([NSJSONSerialization writeJSONObject:dictionary toStream:os options:0 error:&error]<=0) {
+            NSLog(@"Error writing JSON file");
+        }
+        [os close];
+        
+        
+    } else {
+        NSLog(@"error creating cache dir: %@",error);
+    }
 }
 
 -(void)writeBodyToCache {
-    NSLog(@"TODO: %s", __PRETTY_FUNCTION__);
+    if(self.body) {
+        NSError *error;
+        if (![self.body writeToURL:[self bodyURL] atomically:FALSE encoding:NSUTF8StringEncoding error:&error]) {
+            NSLog(@"error writing body to cache: %@", error);
+        }
+    } else {
+        NSLog(@"no body to cache");
+    }
 }
 
 BOOL requestingBody;
@@ -69,13 +136,23 @@ BOOL requestingBody;
     if(!requestingBody) {
         requestingBody = TRUE;
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
-            //TODO: read from cache first and issue our first update
+            // read from cache first and issue our first update
+            NSError *error;
+            self.body = [NSString stringWithContentsOfURL:[self bodyURL] encoding:NSUTF8StringEncoding error:&error];
+            
+            if(self.body) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [[NSNotificationCenter defaultCenter] postNotificationName:ArticleDidUpdateNotification object:self];
+                });
+            } else {
+                NSLog(@"cache miss reading body: %@", error);
+            }
+            
             NSURL *articleURL = [NSURL URLWithString:[NSString stringWithFormat:@"issues/%@/articles/%@/body", [[self issue] index], [self index]] relativeToURL:[NSURL URLWithString:SITE_URL]];
             NSData *data = [NSData dataWithContentsOfURL:articleURL];
             if(data) {
-                body = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                self.body = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
                 
-                [self writeBodyToCache];
                 
                 //notify
                 dispatch_async(dispatch_get_main_queue(), ^{
