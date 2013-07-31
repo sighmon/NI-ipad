@@ -232,17 +232,17 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" text="Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et d" translatesAutoresizingMaskIntoConstraints="NO" id="smq-UL-Oxn">
-                                        <rect key="frame" x="20" y="502" width="280" height="1000"/>
+                                        <rect key="frame" x="0.0" y="502" width="320" height="66"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="1000" id="2zy-Fj-an4"/>
+                                            <constraint firstAttribute="height" constant="66" id="2zy-Fj-an4"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
                                     <imageView multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="zUP-pp-27x">
-                                        <rect key="frame" x="162" y="502" width="138" height="138"/>
+                                        <rect key="frame" x="182" y="502" width="138" height="138"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <gestureRecognizers/>
                                         <constraints>
@@ -283,10 +283,11 @@
                                     <constraint firstItem="tpj-tl-sET" firstAttribute="top" secondItem="vcO-aH-kkm" secondAttribute="bottom" constant="8" symbolic="YES" id="7dm-5C-FsC"/>
                                     <constraint firstItem="vj2-0b-v5W" firstAttribute="top" secondItem="tJH-G9-L0y" secondAttribute="bottom" constant="8" symbolic="YES" id="9Tv-wT-YQa"/>
                                     <constraint firstItem="XBT-LF-UKS" firstAttribute="leading" secondItem="V1G-f5-VFc" secondAttribute="leading" id="Adp-SZ-PBK"/>
-                                    <constraint firstItem="smq-UL-Oxn" firstAttribute="leading" secondItem="vj2-0b-v5W" secondAttribute="leading" id="GcK-nF-PSe"/>
+                                    <constraint firstItem="smq-UL-Oxn" firstAttribute="top" secondItem="vj2-0b-v5W" secondAttribute="bottom" constant="8" symbolic="YES" id="Fmp-rj-a47"/>
                                     <constraint firstAttribute="trailing" secondItem="vj2-0b-v5W" secondAttribute="trailing" symbolic="YES" id="JiA-Mv-SEZ"/>
-                                    <constraint firstItem="smq-UL-Oxn" firstAttribute="top" secondItem="vj2-0b-v5W" secondAttribute="bottom" constant="8" symbolic="YES" id="LZ0-rK-jen"/>
                                     <constraint firstItem="tJH-G9-L0y" firstAttribute="leading" secondItem="XBT-LF-UKS" secondAttribute="leading" id="MA2-b9-CQ2"/>
+                                    <constraint firstItem="smq-UL-Oxn" firstAttribute="leading" secondItem="V1G-f5-VFc" secondAttribute="leading" id="Mer-0Z-aCn"/>
+                                    <constraint firstAttribute="trailing" secondItem="smq-UL-Oxn" secondAttribute="trailing" id="RTh-1r-nGS"/>
                                     <constraint firstItem="XBT-LF-UKS" firstAttribute="top" secondItem="V1G-f5-VFc" secondAttribute="top" id="S75-XP-jKf"/>
                                     <constraint firstAttribute="bottom" secondItem="smq-UL-Oxn" secondAttribute="bottom" id="THW-Xd-6hS"/>
                                     <constraint firstItem="XBT-LF-UKS" firstAttribute="trailing" secondItem="V1G-f5-VFc" secondAttribute="trailing" id="UOH-dr-OGW"/>
@@ -298,7 +299,6 @@
                                     <constraint firstAttribute="centerX" secondItem="XBT-LF-UKS" secondAttribute="centerX" id="meB-Z8-en0"/>
                                     <constraint firstItem="tJH-G9-L0y" firstAttribute="trailing" secondItem="XBT-LF-UKS" secondAttribute="trailing" id="rBj-Ks-A4X"/>
                                     <constraint firstItem="vcO-aH-kkm" firstAttribute="top" secondItem="XBT-LF-UKS" secondAttribute="bottom" symbolic="YES" id="rQu-LQ-5lE"/>
-                                    <constraint firstItem="smq-UL-Oxn" firstAttribute="trailing" secondItem="vj2-0b-v5W" secondAttribute="trailing" id="rUm-1Y-Ty3"/>
                                     <constraint firstItem="tpj-tl-sET" firstAttribute="trailing" secondItem="vcO-aH-kkm" secondAttribute="trailing" id="ww3-1U-Fik"/>
                                     <constraint firstItem="smq-UL-Oxn" firstAttribute="trailing" secondItem="zUP-pp-27x" secondAttribute="trailing" id="xb8-Ll-QoO"/>
                                     <constraint firstItem="smq-UL-Oxn" firstAttribute="top" secondItem="zUP-pp-27x" secondAttribute="top" id="zlo-EZ-Oe3"/>
@@ -532,6 +532,6 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="Q4o-ys-N5E"/>
-        <segue reference="mdp-6r-s59"/>
+        <segue reference="fI5-Du-KTZ"/>
     </inferredMetricsTieBreakers>
 </document>

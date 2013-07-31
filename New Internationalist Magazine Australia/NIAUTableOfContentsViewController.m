@@ -55,6 +55,8 @@
 {
     [self.tableView reloadData];
     [self adjustHeightOfTableview];
+    [self updateEditorsLetterTextViewHeightToContent];
+    [self updateScrollViewContentHeight];
 }
 
 - (void)adjustHeightOfTableview
@@ -122,24 +124,25 @@
     // TODO: Work out how to only exclude words not characters. For now I'll just use a square exclusionPath.
     // self.editorsLetterTextView.textContainer.exclusionPaths = @[[UIBezierPath bezierPathWithRoundedRect:editorImageViewRect cornerRadius:self.editorImageView.layer.cornerRadius]];
     
+    self.editorsLetterTextView.textContainer.exclusionPaths = nil;
     CGRect editorImageViewRect = [self.editorsLetterTextView convertRect:self.editorImageView.frame fromView:self.view];
     self.editorsLetterTextView.textContainer.exclusionPaths = @[[UIBezierPath bezierPathWithRect:editorImageViewRect]];
 }
 
 - (void)updateEditorsLetterTextViewHeightToContent
 {
-    CGFloat height = self.editorsLetterTextView.contentSize.height;
+    CGFloat editorsLetterTextViewHeight = self.editorsLetterTextView.contentSize.height;
     
     // now set the height constraint accordingly
     
     [UIView animateWithDuration:0.25 animations:^{
-        self.editorsLetterTextViewHeightConstraint.constant = height;
+        self.editorsLetterTextViewHeightConstraint.constant = editorsLetterTextViewHeight;
         [self.view needsUpdateConstraints];
     }];
 }
 
 - (void)updateScrollViewContentHeight
-{    
+{
     CGRect contentRect = CGRectZero;
     for (UIView *view in self.scrollView.subviews) {
         contentRect = CGRectUnion(contentRect, view.frame);
@@ -147,16 +150,11 @@
     self.scrollView.contentSize = contentRect.size;
 }
 
-- (void)viewDidLayoutSubviews
-{
-    
-}
-
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
-//    [self updateEditorsLetterTextViewHeightToContent];
-//    [self updateScrollViewContentHeight];
-//    [self updateEditorsLetterTextViewExclusionPath];
+    [self updateEditorsLetterTextViewExclusionPath];
+    [self updateEditorsLetterTextViewHeightToContent];
+    [self updateScrollViewContentHeight];
 }
 
 - (void)addShadowToImageView:(UIImageView *)imageView
