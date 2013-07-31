@@ -148,7 +148,7 @@ BOOL requestingBody;
                 NSLog(@"cache miss reading body: %@", error);
             }
             
-            NSURL *articleURL = [NSURL URLWithString:[NSString stringWithFormat:@"issues/%@/article/%@/body", [[self issue] index], [self index]] relativeToURL:[NSURL URLWithString:SITE_URL]];
+            NSURL *articleURL = [NSURL URLWithString:[NSString stringWithFormat:@"issues/%@/articles/%@/body", [[self issue] index], [self index]] relativeToURL:[NSURL URLWithString:SITE_URL]];
             NSData *data = [NSData dataWithContentsOfURL:articleURL];
             if(data) {
                 self.body = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
