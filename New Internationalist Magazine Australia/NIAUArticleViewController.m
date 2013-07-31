@@ -60,6 +60,7 @@
 
 -(void)publisherReady:(NSNotification *)notification
 {
+    [self setupData];
     [self showArticle];
 }
 

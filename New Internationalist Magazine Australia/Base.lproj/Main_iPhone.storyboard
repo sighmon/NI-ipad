@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4471.1" systemVersion="12E55" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="eQs-ol-VW7">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4488.1" systemVersion="12E55" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="eQs-ol-VW7">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3697.3"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3715.3"/>
     </dependencies>
     <scenes>
         <!--Navigation Controller-->
@@ -265,7 +265,7 @@
                                                 <rect key="frame" x="0.0" y="22" width="320" height="44"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Lnf-CI-DTC" id="DHD-CO-mrV">
-                                                    <rect key="frame" x="0.0" y="0.0" width="289" height="43"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </tableViewCellContentView>
                                                 <connections>
@@ -399,41 +399,29 @@
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Author" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="loG-BX-0f8">
-                                        <rect key="frame" x="0.0" y="201" width="320" height="21"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="320" id="3fm-ad-Alh"/>
-                                            <constraint firstAttribute="height" constant="21" id="6wk-OK-1LD"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline2"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                     <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PoX-gg-8cE">
-                                        <rect key="frame" x="0.0" y="230" width="320" height="1000"/>
+                                        <rect key="frame" x="0.0" y="201" width="320" height="1029"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="1000" id="Zu2-h1-NqP"/>
+                                            <constraint firstAttribute="height" constant="1029" id="Zu2-h1-NqP"/>
                                         </constraints>
+                                        <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES"/>
                                     </webView>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="ulX-QY-4Wv" firstAttribute="top" secondItem="fuM-gI-7Bu" secondAttribute="bottom" constant="8" symbolic="YES" id="15m-c8-Cfs"/>
-                                    <constraint firstItem="PoX-gg-8cE" firstAttribute="top" secondItem="loG-BX-0f8" secondAttribute="bottom" symbolic="YES" id="2vs-9x-lTj"/>
                                     <constraint firstItem="PAM-Qv-IM5" firstAttribute="top" secondItem="ftA-uH-mfj" secondAttribute="top" id="8sk-8V-xJQ"/>
-                                    <constraint firstItem="PoX-gg-8cE" firstAttribute="bottom" secondItem="ftA-uH-mfj" secondAttribute="bottom" id="G1B-GT-nfP"/>
+                                    <constraint firstItem="PoX-gg-8cE" firstAttribute="bottom" secondItem="ftA-uH-mfj" secondAttribute="bottom" constant="662" id="G1B-GT-nfP"/>
                                     <constraint firstItem="PAM-Qv-IM5" firstAttribute="leading" secondItem="ftA-uH-mfj" secondAttribute="leading" id="JcH-Gi-QUd"/>
                                     <constraint firstItem="fuM-gI-7Bu" firstAttribute="top" secondItem="PAM-Qv-IM5" secondAttribute="bottom" constant="8" id="R0u-3D-hpf"/>
                                     <constraint firstItem="PoX-gg-8cE" firstAttribute="leading" secondItem="ftA-uH-mfj" secondAttribute="leading" id="YyS-cI-Zqm"/>
                                     <constraint firstItem="fuM-gI-7Bu" firstAttribute="centerX" secondItem="ulX-QY-4Wv" secondAttribute="centerX" id="Z3g-X6-ewO"/>
                                     <constraint firstItem="fuM-gI-7Bu" firstAttribute="centerX" secondItem="PAM-Qv-IM5" secondAttribute="centerX" id="abs-ms-OdZ"/>
-                                    <constraint firstItem="ulX-QY-4Wv" firstAttribute="centerX" secondItem="loG-BX-0f8" secondAttribute="centerX" id="fX1-DR-E7M"/>
                                     <constraint firstItem="PAM-Qv-IM5" firstAttribute="trailing" secondItem="ftA-uH-mfj" secondAttribute="trailing" id="k68-sx-VHl"/>
                                     <constraint firstItem="PAM-Qv-IM5" firstAttribute="centerX" secondItem="ftA-uH-mfj" secondAttribute="centerX" id="kP7-FK-aeF"/>
                                     <constraint firstItem="PoX-gg-8cE" firstAttribute="trailing" secondItem="ftA-uH-mfj" secondAttribute="trailing" id="mCw-oi-6nn"/>
-                                    <constraint firstItem="loG-BX-0f8" firstAttribute="top" secondItem="ulX-QY-4Wv" secondAttribute="bottom" constant="8" symbolic="YES" id="wzL-sS-ehf"/>
+                                    <constraint firstItem="PoX-gg-8cE" firstAttribute="top" secondItem="ulX-QY-4Wv" secondAttribute="bottom" constant="8" id="uZX-yZ-eP2"/>
                                 </constraints>
                             </scrollView>
                         </subviews>
@@ -450,7 +438,6 @@
                         <barButtonItem key="backBarButtonItem" title="Article" id="LvR-bf-hEH"/>
                     </navigationItem>
                     <connections>
-                        <outlet property="authorLabel" destination="loG-BX-0f8" id="lt6-34-Qgw"/>
                         <outlet property="bodyWebView" destination="PoX-gg-8cE" id="QH5-Cn-hTF"/>
                         <outlet property="featuredImage" destination="PAM-Qv-IM5" id="Lui-Dn-Ag7"/>
                         <outlet property="scrollView" destination="ftA-uH-mfj" id="uaw-RL-w11"/>
@@ -535,6 +522,6 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="Q4o-ys-N5E"/>
-        <segue reference="fI5-Du-KTZ"/>
+        <segue reference="mdp-6r-s59"/>
     </inferredMetricsTieBreakers>
 </document>
