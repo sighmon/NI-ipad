@@ -83,9 +83,62 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"articleCell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-    cell.textLabel.text = [self.issue articleAtIndex:indexPath.row].title;
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+    }
+    [self setupCell:cell atIndexPath:indexPath];
     return cell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSLog(@"*** %@", indexPath);
+    UITableViewCell *cell = [self tableView:tableView cellForRowAtIndexPath:indexPath];
+    NSLog(@"^^^^cell %@", cell);
+//    cell.textLabel.text = [self.issue articleAtIndex:indexPath.row].title;
+//    cell.detailTextLabel.text = [self.issue articleAtIndex:indexPath.row].teaser;
+//    CGRect titleRect = [cell.textLabel.text boundingRectWithSize:cell.textLabel.frame.size options:NSStringDrawingUsesLineFragmentOrigin attributes:nil context:nil];
+//    CGRect teaserRect = [cell.detailTextLabel.text boundingRectWithSize:cell.detailTextLabel.frame.size options:NSStringDrawingUsesLineFragmentOrigin attributes:nil context:nil];
+    
+    NSString *titleText = [self.issue articleAtIndex:indexPath.row].title;
+    NSString *teaserText = [self.issue articleAtIndex:indexPath.row].teaser;
+//
+//    TODO: Remove the hack that sets the width of the label constraint.
+    CGSize constraint = CGSizeMake(240., 2000.0f);
+    
+//    TODO: Fix the deprecation error.
+    CGSize titleSize = [titleText sizeWithFont:[UIFont systemFontOfSize:18] constrainedToSize:constraint lineBreakMode:NSLineBreakByWordWrapping];
+    CGSize teaserSize = [teaserText sizeWithFont:[UIFont systemFontOfSize:12] constrainedToSize:constraint lineBreakMode:NSLineBreakByWordWrapping];
+    
+//    CGRect titleRect = [titleText boundingRectWithSize:constraint options:NSStringDrawingUsesLineFragmentOrigin attributes:nil context:nil];
+//    CGRect teaserRect = [teaserText boundingRectWithSize:constraint options:NSStringDrawingUsesLineFragmentOrigin attributes:nil context:nil];
+    
+    CGFloat height = MAX((titleSize.height + teaserSize.height + 20.), 50.0f);
+    
+    // Set the cell size
+//    CGSize size = [cell.textLabel sizeThatFits: CGSizeMake(320., 1.)];
+//    [cell.textLabel setFrame:CGRectMake(0, 0, size.width, size.height)];
+//    
+//    CGSize teaserSize = [cell.detailTextLabel sizeThatFits: CGSizeMake(320., 1.)];
+//    [cell.detailTextLabel setFrame:CGRectMake(0, 0, teaserSize.width, teaserSize.height)];
+//    
+//    CGSize cellSize = [cell sizeThatFits: CGSizeMake(320., 1.)];
+//    [cell setFrame:CGRectMake(0, 0, cellSize.width, cellSize.height)];
+    
+//    NSLog(@"%@", cell.textLabel);
+//    
+//    CGRect contentRect = CGRectZero;
+//    for (UIView *view in cell.subviews)
+//        contentRect = CGRectUnion(contentRect, view.frame);
+//    
+//    return contentRect.size.height;
+    return height;
+}
+
+- (void)setupCell: (UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+    cell.textLabel.text = [self.issue articleAtIndex:indexPath.row].title;
+    cell.detailTextLabel.text = [self.issue articleAtIndex:indexPath.row].teaser;
+//    cell.imageView.image = [UIImage imageNamed:@"default_article_image.png"];
 }
 
 #pragma mark -
