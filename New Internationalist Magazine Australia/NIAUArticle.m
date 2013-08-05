@@ -64,8 +64,9 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
 
 
 // Q: is providing all of these class methods evil?
+// alternate solution could be to create a skeleton issue then call -bodyURL
 +(NSURL *) cacheURLWithIssue:(NIAUIssue *)issue andId:(NSNumber *)index {
-    return [NSURL URLWithString:[NSString stringWithFormat:@"%@", index] relativeToURL:issue.nkIssue.contentURL];
+    return [NSURL URLWithString:[NSString stringWithFormat:@"%@/", index] relativeToURL:issue.nkIssue.contentURL];
 }
 
 -(NSURL *) cacheURL {
