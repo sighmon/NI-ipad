@@ -88,54 +88,39 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
     }
     [self setupCell:cell atIndexPath:indexPath];
+    //cell.frame = tableView.frame;
+    //[cell layoutIfNeeded];
+    
     return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"*** %@", indexPath);
     UITableViewCell *cell = [self tableView:tableView cellForRowAtIndexPath:indexPath];
-    NSLog(@"^^^^cell %@", cell);
-//    cell.textLabel.text = [self.issue articleAtIndex:indexPath.row].title;
-//    cell.detailTextLabel.text = [self.issue articleAtIndex:indexPath.row].teaser;
-//    CGRect titleRect = [cell.textLabel.text boundingRectWithSize:cell.textLabel.frame.size options:NSStringDrawingUsesLineFragmentOrigin attributes:nil context:nil];
-//    CGRect teaserRect = [cell.detailTextLabel.text boundingRectWithSize:cell.detailTextLabel.frame.size options:NSStringDrawingUsesLineFragmentOrigin attributes:nil context:nil];
     
-    NSString *titleText = [self.issue articleAtIndex:indexPath.row].title;
-    NSString *teaserText = [self.issue articleAtIndex:indexPath.row].teaser;
-//
-//    TODO: Remove the hack that sets the width of the label constraint.
-    CGSize constraint = CGSizeMake(240., 2000.0f);
+    // set the frame to be the same size as the tableView (only really to get the width)
+    cell.frame = tableView.frame;
+    // temporarily store the contents of the textlabel
+    NSString *tmp = cell.textLabel.text;
+    // and set it to a really wide string
+    cell.textLabel.text = [@"" stringByPaddingToLength:100 withString:@" X" startingAtIndex:0];
+    // then update the layout
+    [cell layoutIfNeeded];
+    // pull out the size of the textLabel to get it's maximum possible size
+    CGSize maxSize = cell.textLabel.frame.size;
     
-//    TODO: Fix the deprecation error.
-    CGSize titleSize = [titleText sizeWithFont:[UIFont systemFontOfSize:18] constrainedToSize:constraint lineBreakMode:NSLineBreakByWordWrapping];
-    CGSize teaserSize = [teaserText sizeWithFont:[UIFont systemFontOfSize:12] constrainedToSize:constraint lineBreakMode:NSLineBreakByWordWrapping];
+    // replace the original text
+    cell.textLabel.text = tmp;
     
-//    CGRect titleRect = [titleText boundingRectWithSize:constraint options:NSStringDrawingUsesLineFragmentOrigin attributes:nil context:nil];
-//    CGRect teaserRect = [teaserText boundingRectWithSize:constraint options:NSStringDrawingUsesLineFragmentOrigin attributes:nil context:nil];
+    CGFloat height = [cell.textLabel sizeThatFits:maxSize].height;
     
-    CGFloat height = MAX((titleSize.height + teaserSize.height + 20.), 50.0f);
+    height += [cell.detailTextLabel sizeThatFits:maxSize].height;
     
-    // Set the cell size
-//    CGSize size = [cell.textLabel sizeThatFits: CGSizeMake(320., 1.)];
-//    [cell.textLabel setFrame:CGRectMake(0, 0, size.width, size.height)];
-//    
-//    CGSize teaserSize = [cell.detailTextLabel sizeThatFits: CGSizeMake(320., 1.)];
-//    [cell.detailTextLabel setFrame:CGRectMake(0, 0, teaserSize.width, teaserSize.height)];
-//    
-//    CGSize cellSize = [cell sizeThatFits: CGSizeMake(320., 1.)];
-//    [cell setFrame:CGRectMake(0, 0, cellSize.width, cellSize.height)];
-    
-//    NSLog(@"%@", cell.textLabel);
-//    
-//    CGRect contentRect = CGRectZero;
-//    for (UIView *view in cell.subviews)
-//        contentRect = CGRectUnion(contentRect, view.frame);
-//    
-//    return contentRect.size.height;
     return height;
 }
 
-- (void)setupCell: (UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+- (void)setupCell: (UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {\
+    cell.textLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    cell.detailTextLabel.lineBreakMode = NSLineBreakByWordWrapping;
     cell.textLabel.text = [self.issue articleAtIndex:indexPath.row].title;
     cell.detailTextLabel.text = [self.issue articleAtIndex:indexPath.row].teaser;
 //    cell.imageView.image = [UIImage imageNamed:@"default_article_image.png"];
