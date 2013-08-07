@@ -111,6 +111,8 @@
     // replace the original text
     cell.textLabel.text = tmp;
     
+    // inspired by http://doing-it-wrong.mikeweller.com/2012/07/youre-doing-it-wrong-2-sizing-labels.html
+    
     CGFloat height = [cell.textLabel sizeThatFits:maxSize].height;
     
     height += [cell.detailTextLabel sizeThatFits:maxSize].height;
@@ -118,7 +120,7 @@
     return height;
 }
 
-- (void)setupCell: (UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {\
+- (void)setupCell: (UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     cell.textLabel.lineBreakMode = NSLineBreakByWordWrapping;
     cell.detailTextLabel.lineBreakMode = NSLineBreakByWordWrapping;
     cell.textLabel.text = [self.issue articleAtIndex:indexPath.row].title;
