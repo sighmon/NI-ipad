@@ -88,8 +88,6 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
     }
     [self setupCell:cell atIndexPath:indexPath];
-    //cell.frame = tableView.frame;
-    //[cell layoutIfNeeded];
     
     return cell;
 }
@@ -117,6 +115,9 @@
     
     height += [cell.detailTextLabel sizeThatFits:maxSize].height;
     
+    // TODO: work out how to set the padding to the standard value
+    height += 20.;
+    
     return height;
 }
 
@@ -125,7 +126,7 @@
     cell.detailTextLabel.lineBreakMode = NSLineBreakByWordWrapping;
     cell.textLabel.text = [self.issue articleAtIndex:indexPath.row].title;
     cell.detailTextLabel.text = [self.issue articleAtIndex:indexPath.row].teaser;
-//    cell.imageView.image = [UIImage imageNamed:@"default_article_image.png"];
+    cell.imageView.image = [UIImage imageNamed:@"default_article_image_table_view.png"];
 }
 
 #pragma mark -
@@ -190,13 +191,6 @@
     self.scrollView.contentSize = contentRect.size;
 }
 
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
-{
-    [self updateEditorsLetterTextViewExclusionPath];
-    [self updateEditorsLetterTextViewHeightToContent];
-    [self updateScrollViewContentHeight];
-}
-
 - (void)addShadowToImageView:(UIImageView *)imageView
 {
     // Shadow for any images, i.e. the cover
@@ -254,6 +248,17 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark -
+#pragma mark Rotation handling
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    [self updateEditorsLetterTextViewExclusionPath];
+    [self updateEditorsLetterTextViewHeightToContent];
+    [self adjustHeightOfTableview];
+    [self updateScrollViewContentHeight];
 }
 
 @end

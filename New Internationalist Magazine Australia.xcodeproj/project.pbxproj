@@ -35,6 +35,8 @@
 		055A8EEA177290CF003D9407 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 055A8EC9177290CE003D9407 /* UIKit.framework */; };
 		055A8EF2177290CF003D9407 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 055A8EF0177290CF003D9407 /* InfoPlist.strings */; };
 		055A8EF4177290CF003D9407 /* New_Internationalist_Magazine_AustraliaTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 055A8EF3177290CF003D9407 /* New_Internationalist_Magazine_AustraliaTests.m */; };
+		0567082817B1D51400A87818 /* default_article_image_table_view.png in Resources */ = {isa = PBXBuildFile; fileRef = 0567082617B1D50A00A87818 /* default_article_image_table_view.png */; };
+		0567082917B1D51400A87818 /* default_article_image_table_view@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0567082717B1D50A00A87818 /* default_article_image_table_view@2x.png */; };
 		058F738E178BBA3E002CA40C /* NIAUImageZoomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 058F738D178BBA3E002CA40C /* NIAUImageZoomViewController.m */; };
 		05BD7F2917796B8F00820EF3 /* 0@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 05BD7F1717796B8F00820EF3 /* 0@2x.png */; };
 		05BD7F2A17796B8F00820EF3 /* 1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 05BD7F1817796B8F00820EF3 /* 1@2x.png */; };
@@ -134,6 +136,8 @@
 		055A8F0C1772CF67003D9407 /* iPad-landscape@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPad-landscape@2x.png"; sourceTree = "<group>"; };
 		055A8F0D1772CF67003D9407 /* iPad-portrait.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPad-portrait.png"; sourceTree = "<group>"; };
 		055A8F0E1772CF67003D9407 /* iPad-portrait@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPad-portrait@2x.png"; sourceTree = "<group>"; };
+		0567082617B1D50A00A87818 /* default_article_image_table_view.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = default_article_image_table_view.png; sourceTree = "<group>"; };
+		0567082717B1D50A00A87818 /* default_article_image_table_view@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "default_article_image_table_view@2x.png"; sourceTree = "<group>"; };
 		058F738C178BBA3E002CA40C /* NIAUImageZoomViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NIAUImageZoomViewController.h; sourceTree = "<group>"; };
 		058F738D178BBA3E002CA40C /* NIAUImageZoomViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NIAUImageZoomViewController.m; sourceTree = "<group>"; };
 		05BD7F121779656300820EF3 /* NIAUMagazineArchiveViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NIAUMagazineArchiveViewController.h; sourceTree = "<group>"; };
@@ -216,6 +220,8 @@
 		053878281777E034001E60F6 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				0567082617B1D50A00A87818 /* default_article_image_table_view.png */,
+				0567082717B1D50A00A87818 /* default_article_image_table_view@2x.png */,
 				0528EC3817853C1F000175AB /* default_article_image.png */,
 				0528EC3917853C1F000175AB /* default_article_image@2x.png */,
 				0528EC3A17853C1F000175AB /* default_featured_image.png */,
@@ -487,6 +493,7 @@
 				05BD7F3417796B8F00820EF3 /* 11@2x.png in Resources */,
 				05BD7F5B17796B9F00820EF3 /* 14.png in Resources */,
 				05BD7F3617796B8F00820EF3 /* 13@2x.png in Resources */,
+				0567082817B1D51400A87818 /* default_article_image_table_view.png in Resources */,
 				05BD7F5D17796B9F00820EF3 /* 16.png in Resources */,
 				05BD7F5C17796B9F00820EF3 /* 15.png in Resources */,
 				05BD7F3917796B8F00820EF3 /* 16@2x.png in Resources */,
@@ -512,6 +519,7 @@
 				05BD7F3317796B8F00820EF3 /* 10@2x.png in Resources */,
 				05BD7F5817796B9F00820EF3 /* 11.png in Resources */,
 				0528EC3E17853C1F000175AB /* default_featured_image.png in Resources */,
+				0567082917B1D51400A87818 /* default_article_image_table_view@2x.png in Resources */,
 				05BD7F4D17796B9F00820EF3 /* 0.png in Resources */,
 				055A8ED0177290CE003D9407 /* InfoPlist.strings in Resources */,
 				05BD7F3217796B8F00820EF3 /* 9@2x.png in Resources */,

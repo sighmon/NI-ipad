@@ -122,13 +122,13 @@
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="magazineCellID" id="9Wg-Yx-jLm" customClass="NIAUCell">
-                                <rect key="frame" x="0.0" y="64" width="192" height="272.6400146484375"/>
+                                <rect key="frame" x="0.0" y="64" width="192" height="273"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="192" height="273"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="tyQ-to-wEq">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tyQ-to-wEq">
                                             <rect key="frame" x="0.0" y="0.0" width="192" height="272"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         </imageView>
@@ -294,7 +294,6 @@
                                     <constraint firstItem="SJ4-ca-Goj" firstAttribute="trailing" secondItem="Zqd-QL-8wn" secondAttribute="trailing" id="oMT-DQ-jMq"/>
                                     <constraint firstItem="SJ4-ca-Goj" firstAttribute="leading" secondItem="2Jy-dG-VkX" secondAttribute="trailing" constant="8" symbolic="YES" id="p7A-Ae-Ryh"/>
                                     <constraint firstItem="i6V-Mh-aMJ" firstAttribute="top" secondItem="Zqd-QL-8wn" secondAttribute="top" constant="579" id="yQQ-su-0z8"/>
-                                    <constraint firstItem="SJ4-ca-Goj" firstAttribute="bottom" secondItem="Zqd-QL-8wn" secondAttribute="bottom" id="zgd-Vf-Wc5"/>
                                 </constraints>
                                 <connections>
                                     <outlet property="delegate" destination="Pia-vN-nb6" id="9mb-iV-GUA"/>
@@ -533,6 +532,6 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="TYl-bi-yIk"/>
-        <segue reference="fFO-5s-0tA"/>
+        <segue reference="JBV-bs-efO"/>
     </inferredMetricsTieBreakers>
 </document>
