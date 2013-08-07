@@ -97,6 +97,19 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
 
 }
 
++(NSArray *)articlesFromIssue:(NIAUIssue *)_issue {
+    NSNumberFormatter *nf = [[NSNumberFormatter alloc] init];
+    NSMutableArray *articles = [NSMutableArray array];
+    NSArray *keys = @[NSURLIsDirectoryKey,NSURLNameKey];
+    NSError *error;
+    for (NSURL *url in [[NSFileManager defaultManager] contentsOfDirectoryAtURL:_issue.nkIssue.contentURL includingPropertiesForKeys:keys options:0 error:&error]) {
+        NSDictionary *properties = [url resourceValuesForKeys:keys error:&error];
+        if ([[properties objectForKey:NSURLIsDirectoryKey] boolValue]==YES) {
+            [articles addObject:[self articleFromCacheWithIssue:_issue andId:[nf numberFromString:[properties objectForKey:NSURLNameKey]]]];
+        }
+    }
+    return articles;
+}
 
 -(void)writeToCache {
     NSLog(@"TODO: %s", __PRETTY_FUNCTION__);
