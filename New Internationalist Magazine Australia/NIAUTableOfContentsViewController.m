@@ -109,6 +109,8 @@
     // replace the original text
     cell.textLabel.text = tmp;
     
+    // inspired by http://doing-it-wrong.mikeweller.com/2012/07/youre-doing-it-wrong-2-sizing-labels.html
+    
     CGFloat height = [cell.textLabel sizeThatFits:maxSize].height;
     
     height += [cell.detailTextLabel sizeThatFits:maxSize].height;
