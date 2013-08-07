@@ -184,7 +184,16 @@ BOOL requestingArticles;
         // put dispatch magic here
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
             
-            //TODO: read from cache first and issue our first update
+            // read from cache first and issue our first update
+            
+            articles = [NIAUArticle articlesFromIssue:self];
+            
+            if ([articles count]>0) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [[NSNotificationCenter defaultCenter] postNotificationName:ArticlesDidUpdateNotification object:self];
+                });
+            }
+            
             NSURL *issueURL = [NSURL URLWithString:[NSString stringWithFormat:@"issues/%@.json", [self index]] relativeToURL:[NSURL URLWithString:SITE_URL]];
             NSData *data = [NSData dataWithContentsOfURL:issueURL];
             if(data) {
