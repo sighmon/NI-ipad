@@ -85,10 +85,23 @@
 
 - (void)setupData
 {
+    #define kbodyWebViewFont @"helvetica"
+    #define kbodyWebViewFontSize 13
+    
     self.titleLabel.text = self.article.title;
     self.teaserLabel.text = self.article.teaser;
     self.authorLabel.text = self.article.author;
-    [self.bodyWebView loadHTMLString:self.article.body baseURL:nil];
+    // TODO: Load CSS from the filesystem
+    // TODO: insert that file into the HTML of the article body below
+    NSString *bodyWebViewHTML = [NSString stringWithFormat:@"<html> \n"
+                                   "<head> \n"
+                                   "<style type=\"text/css\"> \n"
+                                   "body {font-family: \"%@\"; font-size: %@;}\n"
+                                   "</style> \n"
+                                   "</head> \n"
+                                   "<body>%@</body> \n"
+                                   "</html>", kbodyWebViewFont, [NSNumber numberWithInt:kbodyWebViewFontSize], self.article.body];
+    [self.bodyWebView loadHTMLString:bodyWebViewHTML baseURL:nil];
 }
 
 - (void)updateScrollViewContentHeight
