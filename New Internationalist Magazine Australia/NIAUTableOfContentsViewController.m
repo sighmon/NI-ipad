@@ -8,6 +8,7 @@
 
 #import "NIAUTableOfContentsViewController.h"
 #import "NIAUImageZoomViewController.h"
+#import "NSAttributedString+HTML.h"
 
 @interface NIAUTableOfContentsViewController ()
 
@@ -125,7 +126,9 @@
     cell.textLabel.lineBreakMode = NSLineBreakByWordWrapping;
     cell.detailTextLabel.lineBreakMode = NSLineBreakByWordWrapping;
     cell.textLabel.text = [self.issue articleAtIndex:indexPath.row].title;
-    cell.detailTextLabel.text = [self.issue articleAtIndex:indexPath.row].teaser;
+//    TODO: For Pix to fix - attributedText for article teasers
+//    cell.detailTextLabel.attributedText = [[NSAttributedString alloc] initWithHTMLData:[[self.issue articleAtIndex:indexPath.row].teaser dataUsingEncoding:NSUTF8StringEncoding] baseURL:nil documentAttributes:nil];
+    cell.detailTextLabel.text =[self.issue articleAtIndex:indexPath.row].teaser;
     cell.imageView.image = [UIImage imageNamed:@"default_article_image_table_view.png"];
 }
 
