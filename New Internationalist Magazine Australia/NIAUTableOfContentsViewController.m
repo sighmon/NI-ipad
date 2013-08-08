@@ -119,6 +119,8 @@
     // TODO: work out how to set the padding to the standard value
     height += 20.;
     
+    NSLog(@"calculated height at [%@]=%f",cell.textLabel.text, height);
+    
     return height;
 }
 
