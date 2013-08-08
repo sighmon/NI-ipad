@@ -38,6 +38,7 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
     return [dictionary objectForKey:@"id"];
 }
 
+
 -(void)setBody:(NSString *)body {
     _body = body;
     [self writeBodyToCache];
@@ -144,7 +145,6 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
     }
 }
 
-BOOL requestingBody;
 
 -(void)requestBody {
     if(!requestingBody) {
@@ -155,6 +155,7 @@ BOOL requestingBody;
             self.body = [NSString stringWithContentsOfURL:[self bodyURL] encoding:NSUTF8StringEncoding error:&error];
             
             if(self.body) {
+                NSLog(@"read body from cache");
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [[NSNotificationCenter defaultCenter] postNotificationName:ArticleDidUpdateNotification object:self];
                 });

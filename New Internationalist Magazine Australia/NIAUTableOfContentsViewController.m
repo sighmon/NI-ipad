@@ -96,8 +96,11 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [self tableView:tableView cellForRowAtIndexPath:indexPath];
     
+    NSLog(@"cell.textLabel.text=%@",cell.textLabel.text);
+    
     // set the frame to be the same size as the tableView (only really to get the width)
     cell.frame = tableView.frame;
+    NSLog(@"cell.frame.width=%f",cell.frame.size.width);
     // temporarily store the contents of the textlabel
     NSString *tmp = cell.textLabel.text;
     // and set it to a really wide string
@@ -119,7 +122,7 @@
     // TODO: work out how to set the padding to the standard value
     height += 20.;
     
-    NSLog(@"calculated height at [%@]=%f",cell.textLabel.text, height);
+    NSLog(@"calculated height=%f", height);
     
     return height;
 }
