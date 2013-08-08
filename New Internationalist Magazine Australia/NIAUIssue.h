@@ -16,6 +16,7 @@ extern NSString *ArticlesFailedUpdateNotification;
 @interface NIAUIssue : NSObject {
     NSDictionary *dictionary;
     NSArray *articles;
+    BOOL requestingArticles;
 }
 
 -(NSString *)name;
