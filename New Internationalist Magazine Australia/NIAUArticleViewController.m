@@ -85,8 +85,7 @@
 
 - (void)setupData
 {
-    #define kbodyWebViewFont @"helvetica"
-    #define kbodyWebViewFontSize 13
+    #define kbodyWebViewFont @"-apple-system-body"
     
     self.titleLabel.text = self.article.title;
     self.teaserLabel.text = self.article.teaser;
@@ -96,11 +95,11 @@
     NSString *bodyWebViewHTML = [NSString stringWithFormat:@"<html> \n"
                                    "<head> \n"
                                    "<style type=\"text/css\"> \n"
-                                   "body {font-family: \"%@\"; font-size: %@;}\n"
+                                   "body {font: \"%@\";}\n"
                                    "</style> \n"
                                    "</head> \n"
                                    "<body>%@</body> \n"
-                                   "</html>", kbodyWebViewFont, [NSNumber numberWithInt:kbodyWebViewFontSize], self.article.body];
+                                   "</html>", kbodyWebViewFont, self.article.body];
     [self.bodyWebView loadHTMLString:bodyWebViewHTML baseURL:nil];
 }
 
@@ -124,6 +123,7 @@
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
     [self.webViewLoadingIndicator stopAnimating];
+    [self ensureScrollsToTop: webView];
     
     // Set the webview size
     CGSize size = [webView sizeThatFits: CGSizeMake(320., 1.)];
@@ -138,6 +138,10 @@
         self.bodyWebViewHeightConstraint.constant = contentHeight;
         [self.view needsUpdateConstraints];
     }];
+}
+
+- (void) ensureScrollsToTop: (UIView *) ensureView {
+    ((UIScrollView *)[[self.bodyWebView subviews] objectAtIndex:0]).scrollsToTop = NO;
 }
 
 #pragma mark -
