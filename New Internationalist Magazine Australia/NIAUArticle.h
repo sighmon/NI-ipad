@@ -31,5 +31,7 @@ extern NSString *ArticleFailedUpdateNotification;
 
 -(void)requestBody;
 
+- (NSURL *)getWebURL;
+
 @end
 

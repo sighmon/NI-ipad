@@ -26,4 +26,6 @@
 @property (weak, nonatomic) IBOutlet UIWebView *bodyWebView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bodyWebViewHeightConstraint;
 
+@property (weak, nonatomic) IBOutlet UINavigationItem *shareAction;
+
 @end

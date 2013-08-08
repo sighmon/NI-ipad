@@ -233,4 +233,9 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
     }
 }
 
+- (NSURL *)getWebURL
+{
+    return [NSURL URLWithString:[NSString stringWithFormat:@"https://digital.newint.com.au/issues/%@",self.index]];
+}
+
 @end

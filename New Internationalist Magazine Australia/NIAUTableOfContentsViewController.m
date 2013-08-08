@@ -237,6 +237,19 @@
 }
 
 #pragma mark -
+#pragma mark Social sharing
+
+- (IBAction)shareActionTapped:(id)sender
+{
+    NSLog(@"Share tapped!");
+    
+    NSArray *itemsToShare = @[[NSString stringWithFormat:@"I'm reading the New Internationalist magazine - %@",self.issue.title], self.imageView.image, self.issue.getWebURL];
+    
+    UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:itemsToShare applicationActivities:nil];
+    [self presentViewController:activityController animated:YES completion:nil];
+}
+
+#pragma mark -
 #pragma mark Responding to gestures
 
 - (IBAction)handleCoverSingleTap:(UITapGestureRecognizer *)recognizer

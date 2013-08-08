@@ -339,6 +339,11 @@
                     <extendedEdge key="edgesForExtendedLayout" top="YES"/>
                     <navigationItem key="navigationItem" id="mI9-oR-uci">
                         <barButtonItem key="backBarButtonItem" title="Contents" id="0vj-Mv-7lU"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="action" id="cVa-dt-tZ7">
+                            <connections>
+                                <action selector="shareActionTapped:" destination="4fR-wf-HfG" id="sjc-ah-JXy"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
@@ -351,6 +356,7 @@
                         <outlet property="labelNumberAndDate" destination="tpj-tl-sET" id="yzw-dE-Ept"/>
                         <outlet property="labelTitle" destination="vcO-aH-kkm" id="4wD-CR-Xzl"/>
                         <outlet property="scrollView" destination="V1G-f5-VFc" id="Rlv-qZ-C7L"/>
+                        <outlet property="shareAction" destination="mI9-oR-uci" id="rMW-qw-47Q"/>
                         <outlet property="tableView" destination="tJH-G9-L0y" id="4hc-uk-IUa"/>
                         <outlet property="tableViewHeightConstraint" destination="tD5-hQ-aG5" id="qhY-bw-PPZ"/>
                         <segue destination="GGn-sZ-3sw" kind="push" identifier="showImageZoom" id="fI5-Du-KTZ"/>
@@ -368,7 +374,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="834" y="-164"/>
+            <point key="canvasLocation" x="833" y="-164"/>
         </scene>
         <!--Article View Controller-->
         <scene sceneID="lsg-eR-zZi">
@@ -464,12 +470,18 @@
                     <extendedEdge key="edgesForExtendedLayout" top="YES"/>
                     <navigationItem key="navigationItem" id="TQH-mr-pQg">
                         <barButtonItem key="backBarButtonItem" title="Article" id="LvR-bf-hEH"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="action" id="sH4-rc-wrV">
+                            <connections>
+                                <action selector="shareActionTapped:" destination="T5k-23-5nF" id="Stm-va-p4c"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="bodyWebView" destination="PoX-gg-8cE" id="QH5-Cn-hTF"/>
                         <outlet property="bodyWebViewHeightConstraint" destination="Zu2-h1-NqP" id="tbM-21-nIy"/>
                         <outlet property="featuredImage" destination="PAM-Qv-IM5" id="Lui-Dn-Ag7"/>
                         <outlet property="scrollView" destination="ftA-uH-mfj" id="uaw-RL-w11"/>
+                        <outlet property="shareAction" destination="TQH-mr-pQg" id="cHu-AQ-lui"/>
                         <outlet property="teaserLabel" destination="ulX-QY-4Wv" id="P0C-Ef-Bvb"/>
                         <outlet property="titleLabel" destination="fuM-gI-7Bu" id="Hyr-De-3YJ"/>
                         <outlet property="webViewLoadingIndicator" destination="aWi-L9-HiD" id="gdT-wy-9FC"/>

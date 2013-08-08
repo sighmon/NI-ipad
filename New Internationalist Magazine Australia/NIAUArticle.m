@@ -183,5 +183,10 @@ BOOL requestingBody;
     }
 }
 
+- (NSURL *)getWebURL
+{
+    return [NSURL URLWithString:[NSString stringWithFormat:@"https://digital.newint.com.au/issues/%@/articles/%@",self.issue.index, self.index]];
+}
+
 
 @end

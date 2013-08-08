@@ -145,6 +145,21 @@
 }
 
 #pragma mark -
+#pragma mark Social sharing
+
+- (IBAction)shareActionTapped:(id)sender
+{
+    NSLog(@"Share tapped!");
+    
+    // TODO: Add article image to share when/if it's available.
+    
+    NSArray *itemsToShare = @[[NSString stringWithFormat:@"I'm reading '%@'",self.article.title], self.article.getWebURL];
+    
+    UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:itemsToShare applicationActivities:nil];
+    [self presentViewController:activityController animated:YES completion:nil];
+}
+
+#pragma mark -
 #pragma mark Responding to gestures
 
 - (IBAction)handleFeaturedImageSingleTap:(UITapGestureRecognizer *)recognizer

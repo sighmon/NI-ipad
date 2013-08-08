@@ -30,4 +30,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *labelNumberAndDate;
 @property (weak, nonatomic) IBOutlet UILabel *labelEditor;
 
+@property (weak, nonatomic) IBOutlet UINavigationItem *shareAction;
+
 @end

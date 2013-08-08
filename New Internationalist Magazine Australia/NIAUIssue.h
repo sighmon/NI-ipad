@@ -38,6 +38,6 @@ extern NSString *ArticlesFailedUpdateNotification;
 -(NSInteger)numberOfArticles;
 -(NIAUArticle *)articleAtIndex:(NSInteger)index;
 
-
+- (NSURL *)getWebURL;
 
 @end
