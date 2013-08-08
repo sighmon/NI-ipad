@@ -21,7 +21,6 @@ NSString *PublisherFailedUpdateNotification = @"PublisherFailedUpdate";
 
 @implementation NIAUPublisher
 
-BOOL requestingIssues;
 
 -(BOOL)isReady {
     return (issues != nil);
