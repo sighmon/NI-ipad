@@ -15,6 +15,7 @@ extern NSString *ArticleFailedUpdateNotification;
 
 @interface NIAUArticle : NSObject {
     NSDictionary *dictionary;
+    BOOL requestingBody;
 }
 
 @property(nonatomic, strong, readonly) NSString *body;

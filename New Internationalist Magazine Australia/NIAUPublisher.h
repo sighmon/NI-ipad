@@ -15,7 +15,7 @@ extern  NSString *PublisherFailedUpdateNotification;
 
 @interface NIAUPublisher : NSObject {
     NSArray *issues;
-    
+    BOOL requestingIssues;
 }
 
 -(BOOL)isReady;
