@@ -122,14 +122,14 @@
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="magazineCellID" id="9Wg-Yx-jLm" customClass="NIAUCell">
-                                <rect key="frame" x="0.0" y="64" width="192" height="273"/>
+                                <rect key="frame" x="0.0" y="64" width="192" height="272.6400146484375"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="192" height="273"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="tyQ-to-wEq">
-                                            <rect key="frame" x="0.0" y="0.0" width="192" height="273"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="192" height="272"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         </imageView>
                                     </subviews>
@@ -309,7 +309,13 @@
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" top="YES"/>
-                    <navigationItem key="navigationItem" id="JEv-4t-ZCj"/>
+                    <navigationItem key="navigationItem" id="JEv-4t-ZCj">
+                        <barButtonItem key="rightBarButtonItem" systemItem="action" id="Fdn-5Q-eAW">
+                            <connections>
+                                <action selector="shareActionTapped:" destination="Pia-vN-nb6" id="l4n-Xa-LDH"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="editorImageView" destination="fpA-Cj-zEf" id="V8V-OO-GrG"/>
@@ -320,6 +326,7 @@
                         <outlet property="labelNumberAndDate" destination="2Jy-dG-VkX" id="iR0-H3-mhh"/>
                         <outlet property="labelTitle" destination="wy6-pb-VG0" id="N80-lO-LLx"/>
                         <outlet property="scrollView" destination="Zqd-QL-8wn" id="d7F-Z6-J6R"/>
+                        <outlet property="shareAction" destination="JEv-4t-ZCj" id="h6Z-qa-EvR"/>
                         <outlet property="tableView" destination="SJ4-ca-Goj" id="o7k-zH-Cpf"/>
                         <outlet property="tableViewHeightConstraint" destination="ww3-8m-7pM" id="GEv-7Q-B21"/>
                         <segue destination="p7L-KM-t4i" kind="push" identifier="showImageZoom" id="fFO-5s-0tA"/>
@@ -430,12 +437,19 @@
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" top="YES"/>
-                    <navigationItem key="navigationItem" id="2iK-uL-gFc"/>
+                    <navigationItem key="navigationItem" id="2iK-uL-gFc">
+                        <barButtonItem key="rightBarButtonItem" systemItem="action" id="aqh-sa-IMR">
+                            <connections>
+                                <action selector="shareActionTapped:" destination="tZW-bR-n1M" id="jXL-PQ-8Dk"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="bodyWebView" destination="e76-g1-MEQ" id="IC0-Ur-EcN"/>
                         <outlet property="bodyWebViewHeightConstraint" destination="6wZ-ZG-5r1" id="Ku1-FX-qry"/>
                         <outlet property="featuredImage" destination="XxT-mo-NcD" id="ei8-eP-36V"/>
                         <outlet property="scrollView" destination="6wQ-vV-iqH" id="P1y-pP-paF"/>
+                        <outlet property="shareAction" destination="2iK-uL-gFc" id="uuO-2E-YWT"/>
                         <outlet property="teaserLabel" destination="H3o-ox-YMu" id="RpD-PF-n6l"/>
                         <outlet property="titleLabel" destination="GVh-7U-naF" id="CTc-l2-e0m"/>
                         <outlet property="webViewLoadingIndicator" destination="s5g-EG-rOf" id="FOQ-1G-247"/>
