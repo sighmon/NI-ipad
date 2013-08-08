@@ -116,7 +116,7 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
     NSError *error;
     if ([[NSFileManager defaultManager] createDirectoryAtURL:[self cacheURL] withIntermediateDirectories:TRUE attributes:nil error:&error]) {
         
-        NSLog(@"writing article to %@",[[self metadataURL] absoluteString]);
+        NSLog(@"writing article to cache: %@",[[self metadataURL] absoluteString]);
         
         NSOutputStream *os = [NSOutputStream outputStreamWithURL:[self metadataURL] append:FALSE];
         

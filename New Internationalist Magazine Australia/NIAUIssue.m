@@ -15,7 +15,6 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
 
 @implementation NIAUIssue
 
-BOOL requestingArticles;
 
 -(id)init {
     if (self = [super init]) {
@@ -179,19 +178,25 @@ BOOL requestingArticles;
 }
 
 -(void)requestArticles {
-    if(!requestingArticles) {
+    NSLog(@"requestArticles called on %@",self);
+    if(requestingArticles) {
+        NSLog(@"already requesting articles");
+    } else {
         requestingArticles = TRUE;
         // put dispatch magic here
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
             
             // read from cache first and issue our first update
             
-            articles = [NIAUArticle articlesFromIssue:self];
+            articles = [NIAUArticle articlesFromIssue:self];		
             
             if ([articles count]>0) {
+                NSLog(@"articles from cache: %@",articles);
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [[NSNotificationCenter defaultCenter] postNotificationName:ArticlesDidUpdateNotification object:self];
                 });
+            } else {
+                NSLog(@"no articles found in cache");
             }
             
             NSURL *issueURL = [NSURL URLWithString:[NSString stringWithFormat:@"issues/%@.json", [self index]] relativeToURL:[NSURL URLWithString:SITE_URL]];
