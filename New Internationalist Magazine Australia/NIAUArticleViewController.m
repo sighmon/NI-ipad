@@ -123,6 +123,7 @@
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
     [self.webViewLoadingIndicator stopAnimating];
+    [self ensureScrollsToTop: webView];
     
     // Set the webview size
     CGSize size = [webView sizeThatFits: CGSizeMake(320., 1.)];
@@ -137,6 +138,10 @@
         self.bodyWebViewHeightConstraint.constant = contentHeight;
         [self.view needsUpdateConstraints];
     }];
+}
+
+- (void) ensureScrollsToTop: (UIView *) ensureView {
+    ((UIScrollView *)[[self.bodyWebView subviews] objectAtIndex:0]).scrollsToTop = NO;
 }
 
 #pragma mark -

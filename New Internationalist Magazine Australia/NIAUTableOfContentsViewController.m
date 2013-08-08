@@ -45,6 +45,9 @@
     
     // Set the scrollView content height to the editorsLetterTextView.
     [self updateScrollViewContentHeight];
+    
+    // Enable tapping the top bar to scroll to top for the scrollview by disabling it on the tableview
+    [self.tableView setScrollsToTop:NO];
 }
 
 -(void)publisherReady:(NSNotification *)not
@@ -55,8 +58,8 @@
 -(void)showArticles
 {
     [self.tableView reloadData];
-    [self adjustHeightOfTableview];
     [self updateEditorsLetterTextViewHeightToContent];
+    [self adjustHeightOfTableview];
     [self updateScrollViewContentHeight];
 }
 
