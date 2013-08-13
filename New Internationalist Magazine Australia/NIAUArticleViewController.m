@@ -45,9 +45,7 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
-    NSLog(@"TODO: Get the real article images.");
-    [self.featuredImage setImage:[UIImage imageNamed:@"default_featured_image.png"]];
-    [self.secondTestImage setImage:[UIImage imageNamed:@"default_article_image.png"]];
+    
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(publisherReady:) name:ArticleDidUpdateNotification object:self.article];
     
@@ -87,6 +85,14 @@
 {
     #define kbodyWebViewFont @"-apple-system-body"
     
+    
+    //Get the real article images.
+    NSLog(@"pre getFeaturedImageWIthCompletionBlock");
+    [self.article getFeaturedImageWithCompletionBlock:^(UIImage *img) {
+        [self.featuredImage setImage:img];
+        // TODO: do we need to force a redraw?
+    }];
+    NSLog(@"post getFeaturedImageWIthCompletionBlock");
     self.titleLabel.text = self.article.title;
     self.teaserLabel.text = self.article.teaser;
     self.authorLabel.text = self.article.author;

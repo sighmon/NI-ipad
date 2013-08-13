@@ -138,6 +138,17 @@
 }
 
 - (void)setupCell: (UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+
+    //cell.imageView.image = [UIImage imageNamed:@"default_article_image_table_view.png"];
+    // TODO: possibly replace the imageview with our own,
+    // see http://stackoverflow.com/questions/3182649/ios-sdk-uiviewcontentmodescaleaspectfit-vs-uiviewcontentmodescaleaspectfill
+    [[self.issue articleAtIndex:indexPath.row] getFeaturedImageWithSize:CGSizeMake(57,43) andCompletionBlock:^(UIImage *img) {
+        NSLog(@"completion block got image with width %f",[img size].width);
+        [cell.imageView setImage:img];
+        // TODO: do we need to force a redraw?
+    }];
+
+    
     cell.textLabel.lineBreakMode = NSLineBreakByWordWrapping;
     cell.detailTextLabel.lineBreakMode = NSLineBreakByWordWrapping;
     cell.textLabel.text = [self.issue articleAtIndex:indexPath.row].title;
@@ -145,7 +156,7 @@
 //    cell.detailTextLabel.attributedText = [[NSAttributedString alloc] initWithHTMLData:[[self.issue articleAtIndex:indexPath.row].teaser dataUsingEncoding:NSUTF8StringEncoding] baseURL:nil documentAttributes:nil];
     id teaser = [self.issue articleAtIndex:indexPath.row].teaser;
     cell.detailTextLabel.text =  (teaser==[NSNull null]) ? @"" : teaser;
-    cell.imageView.image = [UIImage imageNamed:@"default_article_image_table_view.png"];
+    
 }
 
 #pragma mark -
