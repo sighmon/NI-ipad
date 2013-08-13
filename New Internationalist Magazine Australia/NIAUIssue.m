@@ -207,25 +207,28 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
                                       JSONObjectWithData:data
                                       options:kNilOptions
                                       error:&error];
-                NSMutableArray *tmpArticles = [NSMutableArray arrayWithCapacity:1];
+                
                 [[dict objectForKey:@"articles"] enumerateObjectsUsingBlock:^(id dict, NSUInteger idx, BOOL *stop) {
                     
-                    // TODO: discard these objects and re-read cache after adding them (will preserve locally cached but remotely deleted data)
-                    [tmpArticles addObject:[NIAUArticle articleWithIssue:self andDictionary:dict]];
+                    // discard the returned objects and re-read cache after adding them (will preserve locally cached but remotely deleted data)
+                    [NIAUArticle articleWithIssue:self andDictionary:dict];
                     
                 }];
-                articles = [NSArray arrayWithArray:tmpArticles];
+                articles = [NIAUArticle articlesFromIssue:self];
                 
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [[NSNotificationCenter defaultCenter] postNotificationName:ArticlesDidUpdateNotification object:self];
                 });
                 
             } else {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [[NSNotificationCenter defaultCenter] postNotificationName:ArticlesFailedUpdateNotification object:self];
-                });
+                
+                // only send failure notification if there is nothing in the cache
+                if ([articles count]<1) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [[NSNotificationCenter defaultCenter] postNotificationName:ArticlesFailedUpdateNotification object:self];
+                    });
+                }
 
-                // failure notification
             }
             
             requestingArticles = FALSE;

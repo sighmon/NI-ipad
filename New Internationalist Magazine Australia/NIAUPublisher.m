@@ -97,9 +97,12 @@ static NIAUPublisher *instance =nil;
                } else {
                    // TODO: what to do here?
                    NSLog(@"download failed");
-                   dispatch_async(dispatch_get_main_queue(), ^{
-                       [[NSNotificationCenter defaultCenter] postNotificationName:PublisherFailedUpdateNotification object:self];
-                   });
+                   // only send failed notification if there is nothing in the cache
+                   if ([issues count]<1) {
+                       dispatch_async(dispatch_get_main_queue(), ^{
+                           [[NSNotificationCenter defaultCenter] postNotificationName:PublisherFailedUpdateNotification object:self];
+                       });
+                   }
 
                 
                }

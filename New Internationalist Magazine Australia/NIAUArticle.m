@@ -177,9 +177,12 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
                     [[NSNotificationCenter defaultCenter] postNotificationName:ArticleDidUpdateNotification object:self];
                 });
             } else {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [[NSNotificationCenter defaultCenter] postNotificationName:ArticleFailedUpdateNotification object:self];
-                });
+                // only send failure notification if body is null
+                if(!self.body) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [[NSNotificationCenter defaultCenter] postNotificationName:ArticleFailedUpdateNotification object:self];
+                    });
+                }
             }
             requestingBody = FALSE;
         });
