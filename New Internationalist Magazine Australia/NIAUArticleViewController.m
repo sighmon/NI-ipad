@@ -96,16 +96,21 @@
     self.titleLabel.text = self.article.title;
     self.teaserLabel.text = self.article.teaser;
     self.authorLabel.text = self.article.author;
+    
     // TODO: Load CSS from the filesystem
+    
+//    NSString *cssFilePath = [[NSBundle mainBundle] pathForResource:@"article-body" ofType:@"css"];
+//    NSString *cssString = [NSString stringWithContentsOfFile:cssFilePath encoding:NSStringEncodingConversionAllowLossy error:nil];
+    NSURL *cssURL = [[NSBundle mainBundle] URLForResource:@"article-body" withExtension:@"css"];
+    
     // TODO: insert that file into the HTML of the article body below
+    
     NSString *bodyWebViewHTML = [NSString stringWithFormat:@"<html> \n"
                                    "<head> \n"
-                                   "<style type=\"text/css\"> \n"
-                                   "body {font: \"%@\";}\n"
-                                   "</style> \n"
+                                   "<link rel=\"stylesheet\" type=\"text/css\" href=\"%@\">"
                                    "</head> \n"
                                    "<body>%@</body> \n"
-                                   "</html>", kbodyWebViewFont, self.article.body];
+                                   "</html>", cssURL, self.article.body];
     [self.bodyWebView loadHTMLString:bodyWebViewHTML baseURL:nil];
 }
 
