@@ -85,19 +85,25 @@
     return [self.issue numberOfArticles];
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"articleCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
     }
-    [self setupCell:cell atIndexPath:indexPath];
     
     return cell;
 }
 
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell *cell = [self tableView:tableView cellForHeightForRowAtIndexPath:indexPath];
+    [self setupCell:cell atIndexPath:indexPath];
+    return cell;
+}
+
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [self tableView:tableView cellForRowAtIndexPath:indexPath];
+    UITableViewCell *cell = [self tableView:tableView cellForHeightForRowAtIndexPath:indexPath];
     
     NSLog(@"cell.textLabel.text=%@",cell.textLabel.text);
     
@@ -137,16 +143,11 @@
     return textHeight + detailTextHeight + 20.;
 }
 
-- (void)setupCell: (UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+- (void)setupCellForHeight: (UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
 
-    //cell.imageView.image = [UIImage imageNamed:@"default_article_image_table_view.png"];
+    cell.imageView.image = [UIImage imageNamed:@"default_article_image_table_view.png"];
     // TODO: possibly replace the imageview with our own,
     // see http://stackoverflow.com/questions/3182649/ios-sdk-uiviewcontentmodescaleaspectfit-vs-uiviewcontentmodescaleaspectfill
-    [[self.issue articleAtIndex:indexPath.row] getFeaturedImageWithSize:CGSizeMake(57,43) andCompletionBlock:^(UIImage *img) {
-        NSLog(@"completion block got image with width %f",[img size].width);
-        [cell.imageView setImage:img];
-        // TODO: do we need to force a redraw?
-    }];
 
     
     cell.textLabel.lineBreakMode = NSLineBreakByWordWrapping;
@@ -158,6 +159,17 @@
     cell.detailTextLabel.text =  (teaser==[NSNull null]) ? @"" : teaser;
     
 }
+
+- (void)setupCell: (UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+    [self setupCellForHeight:cell atIndexPath:indexPath];
+    [[self.issue articleAtIndex:indexPath.row] getFeaturedImageWithSize:CGSizeMake(57,43) andCompletionBlock:^(UIImage *img) {
+        NSLog(@"completion block got image with width %f",[img size].width);
+        [cell.imageView setImage:img];
+        //[cell.imageView setNeedsLayout];
+        // TODO: do we need to force a redraw?
+    }];
+}
+
 
 #pragma mark -
 #pragma mark Setup Data
