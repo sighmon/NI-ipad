@@ -403,23 +403,23 @@
                                             <outletCollection property="gestureRecognizers" destination="HgU-zu-L5t" appends="YES" id="5Hb-t7-UvC"/>
                                         </connections>
                                     </imageView>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Article title" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="320" translatesAutoresizingMaskIntoConstraints="NO" id="fuM-gI-7Bu">
-                                        <rect key="frame" x="0.0" y="143" width="320" height="21"/>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Article title" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="270" translatesAutoresizingMaskIntoConstraints="NO" id="fuM-gI-7Bu">
+                                        <rect key="frame" x="25" y="143" width="270" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="320" id="Qeh-Y7-MRR"/>
                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="21" id="UPs-gt-bBG"/>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="270" id="bSt-PM-SPz"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline1"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Article teaser" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="320" translatesAutoresizingMaskIntoConstraints="NO" id="ulX-QY-4Wv">
-                                        <rect key="frame" x="0.0" y="172" width="320" height="21"/>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Article teaser" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="270" translatesAutoresizingMaskIntoConstraints="NO" id="ulX-QY-4Wv">
+                                        <rect key="frame" x="25" y="172" width="270" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <constraints>
                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="21" id="MHm-8t-5SC"/>
-                                            <constraint firstAttribute="width" constant="320" id="ykB-M5-Vzf"/>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="270" id="mpy-kN-GiI"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead1"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -448,6 +448,8 @@
                                     <constraint firstItem="PAM-Qv-IM5" firstAttribute="top" secondItem="ftA-uH-mfj" secondAttribute="top" id="8sk-8V-xJQ"/>
                                     <constraint firstItem="PoX-gg-8cE" firstAttribute="bottom" secondItem="ftA-uH-mfj" secondAttribute="bottom" id="G1B-GT-nfP"/>
                                     <constraint firstItem="PAM-Qv-IM5" firstAttribute="leading" secondItem="ftA-uH-mfj" secondAttribute="leading" id="JcH-Gi-QUd"/>
+                                    <constraint firstItem="fuM-gI-7Bu" firstAttribute="leading" secondItem="ftA-uH-mfj" secondAttribute="leading" constant="25" id="Jqy-4c-FNn"/>
+                                    <constraint firstAttribute="trailing" secondItem="fuM-gI-7Bu" secondAttribute="trailing" constant="25" id="L1c-1M-jKn"/>
                                     <constraint firstItem="fuM-gI-7Bu" firstAttribute="top" secondItem="PAM-Qv-IM5" secondAttribute="bottom" constant="8" id="R0u-3D-hpf"/>
                                     <constraint firstItem="PoX-gg-8cE" firstAttribute="leading" secondItem="ftA-uH-mfj" secondAttribute="leading" id="YyS-cI-Zqm"/>
                                     <constraint firstItem="fuM-gI-7Bu" firstAttribute="centerX" secondItem="ulX-QY-4Wv" secondAttribute="centerX" id="Z3g-X6-ewO"/>
@@ -566,7 +568,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="fI5-Du-KTZ"/>
+        <segue reference="mdp-6r-s59"/>
         <segue reference="fFr-gL-mDW"/>
     </inferredMetricsTieBreakers>
 </document>
