@@ -83,8 +83,8 @@
 
 - (void)setupData
 {
-    #define kbodyWebViewFont @"-apple-system-body"
-    
+    // Tried to use system font.. seems to be different for webview
+    // #define kbodyWebViewFont @"-apple-system-body"
     
     //Get the real article images.
     NSLog(@"pre getFeaturedImageWIthCompletionBlock");
@@ -96,17 +96,23 @@
     self.titleLabel.text = self.article.title;
     self.teaserLabel.text = self.article.teaser;
     self.authorLabel.text = self.article.author;
-    // TODO: Load CSS from the filesystem
-    // TODO: insert that file into the HTML of the article body below
+    
+    // Load CSS from the filesystem
+    NSURL *cssURL = [[NSBundle mainBundle] URLForResource:@"article-body" withExtension:@"css"];
+    
+    // Load the article into the webview
     NSString *bodyWebViewHTML = [NSString stringWithFormat:@"<html> \n"
                                    "<head> \n"
-                                   "<style type=\"text/css\"> \n"
-                                   "body {font: \"%@\";}\n"
-                                   "</style> \n"
+                                   "<link rel=\"stylesheet\" type=\"text/css\" href=\"%@\">"
                                    "</head> \n"
                                    "<body>%@</body> \n"
-                                   "</html>", kbodyWebViewFont, self.article.body];
+                                   "</html>", cssURL, self.article.body];
     [self.bodyWebView loadHTMLString:bodyWebViewHTML baseURL:nil];
+    
+    // Prevent webview from scrolling
+    if ([self.bodyWebView respondsToSelector:@selector(scrollView)]) {
+        self.bodyWebView.scrollView.scrollEnabled = NO;
+    }
 }
 
 - (void)updateScrollViewContentHeight
