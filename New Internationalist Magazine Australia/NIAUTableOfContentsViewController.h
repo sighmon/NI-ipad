@@ -20,6 +20,7 @@
 @property (nonatomic, strong) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *tableViewHeightConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *editorsLetterTextViewHeightConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *magazineCoverWidthConstraint;
 
 @property (nonatomic, weak) IBOutlet UIScrollView *scrollView;
 @property (nonatomic, weak) IBOutlet UIImageView *imageView;

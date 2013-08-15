@@ -40,8 +40,8 @@
     // Set the editorsLetterTextView height to its content.
     [self updateEditorsLetterTextViewHeightToContent];
     
-    // Set the exclusion path around the editors letter
-    [self updateEditorsLetterTextViewExclusionPath];
+//    // Set the exclusion path around the editors letter
+//    [self updateEditorsLetterTextViewExclusionPath];
     
     // Set the scrollView content height to the editorsLetterTextView.
     [self updateScrollViewContentHeight];
@@ -69,8 +69,20 @@
     
     // now set the height constraint accordingly
     
-    [UIView animateWithDuration:0.25 animations:^{
+    [UIView animateWithDuration:.25 animations:^{
         self.tableViewHeightConstraint.constant = height;
+        [self.view needsUpdateConstraints];
+    }];
+}
+
+- (void)adjustWidthOfMagazineCover
+{
+    CGFloat width = self.view.frame.size.height / 2.;
+    
+    // now set the width constraint accordingly
+    
+    [UIView animateWithDuration:.25 animations:^{
+        self.magazineCoverWidthConstraint.constant = width;
         [self.view needsUpdateConstraints];
     }];
 }
@@ -121,8 +133,7 @@
     
     //WTF: first time through this gets random smaller sizes...
     
-    NSLog(@"maxSize.width=%f",maxSize.width);
-    
+//    NSLog(@"maxSize.width=%f",maxSize.width);
     
     // replace the original text
     cell.textLabel.text = tmp;
@@ -133,10 +144,8 @@
     
     CGFloat detailTextHeight =  [cell.detailTextLabel sizeThatFits:maxSize].height;
     
-    NSLog(@"textHeight=%f",textHeight);
-    NSLog(@"detailTextHeight=%f",detailTextHeight);
-    
-    
+//    NSLog(@"textHeight=%f",textHeight);
+//    NSLog(@"detailTextHeight=%f",detailTextHeight);
     
     // TODO: work out how to set the padding to the standard value
     
@@ -148,7 +157,6 @@
     cell.imageView.image = [UIImage imageNamed:@"default_article_image_table_view.png"];
     // TODO: possibly replace the imageview with our own,
     // see http://stackoverflow.com/questions/3182649/ios-sdk-uiviewcontentmodescaleaspectfit-vs-uiviewcontentmodescaleaspectfill
-
     
     cell.textLabel.lineBreakMode = NSLineBreakByWordWrapping;
     cell.detailTextLabel.lineBreakMode = NSLineBreakByWordWrapping;
@@ -157,7 +165,6 @@
 //    cell.detailTextLabel.attributedText = [[NSAttributedString alloc] initWithHTMLData:[[self.issue articleAtIndex:indexPath.row].teaser dataUsingEncoding:NSUTF8StringEncoding] baseURL:nil documentAttributes:nil];
     id teaser = [self.issue articleAtIndex:indexPath.row].teaser;
     cell.detailTextLabel.text =  (teaser==[NSNull null]) ? @"" : teaser;
-    
 }
 
 - (void)setupCell: (UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
@@ -308,9 +315,16 @@
 #pragma mark -
 #pragma mark Rotation handling
 
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+    
+    [self adjustWidthOfMagazineCover];
+}
+
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
-    [self updateEditorsLetterTextViewExclusionPath];
+//    [self updateEditorsLetterTextViewExclusionPath];
     [self updateEditorsLetterTextViewHeightToContent];
     [self adjustHeightOfTableview];
     [self updateScrollViewContentHeight];

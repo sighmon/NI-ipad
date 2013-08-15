@@ -115,7 +115,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="xiD-Qm-3PW">
-                            <size key="itemSize" width="192" height="272.63999999999999"/>
+                            <size key="itemSize" width="192" height="273"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -128,8 +128,8 @@
                                     <rect key="frame" x="0.0" y="0.0" width="192" height="273"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tyQ-to-wEq">
-                                            <rect key="frame" x="0.0" y="0.0" width="192" height="272"/>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="tyQ-to-wEq">
+                                            <rect key="frame" x="0.0" y="0.0" width="192" height="273"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         </imageView>
                                     </subviews>
@@ -179,6 +179,10 @@
                                         <rect key="frame" x="0.0" y="0.0" width="384" height="515"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <gestureRecognizers/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="384" id="6ct-J1-wrK"/>
+                                            <constraint firstAttribute="height" constant="515" id="NZQ-5e-fH3"/>
+                                        </constraints>
                                         <connections>
                                             <outletCollection property="gestureRecognizers" destination="12T-Lf-AiD" appends="YES" id="MUA-4E-ZgC"/>
                                         </connections>
@@ -196,34 +200,30 @@
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline2"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Editor" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="356" translatesAutoresizingMaskIntoConstraints="NO" id="i6V-Mh-aMJ">
-                                        <rect key="frame" x="20" y="579" width="356" height="21"/>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Editor" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="209" translatesAutoresizingMaskIntoConstraints="NO" id="i6V-Mh-aMJ">
+                                        <rect key="frame" x="167" y="632" width="209" height="20"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="21" id="Cgu-yX-7T8"/>
-                                            <constraint firstAttribute="width" constant="356" id="iTT-Vi-aA8"/>
-                                        </constraints>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline2"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ewB-NK-0ve">
-                                        <rect key="frame" x="0.0" y="608" width="384" height="416"/>
+                                        <rect key="frame" x="20" y="724" width="356" height="300"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="416" id="Bvh-lG-9LW"/>
+                                            <constraint firstAttribute="height" constant="300" id="Bvh-lG-9LW"/>
                                         </constraints>
                                         <string key="text">This is some sample text for the editor's letter. They'll write something amazingly interesting, promise! This is some sample text for the editor's letter. They'll write something amazingly interesting, promise! This is some sample text for the editor's letter. They'll write something amazingly interesting, promise! This is some sample text for the editor's letter. They'll write something amazingly interesting, promise! This is some sample text for the editor's letter. They'll write something amazingly interesting, promise! This is some sample text for the editor's letter. They'll write something amazingly interesting, promise! This is some sample text for the editor's letter. They'll write something amazingly interesting, promise! </string>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
                                     <imageView multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fpA-Cj-zEf">
-                                        <rect key="frame" x="257" y="608" width="127" height="127"/>
+                                        <rect key="frame" x="20" y="579" width="125" height="125"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <gestureRecognizers/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="127" id="G8A-Ec-x56"/>
-                                            <constraint firstAttribute="height" constant="127" id="fgG-YC-WXl"/>
+                                            <constraint firstAttribute="width" constant="125" id="5Kb-7X-WGK"/>
+                                            <constraint firstAttribute="height" constant="125" id="Tnr-PK-F3j"/>
                                         </constraints>
                                         <connections>
                                             <outletCollection property="gestureRecognizers" destination="LNS-6r-CEZ" appends="YES" id="jGY-0J-vLK"/>
@@ -234,7 +234,6 @@
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" priority="279" constant="384" id="rNq-Jb-bU9"/>
                                             <constraint firstAttribute="height" constant="1024" id="ww3-8m-7pM"/>
                                         </constraints>
                                         <prototypes>
@@ -273,27 +272,27 @@
                                     </tableView>
                                 </subviews>
                                 <constraints>
+                                    <constraint firstItem="fpA-Cj-zEf" firstAttribute="top" secondItem="2Jy-dG-VkX" secondAttribute="bottom" constant="8" id="07a-Cx-UqK"/>
+                                    <constraint firstItem="SJ4-ca-Goj" firstAttribute="leading" secondItem="ewB-NK-0ve" secondAttribute="trailing" constant="8" symbolic="YES" id="3iE-TQ-UGO"/>
+                                    <constraint firstItem="SJ4-ca-Goj" firstAttribute="leading" secondItem="i6V-Mh-aMJ" secondAttribute="trailing" constant="8" id="8Hg-ja-42K"/>
                                     <constraint firstItem="wy6-pb-VG0" firstAttribute="leading" secondItem="Zqd-QL-8wn" secondAttribute="leading" symbolic="YES" id="9Gb-N4-RUa"/>
                                     <constraint firstItem="SJ4-ca-Goj" firstAttribute="top" secondItem="ebt-QH-0s8" secondAttribute="top" id="Cxr-YA-I1E"/>
+                                    <constraint firstItem="ewB-NK-0ve" firstAttribute="top" secondItem="fpA-Cj-zEf" secondAttribute="bottom" constant="20" id="EvR-JX-jfA"/>
                                     <constraint firstItem="2Jy-dG-VkX" firstAttribute="top" secondItem="wy6-pb-VG0" secondAttribute="bottom" symbolic="YES" id="Msa-SB-Iy7"/>
-                                    <constraint firstItem="fpA-Cj-zEf" firstAttribute="top" secondItem="ewB-NK-0ve" secondAttribute="top" id="NBq-Jj-nbZ"/>
-                                    <constraint firstItem="ewB-NK-0ve" firstAttribute="leading" secondItem="Zqd-QL-8wn" secondAttribute="leading" id="Oek-5u-ywG"/>
+                                    <constraint firstItem="ewB-NK-0ve" firstAttribute="leading" secondItem="Zqd-QL-8wn" secondAttribute="leading" constant="20" id="Oek-5u-ywG"/>
                                     <constraint firstItem="ebt-QH-0s8" firstAttribute="leading" secondItem="Zqd-QL-8wn" secondAttribute="leading" id="Rv4-4q-Z2G"/>
-                                    <constraint firstItem="i6V-Mh-aMJ" firstAttribute="top" secondItem="2Jy-dG-VkX" secondAttribute="bottom" symbolic="YES" id="SgF-a6-Wzs"/>
                                     <constraint firstItem="wy6-pb-VG0" firstAttribute="top" secondItem="ebt-QH-0s8" secondAttribute="bottom" symbolic="YES" id="TE3-gI-n9e"/>
-                                    <constraint firstItem="ewB-NK-0ve" firstAttribute="top" secondItem="i6V-Mh-aMJ" secondAttribute="bottom" symbolic="YES" id="UZi-nU-XGq"/>
-                                    <constraint firstItem="i6V-Mh-aMJ" firstAttribute="leading" secondItem="Zqd-QL-8wn" secondAttribute="leading" symbolic="YES" id="UbE-Mv-tPG"/>
+                                    <constraint firstItem="ebt-QH-0s8" firstAttribute="width" secondItem="SJ4-ca-Goj" secondAttribute="width" id="TpF-nE-XMD"/>
                                     <constraint firstItem="SJ4-ca-Goj" firstAttribute="leading" secondItem="ebt-QH-0s8" secondAttribute="trailing" id="Zue-bS-afV"/>
                                     <constraint firstItem="ebt-QH-0s8" firstAttribute="top" secondItem="Zqd-QL-8wn" secondAttribute="top" id="aOr-iJ-gnv"/>
                                     <constraint firstItem="2Jy-dG-VkX" firstAttribute="leading" secondItem="Zqd-QL-8wn" secondAttribute="leading" symbolic="YES" id="b6J-q8-yB4"/>
                                     <constraint firstAttribute="bottom" secondItem="ewB-NK-0ve" secondAttribute="bottom" id="bmJ-y0-soP"/>
-                                    <constraint firstItem="fpA-Cj-zEf" firstAttribute="trailing" secondItem="ewB-NK-0ve" secondAttribute="trailing" id="elX-ZF-chR"/>
-                                    <constraint firstItem="SJ4-ca-Goj" firstAttribute="leading" secondItem="fpA-Cj-zEf" secondAttribute="trailing" id="fvE-Mi-VSR"/>
-                                    <constraint firstItem="SJ4-ca-Goj" firstAttribute="leading" secondItem="i6V-Mh-aMJ" secondAttribute="trailing" constant="8" symbolic="YES" id="iAq-S7-v2P"/>
+                                    <constraint firstItem="i6V-Mh-aMJ" firstAttribute="leading" secondItem="fpA-Cj-zEf" secondAttribute="trailing" constant="22" id="h44-lY-EN3"/>
                                     <constraint firstItem="SJ4-ca-Goj" firstAttribute="leading" secondItem="wy6-pb-VG0" secondAttribute="trailing" constant="8" symbolic="YES" id="nni-gY-Ac7"/>
                                     <constraint firstItem="SJ4-ca-Goj" firstAttribute="trailing" secondItem="Zqd-QL-8wn" secondAttribute="trailing" id="oMT-DQ-jMq"/>
                                     <constraint firstItem="SJ4-ca-Goj" firstAttribute="leading" secondItem="2Jy-dG-VkX" secondAttribute="trailing" constant="8" symbolic="YES" id="p7A-Ae-Ryh"/>
-                                    <constraint firstItem="i6V-Mh-aMJ" firstAttribute="top" secondItem="Zqd-QL-8wn" secondAttribute="top" constant="579" id="yQQ-su-0z8"/>
+                                    <constraint firstItem="i6V-Mh-aMJ" firstAttribute="centerY" secondItem="fpA-Cj-zEf" secondAttribute="centerY" id="weC-sk-xX1"/>
+                                    <constraint firstItem="fpA-Cj-zEf" firstAttribute="leading" secondItem="Zqd-QL-8wn" secondAttribute="leading" constant="20" id="yk6-S9-dQb"/>
                                 </constraints>
                                 <connections>
                                     <outlet property="delegate" destination="Pia-vN-nb6" id="9mb-iV-GUA"/>
@@ -325,6 +324,7 @@
                         <outlet property="labelEditor" destination="i6V-Mh-aMJ" id="zOw-Kt-cLd"/>
                         <outlet property="labelNumberAndDate" destination="2Jy-dG-VkX" id="iR0-H3-mhh"/>
                         <outlet property="labelTitle" destination="wy6-pb-VG0" id="N80-lO-LLx"/>
+                        <outlet property="magazineCoverWidthConstraint" destination="6ct-J1-wrK" id="yrS-7Z-bLh"/>
                         <outlet property="scrollView" destination="Zqd-QL-8wn" id="d7F-Z6-J6R"/>
                         <outlet property="shareAction" destination="JEv-4t-ZCj" id="h6Z-qa-EvR"/>
                         <outlet property="tableView" destination="SJ4-ca-Goj" id="o7k-zH-Cpf"/>
