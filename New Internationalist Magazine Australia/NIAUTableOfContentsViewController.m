@@ -77,6 +77,8 @@
 
 - (void)adjustWidthOfMagazineCover
 {
+    // TODO: Fix the case that you start the app in Landscape mode
+    
     CGFloat width = self.view.frame.size.height / 2.;
     
     // now set the width constraint accordingly

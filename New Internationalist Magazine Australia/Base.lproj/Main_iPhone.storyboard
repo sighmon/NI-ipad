@@ -267,7 +267,7 @@
                                             <outlet property="delegate" destination="4fR-wf-HfG" id="EzB-cc-tXZ"/>
                                         </connections>
                                     </tableView>
-                                    <imageView multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="zUP-pp-27x">
+                                    <imageView multipleTouchEnabled="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="zUP-pp-27x">
                                         <rect key="frame" x="20" y="485" width="138" height="138"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <gestureRecognizers/>
