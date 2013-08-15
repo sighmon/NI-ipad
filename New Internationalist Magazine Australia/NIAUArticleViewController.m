@@ -90,7 +90,7 @@
     NSLog(@"pre getFeaturedImageWIthCompletionBlock");
     [self.article getFeaturedImageWithCompletionBlock:^(UIImage *img) {
         [self.featuredImage setImage:img];
-        // TODO: do we need to force a redraw?
+        [self.featuredImage setNeedsLayout];
     }];
     NSLog(@"post getFeaturedImageWIthCompletionBlock");
     self.titleLabel.text = self.article.title;
@@ -163,9 +163,9 @@
 {
     NSLog(@"Share tapped!");
     
-    // TODO: Add article image to share when/if it's available.
+    // TODO: Check that the image isn't a default image.
     
-    NSArray *itemsToShare = @[[NSString stringWithFormat:@"I'm reading '%@'",self.article.title], self.article.getWebURL];
+    NSArray *itemsToShare = @[[NSString stringWithFormat:@"I'm reading '%@'",self.article.title], self.featuredImage.image, self.article.getWebURL];
     
     UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:itemsToShare applicationActivities:nil];
     [self presentViewController:activityController animated:YES completion:nil];

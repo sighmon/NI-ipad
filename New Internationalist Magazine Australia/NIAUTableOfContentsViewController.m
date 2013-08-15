@@ -185,7 +185,8 @@
 {
     // Set the cover from the issue cover tapped
     [self.issue getCoverWithCompletionBlock:^(UIImage *img) {
-        self.imageView.image = img;
+        [self.imageView setImage:img];
+        [self.imageView setNeedsLayout];
     }];
     
     self.labelTitle.text = self.issue.title;
@@ -195,8 +196,12 @@
     self.labelEditor.text = [NSString stringWithFormat:@"Editor's letter by %@", self.issue.editorsName];
     self.editorsLetterTextView.text = self.issue.editorsLetter;
     
-    NSLog(@"TODO: Get the real editor's image.");
-    [self.editorImageView setImage:[UIImage imageNamed:@"default_editors_photo.png"]];
+    [self.editorImageView setImage:[UIImage imageNamed:@"default_editors_photo"]];
+    // Load the real editor's image
+    [self.issue getEditorsImageWithCompletionBlock:^(UIImage *img) {
+        [self.editorImageView setImage:img];
+        [self.editorImageView setNeedsLayout];
+    }];
     [self applyRoundMask:self.editorImageView];
 }
 

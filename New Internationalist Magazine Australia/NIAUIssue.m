@@ -177,6 +177,37 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
     }
 }
 
+-(void)getEditorsImageWithCompletionBlock:(void(^)(UIImage *img))block {
+    
+    NSString *url = [[dictionary objectForKey:@"editors_photo"] objectForKey:@"url"];
+    // online location of cover
+    NSURL *photoURL = [NSURL URLWithString:url relativeToURL:[NSURL URLWithString:SITE_URL]];
+    NSString *coverFileName = [photoURL lastPathComponent];
+    // local URL to where the cover is/would be stored
+    NSURL *photoCacheURL = [NSURL URLWithString:coverFileName relativeToURL:[self.nkIssue contentURL]];
+    NSLog(@"trying to read cached editor's image from %@",photoCacheURL);
+    UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:photoCacheURL]];
+    
+    if(image) {
+        // cache hit
+        block(image);
+    } else {
+        // cache miss, download
+        NSLog(@"cache miss, downloading image from %@",photoURL);
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0),
+                       ^{
+                           // download image data
+                           NSData *imageData = [NSData dataWithContentsOfURL:photoURL];
+                           // what if imageData is nil? - seems to cope
+                           UIImage *image = [UIImage imageWithData:imageData];
+                           if(image) {
+                               [imageData writeToURL:photoCacheURL atomically:YES];
+                               block(image);
+                           }
+                       });
+    }
+}
+
 -(void)requestArticles {
     NSLog(@"requestArticles called on %@",self);
     if(requestingArticles) {
