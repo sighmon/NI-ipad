@@ -31,6 +31,10 @@
 @property (weak, nonatomic) IBOutlet UILabel *labelNumberAndDate;
 @property (weak, nonatomic) IBOutlet UILabel *labelEditor;
 
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *tableViewArticleTitleHeightConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *tableViewArticleTeaserHeightConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *tableViewCellHeightConstraint;
+
 @property (weak, nonatomic) IBOutlet UINavigationItem *shareAction;
 
 @end

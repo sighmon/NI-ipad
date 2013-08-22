@@ -106,6 +106,9 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
     }
     
+//    cell.contentView.translatesAutoresizingMaskIntoConstraints = NO;
+//    [cell setAutoresizingMask:(UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleRightMargin)];
+    
     return cell;
 }
 
@@ -119,54 +122,37 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [self tableView:tableView cellForHeightForRowAtIndexPath:indexPath];
     
-    NSLog(@"cell.textLabel.text=%@",cell.textLabel.text);
+    UILabel *articleTitle = (UILabel *)[cell viewWithTag:101];
+    UILabel *articleTeaser = (UILabel *)[cell viewWithTag:102];
     
     // set the frame to be the same size as the tableView (only really to get the width)
     cell.frame = tableView.frame;
     NSLog(@"cell.frame.width=%f",cell.frame.size.width);
-    // temporarily store the contents of the textlabel
-    NSString *tmp = cell.textLabel.text;
-    // and set it to a really wide string
-    cell.textLabel.text = [@"" stringByPaddingToLength:500 withString:@" X" startingAtIndex:0];
-    // then update the layout
-    [cell layoutIfNeeded];
-    // pull out the size of the textLabel to get it's maximum possible size
-    CGSize 	maxSize = cell.textLabel.frame.size;
-    
-    //WTF: first time through this gets random smaller sizes...
-    
-//    NSLog(@"maxSize.width=%f",maxSize.width);
-    
-    // replace the original text
-    cell.textLabel.text = tmp;
-    
-    // inspired by http://doing-it-wrong.mikeweller.com/2012/07/youre-doing-it-wrong-2-sizing-labels.html
-    
-    CGFloat textHeight = [cell.textLabel sizeThatFits:maxSize].height;
-    
-    CGFloat detailTextHeight =  [cell.detailTextLabel sizeThatFits:maxSize].height;
-    
-//    NSLog(@"textHeight=%f",textHeight);
-//    NSLog(@"detailTextHeight=%f",detailTextHeight);
-    
-    // TODO: work out how to set the padding to the standard value
-    
-    return textHeight + detailTextHeight + 20.;
+
+    return articleTeaser.frame.origin.y + articleTeaser.frame.size.height;
 }
 
 - (void)setupCellForHeight: (UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
 
-    cell.imageView.image = [UIImage imageNamed:@"default_article_image_table_view.png"];
+    //cell.imageView.image = [UIImage imageNamed:@"default_article_image_table_view.png"];
     // TODO: possibly replace the imageview with our own,
     // see http://stackoverflow.com/questions/3182649/ios-sdk-uiviewcontentmodescaleaspectfit-vs-uiviewcontentmodescaleaspectfill
     
-    cell.textLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    cell.detailTextLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    cell.textLabel.text = [self.issue articleAtIndex:indexPath.row].title;
+    //self.tableViewArticleTitle.text = [self.issue articleAtIndex:indexPath.row].title;
 //    TODO: For Pix to fix - attributedText for article teasers
 //    cell.detailTextLabel.attributedText = [[NSAttributedString alloc] initWithHTMLData:[[self.issue articleAtIndex:indexPath.row].teaser dataUsingEncoding:NSUTF8StringEncoding] baseURL:nil documentAttributes:nil];
     id teaser = [self.issue articleAtIndex:indexPath.row].teaser;
-    cell.detailTextLabel.text =  (teaser==[NSNull null]) ? @"" : teaser;
+    //self.tableViewArticleTeaser.text =  (teaser==[NSNull null]) ? @"" : teaser;
+    
+    UIImageView *articleImageView = (UIImageView *)[cell viewWithTag:100];
+    articleImageView.image = [UIImage imageNamed:@"default_article_image_table_view.png"];
+    
+    UILabel *articleTitle = (UILabel *)[cell viewWithTag:101];
+    articleTitle.text = [self.issue articleAtIndex:indexPath.row].title;
+    
+    UILabel *articleTeaser = (UILabel *)[cell viewWithTag:102];
+    articleTeaser.text = (teaser==[NSNull null]) ? @"" : teaser;
+    
 }
 
 - (void)setupCell: (UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
