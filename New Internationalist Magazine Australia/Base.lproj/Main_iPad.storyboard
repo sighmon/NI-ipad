@@ -229,8 +229,8 @@
                                             <outletCollection property="gestureRecognizers" destination="LNS-6r-CEZ" appends="YES" id="jGY-0J-vLK"/>
                                         </connections>
                                     </imageView>
-                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="SJ4-ca-Goj">
-                                        <rect key="frame" x="384" y="149" width="384" height="875"/>
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="SJ4-ca-Goj">
+                                        <rect key="frame" x="384" y="0.0" width="384" height="1024"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>

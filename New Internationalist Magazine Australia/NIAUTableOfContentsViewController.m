@@ -122,7 +122,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [self tableView:tableView cellForHeightForRowAtIndexPath:indexPath];
     
-    UILabel *articleTitle = (UILabel *)[cell viewWithTag:101];
+//    UILabel *articleTitle = (UILabel *)[cell viewWithTag:101];
     UILabel *articleTeaser = (UILabel *)[cell viewWithTag:102];
     
     // set the frame to be the same size as the tableView (only really to get the width)
