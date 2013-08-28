@@ -55,9 +55,13 @@
     [self showArticles];
 }
 
+
 -(void)showArticles
 {
     [self.tableView reloadData];
+
+    [self.tableView reloadRowsAtIndexPaths:[self.tableView indexPathsForVisibleRows] withRowAnimation:UITableViewRowAnimationFade];
+
     [self updateEditorsLetterTextViewHeightToContent];
     [self adjustHeightOfTableview];
     [self updateScrollViewContentHeight];
@@ -105,7 +109,7 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
     }
-    
+    [self setupCellForHeight:cell atIndexPath:indexPath];
 //    cell.contentView.translatesAutoresizingMaskIntoConstraints = NO;
 //    [cell setAutoresizingMask:(UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleRightMargin)];
     
@@ -115,6 +119,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [self tableView:tableView cellForHeightForRowAtIndexPath:indexPath];
     [self setupCell:cell atIndexPath:indexPath];
+    NSLog(@"cellForRowAtIndexPath %@ (%@)",((UILabel *)[cell viewWithTag:101]).text,[self.issue articleAtIndex:indexPath.row].teaser.class);
     return cell;
 }
 
@@ -126,10 +131,35 @@
     UILabel *articleTeaser = (UILabel *)[cell viewWithTag:102];
     
     // set the frame to be the same size as the tableView (only really to get the width)
+    [tableView addSubview:cell];
     cell.frame = tableView.frame;
-    NSLog(@"cell.frame.width=%f",cell.frame.size.width);
+    //cell.frame = CGRectMake(tableView.frame.origin.x, tableView.frame.origin.y, tableView.frame.size.width, 1000);
+    
 
-    return articleTeaser.frame.origin.y + articleTeaser.frame.size.height;
+    
+    NSLog(@"tableView.frame.width=%f",tableView.frame.size.width);
+    NSLog(@"tableView.frame.height=%f",tableView.frame.size.height);
+    NSLog(@"cell.frame.width=%f",cell.frame.size.width);
+    NSLog(@"cell.frame.height=%f",cell.frame.size.height);
+
+    //CGSize const fittingSize = UILayoutFittingExpandedSize;
+    
+	//[cell setNeedsLayout];
+	//[cell layoutIfNeeded];
+    
+	//CGFloat height = [cell.contentView systemLayoutSizeFittingSize:fittingSize].height;
+    
+    CGFloat height = articleTeaser.frame.origin.y + articleTeaser.frame.size.height;
+    
+    NSLog(@"articleTeaser.width = %f", articleTeaser.frame.size.width);
+    
+    //[cell removeFromSuperview];
+    
+    NSLog(@"heightforrowatindexpath: article %@ height=%f",((UILabel *)[cell viewWithTag:101]).text,height);
+    
+    
+    
+    return height;
 }
 
 - (void)setupCellForHeight: (UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
@@ -313,14 +343,13 @@
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
     
     [self adjustWidthOfMagazineCover];
+    [self showArticles];
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
 //    [self updateEditorsLetterTextViewExclusionPath];
-    [self updateEditorsLetterTextViewHeightToContent];
-    [self adjustHeightOfTableview];
-    [self updateScrollViewContentHeight];
+    
 }
 
 @end
