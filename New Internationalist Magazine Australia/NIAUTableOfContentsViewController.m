@@ -58,6 +58,10 @@
 -(void)showArticles
 {
     [self.tableView reloadData];
+//    [self.tableView beginUpdates];
+//    NSArray *indexPaths = [self.tableView indexPathsForVisibleRows]; // TODO: all index paths
+//	[self.tableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationFade];
+//    [self.tableView endUpdates];
     [self updateEditorsLetterTextViewHeightToContent];
     [self adjustHeightOfTableview];
     [self updateScrollViewContentHeight];
@@ -308,19 +312,24 @@
 #pragma mark -
 #pragma mark Rotation handling
 
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
-{
-    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+	[super willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
     
     [self adjustWidthOfMagazineCover];
+    [self showArticles];
 }
+
+
+//- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+//{
+//    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+//    
+//    [self adjustWidthOfMagazineCover];
+//}
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
-//    [self updateEditorsLetterTextViewExclusionPath];
-    [self updateEditorsLetterTextViewHeightToContent];
-    [self adjustHeightOfTableview];
-    [self updateScrollViewContentHeight];
+    
 }
 
 @end
