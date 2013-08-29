@@ -16,6 +16,8 @@ extern NSString *ArticleFailedUpdateNotification;
 @interface NIAUArticle : NSObject {
     NSDictionary *dictionary;
     BOOL requestingBody;
+    UIImage *cachedFeaturedImage;
+    CGSize cachedFeaturedImageSize;
 }
 
 @property(nonatomic, strong, readonly) NSString *body;

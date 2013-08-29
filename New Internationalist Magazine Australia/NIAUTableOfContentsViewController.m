@@ -36,18 +36,6 @@
     
     // Add the data for the view
     [self setupData];
-    
-    // Set the editorsLetterTextView height to its content.
-    [self updateEditorsLetterTextViewHeightToContent];
-    
-//    // Set the exclusion path around the editors letter
-//    [self updateEditorsLetterTextViewExclusionPath];
-    
-    // Set the scrollView content height to the editorsLetterTextView.
-    [self updateScrollViewContentHeight];
-    
-    // Enable tapping the top bar to scroll to top for the scrollview by disabling it on the tableview
-    [self.tableView setScrollsToTop:NO];
 }
 
 -(void)publisherReady:(NSNotification *)not
@@ -58,21 +46,6 @@
 -(void)showArticles
 {
     [self.tableView reloadData];
-    [self updateEditorsLetterTextViewHeightToContent];
-    [self adjustHeightOfTableview];
-    [self updateScrollViewContentHeight];
-}
-
-- (void)adjustHeightOfTableview
-{
-    CGFloat height = self.tableView.contentSize.height;
-    
-    // now set the height constraint accordingly
-    
-    [UIView animateWithDuration:.25 animations:^{
-        self.tableViewHeightConstraint.constant = height;
-        [self.view needsUpdateConstraints];
-    }];
 }
 
 - (void)adjustWidthOfMagazineCover
@@ -105,10 +78,7 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
     }
-    
-//    cell.contentView.translatesAutoresizingMaskIntoConstraints = NO;
-//    [cell setAutoresizingMask:(UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleRightMargin)];
-    
+    [self setupCellForHeight:cell atIndexPath:indexPath];
     return cell;
 }
 
@@ -120,29 +90,25 @@
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
     UITableViewCell *cell = [self tableView:tableView cellForHeightForRowAtIndexPath:indexPath];
     
-//    UILabel *articleTitle = (UILabel *)[cell viewWithTag:101];
-    UILabel *articleTeaser = (UILabel *)[cell viewWithTag:102];
+    [tableView addSubview:cell];
+    CGSize fittingSize = CGSizeMake(tableView.bounds.size.width, 0);
+    CGSize size = [cell.contentView systemLayoutSizeFittingSize:fittingSize];
+    [cell removeFromSuperview];
     
-    // set the frame to be the same size as the tableView (only really to get the width)
-    cell.frame = tableView.frame;
-    NSLog(@"cell.frame.width=%f",cell.frame.size.width);
-
-    return articleTeaser.frame.origin.y + articleTeaser.frame.size.height;
+    int width = size.width;
+    int height = size.height;
+    
+    NSLog(@"%@ %ix%i",((UILabel *)[cell viewWithTag:101]).text,width,height);
+    
+    return size.height;
 }
 
 - (void)setupCellForHeight: (UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
 
-    //cell.imageView.image = [UIImage imageNamed:@"default_article_image_table_view.png"];
-    // TODO: possibly replace the imageview with our own,
-    // see http://stackoverflow.com/questions/3182649/ios-sdk-uiviewcontentmodescaleaspectfit-vs-uiviewcontentmodescaleaspectfill
-    
-    //self.tableViewArticleTitle.text = [self.issue articleAtIndex:indexPath.row].title;
-//    TODO: For Pix to fix - attributedText for article teasers
-//    cell.detailTextLabel.attributedText = [[NSAttributedString alloc] initWithHTMLData:[[self.issue articleAtIndex:indexPath.row].teaser dataUsingEncoding:NSUTF8StringEncoding] baseURL:nil documentAttributes:nil];
     id teaser = [self.issue articleAtIndex:indexPath.row].teaser;
-    //self.tableViewArticleTeaser.text =  (teaser==[NSNull null]) ? @"" : teaser;
     
     UIImageView *articleImageView = (UIImageView *)[cell viewWithTag:100];
     articleImageView.image = [UIImage imageNamed:@"default_article_image_table_view.png"];
@@ -152,17 +118,22 @@
     
     UILabel *articleTeaser = (UILabel *)[cell viewWithTag:102];
     articleTeaser.text = (teaser==[NSNull null]) ? @"" : teaser;
-    
 }
 
 - (void)setupCell: (UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     [self setupCellForHeight:cell atIndexPath:indexPath];
-//    [[self.issue articleAtIndex:indexPath.row] getFeaturedImageWithSize:CGSizeMake(57,43) andCompletionBlock:^(UIImage *img) {
-//        NSLog(@"completion block got image with width %f",[img size].width);
-//        [cell.imageView setImage:img];
-//        //[cell.imageView setNeedsLayout];
-//        // TODO: do we need to force a redraw?
-//    }];
+    UIImageView *articleImageView = (UIImageView *)[cell viewWithTag:100];
+    if (articleImageView.image == [UIImage imageNamed:@"default_article_image_table_view.png"]) {
+        [[self.issue articleAtIndex:indexPath.row] getFeaturedImageWithSize:CGSizeMake(57,43) andCompletionBlock:^(UIImage *img) {
+            NSLog(@"completion block got image with width %f",[img size].width);
+            UIImageView *articleImageView = (UIImageView *)[cell viewWithTag:100];
+            [articleImageView setImage:img];
+//            [cell setNeedsLayout];
+            // TODO: do we need to force a redraw?
+        }];
+    } else {
+        NSLog(@"Cell has an image.");
+    }
 }
 
 
@@ -177,20 +148,20 @@
         [self.imageView setNeedsLayout];
     }];
     
-    self.labelTitle.text = self.issue.title;
+//    self.labelTitle.text = self.issue.title;
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"MMMM yyyy"];
     self.labelNumberAndDate.text = [NSString stringWithFormat: @"%@ - %@", self.issue.name, [dateFormatter stringFromDate:self.issue.publication]];
-    self.labelEditor.text = [NSString stringWithFormat:@"Editor's letter by %@", self.issue.editorsName];
-    self.editorsLetterTextView.text = self.issue.editorsLetter;
+//    self.labelEditor.text = [NSString stringWithFormat:@"Editor's letter by %@", self.issue.editorsName];
+//    self.editorsLetterTextView.text = self.issue.editorsLetter;
     
-    [self.editorImageView setImage:[UIImage imageNamed:@"default_editors_photo"]];
-    // Load the real editor's image
-    [self.issue getEditorsImageWithCompletionBlock:^(UIImage *img) {
-        [self.editorImageView setImage:img];
-        [self.editorImageView setNeedsLayout];
-    }];
-    [self applyRoundMask:self.editorImageView];
+//    [self.editorImageView setImage:[UIImage imageNamed:@"default_editors_photo"]];
+//    // Load the real editor's image
+//    [self.issue getEditorsImageWithCompletionBlock:^(UIImage *img) {
+//        [self.editorImageView setImage:img];
+//        [self.editorImageView setNeedsLayout];
+//    }];
+//    [self applyRoundMask:self.editorImageView];
 }
 
 - (void)applyRoundMask:(UIImageView *)imageView
@@ -198,39 +169,6 @@
     // Draw a round mask for images.. i.e. the editor's photo
     imageView.layer.masksToBounds = YES;
     imageView.layer.cornerRadius = self.editorImageView.bounds.size.width / 2.;
-}
-
-- (void)updateEditorsLetterTextViewExclusionPath
-{
-    // Wrap the text around the editor's photo
-    
-    // TODO: Work out how to only exclude words not characters. For now I'll just use a square exclusionPath.
-    // self.editorsLetterTextView.textContainer.exclusionPaths = @[[UIBezierPath bezierPathWithRoundedRect:editorImageViewRect cornerRadius:self.editorImageView.layer.cornerRadius]];
-    
-    self.editorsLetterTextView.textContainer.exclusionPaths = nil;
-    CGRect editorImageViewRect = [self.editorsLetterTextView convertRect:self.editorImageView.frame fromView:self.view];
-    self.editorsLetterTextView.textContainer.exclusionPaths = @[[UIBezierPath bezierPathWithRect:editorImageViewRect]];
-}
-
-- (void)updateEditorsLetterTextViewHeightToContent
-{
-    CGFloat editorsLetterTextViewHeight = self.editorsLetterTextView.contentSize.height;
-    
-    // now set the height constraint accordingly
-    
-    [UIView animateWithDuration:0.25 animations:^{
-        self.editorsLetterTextViewHeightConstraint.constant = editorsLetterTextViewHeight;
-        [self.view needsUpdateConstraints];
-    }];
-}
-
-- (void)updateScrollViewContentHeight
-{
-    CGRect contentRect = CGRectZero;
-    for (UIView *view in self.scrollView.subviews) {
-        contentRect = CGRectUnion(contentRect, view.frame);
-    }
-    self.scrollView.contentSize = contentRect.size;
 }
 
 - (void)addShadowToImageView:(UIImageView *)imageView
@@ -317,10 +255,7 @@
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
-//    [self updateEditorsLetterTextViewExclusionPath];
-    [self updateEditorsLetterTextViewHeightToContent];
-    [self adjustHeightOfTableview];
-    [self updateScrollViewContentHeight];
+
 }
 
 @end

@@ -9,6 +9,7 @@
 #import "NIAUArticle.h"
 #import "NIAUIssue.h"
 #import "local.h"
+#import "UIImage+Resize.h"
 
 
 NSString *ArticleDidUpdateNotification = @"ArticleDidUpdate";
@@ -146,13 +147,13 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
     }
 }
 
-+(UIImage *)imageThatFitsWidth:(float)width fromImage:(UIImage *)image {
-    NSLog(@"scale width from  %f to %f",[image size].width,width);
-    NSLog(@"image.cgimage: %@",image.CGImage);
-    NSLog(@"image.ciimage: %@",image.CIImage);
-    float xScale = [image size].width/width;
-    NSLog(@"scaling by %f",xScale);
-    return [UIImage imageWithCGImage:image.CGImage scale:xScale orientation:image.imageOrientation];
++(UIImage *)imageThatFitsSize:(CGSize)size fromImage:(UIImage *)image {
+
+    NSLog(@"SCALING IMAGE");
+    UIImage *i = [UIImage imageWithCGImage:image.CGImage scale:1 orientation:image.imageOrientation];
+    CGSize scaledSize = CGSizeMake(size.width*4, size.height*4);
+    i = [i resizedImageWithContentMode:UIViewContentModeScaleAspectFill bounds:scaledSize interpolationQuality:kCGInterpolationDefault];
+    return [UIImage imageWithCGImage:i.CGImage scale:4 orientation:image.imageOrientation];
 }
 
 -(void)getFeaturedImageWithCompletionBlock:(void(^)(UIImage *img)) block {
@@ -160,41 +161,52 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
 }
 
 -(void)getFeaturedImageWithSize:(CGSize)size andCompletionBlock:(void(^)(UIImage *img)) block {
-    NSString *url = [[dictionary objectForKey:@"featured_image"] objectForKey:@"url"];
-    NSURL *featuredImageURL = [NSURL URLWithString:url relativeToURL:[NSURL URLWithString:SITE_URL]];
-    NSString *featuredImageFileName = [featuredImageURL lastPathComponent];
-    NSURL *featuredImageCacheURL = [NSURL URLWithString:featuredImageFileName relativeToURL:[self cacheURL]];
-    NSData *imageData = [NSData dataWithContentsOfURL:featuredImageCacheURL];
-    UIImage *image = [UIImage imageWithData:imageData];
-    
-    if(image) {
-        NSLog(@"successfully read image from %@",featuredImageCacheURL);
-        if(CGSizeEqualToSize(size,CGSizeZero)) {
-            block(image);
-        } else {
-            block([NIAUArticle imageThatFitsWidth:size.width fromImage:image]);
-        }
+    if (cachedFeaturedImage != nil) {
+        NSLog(@"Cached fimage %f %f", cachedFeaturedImage.size.height, size.height);
+    }
+    if (cachedFeaturedImage != nil && !CGSizeEqualToSize(size,CGSizeZero) && CGSizeEqualToSize(size,cachedFeaturedImageSize)) {
+        block(cachedFeaturedImage);
     } else {
-        NSLog(@"trying to read image from %@",featuredImageURL);
-
-        dispatch_async(dispatch_get_global_queue
-                       (DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0),
-                       ^{
-                           NSData *imageData = [NSData dataWithContentsOfURL:featuredImageURL];
-                           UIImage *image = [UIImage imageWithData:imageData];
-                           if(image) {
-                               NSLog(@"successfully read image from %@",featuredImageURL);
-                               [imageData writeToURL:	featuredImageCacheURL atomically:YES];
-                               // very undry, copied from above
-                               if(CGSizeEqualToSize(size,CGSizeZero)) {
-                                   block(image);
+        NSString *url = [[dictionary objectForKey:@"featured_image"] objectForKey:@"url"];
+        NSURL *featuredImageURL = [NSURL URLWithString:url relativeToURL:[NSURL URLWithString:SITE_URL]];
+        NSString *featuredImageFileName = [featuredImageURL lastPathComponent];
+        NSURL *featuredImageCacheURL = [NSURL URLWithString:featuredImageFileName relativeToURL:[self cacheURL]];
+        NSData *imageData = [NSData dataWithContentsOfURL:featuredImageCacheURL];
+        UIImage *image = [UIImage imageWithData:imageData];
+        
+        if(image) {
+            NSLog(@"successfully read image from %@",featuredImageCacheURL);
+            if(CGSizeEqualToSize(size,CGSizeZero)) {
+                block(image);
+            } else {
+                cachedFeaturedImage = [NIAUArticle imageThatFitsSize:size fromImage:image];
+                cachedFeaturedImageSize = size;
+                block(cachedFeaturedImage);
+            }
+        } else {
+            NSLog(@"trying to read image from %@",featuredImageURL);
+            
+            dispatch_async(dispatch_get_global_queue
+                           (DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0),
+                           ^{
+                               NSData *imageData = [NSData dataWithContentsOfURL:featuredImageURL];
+                               UIImage *image = [UIImage imageWithData:imageData];
+                               if(image) {
+                                   NSLog(@"successfully read image from %@",featuredImageURL);
+                                   [imageData writeToURL:	featuredImageCacheURL atomically:YES];
+                                   // very undry, copied from above
+                                   if(CGSizeEqualToSize(size,CGSizeZero)) {
+                                       block(image);
+                                   } else {
+                                       cachedFeaturedImage = [NIAUArticle imageThatFitsSize:size fromImage:image];
+                                       cachedFeaturedImageSize = size;
+                                       block(cachedFeaturedImage);
+                                   }
                                } else {
-                                   block([NIAUArticle imageThatFitsWidth:size.width fromImage:image]);
+                                   NSLog(@"failed to read image from %@",featuredImageURL);
                                }
-                           } else {
-                               NSLog(@"failed to read image from %@",featuredImageURL);
-                           }
-                       });
+                           });
+        }
     }
 }
 
