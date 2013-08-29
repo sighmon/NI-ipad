@@ -172,7 +172,8 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
         if(CGSizeEqualToSize(size,CGSizeZero)) {
             block(image);
         } else {
-            block([NIAUArticle imageThatFitsWidth:size.width fromImage:image]);
+//            block([NIAUArticle imageThatFitsWidth:size.width fromImage:image]);
+            block(image);
         }
     } else {
         NSLog(@"trying to read image from %@",featuredImageURL);

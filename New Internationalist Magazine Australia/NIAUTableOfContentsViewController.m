@@ -164,13 +164,13 @@
 
 - (void)setupCell: (UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     [self setupCellForHeight:cell atIndexPath:indexPath];
-//    [[self.issue articleAtIndex:indexPath.row] getFeaturedImageWithSize:CGSizeMake(57,43) andCompletionBlock:^(UIImage *img) {
-//        NSLog(@"completion block got image with width %f",[img size].width);
-//        UIImageView *articleImageView = (UIImageView *)[cell viewWithTag:100];
-//        [articleImageView setImage:img];
-//        //[cell.imageView setNeedsLayout];
-//        // TODO: do we need to force a redraw?
-//    }];
+    [[self.issue articleAtIndex:indexPath.row] getFeaturedImageWithSize:CGSizeMake(57,43) andCompletionBlock:^(UIImage *img) {
+        NSLog(@"completion block got image with width %f",[img size].width);
+        UIImageView *articleImageView = (UIImageView *)[cell viewWithTag:100];
+        [articleImageView setImage:img];
+        //[cell.imageView setNeedsLayout];
+        // TODO: do we need to force a redraw?
+    }];
 }
 
 
