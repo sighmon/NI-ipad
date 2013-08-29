@@ -222,7 +222,7 @@
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="tJH-G9-L0y">
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="68" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="tJH-G9-L0y">
                                         <rect key="frame" x="0.0" y="350" width="320" height="115"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -231,34 +231,28 @@
                                         </constraints>
                                         <prototypes>
                                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="articleCell" id="Lnf-CI-DTC">
-                                                <rect key="frame" x="0.0" y="22" width="320" height="44"/>
+                                                <rect key="frame" x="0.0" y="22" width="320" height="68"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Lnf-CI-DTC" id="DHD-CO-mrV">
-                                                    <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="287" height="67"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" tag="100" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Ncv-6K-XlK">
-                                                            <rect key="frame" x="0.0" y="0.0" width="63" height="43"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="63" height="67"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="63" id="l5y-1E-lgH"/>
                                                             </constraints>
                                                         </imageView>
                                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="101" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="196" translatesAutoresizingMaskIntoConstraints="NO" id="ot8-Xd-7ca">
-                                                            <rect key="frame" x="71" y="0.0" width="196" height="21"/>
+                                                            <rect key="frame" x="71" y="8" width="196" height="20"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="21" id="CYZ-W2-dhq"/>
-                                                            </constraints>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="102" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Teaser" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="196" translatesAutoresizingMaskIntoConstraints="NO" id="AxD-JB-DVe">
-                                                            <rect key="frame" x="71" y="21" width="196" height="22"/>
+                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="102" contentMode="left" horizontalHuggingPriority="251" text="Teaser" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="196" translatesAutoresizingMaskIntoConstraints="NO" id="AxD-JB-DVe">
+                                                            <rect key="frame" x="71" y="36" width="196" height="23"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="22" placeholder="YES" id="BtZ-vv-rbg"/>
-                                                            </constraints>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
@@ -266,9 +260,10 @@
                                                     <constraints>
                                                         <constraint firstAttribute="trailing" secondItem="AxD-JB-DVe" secondAttribute="trailing" constant="20" id="6Rl-GJ-Wms"/>
                                                         <constraint firstItem="ot8-Xd-7ca" firstAttribute="leading" secondItem="Ncv-6K-XlK" secondAttribute="trailing" constant="8" symbolic="YES" id="ALU-Cw-gdG"/>
-                                                        <constraint firstItem="ot8-Xd-7ca" firstAttribute="top" secondItem="DHD-CO-mrV" secondAttribute="top" id="EYE-v7-LCP"/>
+                                                        <constraint firstAttribute="bottom" secondItem="AxD-JB-DVe" secondAttribute="bottom" constant="8" id="CCR-3S-rNA"/>
+                                                        <constraint firstItem="ot8-Xd-7ca" firstAttribute="top" secondItem="DHD-CO-mrV" secondAttribute="top" constant="8" id="EYE-v7-LCP"/>
                                                         <constraint firstAttribute="trailing" secondItem="ot8-Xd-7ca" secondAttribute="trailing" constant="20" id="JDz-8T-H2T"/>
-                                                        <constraint firstItem="AxD-JB-DVe" firstAttribute="top" secondItem="ot8-Xd-7ca" secondAttribute="bottom" id="Ygi-j4-Bw2"/>
+                                                        <constraint firstItem="AxD-JB-DVe" firstAttribute="top" secondItem="ot8-Xd-7ca" secondAttribute="bottom" constant="8" id="Ygi-j4-Bw2"/>
                                                         <constraint firstItem="Ncv-6K-XlK" firstAttribute="leading" secondItem="DHD-CO-mrV" secondAttribute="leading" id="cpa-xI-MWh"/>
                                                         <constraint firstAttribute="bottom" secondItem="Ncv-6K-XlK" secondAttribute="bottom" id="kYG-3x-2GL"/>
                                                         <constraint firstItem="Ncv-6K-XlK" firstAttribute="top" secondItem="DHD-CO-mrV" secondAttribute="top" id="nT3-kR-6fh"/>

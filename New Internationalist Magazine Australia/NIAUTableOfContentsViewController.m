@@ -124,16 +124,19 @@
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
     UITableViewCell *cell = [self tableView:tableView cellForHeightForRowAtIndexPath:indexPath];
     
 //    UILabel *articleTitle = (UILabel *)[cell viewWithTag:101];
-    UILabel *articleTeaser = (UILabel *)[cell viewWithTag:102];
+//    UILabel *articleTeaser = (UILabel *)[cell viewWithTag:102];
     
-    // set the frame to be the same size as the tableView (only really to get the width)
-    cell.frame = tableView.frame;
+    [tableView addSubview:cell];
+    CGFloat height = [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
+    [cell removeFromSuperview];
+    
     NSLog(@"cell.frame.width=%f",cell.frame.size.width);
 
-    return articleTeaser.frame.origin.y + articleTeaser.frame.size.height;
+    return height;
 }
 
 - (void)setupCellForHeight: (UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
@@ -163,7 +166,8 @@
     [self setupCellForHeight:cell atIndexPath:indexPath];
 //    [[self.issue articleAtIndex:indexPath.row] getFeaturedImageWithSize:CGSizeMake(57,43) andCompletionBlock:^(UIImage *img) {
 //        NSLog(@"completion block got image with width %f",[img size].width);
-//        [cell.imageView setImage:img];
+//        UIImageView *articleImageView = (UIImageView *)[cell viewWithTag:100];
+//        [articleImageView setImage:img];
 //        //[cell.imageView setNeedsLayout];
 //        // TODO: do we need to force a redraw?
 //    }];
