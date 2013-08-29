@@ -132,7 +132,7 @@
     
     // set the frame to be the same size as the tableView (only really to get the width)
     [tableView addSubview:cell];
-    cell.frame = tableView.frame;
+    //cell.frame = tableView.frame;
     //cell.frame = CGRectMake(tableView.frame.origin.x, tableView.frame.origin.y, tableView.frame.size.width, 1000);
     
 
@@ -142,22 +142,20 @@
     NSLog(@"cell.frame.width=%f",cell.frame.size.width);
     NSLog(@"cell.frame.height=%f",cell.frame.size.height);
 
-    //CGSize const fittingSize = UILayoutFittingExpandedSize;
+
     
-	//[cell setNeedsLayout];
-	//[cell layoutIfNeeded];
     
-	//CGFloat height = [cell.contentView systemLayoutSizeFittingSize:fittingSize].height;
+	CGFloat height = [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
     
-    CGFloat height = articleTeaser.frame.origin.y + articleTeaser.frame.size.height;
+    
     
     NSLog(@"articleTeaser.width = %f", articleTeaser.frame.size.width);
     
-    //[cell removeFromSuperview];
+    [cell removeFromSuperview];
     
     NSLog(@"heightforrowatindexpath: article %@ height=%f",((UILabel *)[cell viewWithTag:101]).text,height);
     
-    
+
     
     return height;
 }
@@ -178,9 +176,11 @@
     articleImageView.image = [UIImage imageNamed:@"default_article_image_table_view.png"];
     
     UILabel *articleTitle = (UILabel *)[cell viewWithTag:101];
+    //[articleTitle setTranslatesAutoresizingMaskIntoConstraints:NO];
     articleTitle.text = [self.issue articleAtIndex:indexPath.row].title;
     
     UILabel *articleTeaser = (UILabel *)[cell viewWithTag:102];
+    //[articleTeaser setTranslatesAutoresizingMaskIntoConstraints:NO];
     articleTeaser.text = (teaser==[NSNull null]) ? @"" : teaser;
     
 }
@@ -344,6 +344,7 @@
     
     [self adjustWidthOfMagazineCover];
     [self showArticles];
+
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
