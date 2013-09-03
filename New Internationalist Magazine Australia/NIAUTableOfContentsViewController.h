@@ -18,6 +18,7 @@
 @property (nonatomic, strong) UIImage *cover;
 
 @property (nonatomic, strong) IBOutlet UITableView *tableView;
+@property (nonatomic, strong) NSMutableDictionary *cellDictionary;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *tableViewHeightConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *editorsLetterTextViewHeightConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *magazineCoverWidthConstraint;
