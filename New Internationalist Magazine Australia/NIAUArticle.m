@@ -161,11 +161,11 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
 }
 
 -(void)getFeaturedImageWithSize:(CGSize)size andCompletionBlock:(void(^)(UIImage *img)) block {
-    if (cachedFeaturedImage != nil) {
-        NSLog(@"Cached fimage %f %f", cachedFeaturedImage.size.height, size.height);
+    if (cachedFeaturedImageThumb != nil) {
+        NSLog(@"Cached fimage %f %f", cachedFeaturedImageThumb.size.height, size.height);
     }
-    if (cachedFeaturedImage != nil && !CGSizeEqualToSize(size,CGSizeZero) && CGSizeEqualToSize(size,cachedFeaturedImageSize)) {
-        block(cachedFeaturedImage);
+    if (cachedFeaturedImageThumb != nil && !CGSizeEqualToSize(size,CGSizeZero) && CGSizeEqualToSize(size,cachedFeaturedImageThumbSize)) {
+        block(cachedFeaturedImageThumb);
     } else {
         NSString *url = [[dictionary objectForKey:@"featured_image"] objectForKey:@"url"];
         NSURL *featuredImageURL = [NSURL URLWithString:url relativeToURL:[NSURL URLWithString:SITE_URL]];
@@ -179,9 +179,9 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
             if(CGSizeEqualToSize(size,CGSizeZero)) {
                 block(image);
             } else {
-                cachedFeaturedImage = [NIAUArticle imageThatFitsSize:size fromImage:image];
-                cachedFeaturedImageSize = size;
-                block(cachedFeaturedImage);
+                cachedFeaturedImageThumb = [NIAUArticle imageThatFitsSize:size fromImage:image];
+                cachedFeaturedImageThumbSize = size;
+                block(cachedFeaturedImageThumb);
             }
         } else {
             NSLog(@"trying to read image from %@",featuredImageURL);
@@ -198,9 +198,9 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
                                    if(CGSizeEqualToSize(size,CGSizeZero)) {
                                        block(image);
                                    } else {
-                                       cachedFeaturedImage = [NIAUArticle imageThatFitsSize:size fromImage:image];
-                                       cachedFeaturedImageSize = size;
-                                       block(cachedFeaturedImage);
+                                       cachedFeaturedImageThumb = [NIAUArticle imageThatFitsSize:size fromImage:image];
+                                       cachedFeaturedImageThumbSize = size;
+                                       block(cachedFeaturedImageThumb);
                                    }
                                } else {
                                    NSLog(@"failed to read image from %@",featuredImageURL);

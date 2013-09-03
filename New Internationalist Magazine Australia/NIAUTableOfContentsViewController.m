@@ -123,17 +123,52 @@
 - (void)setupCell: (UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     [self setupCellForHeight:cell atIndexPath:indexPath];
     UIImageView *articleImageView = (UIImageView *)[cell viewWithTag:100];
-    if (articleImageView.image == [UIImage imageNamed:@"default_article_image_table_view.png"]) {
-        [[self.issue articleAtIndex:indexPath.row] getFeaturedImageWithSize:CGSizeMake(57,43) andCompletionBlock:^(UIImage *img) {
-            NSLog(@"completion block got image with width %f",[img size].width);
-            UIImageView *articleImageView = (UIImageView *)[cell viewWithTag:100];
-            [articleImageView setImage:img];
-//            [cell setNeedsLayout];
-            // TODO: do we need to force a redraw?
-        }];
-    } else {
-        NSLog(@"Cell has an image.");
+    
+    if (self.tableView.dragging == NO && self.tableView.decelerating == NO) {
+        if (articleImageView.image == [UIImage imageNamed:@"default_article_image_table_view.png"]) {
+            [[self.issue articleAtIndex:indexPath.row] getFeaturedImageWithSize:CGSizeMake(57,43) andCompletionBlock:^(UIImage *img) {
+                NSLog(@"completion block got image with width %f",[img size].width);
+                UIImageView *articleImageView = (UIImageView *)[cell viewWithTag:100];
+                [articleImageView setImage:img];
+                //            [cell setNeedsLayout];
+                // TODO: do we need to force a redraw?
+            }];
+        } else {
+            NSLog(@"Cell has an image.");
+        }
     }
+}
+
+// -------------------------------------------------------------------------------
+//	loadImagesForOnscreenRows
+//  This method is used in case the user scrolled into a set of cells that don't
+//  have their app icons yet.
+// -------------------------------------------------------------------------------
+- (void)loadImagesForOnscreenRows
+{
+    [self.tableView reloadRowsAtIndexPaths:[self.tableView indexPathsForVisibleRows] withRowAnimation:UITableViewRowAnimationFade];
+}
+
+#pragma mark - UIScrollViewDelegate
+
+// -------------------------------------------------------------------------------
+//	scrollViewDidEndDragging:willDecelerate:
+//  Load images for all onscreen rows when scrolling is finished.
+// -------------------------------------------------------------------------------
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    if (!decelerate)
+	{
+        [self loadImagesForOnscreenRows];
+    }
+}
+
+// -------------------------------------------------------------------------------
+//	scrollViewDidEndDecelerating:
+// -------------------------------------------------------------------------------
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    [self loadImagesForOnscreenRows];
 }
 
 
