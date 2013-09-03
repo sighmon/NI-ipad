@@ -16,6 +16,8 @@
 
 @implementation NIAUTableOfContentsViewController
 
+static NSString *CellIdentifier = @"articleCell";
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -29,6 +31,8 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    
+    self.cellDictionary = [NSMutableDictionary dictionary];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(publisherReady:) name:ArticlesDidUpdateNotification object:self.issue];
     
@@ -73,12 +77,20 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *CellIdentifier = @"articleCell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+    
+    id cell = [self.cellDictionary objectForKey:[NSNumber numberWithInt:indexPath.row]];
+    if (cell != nil) {
+        NSLog(@"Cell cache hit");
+    } else {
+        NSLog(@"Index path: %@",[NSNumber numberWithInt:indexPath.row]);
+        cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        if (cell == nil) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+        }
+        [self setupCellForHeight:cell atIndexPath:indexPath];
+        [self.cellDictionary setObject:cell forKey:[NSNumber numberWithInt:indexPath.row]];
     }
-    [self setupCellForHeight:cell atIndexPath:indexPath];
+    
     return cell;
 }
 
@@ -88,22 +100,24 @@
     return cell;
 }
 
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (CGSize)calculateCellSize:(UITableViewCell *)cell inTableView:(UITableView *)tableView {
     
-    UITableViewCell *cell = [self tableView:tableView cellForHeightForRowAtIndexPath:indexPath];
-    
-    [tableView addSubview:cell];
     CGSize fittingSize = CGSizeMake(tableView.bounds.size.width, 0);
     CGSize size = [cell.contentView systemLayoutSizeFittingSize:fittingSize];
-    [cell removeFromSuperview];
     
     int width = size.width;
     int height = size.height;
     
     NSLog(@"%@ %ix%i",((UILabel *)[cell viewWithTag:101]).text,width,height);
     
-    return size.height;
+    return size;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    UITableViewCell *cell = [self tableView:tableView cellForHeightForRowAtIndexPath:indexPath];
+    
+    return [self calculateCellSize:cell inTableView:tableView].height;
 }
 
 - (void)setupCellForHeight: (UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
@@ -118,10 +132,15 @@
     
     UILabel *articleTeaser = (UILabel *)[cell viewWithTag:102];
     articleTeaser.text = (teaser==[NSNull null]) ? @"" : teaser;
+    
+//    [self.tableView addSubview:cell];
+//    [cell removeFromSuperview];
 }
 
 - (void)setupCell: (UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
-    [self setupCellForHeight:cell atIndexPath:indexPath];
+//    [self setupCellForHeight:cell atIndexPath:indexPath];
+//    CGSize size = [self calculateCellSize:cell inTableView:self.tableView];
+//    cell.frame = CGRectMake(cell.frame.origin.x, cell.frame.origin.y, size.width, size.height);
     UIImageView *articleImageView = (UIImageView *)[cell viewWithTag:100];
     
     if (self.tableView.dragging == NO && self.tableView.decelerating == NO) {
@@ -146,7 +165,15 @@
 // -------------------------------------------------------------------------------
 - (void)loadImagesForOnscreenRows
 {
-    [self.tableView reloadRowsAtIndexPaths:[self.tableView indexPathsForVisibleRows] withRowAnimation:UITableViewRowAnimationFade];
+    NSArray *visiblePaths = [self.tableView indexPathsForVisibleRows];
+    for (NSIndexPath *indexPath in visiblePaths)
+    {
+        id cell = [self.cellDictionary objectForKey:[NSNumber numberWithInt:indexPath.row]];
+        
+        if (cell) {
+            [self setupCell:cell atIndexPath:indexPath];
+        }
+    }
 }
 
 #pragma mark - UIScrollViewDelegate
