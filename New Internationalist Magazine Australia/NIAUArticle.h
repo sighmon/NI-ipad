@@ -32,8 +32,8 @@ extern NSString *ArticleFailedUpdateNotification;
 +(NIAUArticle *)articleWithIssue:(NIAUIssue *)issue andDictionary:(NSDictionary *)dict;
 +(NIAUArticle *)articleFromCacheWithIssue:(NIAUIssue *)issue andId:(NSNumber *)index;
 
--(void)getFeaturedImageWithSize:(CGSize)size andCompletionBlock:(void(^)(UIImage *img)) block;
 -(void)getFeaturedImageWithCompletionBlock:(void(^)(UIImage *img)) block;
+-(void)getFeaturedImageThumbWithSize:(CGSize)size andCompletionBlock:(void(^)(UIImage *img)) block;
 -(void)requestBody;
 
 - (NSURL *)getWebURL;
