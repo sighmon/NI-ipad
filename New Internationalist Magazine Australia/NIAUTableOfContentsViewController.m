@@ -160,7 +160,7 @@ static NSString *CellIdentifier = @"articleCell";
     
     if (self.tableView.dragging == NO && self.tableView.decelerating == NO) {
         if (articleImageView.image == [UIImage imageNamed:@"default_article_image_table_view.png"]) {
-            [[self.issue articleAtIndex:indexPath.row] getFeaturedImageWithSize:CGSizeMake(57,43) andCompletionBlock:^(UIImage *img) {
+            [[self.issue articleAtIndex:indexPath.row] getFeaturedImageThumbWithSize:CGSizeMake(57,43) andCompletionBlock:^(UIImage *img) {
                 NSLog(@"completion block got image with width %f",[img size].width);
                 UIImageView *articleImageView = (UIImageView *)[cell viewWithTag:100];
                 [articleImageView setImage:img];
