@@ -40,6 +40,12 @@ static NSString *CellIdentifier = @"articleCell";
     
     // Add the data for the view
     [self setupData];
+    
+    // Set the editorsLetterTextView height to its content.
+    [self updateEditorsLetterTextViewHeightToContent];
+    
+    // Set the scrollView content height to the editorsLetterTextView.
+    [self updateScrollViewContentHeight];
 }
 
 -(void)publisherReady:(NSNotification *)not
@@ -50,6 +56,8 @@ static NSString *CellIdentifier = @"articleCell";
 -(void)showArticles
 {
     [self.tableView reloadData];
+    [self updateEditorsLetterTextViewHeightToContent];
+    [self updateScrollViewContentHeight];
 }
 
 - (void)adjustWidthOfMagazineCover
@@ -64,6 +72,27 @@ static NSString *CellIdentifier = @"articleCell";
         self.magazineCoverWidthConstraint.constant = width;
         [self.view needsUpdateConstraints];
     }];
+}
+
+- (void)updateEditorsLetterTextViewHeightToContent
+{
+    CGFloat editorsLetterTextViewHeight = self.editorsLetterTextView.contentSize.height;
+    
+    // now set the height constraint accordingly
+    
+    [UIView animateWithDuration:0.25 animations:^{
+        self.editorsLetterTextViewHeightConstraint.constant = editorsLetterTextViewHeight;
+        [self.view needsUpdateConstraints];
+    }];
+}
+
+- (void)updateScrollViewContentHeight
+{
+    CGRect contentRect = CGRectZero;
+    for (UIView *view in self.scrollView.subviews) {
+        contentRect = CGRectUnion(contentRect, view.frame);
+    }
+    self.scrollView.contentSize = contentRect.size;
 }
 
 #pragma mark - Table view data source
@@ -214,16 +243,16 @@ static NSString *CellIdentifier = @"articleCell";
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"MMMM yyyy"];
     self.labelNumberAndDate.text = [NSString stringWithFormat: @"%@ - %@", self.issue.name, [dateFormatter stringFromDate:self.issue.publication]];
-//    self.labelEditor.text = [NSString stringWithFormat:@"Editor's letter by %@", self.issue.editorsName];
-//    self.editorsLetterTextView.text = self.issue.editorsLetter;
+    self.labelEditor.text = [NSString stringWithFormat:@"Editor's letter by %@", self.issue.editorsName];
+    self.editorsLetterTextView.text = self.issue.editorsLetter;
     
 //    [self.editorImageView setImage:[UIImage imageNamed:@"default_editors_photo"]];
-//    // Load the real editor's image
-//    [self.issue getEditorsImageWithCompletionBlock:^(UIImage *img) {
-//        [self.editorImageView setImage:img];
-//        [self.editorImageView setNeedsLayout];
-//    }];
-//    [self applyRoundMask:self.editorImageView];
+    // Load the real editor's image
+    [self.issue getEditorsImageWithCompletionBlock:^(UIImage *img) {
+        [self.editorImageView setImage:img];
+        [self.editorImageView setNeedsLayout];
+    }];
+    [self applyRoundMask:self.editorImageView];
 }
 
 - (void)applyRoundMask:(UIImageView *)imageView
@@ -317,7 +346,8 @@ static NSString *CellIdentifier = @"articleCell";
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
-
+    [self updateEditorsLetterTextViewHeightToContent];
+    [self updateScrollViewContentHeight];
 }
 
 @end
