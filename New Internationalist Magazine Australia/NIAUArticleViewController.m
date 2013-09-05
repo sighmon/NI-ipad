@@ -124,6 +124,22 @@
     self.scrollView.contentSize = contentRect.size;
 }
 
+- (void)updateWebViewHight
+{
+    // Set the webview size
+    CGSize size = [self.bodyWebView sizeThatFits: CGSizeMake(320., 1.)];
+    CGRect frame = self.bodyWebView.frame;
+    frame.size.height = size.height;
+    self.bodyWebView.frame = frame;
+    
+    // Update the constraints.
+    CGFloat contentHeight = self.bodyWebView.frame.size.height + 20;
+    
+    self.bodyWebViewHeightConstraint.constant = contentHeight;
+    [self.view needsUpdateConstraints];
+    NSLog(@"Updated webview height");
+}
+
 #pragma mark -
 #pragma mark WebView delegate
 
@@ -136,20 +152,7 @@
 {
     [self.webViewLoadingIndicator stopAnimating];
     [self ensureScrollsToTop: webView];
-    
-    // Set the webview size
-    CGSize size = [webView sizeThatFits: CGSizeMake(320., 1.)];
-    CGRect frame = webView.frame;
-    frame.size.height = size.height;
-    webView.frame = frame;
-    
-    // Update the constraints.
-    CGFloat contentHeight = webView.frame.size.height + 20;
-    
-    [UIView animateWithDuration:0.25 animations:^{
-        self.bodyWebViewHeightConstraint.constant = contentHeight;
-        [self.view needsUpdateConstraints];
-    }];
+    [self updateWebViewHight];
 }
 
 - (void) ensureScrollsToTop: (UIView *) ensureView {
@@ -190,6 +193,20 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark -
+#pragma mark Rotation handling
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    [self updateWebViewHight];
+    [self updateScrollViewContentHeight];
 }
 
 @end
