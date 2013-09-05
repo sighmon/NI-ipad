@@ -147,12 +147,15 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
     }
 }
 
+// can't seem to use this typedef anywhere...
+//typedef id (^MethodBlock(id));
+
 // this might eventually become it's own class... for now, a class method
-+(id)getCachedObjectWithOptions:(NSDictionary*)options andMethods:(NSArray*)methods andDepth:(int)depth{
++(id)getObjectWithOptions:(NSDictionary*)options andDepth:(int)depth usingBlocks:(NSArray*)blocks{
     __block id object = nil;
     
-    [methods enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        id (^block)(NSDictionary *) = obj;
+    [blocks enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        id (^block)(id) = obj;
         if(depth==0 || idx<depth) {
             object = block(options);
         } else {
@@ -166,6 +169,73 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
     }];
     
     return object;
+}
+
+-(UIImage *)getFeaturedImageThumbFromDisk {
+    NSLog(@"%s not implemented", __PRETTY_FUNCTION__);
+    return nil;
+}
+
+-(UIImage *)getFeaturedImage {
+    NSLog(@"%s not implemented", __PRETTY_FUNCTION__);
+    return nil;
+}
+
+-(UIImage *)generateFeaturedImageWithSize:(CGSize)size {
+    NSLog(@"%s not implemented", __PRETTY_FUNCTION__);
+    return nil;
+
+    // something like...
+    /*
+    UIImage *image = [self getFeaturedImage];
+    CGSize itemSize = CGSizeMake(kAppIconSize, kAppIconSize);
+    UIGraphicsBeginImageContextWithOptions(itemSize, NO, 0.0f);
+    CGRect imageRect = CGRectMake(0.0, 0.0, itemSize.width, itemSize.height);
+    [image drawInRect:imageRect];
+    self.appRecord.appIcon = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    */
+}
+
+-(void)writeFeaturedImageThumbToDisk{
+    NSLog(@"%s not implemented", __PRETTY_FUNCTION__);
+}
+
+// our cache strategy in a nutshell
+-(UIImage *)getFeaturedImageWithSize:(CGSize)size {
+    
+    return [self.class getObjectWithOptions:@{@"size": [NSValue valueWithCGSize:size]} andDepth:0
+                                usingBlocks:@[
+                                              // get thumb from memory
+                                              ^id(id opts){
+        if(CGSizeEqualToSize(cachedFeaturedImageThumbSize,
+                             [opts[@"size"] CGSizeValue])) {
+            return cachedFeaturedImageThumb;
+        }
+        return nil;
+    },
+                                               // get thumb from disk
+                                               ^id(id opts){
+        UIImage *image = [self getFeaturedImageThumbFromDisk];
+        CGSize size = [opts[@"size"] CGSizeValue];
+        if(image && CGSizeEqualToSize([image size],
+                                      size)) {
+            cachedFeaturedImageThumb = image;
+            cachedFeaturedImageThumbSize = size;
+            return image;
+        }
+        return nil;
+    },
+                                               // generate thumb
+                                               ^id(id opts){
+        UIImage *image = [self generateFeaturedImageWithSize:[opts[@"size"] CGSizeValue]];
+        if(image) {
+            [self writeFeaturedImageThumbToDisk];
+            return image;
+        }
+        return nil;
+    }
+                                               ]];
 }
 
 +(UIImage *)imageThatFitsSize:(CGSize)size fromImage:(UIImage *)image {
