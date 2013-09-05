@@ -234,7 +234,7 @@ static NSString *CellIdentifier = @"articleCell";
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"MMMM yyyy"];
     self.labelNumberAndDate.text = [NSString stringWithFormat: @"%@ - %@", self.issue.name, [dateFormatter stringFromDate:self.issue.publication]];
-    self.labelEditor.text = [NSString stringWithFormat:@"Editor's letter by %@", self.issue.editorsName];
+    self.labelEditor.text = [NSString stringWithFormat:@"Edited by:\n%@", self.issue.editorsName];
     self.editorsLetterTextView.text = self.issue.editorsLetter;
     
 //    [self.editorImageView setImage:[UIImage imageNamed:@"default_editors_photo"]];
