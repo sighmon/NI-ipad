@@ -157,18 +157,23 @@ static NSString *CellIdentifier = @"articleCell";
 //    CGSize size = [self calculateCellSize:cell inTableView:self.tableView];
 //    cell.frame = CGRectMake(cell.frame.origin.x, cell.frame.origin.y, size.width, size.height);
     UIImageView *articleImageView = (UIImageView *)[cell viewWithTag:100];
-    
+    NIAUArticle *article = [self.issue articleAtIndex:indexPath.row];
+    CGSize thumbSize = CGSizeMake(57,43);
     if (self.tableView.dragging == NO && self.tableView.decelerating == NO) {
         if (articleImageView.image == [UIImage imageNamed:@"default_article_image_table_view.png"]) {
-            [[self.issue articleAtIndex:indexPath.row] getFeaturedImageThumbWithSize:CGSizeMake(57,43) andCompletionBlock:^(UIImage *img) {
-                NSLog(@"completion block got image with width %f",[img size].width);
-                UIImageView *articleImageView = (UIImageView *)[cell viewWithTag:100];
-                [articleImageView setImage:img];
+            [article getFeaturedImageThumbWithSize:thumbSize andCompletionBlock:^(UIImage *thumb) {
+                NSLog(@"completion block got image with width %f",[thumb size].width);
+                [articleImageView setImage:thumb];
                 //            [cell setNeedsLayout];
                 // TODO: do we need to force a redraw?
             }];
         } else {
-            NSLog(@"Cell has an image.");
+            //NSLog(@"Cell has an image.");
+        }
+    } else {
+        UIImage *thumb = [article attemptToGetFeaturedImageThumbFromDiskWithSize:thumbSize];
+        if(thumb) {
+            [articleImageView setImage:thumb];
         }
     }
 }

@@ -156,7 +156,7 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
     
     [blocks enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         id (^block)(id) = obj;
-        if(depth==0 || idx<depth) {
+        if(depth<0 || idx<depth) {
             object = block(options);
         } else {
             // stop enumerating if we hit the depth test
@@ -209,10 +209,18 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
                    });
 }
 
-// our cache strategy in a nutshell
 -(UIImage *)getFeaturedImageThumbWithSize:(CGSize)size {
+    return [self getFeaturedImageThumbWithSize:size stoppingAtDepth:-1];
+}
+
+-(UIImage *)attemptToGetFeaturedImageThumbFromDiskWithSize:(CGSize)size {
+    return [self getFeaturedImageThumbWithSize:size stoppingAtDepth:1];
+}
+
+// our cache strategy in a nutshell
+-(UIImage *)getFeaturedImageThumbWithSize:(CGSize)size stoppingAtDepth:(int)depth {
     
-    return [self.class getObjectWithOptions:@{@"size": [NSValue valueWithCGSize:size]} andDepth:0
+    return [self.class getObjectWithOptions:@{@"size": [NSValue valueWithCGSize:size]} andDepth:depth
                                 usingBlocks:@[
                                               // get thumb from memory
                                               ^id(id opts){

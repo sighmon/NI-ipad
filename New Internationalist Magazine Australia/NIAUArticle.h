@@ -34,6 +34,8 @@ extern NSString *ArticleFailedUpdateNotification;
 
 -(void)getFeaturedImageWithCompletionBlock:(void(^)(UIImage *img)) block;
 -(void)getFeaturedImageThumbWithSize:(CGSize)size andCompletionBlock:(void(^)(UIImage *img)) block;
+-(UIImage *)attemptToGetFeaturedImageThumbFromDiskWithSize:(CGSize)size;
+
 -(void)requestBody;
 
 - (NSURL *)getWebURL;
