@@ -183,7 +183,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="351" height="72"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" tag="100" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="hnb-mx-huc">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" tag="100" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="hnb-mx-huc">
                                                     <rect key="frame" x="0.0" y="0.0" width="57" height="72"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <constraints>
@@ -232,34 +232,30 @@
                                 <rect key="frame" x="0.0" y="0.0" width="384" height="1024"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <subviews>
-                                    <imageView multipleTouchEnabled="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ebt-QH-0s8">
+                                    <imageView multipleTouchEnabled="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ebt-QH-0s8">
                                         <rect key="frame" x="0.0" y="64" width="384" height="451"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <gestureRecognizers/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="384" id="6ct-J1-wrK"/>
                                             <constraint firstAttribute="height" constant="451" id="NZQ-5e-fH3"/>
                                         </constraints>
                                         <connections>
                                             <outletCollection property="gestureRecognizers" destination="12T-Lf-AiD" appends="YES" id="MUA-4E-ZgC"/>
                                         </connections>
                                     </imageView>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Number - Date" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="344" translatesAutoresizingMaskIntoConstraints="NO" id="2Jy-dG-VkX">
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Number - Date" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="344" translatesAutoresizingMaskIntoConstraints="NO" id="2Jy-dG-VkX">
                                         <rect key="frame" x="20" y="523" width="344" height="20"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" priority="766" constant="344" id="uD9-7Z-wTK"/>
-                                        </constraints>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline2"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Editor" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="211" translatesAutoresizingMaskIntoConstraints="NO" id="i6V-Mh-aMJ">
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Editor" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="211" translatesAutoresizingMaskIntoConstraints="NO" id="i6V-Mh-aMJ">
                                         <rect key="frame" x="153" y="604" width="211" height="20"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" editable="NO" text="This is some sample text for the editor's letter. " translatesAutoresizingMaskIntoConstraints="NO" id="ewB-NK-0ve">
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" editable="NO" text="This is some sample text for the editor's letter. " translatesAutoresizingMaskIntoConstraints="NO" id="ewB-NK-0ve">
                                         <rect key="frame" x="20" y="684" width="344" height="340"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -284,6 +280,7 @@
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="fpA-Cj-zEf" firstAttribute="top" secondItem="2Jy-dG-VkX" secondAttribute="bottom" constant="8" id="07a-Cx-UqK"/>
+                                    <constraint firstAttribute="trailing" secondItem="ebt-QH-0s8" secondAttribute="trailing" id="7Xs-id-hg1"/>
                                     <constraint firstItem="ewB-NK-0ve" firstAttribute="top" secondItem="fpA-Cj-zEf" secondAttribute="bottom" constant="8" symbolic="YES" id="EvR-JX-jfA"/>
                                     <constraint firstAttribute="trailing" secondItem="i6V-Mh-aMJ" secondAttribute="trailing" constant="20" symbolic="YES" id="KXC-Hi-KTO"/>
                                     <constraint firstItem="ewB-NK-0ve" firstAttribute="leading" secondItem="Zqd-QL-8wn" secondAttribute="leading" constant="20" symbolic="YES" id="Oek-5u-ywG"/>
@@ -294,6 +291,7 @@
                                     <constraint firstItem="2Jy-dG-VkX" firstAttribute="leading" secondItem="Zqd-QL-8wn" secondAttribute="leading" symbolic="YES" id="b6J-q8-yB4"/>
                                     <constraint firstAttribute="bottom" secondItem="ewB-NK-0ve" secondAttribute="bottom" id="bmJ-y0-soP"/>
                                     <constraint firstItem="i6V-Mh-aMJ" firstAttribute="leading" secondItem="fpA-Cj-zEf" secondAttribute="trailing" constant="8" symbolic="YES" id="h44-lY-EN3"/>
+                                    <constraint firstItem="ebt-QH-0s8" firstAttribute="width" secondItem="Zqd-QL-8wn" secondAttribute="width" id="kid-nh-Sbc"/>
                                     <constraint firstItem="i6V-Mh-aMJ" firstAttribute="centerY" secondItem="fpA-Cj-zEf" secondAttribute="centerY" id="weC-sk-xX1"/>
                                     <constraint firstAttribute="trailing" secondItem="ewB-NK-0ve" secondAttribute="trailing" constant="20" symbolic="YES" id="xBF-KD-rBT"/>
                                     <constraint firstItem="fpA-Cj-zEf" firstAttribute="leading" secondItem="Zqd-QL-8wn" secondAttribute="leading" constant="20" id="yk6-S9-dQb"/>
@@ -331,7 +329,6 @@
                         <outlet property="imageView" destination="ebt-QH-0s8" id="2h3-p7-vHd"/>
                         <outlet property="labelEditor" destination="i6V-Mh-aMJ" id="zOw-Kt-cLd"/>
                         <outlet property="labelNumberAndDate" destination="2Jy-dG-VkX" id="iR0-H3-mhh"/>
-                        <outlet property="magazineCoverWidthConstraint" destination="6ct-J1-wrK" id="yrS-7Z-bLh"/>
                         <outlet property="scrollView" destination="Zqd-QL-8wn" id="d7F-Z6-J6R"/>
                         <outlet property="shareAction" destination="JEv-4t-ZCj" id="h6Z-qa-EvR"/>
                         <outlet property="tableView" destination="SJ4-ca-Goj" id="o7k-zH-Cpf"/>
