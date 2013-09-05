@@ -276,9 +276,14 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
 
 
 -(void)getFeaturedImageWithCompletionBlock:(void(^)(UIImage *img)) block {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0),
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0),
                    ^{
-                       block([self getFeaturedImage]);
+                       UIImage *image = [self getFeaturedImage];
+                       // run the block on the main queue so it can do ui stuff
+                       dispatch_async(dispatch_get_main_queue(), ^{
+                           block(image);
+                       });
+
                    });
 }
 
