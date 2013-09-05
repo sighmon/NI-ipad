@@ -110,6 +110,7 @@ static NSString *CellIdentifier = @"articleCell";
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSLog(@"cellForRow.. %ld",(long)indexPath.row);
     UITableViewCell *cell = [self tableView:tableView cellForHeightForRowAtIndexPath:indexPath];
     [self setupCell:cell atIndexPath:indexPath];
     return cell;
@@ -162,10 +163,11 @@ static NSString *CellIdentifier = @"articleCell";
     if (self.tableView.dragging == NO && self.tableView.decelerating == NO) {
         if (articleImageView.image == [UIImage imageNamed:@"default_article_image_table_view.png"]) {
             [article getFeaturedImageThumbWithSize:thumbSize andCompletionBlock:^(UIImage *thumb) {
-                NSLog(@"completion block got image with width %f",[thumb size].width);
+
+                //UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+                //[(UIImageView *)[cell viewWithTag:100] setImage:thumb];
                 [articleImageView setImage:thumb];
-                //            [cell setNeedsLayout];
-                // TODO: do we need to force a redraw?
+                
             }];
         } else {
             //NSLog(@"Cell has an image.");
@@ -174,6 +176,8 @@ static NSString *CellIdentifier = @"articleCell";
         UIImage *thumb = [article attemptToGetFeaturedImageThumbFromDiskWithSize:thumbSize];
         if(thumb) {
             [articleImageView setImage:thumb];
+            //UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+            //[(UIImageView *)[cell viewWithTag:100] setImage:thumb];
         }
     }
 }
@@ -186,14 +190,19 @@ static NSString *CellIdentifier = @"articleCell";
 - (void)loadImagesForOnscreenRows
 {
     NSArray *visiblePaths = [self.tableView indexPathsForVisibleRows];
+    [self.tableView reloadRowsAtIndexPaths:visiblePaths withRowAnimation:UITableViewRowAnimationNone];
+    /*
     for (NSIndexPath *indexPath in visiblePaths)
     {
+        
         id cell = [self.cellDictionary objectForKey:[NSNumber numberWithInt:indexPath.row]];
         
         if (cell) {
             [self setupCell:cell atIndexPath:indexPath];
         }
+        
     }
+     */
 }
 
 #pragma mark - UIScrollViewDelegate

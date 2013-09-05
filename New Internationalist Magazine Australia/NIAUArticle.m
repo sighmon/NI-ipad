@@ -156,7 +156,7 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
     
     [blocks enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         id (^block)(id) = obj;
-        if(depth<0 || idx<depth) {
+        if(depth<0 || idx<=depth) {
             object = block(options);
         } else {
             // stop enumerating if we hit the depth test
@@ -171,9 +171,20 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
     return object;
 }
 
+-(NSURL *)featuredImageThumbCacheURL {
+    NSString *url = [[dictionary objectForKey:@"featured_image"] objectForKey:@"url"];
+    NSURL *featuredImageURL = [NSURL URLWithString:url relativeToURL:[NSURL URLWithString:SITE_URL]];
+    NSString *featuredImageBaseName = [[featuredImageURL lastPathComponent] stringByDeletingPathExtension];
+    return [NSURL URLWithString:[featuredImageBaseName stringByAppendingPathExtension:@"_thumb.png"] relativeToURL:[self cacheURL]];
+}
+
+-(void)writeFeaturedImageThumbToDisk{
+    [UIImagePNGRepresentation(cachedFeaturedImageThumb) writeToURL:[self featuredImageThumbCacheURL] atomically:YES];
+}
+
 -(UIImage *)getFeaturedImageThumbFromDisk {
-    NSLog(@"%s not implemented", __PRETTY_FUNCTION__);
-    return nil;
+    NSData *thumbData = [NSData dataWithContentsOfURL:[self featuredImageThumbCacheURL]];
+    return [UIImage imageWithData:thumbData scale:[[UIScreen mainScreen] scale]];
 }
 
 -(UIImage *)generateFeaturedImageThumbWithSize:(CGSize)thumbSize {
@@ -198,14 +209,16 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
     return thumb;
 }
 
--(void)writeFeaturedImageThumbToDisk{
-    NSLog(@"%s not implemented", __PRETTY_FUNCTION__);
-}
+
 
 -(void)getFeaturedImageThumbWithSize:(CGSize)size andCompletionBlock:(void (^)(UIImage *))block {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0),
                    ^{
-                       block([self getFeaturedImageThumbWithSize:size]);
+                       UIImage *thumb = [self getFeaturedImageThumbWithSize:size];
+                       // run the block on the main queue so it can do ui stuff
+                       dispatch_async(dispatch_get_main_queue(), ^{
+                           block(thumb);
+                       });
                    });
 }
 
@@ -224,6 +237,7 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
                                 usingBlocks:@[
                                               // get thumb from memory
                                               ^id(id opts){
+        NSLog(@"get thumb from memory");
         if(CGSizeEqualToSize(cachedFeaturedImageThumbSize,
                              [opts[@"size"] CGSizeValue])) {
             return cachedFeaturedImageThumb;
@@ -232,6 +246,7 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
     },
                                                // get thumb from disk
                                                ^id(id opts){
+        NSLog(@"get thumb from disk");
         UIImage *image = [self getFeaturedImageThumbFromDisk];
         CGSize size = [opts[@"size"] CGSizeValue];
         if(image && CGSizeEqualToSize([image size],
@@ -240,10 +255,13 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
             cachedFeaturedImageThumbSize = size;
             return image;
         }
+        NSLog(@"thumb disk cache miss");
+        if(image) NSLog(@"sizes: %@ vs %@",[NSValue valueWithCGSize:size],[NSValue valueWithCGSize:[image size]]);
         return nil;
     },
                                                // generate thumb
                                                ^id(id opts){
+        NSLog(@"generate thumb");
         UIImage *image = [self generateFeaturedImageThumbWithSize:[opts[@"size"] CGSizeValue]];
         if(image) {
             cachedFeaturedImageThumb = image;
@@ -258,7 +276,7 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
 
 
 -(void)getFeaturedImageWithCompletionBlock:(void(^)(UIImage *img)) block {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0),
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0),
                    ^{
                        block([self getFeaturedImage]);
                    });
