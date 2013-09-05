@@ -147,6 +147,27 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
     }
 }
 
+// this might eventually become it's own class... for now, a class method
++(id)getCachedObjectWithOptions:(NSDictionary*)options andMethods:(NSArray*)methods andDepth:(int)depth{
+    __block id object = nil;
+    
+    [methods enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        id (^block)(NSDictionary *) = obj;
+        if(depth==0 || idx<depth) {
+            object = block(options);
+        } else {
+            // stop enumerating if we hit the depth test
+            *stop = YES;
+        }
+        // stop enumerating if we have found a non-nil object
+        if (object) {
+            *stop = YES;
+        }
+    }];
+    
+    return object;
+}
+
 +(UIImage *)imageThatFitsSize:(CGSize)size fromImage:(UIImage *)image {
 
     NSLog(@"SCALING IMAGE");
