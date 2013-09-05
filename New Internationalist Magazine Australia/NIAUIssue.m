@@ -171,7 +171,10 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
                UIImage *image = [UIImage imageWithData:imageData];
                if(image) {
                    [imageData writeToURL:coverCacheURL atomically:YES];
-                   block(image);
+                   // call block on main queue so it can do UI stuff
+                   dispatch_async(dispatch_get_main_queue(), ^{
+                       block(image);	
+                   });
                }
            });
     }
