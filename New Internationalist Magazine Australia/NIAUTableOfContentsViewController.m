@@ -60,20 +60,6 @@ static NSString *CellIdentifier = @"articleCell";
     [self updateScrollViewContentHeight];
 }
 
-- (void)adjustWidthOfMagazineCover
-{
-    // TODO: Fix the case that you start the app in Landscape mode
-    
-    CGFloat width = self.view.frame.size.height / 2.;
-    
-    // now set the width constraint accordingly
-    
-    [UIView animateWithDuration:.25 animations:^{
-        self.magazineCoverWidthConstraint.constant = width;
-        [self.view needsUpdateConstraints];
-    }];
-}
-
 - (void)updateEditorsLetterTextViewHeightToContent
 {
     CGFloat editorsLetterTextViewHeight = self.editorsLetterTextView.contentSize.height;
@@ -340,8 +326,6 @@ static NSString *CellIdentifier = @"articleCell";
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
-    
-    [self adjustWidthOfMagazineCover];
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
