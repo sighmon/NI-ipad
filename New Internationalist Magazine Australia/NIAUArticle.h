@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "NIAUCache.h"
 
 @class NIAUIssue;
 
@@ -18,6 +19,7 @@ extern NSString *ArticleFailedUpdateNotification;
     BOOL requestingBody;
     UIImage *cachedFeaturedImageThumb;
     CGSize cachedFeaturedImageThumbSize;
+    NIAUCache *featuredImageCache;
 }
 
 @property(nonatomic, strong, readonly) NSString *body;

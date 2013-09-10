@@ -80,6 +80,10 @@
 		05BD7F5E17796B9F00820EF3 /* 17.png in Resources */ = {isa = PBXBuildFile; fileRef = 05BD7F4C17796B9F00820EF3 /* 17.png */; };
 		3CA1C435E64C4F6F866B2E9B /* libPods-New Internationalist Magazine Australia.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BC803423D2F743538C4A77A9 /* libPods-New Internationalist Magazine Australia.a */; };
 		52090A62178CF7D1002D5162 /* NIAUPublisher.m in Sources */ = {isa = PBXBuildFile; fileRef = 52090A61178CF7D1002D5162 /* NIAUPublisher.m */; };
+		52CD5EE617D896240038A70C /* NIAUCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 52CD5EE517D896240038A70C /* NIAUCache.m */; };
+		52CD5EE717D896240038A70C /* NIAUCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 52CD5EE517D896240038A70C /* NIAUCache.m */; };
+		52CD5EEC17D8A6DC0038A70C /* NIAUCacheMethod.m in Sources */ = {isa = PBXBuildFile; fileRef = 52CD5EEB17D8A6DC0038A70C /* NIAUCacheMethod.m */; };
+		52CD5EED17D8A6DC0038A70C /* NIAUCacheMethod.m in Sources */ = {isa = PBXBuildFile; fileRef = 52CD5EEB17D8A6DC0038A70C /* NIAUCacheMethod.m */; };
 		C13EF1F7C6F64FA9AEE3C92E /* libPods-New Internationalist Magazine AustraliaTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 404F04905A5F4ACCA9F9CAB7 /* libPods-New Internationalist Magazine AustraliaTests.a */; };
 /* End PBXBuildFile section */
 
@@ -202,6 +206,10 @@
 		52090A60178CF7D1002D5162 /* NIAUPublisher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NIAUPublisher.h; sourceTree = "<group>"; };
 		52090A61178CF7D1002D5162 /* NIAUPublisher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NIAUPublisher.m; sourceTree = "<group>"; };
 		52090A65178D4291002D5162 /* local.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = local.h; sourceTree = "<group>"; };
+		52CD5EE417D896240038A70C /* NIAUCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NIAUCache.h; sourceTree = "<group>"; };
+		52CD5EE517D896240038A70C /* NIAUCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NIAUCache.m; sourceTree = "<group>"; };
+		52CD5EEA17D8A6DC0038A70C /* NIAUCacheMethod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NIAUCacheMethod.h; sourceTree = "<group>"; };
+		52CD5EEB17D8A6DC0038A70C /* NIAUCacheMethod.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NIAUCacheMethod.m; sourceTree = "<group>"; };
 		52EFA528179F877A00C93943 /* XCTestCase+MethodSwizzling.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "XCTestCase+MethodSwizzling.h"; sourceTree = "<group>"; };
 		52EFA529179F877A00C93943 /* XCTestCase+MethodSwizzling.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "XCTestCase+MethodSwizzling.m"; sourceTree = "<group>"; };
 		868019326A98489183B0CADE /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
@@ -312,6 +320,7 @@
 				053878251777D767001E60F6 /* NIAUIssue.m */,
 				052167E2177BD6DF00A4A81A /* NIAUArticle.h */,
 				052167E3177BD6DF00A4A81A /* NIAUArticle.m */,
+				52CD5EE917D8A68C0038A70C /* Caching */,
 				055A8EDD177290CF003D9407 /* NIAUViewController.h */,
 				055A8EDE177290CF003D9407 /* NIAUViewController.m */,
 				05BD7F121779656300820EF3 /* NIAUMagazineArchiveViewController.h */,
@@ -442,6 +451,17 @@
 				05BD7F2817796B8F00820EF3 /* 17@2x.png */,
 			);
 			name = Covers;
+			sourceTree = "<group>";
+		};
+		52CD5EE917D8A68C0038A70C /* Caching */ = {
+			isa = PBXGroup;
+			children = (
+				52CD5EE417D896240038A70C /* NIAUCache.h */,
+				52CD5EE517D896240038A70C /* NIAUCache.m */,
+				52CD5EEA17D8A6DC0038A70C /* NIAUCacheMethod.h */,
+				52CD5EEB17D8A6DC0038A70C /* NIAUCacheMethod.m */,
+			);
+			name = Caching;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -660,10 +680,12 @@
 			files = (
 				058F738E178BBA3E002CA40C /* NIAUImageZoomViewController.m in Sources */,
 				053878261777D767001E60F6 /* NIAUIssue.m in Sources */,
+				52CD5EEC17D8A6DC0038A70C /* NIAUCacheMethod.m in Sources */,
 				052167E4177BD6DF00A4A81A /* NIAUArticle.m in Sources */,
 				52090A62178CF7D1002D5162 /* NIAUPublisher.m in Sources */,
 				055A8EDF177290CF003D9407 /* NIAUViewController.m in Sources */,
 				05A80DDF17CF1F2E00D59180 /* UIImage+Resize.m in Sources */,
+				52CD5EE617D896240038A70C /* NIAUCache.m in Sources */,
 				05287A24177983E400501F5F /* NIAUCell.m in Sources */,
 				0507DB6A177AA0F60099540D /* NIAUTableOfContentsViewController.m in Sources */,
 				055A8ED2177290CF003D9407 /* main.m in Sources */,
@@ -678,6 +700,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				055A8EF4177290CF003D9407 /* New_Internationalist_Magazine_AustraliaTests.m in Sources */,
+				52CD5EED17D8A6DC0038A70C /* NIAUCacheMethod.m in Sources */,
+				52CD5EE717D896240038A70C /* NIAUCache.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
