@@ -266,7 +266,7 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
 }
 
 -(UIImage *)attemptToGetFeaturedImageThumbFromDiskWithSize:(CGSize)size {
-    return [featuredImageThumbCache readWithOptions:@{@"size":[NSValue valueWithCGSize:size]} stoppingAt:@"disk"];
+    return [featuredImageThumbCache readWithOptions:@{@"size":[NSValue valueWithCGSize:size]} stoppingAt:@"generate"];
 }
 
 

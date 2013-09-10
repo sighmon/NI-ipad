@@ -229,7 +229,7 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [[NSNotificationCenter defaultCenter] postNotificationName:ArticlesDidUpdateNotification object:self];
                 });
-                NSLog(@"cache hit. stoppimg");
+//                NSLog(@"cache hit. stoppimg");
             } else {
                 NSLog(@"no articles found in cache");
                 [self downloadArticles];

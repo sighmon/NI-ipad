@@ -32,17 +32,20 @@
 // TODO: to allow cache refreshes, also accept startingAt
 -(id)readWithOptions:(id)options stoppingAt:(NSString *)stopName {
     __block id result;
+    if(![self.methods count]) {
+        NSLog(@"*** READING NIAUCache OBJECT WITH NO METHODS ***");
+    }
     // TODO: implement starting at by building an NSIndexSet based on the location of the method given by startingAt
-    NSLog(@"readWithOptions:%@ stoppingAt:%@",options,stopName);
-    NSLog(@"methods:%@", self.methods);
+    //NSLog(@"readWithOptions:%@ stoppingAt:%@",options,stopName);
+    //NSLog(@"methods:%@", self.methods);
     [self.methods enumerateObjectsUsingBlock:^(NIAUCacheMethod *method, NSUInteger idx, BOOL *stop) {
         if(stopName!=nil && (method.name == stopName)) {
-            NSLog(@"read stopping at %@",method.name);
+            //NSLog(@"read stopping at %@",method.name);
             *stop = YES;
         } else {
-            NSLog(@"method: %@",method.name);
+            //NSLog(@"method: %@",method.name);
             result = method.readBlock(options, _state);
-            NSLog(@"-->%@",result);
+            //NSLog(@"-->%@",result);
             if (result) {
                 *stop = YES;
                 // write result back to cache in backround queue

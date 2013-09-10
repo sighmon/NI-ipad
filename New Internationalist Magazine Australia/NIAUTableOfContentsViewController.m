@@ -95,9 +95,9 @@ static NSString *CellIdentifier = @"articleCell";
     
     id cell = [self.cellDictionary objectForKey:[NSNumber numberWithInt:indexPath.row]];
     if (cell != nil) {
-        NSLog(@"Cell cache hit");
+//        NSLog(@"Cell cache hit");
     } else {
-        NSLog(@"Index path: %@",[NSNumber numberWithInt:indexPath.row]);
+//        NSLog(@"Index path: %@",[NSNumber numberWithInt:indexPath.row]);
         cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (cell == nil) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
@@ -110,7 +110,7 @@ static NSString *CellIdentifier = @"articleCell";
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"cellForRow.. %ld",(long)indexPath.row);
+//    NSLog(@"cellForRow.. %ld",(long)indexPath.row);
     UITableViewCell *cell = [self tableView:tableView cellForHeightForRowAtIndexPath:indexPath];
     [self setupCell:cell atIndexPath:indexPath];
     return cell;
@@ -124,7 +124,7 @@ static NSString *CellIdentifier = @"articleCell";
     int width = size.width;
     int height = size.height;
     
-    NSLog(@"%@ %ix%i",((UILabel *)[cell viewWithTag:101]).text,width,height);
+//    NSLog(@"%@ %ix%i",((UILabel *)[cell viewWithTag:101]).text,width,height);
     
     return size;
 }
