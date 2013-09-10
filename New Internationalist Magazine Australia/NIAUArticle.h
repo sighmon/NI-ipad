@@ -16,14 +16,14 @@ extern NSString *ArticleFailedUpdateNotification;
 
 @interface NIAUArticle : NSObject {
     NSDictionary *dictionary;
-    BOOL requestingBody;
+    NIAUCache *bodyCache;
     NIAUCache *featuredImageThumbCache;
     NIAUCache *featuredImageCache;
 }
 
-@property(nonatomic, strong, readonly) NSString *body;
-
 @property(nonatomic, strong) NIAUIssue *issue;
+//Q: does atomic mean what i think it means (threadsafety)?
+@property(atomic) BOOL requestingBody;
 
 -(NSString *)title;
 -(NSString *)teaser;
@@ -38,6 +38,7 @@ extern NSString *ArticleFailedUpdateNotification;
 -(UIImage *)attemptToGetFeaturedImageThumbFromDiskWithSize:(CGSize)size;
 
 -(void)requestBody;
+-(NSString *)attemptToGetBodyFromDisk;
 
 - (NSURL *)getWebURL;
 

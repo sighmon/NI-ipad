@@ -81,6 +81,7 @@
 //    }];
 }
 
+
 - (void)setupData
 {
     // Tried to use system font.. seems to be different for webview
@@ -90,12 +91,12 @@
     NSLog(@"pre getFeaturedImageWIthCompletionBlock");
     [self.article getFeaturedImageWithCompletionBlock:^(UIImage *img) {
         [self.featuredImage setImage:img];
-        [self.featuredImage setNeedsLayout];
+        //[self.featuredImage setNeedsLayout];
     }];
     NSLog(@"post getFeaturedImageWIthCompletionBlock");
-    self.titleLabel.text = self.article.title;
-    self.teaserLabel.text = self.article.teaser;
-    self.authorLabel.text = self.article.author;
+    self.titleLabel.text = WITH_DEFAULT(self.article.title,@"NOTITLE");
+    self.teaserLabel.text = WITH_DEFAULT(self.article.teaser,@"NOTEASER");
+    self.authorLabel.text = WITH_DEFAULT(self.article.author,@"NOAUTHOR");
     
     // Load CSS from the filesystem
     NSURL *cssURL = [[NSBundle mainBundle] URLForResource:@"article-body" withExtension:@"css"];
@@ -106,7 +107,7 @@
                                    "<link rel=\"stylesheet\" type=\"text/css\" href=\"%@\">"
                                    "</head> \n"
                                    "<body>%@</body> \n"
-                                   "</html>", cssURL, self.article.body];
+                                   "</html>", cssURL, [self.article attemptToGetBodyFromDisk]];
     [self.bodyWebView loadHTMLString:bodyWebViewHTML baseURL:nil];
     
     // Prevent webview from scrolling

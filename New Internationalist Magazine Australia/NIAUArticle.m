@@ -40,11 +40,6 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
 }
 
 
--(void)setBody:(NSString *)body {
-    _body = body;
-    [self writeBodyToCache];
-}
-
 -(NIAUCache *)buildFeaturedImageCache {
     __weak NIAUArticle *weakSelf = self;
     NIAUCache *cache = [[NIAUCache alloc] init];
@@ -106,6 +101,31 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
     return cache;
 }
 
+-(NIAUCache *)buildBodyCache {
+    __weak NIAUArticle *weakSelf = self;
+    NIAUCache *cache = [[NIAUCache alloc] init];
+    [cache addMethod:[[NIAUCacheMethod alloc] initMethod:@"memory" withReadBlock:^id(id options, id state) {
+        return state[@"body"];
+    } andWriteBlock:^(id object, id options, id state) {
+        state[@"body"] = object;
+    }]];
+    [cache addMethod:[[NIAUCacheMethod alloc] initMethod:@"disk" withReadBlock:^id(id options, id state) {
+        return [NSString stringWithContentsOfURL:[weakSelf bodyCacheURL] encoding:NSUTF8StringEncoding error:nil];
+    } andWriteBlock:^(id object, id options, id state) {
+        [(NSString*)object writeToURL:[self bodyCacheURL] atomically:FALSE encoding:NSUTF8StringEncoding error:nil];
+    }]];
+    [cache addMethod:[[NIAUCacheMethod alloc] initMethod:@"net" withReadBlock:^id(id options, id state) {
+        NSURL *articleURL = [NSURL URLWithString:[NSString stringWithFormat:@"issues/%@/articles/%@/body", [[weakSelf issue] index], [weakSelf index]] relativeToURL:[NSURL URLWithString:SITE_URL]];
+        NSData *data = [NSData dataWithContentsOfURL:articleURL];
+        if(data)
+            return [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        else return nil;
+    } andWriteBlock:^(id object, id options, id state) {
+        // no op
+    }]];
+    return cache;
+}
+
 -(NIAUArticle *)initWithIssue:(NIAUIssue *)_issue andDictionary:(NSDictionary *)_dictionary {
     self = [super init];
     if(self) {
@@ -114,6 +134,7 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
         
         featuredImageCache = [self buildFeaturedImageCache];
         featuredImageThumbCache = [self buildFeaturedImageThumbCache];
+        bodyCache = [self buildBodyCache];
     }
     
     return self;
@@ -147,7 +168,7 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
     return [NIAUArticle metadataURLWithIssue:[self issue] andId:[self index]];
 }
 
--(NSURL *) bodyURL {
+-(NSURL *) bodyCacheURL {
     return [NSURL URLWithString:@"body.html" relativeToURL:[self cacheURL]];
 }
 
@@ -195,19 +216,6 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
         
     } else {
         NSLog(@"error creating cache dir: %@",error);
-    }
-}
-
--(void)writeBodyToCache {
-    if(self.body) {
-        NSError *error;
-        if (![self.body writeToURL:[self bodyURL] atomically:FALSE encoding:NSUTF8StringEncoding error:&error]) {
-            NSLog(@"error writing body to cache: %@", error);
-        } else {
-            NSLog(@"wrote body to cache");
-        }
-    } else {
-        NSLog(@"no body to cache");
     }
 }
 
@@ -292,51 +300,32 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
     return [NSURL URLWithString:featuredImageFileName relativeToURL:[self cacheURL]];
 }
 
-//TODO: restructure to use the same pattern as FeaturedImageThumb
 -(UIImage *)getFeaturedImage {
     return [featuredImageCache readWithOptions:nil];
 }
 
+-(NSString *)attemptToGetBodyFromDisk {
+    return [bodyCache readWithOptions:nil stoppingAt:@"net"];
+}
 
 -(void)requestBody {
-    if(!requestingBody) {
-        requestingBody = TRUE;
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
-            // read from cache first and issue our first update
-            NSError *error;
-            // update body, without writing to cache
-            _body = [NSString stringWithContentsOfURL:[self bodyURL] encoding:NSUTF8StringEncoding error:&error];
+    if(!self.requestingBody) {
+        self.requestingBody = TRUE;
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
             
-            if(self.body) {
-                NSLog(@"read body from cache");
+            id body = [bodyCache readWithOptions:nil];
+            NSLog(@"requestBody. body==%@",body);
+            if(body) {
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [[NSNotificationCenter defaultCenter] postNotificationName:ArticleDidUpdateNotification object:self];
                 });
             } else {
-                NSLog(@"cache miss reading body: %@", error);
-            }
-            
-            NSURL *articleURL = [NSURL URLWithString:[NSString stringWithFormat:@"issues/%@/articles/%@/body", [[self issue] index], [self index]] relativeToURL:[NSURL URLWithString:SITE_URL]];
-            NSData *data = [NSData dataWithContentsOfURL:articleURL];
-            if(data) {
-                self.body = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-                
-                
-                //notify
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    [[NSNotificationCenter defaultCenter] postNotificationName:ArticleDidUpdateNotification object:self];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:ArticleFailedUpdateNotification object:self];
                 });
-            } else {
-                // only send failure notification if body is null
-                if(!self.body) {
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        [[NSNotificationCenter defaultCenter] postNotificationName:ArticleFailedUpdateNotification object:self];
-                    });
-                }
             }
-            requestingBody = FALSE;
+            self.requestingBody = FALSE;
         });
-
     }
 }
 

@@ -17,3 +17,5 @@
 
 // from viggio/Newsstand
 #define CacheDirectory [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0]
+
+#define WITH_DEFAULT(val,def) ((val)?(val):(def))
