@@ -45,12 +45,37 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
     [self writeBodyToCache];
 }
 
+-(NIAUCache *)buildFeaturedImageCache {
+    __weak NIAUArticle *weakSelf = self;
+    NIAUCache *cache = [[NIAUCache alloc] init];
+    [cache addMethod:[[NIAUCacheMethod alloc] initMethod:@"memory" withReadBlock:^id(id options, id state) {
+        return state[@"featuredImage"];
+    } andWriteBlock:^(id object, id options, id state) {
+        state[@"featuredImage"] = object;
+    }]];
+    [cache addMethod:[[NIAUCacheMethod alloc] initMethod:@"disk" withReadBlock:^id(id options, id state) {
+        NSData *imageData = [NSData dataWithContentsOfURL:[weakSelf featuredImageCacheURL]];
+        return [UIImage imageWithData:imageData];
+    } andWriteBlock:^(id object, id options, id state) {
+        [UIImagePNGRepresentation(object) writeToURL:[weakSelf featuredImageCacheURL] atomically:YES];
+    }]];
+    [cache addMethod:[[NIAUCacheMethod alloc] initMethod:@"net" withReadBlock:^id(id options, id state) {
+        NSData *imageData = [NSData dataWithContentsOfURL:[weakSelf featuredImageURL]];
+        return [UIImage imageWithData:imageData];
+    } andWriteBlock:^(id object, id options, id state) {
+        // noop
+    }]];
+    return cache;
+}
+
 -(NIAUArticle *)initWithIssue:(NIAUIssue *)_issue andDictionary:(NSDictionary *)_dictionary {
-    
-    issue = _issue;
-    
-    dictionary = _dictionary;
-    
+    self = [super init];
+    if(self) {
+        issue = _issue;
+        dictionary = _dictionary;
+        
+        featuredImageCache = [self buildFeaturedImageCache];
+    }
     
     return self;
 }
@@ -189,7 +214,10 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
 
 -(UIImage *)generateFeaturedImageThumbWithSize:(CGSize)thumbSize {
     UIImage *image = [self getFeaturedImage];
-
+    
+    // don't make blank thumbnails ;)
+    if(!image) return nil;
+    
     UIGraphicsBeginImageContextWithOptions(thumbSize, NO, 0.0f);
     float thumbAspect = thumbSize.width/thumbSize.height;
     float imageAspect = [image size].width/[image size].height;
@@ -279,7 +307,7 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0),
                    ^{
                        UIImage *image = [self getFeaturedImage];
-                       // run the block on the main queue so it can do ui stuff
+                       // run the block on the main queue so it can 	do ui stuff
                        dispatch_async(dispatch_get_main_queue(), ^{
                            block(image);
                        });
@@ -287,32 +315,19 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
                    });
 }
 
+-(NSURL *) featuredImageURL {
+    NSString *url = [[dictionary objectForKey:@"featured_image"] objectForKey:@"url"];
+    return [NSURL URLWithString:url relativeToURL:[NSURL URLWithString:SITE_URL]];
+}
+
+-(NSURL *) featuredImageCacheURL {
+    NSString *featuredImageFileName = [[self featuredImageURL]lastPathComponent];
+    return [NSURL URLWithString:featuredImageFileName relativeToURL:[self cacheURL]];
+}
+
 //TODO: restructure to use the same pattern as FeaturedImageThumb
 -(UIImage *)getFeaturedImage {
-    NSString *url = [[dictionary objectForKey:@"featured_image"] objectForKey:@"url"];
-    NSURL *featuredImageURL = [NSURL URLWithString:url relativeToURL:[NSURL URLWithString:SITE_URL]];
-    NSString *featuredImageFileName = [featuredImageURL lastPathComponent];
-    NSURL *featuredImageCacheURL = [NSURL URLWithString:featuredImageFileName relativeToURL:[self cacheURL]];
-    NSData *imageData = [NSData dataWithContentsOfURL:featuredImageCacheURL];
-    UIImage *image = [UIImage imageWithData:imageData];
-    
-    if(image) {
-        NSLog(@"successfully read image from %@",featuredImageCacheURL);
-        return image;
-    } else {
-        NSLog(@"trying to read image from %@",featuredImageURL);
-        
-        NSData *imageData = [NSData dataWithContentsOfURL:featuredImageURL];
-        UIImage *image = [UIImage imageWithData:imageData];
-        if(image) {
-            NSLog(@"successfully read image from %@",featuredImageURL);
-            [imageData writeToURL:	featuredImageCacheURL atomically:YES];
-            return image;
-        } else {
-            NSLog(@"failed to read image from %@",featuredImageURL);
-            return nil;
-        }
-    }
+    return [featuredImageCache readWithOptions:nil];
 }
 
 
