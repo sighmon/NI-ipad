@@ -29,8 +29,10 @@
     return [self readWithOptions:options stoppingAt:nil];
 }
 
+// TODO: to allow cache refreshes, also accept startingAt
 -(id)readWithOptions:(id)options stoppingAt:(NSString *)stopName {
     __block id result;
+    // TODO: implement starting at by building an NSIndexSet based on the location of the method given by startingAt
     NSLog(@"readWithOptions:%@ stoppingAt:%@",options,stopName);
     NSLog(@"methods:%@", self.methods);
     [self.methods enumerateObjectsUsingBlock:^(NIAUCacheMethod *method, NSUInteger idx, BOOL *stop) {

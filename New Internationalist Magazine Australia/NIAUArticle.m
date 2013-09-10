@@ -68,6 +68,44 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
     return cache;
 }
 
+-(NIAUCache *)buildFeaturedImageThumbCache {
+    __weak NIAUArticle *weakSelf = self;
+    NIAUCache *cache = [[NIAUCache alloc] init];
+    [cache addMethod:[[NIAUCacheMethod alloc] initMethod:@"memory" withReadBlock:^id(id options, id state) {
+        id entry = state[@"size"];
+        if(!entry) return nil;
+        CGSize cachedSize = [(NSValue *)entry CGSizeValue];
+        CGSize size = [(NSValue *)options[@"size"] CGSizeValue];
+        if(CGSizeEqualToSize(cachedSize,size)) {
+            return state[@"thumb"];
+        } else {
+            return nil;
+        }
+    } andWriteBlock:^(id object, id options, id state) {
+        state[@"size"]=options[@"size"];
+        state[@"thumb"]=object;
+    }]];
+    [cache addMethod:[[NIAUCacheMethod alloc] initMethod:@"disk" withReadBlock:^id(id options, id state) {
+        CGSize size = [(NSValue *)options[@"size"] CGSizeValue];
+        UIImage *image = [weakSelf getFeaturedImageThumbFromDisk];
+        if(image && CGSizeEqualToSize([image size], size)) {
+            return image;
+        } else {
+            return nil;
+        }
+    } andWriteBlock:^(id object, id options, id state) {
+        // writeFeaturedImageThumbToDisk
+        [UIImagePNGRepresentation(object) writeToURL:[self featuredImageThumbCacheURL] atomically:YES];
+    }]];
+    [cache addMethod:[[NIAUCacheMethod alloc] initMethod:@"generate" withReadBlock:^id(id options, id state) {
+        CGSize size = [(NSValue *)options[@"size"] CGSizeValue];
+        return [weakSelf generateFeaturedImageThumbWithSize:size];
+    } andWriteBlock:^(id object, id options, id state) {
+        // no op
+    }]];
+    return cache;
+}
+
 -(NIAUArticle *)initWithIssue:(NIAUIssue *)_issue andDictionary:(NSDictionary *)_dictionary {
     self = [super init];
     if(self) {
@@ -75,6 +113,7 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
         dictionary = _dictionary;
         
         featuredImageCache = [self buildFeaturedImageCache];
+        featuredImageThumbCache = [self buildFeaturedImageThumbCache];
     }
     
     return self;
@@ -172,39 +211,11 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
     }
 }
 
-// can't seem to use this typedef anywhere...
-//typedef id (^MethodBlock(id));
-
-// this might eventually become it's own class... for now, a class method
-+(id)getObjectWithOptions:(NSDictionary*)options andDepth:(int)depth usingBlocks:(NSArray*)blocks{
-    __block id object = nil;
-    
-    [blocks enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        id (^block)(id) = obj;
-        if(depth<0 || idx<=depth) {
-            object = block(options);
-        } else {
-            // stop enumerating if we hit the depth test
-            *stop = YES;
-        }
-        // stop enumerating if we have found a non-nil object
-        if (object) {
-            *stop = YES;
-        }
-    }];
-    
-    return object;
-}
-
 -(NSURL *)featuredImageThumbCacheURL {
     NSString *url = [[dictionary objectForKey:@"featured_image"] objectForKey:@"url"];
     NSURL *featuredImageURL = [NSURL URLWithString:url relativeToURL:[NSURL URLWithString:SITE_URL]];
     NSString *featuredImageBaseName = [[featuredImageURL lastPathComponent] stringByDeletingPathExtension];
     return [NSURL URLWithString:[featuredImageBaseName stringByAppendingPathExtension:@"_thumb.png"] relativeToURL:[self cacheURL]];
-}
-
--(void)writeFeaturedImageThumbToDisk{
-    [UIImagePNGRepresentation(cachedFeaturedImageThumb) writeToURL:[self featuredImageThumbCacheURL] atomically:YES];
 }
 
 -(UIImage *)getFeaturedImageThumbFromDisk {
@@ -251,55 +262,11 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
 }
 
 -(UIImage *)getFeaturedImageThumbWithSize:(CGSize)size {
-    return [self getFeaturedImageThumbWithSize:size stoppingAtDepth:-1];
+    return [featuredImageThumbCache readWithOptions:@{@"size":[NSValue valueWithCGSize:size]}];
 }
 
 -(UIImage *)attemptToGetFeaturedImageThumbFromDiskWithSize:(CGSize)size {
-    return [self getFeaturedImageThumbWithSize:size stoppingAtDepth:1];
-}
-
-// our cache strategy in a nutshell
--(UIImage *)getFeaturedImageThumbWithSize:(CGSize)size stoppingAtDepth:(int)depth {
-    
-    return [self.class getObjectWithOptions:@{@"size": [NSValue valueWithCGSize:size]} andDepth:depth
-                                usingBlocks:@[
-                                              // get thumb from memory
-                                              ^id(id opts){
-        NSLog(@"get thumb from memory");
-        if(CGSizeEqualToSize(cachedFeaturedImageThumbSize,
-                             [opts[@"size"] CGSizeValue])) {
-            return cachedFeaturedImageThumb;
-        }
-        return nil;
-    },
-                                               // get thumb from disk
-                                               ^id(id opts){
-        NSLog(@"get thumb from disk");
-        UIImage *image = [self getFeaturedImageThumbFromDisk];
-        CGSize size = [opts[@"size"] CGSizeValue];
-        if(image && CGSizeEqualToSize([image size],
-                                      size)) {
-            cachedFeaturedImageThumb = image;
-            cachedFeaturedImageThumbSize = size;
-            return image;
-        }
-        NSLog(@"thumb disk cache miss");
-        if(image) NSLog(@"sizes: %@ vs %@",[NSValue valueWithCGSize:size],[NSValue valueWithCGSize:[image size]]);
-        return nil;
-    },
-                                               // generate thumb
-                                               ^id(id opts){
-        NSLog(@"generate thumb");
-        UIImage *image = [self generateFeaturedImageThumbWithSize:[opts[@"size"] CGSizeValue]];
-        if(image) {
-            cachedFeaturedImageThumb = image;
-            cachedFeaturedImageThumbSize = size;
-            [self writeFeaturedImageThumbToDisk];
-            return image;
-        }
-        return nil;
-    }
-                                               ]];
+    return [featuredImageThumbCache readWithOptions:@{@"size":[NSValue valueWithCGSize:size]} stoppingAt:@"disk"];
 }
 
 

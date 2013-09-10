@@ -17,8 +17,7 @@ extern NSString *ArticleFailedUpdateNotification;
 @interface NIAUArticle : NSObject {
     NSDictionary *dictionary;
     BOOL requestingBody;
-    UIImage *cachedFeaturedImageThumb;
-    CGSize cachedFeaturedImageThumbSize;
+    NIAUCache *featuredImageThumbCache;
     NIAUCache *featuredImageCache;
 }
 
