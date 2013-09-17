@@ -9,7 +9,7 @@
 #import "NIAUArticle.h"
 #import "NIAUIssue.h"
 #import "local.h"
-#import "UIImage+Resize.h"
+//#import "UIImage+Resize.h"
 
 
 NSString *ArticleDidUpdateNotification = @"ArticleDidUpdate";

@@ -18,4 +18,10 @@
 // from viggio/Newsstand
 #define CacheDirectory [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0]
 
-#define WITH_DEFAULT(val,def) ((val)?(val):(def))
+#define WITH_DEFAULT(val,def) ((val!=(id)[NSNull null] && val)?(val):(def))
+
+#if DEBUG
+#define IF_DEBUG(debug,else) (debug)
+#else
+#define IF_DEBUG(debug,else) (else)
+#endif

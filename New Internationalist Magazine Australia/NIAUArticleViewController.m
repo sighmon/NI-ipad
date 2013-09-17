@@ -94,9 +94,10 @@
         //[self.featuredImage setNeedsLayout];
     }];
     NSLog(@"post getFeaturedImageWIthCompletionBlock");
-    self.titleLabel.text = WITH_DEFAULT(self.article.title,@"NOTITLE");
-    self.teaserLabel.text = WITH_DEFAULT(self.article.teaser,@"NOTEASER");
-    self.authorLabel.text = WITH_DEFAULT(self.article.author,@"NOAUTHOR");
+
+    self.titleLabel.text = WITH_DEFAULT(self.article.title,IF_DEBUG(@"!!!NOTITLE!!!",@""));
+    self.teaserLabel.text = WITH_DEFAULT(self.article.teaser,IF_DEBUG(@"!!!NOTEASER!!!",@""));
+    self.authorLabel.text = WITH_DEFAULT(self.article.author,IF_DEBUG(@"!!!NOAUTHOR!!!",@""));
     
     // Load CSS from the filesystem
     NSURL *cssURL = [[NSBundle mainBundle] URLForResource:@"article-body" withExtension:@"css"];

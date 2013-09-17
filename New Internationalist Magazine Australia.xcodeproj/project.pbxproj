@@ -58,7 +58,6 @@
 		0567082817B1D51400A87818 /* default_article_image_table_view.png in Resources */ = {isa = PBXBuildFile; fileRef = 0567082617B1D50A00A87818 /* default_article_image_table_view.png */; };
 		0567082917B1D51400A87818 /* default_article_image_table_view@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0567082717B1D50A00A87818 /* default_article_image_table_view@2x.png */; };
 		058F738E178BBA3E002CA40C /* NIAUImageZoomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 058F738D178BBA3E002CA40C /* NIAUImageZoomViewController.m */; };
-		05A80DDF17CF1F2E00D59180 /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = 05A80DDE17CF1F2E00D59180 /* UIImage+Resize.m */; };
 		05BD7F2917796B8F00820EF3 /* 0@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 05BD7F1717796B8F00820EF3 /* 0@2x.png */; };
 		05BD7F2A17796B8F00820EF3 /* 1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 05BD7F1817796B8F00820EF3 /* 1@2x.png */; };
 		05BD7F2B17796B8F00820EF3 /* 2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 05BD7F1917796B8F00820EF3 /* 2@2x.png */; };
@@ -168,8 +167,6 @@
 		0567082717B1D50A00A87818 /* default_article_image_table_view@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "default_article_image_table_view@2x.png"; sourceTree = "<group>"; };
 		058F738C178BBA3E002CA40C /* NIAUImageZoomViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NIAUImageZoomViewController.h; sourceTree = "<group>"; };
 		058F738D178BBA3E002CA40C /* NIAUImageZoomViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NIAUImageZoomViewController.m; sourceTree = "<group>"; };
-		05A80DDD17CF1F2E00D59180 /* UIImage+Resize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Resize.h"; sourceTree = "<group>"; };
-		05A80DDE17CF1F2E00D59180 /* UIImage+Resize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Resize.m"; sourceTree = "<group>"; };
 		05BD7F121779656300820EF3 /* NIAUMagazineArchiveViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NIAUMagazineArchiveViewController.h; sourceTree = "<group>"; };
 		05BD7F131779656300820EF3 /* NIAUMagazineArchiveViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NIAUMagazineArchiveViewController.m; sourceTree = "<group>"; };
 		05BD7F141779671900820EF3 /* NIAUCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NIAUCell.h; sourceTree = "<group>"; };
@@ -323,7 +320,6 @@
 		055A8ECB177290CE003D9407 /* New Internationalist Magazine Australia */ = {
 			isa = PBXGroup;
 			children = (
-				05A80DE617CF2FEF00D59180 /* Image Resizing */,
 				0511F13917BB1D55004B5A72 /* Stylesheet */,
 				055A8F011772C70F003D9407 /* Icons */,
 				053878281777E034001E60F6 /* Images */,
@@ -412,15 +408,6 @@
 				05FA185217A8B90000E023A0 /* 152.png */,
 			);
 			name = Icons;
-			sourceTree = "<group>";
-		};
-		05A80DE617CF2FEF00D59180 /* Image Resizing */ = {
-			isa = PBXGroup;
-			children = (
-				05A80DDD17CF1F2E00D59180 /* UIImage+Resize.h */,
-				05A80DDE17CF1F2E00D59180 /* UIImage+Resize.m */,
-			);
-			name = "Image Resizing";
 			sourceTree = "<group>";
 		};
 		05BD7F1617796B7000820EF3 /* Covers */ = {
@@ -714,7 +701,6 @@
 				052167E4177BD6DF00A4A81A /* NIAUArticle.m in Sources */,
 				52090A62178CF7D1002D5162 /* NIAUPublisher.m in Sources */,
 				055A8EDF177290CF003D9407 /* NIAUViewController.m in Sources */,
-				05A80DDF17CF1F2E00D59180 /* UIImage+Resize.m in Sources */,
 				52CD5EE617D896240038A70C /* NIAUCache.m in Sources */,
 				05287A24177983E400501F5F /* NIAUCell.m in Sources */,
 				0507DB6A177AA0F60099540D /* NIAUTableOfContentsViewController.m in Sources */,
