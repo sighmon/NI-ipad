@@ -121,8 +121,8 @@ static NSString *CellIdentifier = @"articleCell";
     CGSize fittingSize = CGSizeMake(tableView.bounds.size.width, 0);
     CGSize size = [cell.contentView systemLayoutSizeFittingSize:fittingSize];
     
-    int width = size.width;
-    int height = size.height;
+//    int width = size.width;
+//    int height = size.height;
     
 //    NSLog(@"%@ %ix%i",((UILabel *)[cell viewWithTag:101]).text,width,height);
     
