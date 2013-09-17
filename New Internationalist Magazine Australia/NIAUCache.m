@@ -49,7 +49,14 @@
             if (result) {
                 *stop = YES;
                 // write result back to cache in backround queue
+                NSString *secondMethodName = nil;
+                if([self.methods count]>1) {
+                    secondMethodName = self.methods[2];
+                }
+                // make sure we at least write it in to the first level cache before returning
+                [self write:result withOptions:options stoppingAt:secondMethodName];
                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0),
+                               // startingAt:secondMethodName
                                ^{ [self write:result withOptions:options stoppingAt:method.name]; });
             }
         }
