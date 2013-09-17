@@ -8,7 +8,6 @@
 
 #import "NIAUTableOfContentsViewController.h"
 #import "NIAUImageZoomViewController.h"
-#import "NSAttributedString+HTML.h"
 
 @interface NIAUTableOfContentsViewController ()
 
