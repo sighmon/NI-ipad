@@ -16,6 +16,8 @@
 
 @implementation NIAUTableOfContentsViewController
 
+static NSString *CellIdentifier = @"articleCell";
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -30,6 +32,8 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
+    self.cellDictionary = [NSMutableDictionary dictionary];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(publisherReady:) name:ArticlesDidUpdateNotification object:self.issue];
     
     [self.issue requestArticles];
@@ -40,14 +44,8 @@
     // Set the editorsLetterTextView height to its content.
     [self updateEditorsLetterTextViewHeightToContent];
     
-//    // Set the exclusion path around the editors letter
-//    [self updateEditorsLetterTextViewExclusionPath];
-    
     // Set the scrollView content height to the editorsLetterTextView.
     [self updateScrollViewContentHeight];
-    
-    // Enable tapping the top bar to scroll to top for the scrollview by disabling it on the tableview
-    [self.tableView setScrollsToTop:NO];
 }
 
 -(void)publisherReady:(NSNotification *)not
@@ -59,171 +57,7 @@
 {
     [self.tableView reloadData];
     [self updateEditorsLetterTextViewHeightToContent];
-    [self adjustHeightOfTableview];
     [self updateScrollViewContentHeight];
-}
-
-- (void)adjustHeightOfTableview
-{
-    CGFloat height = self.tableView.contentSize.height;
-    
-    // now set the height constraint accordingly
-    
-    [UIView animateWithDuration:.25 animations:^{
-        self.tableViewHeightConstraint.constant = height;
-        [self.view needsUpdateConstraints];
-    }];
-}
-
-- (void)adjustWidthOfMagazineCover
-{
-    // TODO: Fix the case that you start the app in Landscape mode
-    
-    CGFloat width = self.view.frame.size.height / 2.;
-    
-    // now set the width constraint accordingly
-    
-    [UIView animateWithDuration:.25 animations:^{
-        self.magazineCoverWidthConstraint.constant = width;
-        [self.view needsUpdateConstraints];
-    }];
-}
-
-#pragma mark - Table view data source
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self.issue numberOfArticles];
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *CellIdentifier = @"articleCell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
-    }
-    
-    return cell;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [self tableView:tableView cellForHeightForRowAtIndexPath:indexPath];
-    [self setupCell:cell atIndexPath:indexPath];
-    return cell;
-}
-
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [self tableView:tableView cellForHeightForRowAtIndexPath:indexPath];
-    
-    NSLog(@"cell.textLabel.text=%@",cell.textLabel.text);
-    
-    // set the frame to be the same size as the tableView (only really to get the width)
-    cell.frame = tableView.frame;
-    NSLog(@"cell.frame.width=%f",cell.frame.size.width);
-    // temporarily store the contents of the textlabel
-    NSString *tmp = cell.textLabel.text;
-    // and set it to a really wide string
-    cell.textLabel.text = [@"" stringByPaddingToLength:500 withString:@" X" startingAtIndex:0];
-    // then update the layout
-    [cell layoutIfNeeded];
-    // pull out the size of the textLabel to get it's maximum possible size
-    CGSize 	maxSize = cell.textLabel.frame.size;
-    
-    //WTF: first time through this gets random smaller sizes...
-    
-//    NSLog(@"maxSize.width=%f",maxSize.width);
-    
-    // replace the original text
-    cell.textLabel.text = tmp;
-    
-    // inspired by http://doing-it-wrong.mikeweller.com/2012/07/youre-doing-it-wrong-2-sizing-labels.html
-    
-    CGFloat textHeight = [cell.textLabel sizeThatFits:maxSize].height;
-    
-    CGFloat detailTextHeight =  [cell.detailTextLabel sizeThatFits:maxSize].height;
-    
-//    NSLog(@"textHeight=%f",textHeight);
-//    NSLog(@"detailTextHeight=%f",detailTextHeight);
-    
-    // TODO: work out how to set the padding to the standard value
-    
-    return textHeight + detailTextHeight + 20.;
-}
-
-- (void)setupCellForHeight: (UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
-
-    cell.imageView.image = [UIImage imageNamed:@"default_article_image_table_view.png"];
-    // TODO: possibly replace the imageview with our own,
-    // see http://stackoverflow.com/questions/3182649/ios-sdk-uiviewcontentmodescaleaspectfit-vs-uiviewcontentmodescaleaspectfill
-    
-    cell.textLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    cell.detailTextLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    cell.textLabel.text = [self.issue articleAtIndex:indexPath.row].title;
-//    TODO: For Pix to fix - attributedText for article teasers
-//    cell.detailTextLabel.attributedText = [[NSAttributedString alloc] initWithHTMLData:[[self.issue articleAtIndex:indexPath.row].teaser dataUsingEncoding:NSUTF8StringEncoding] baseURL:nil documentAttributes:nil];
-    id teaser = [self.issue articleAtIndex:indexPath.row].teaser;
-    cell.detailTextLabel.text =  (teaser==[NSNull null]) ? @"" : teaser;
-}
-
-- (void)setupCell: (UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
-    [self setupCellForHeight:cell atIndexPath:indexPath];
-//    [[self.issue articleAtIndex:indexPath.row] getFeaturedImageWithSize:CGSizeMake(57,43) andCompletionBlock:^(UIImage *img) {
-//        NSLog(@"completion block got image with width %f",[img size].width);
-//        [cell.imageView setImage:img];
-//        //[cell.imageView setNeedsLayout];
-//        // TODO: do we need to force a redraw?
-//    }];
-}
-
-
-#pragma mark -
-#pragma mark Setup Data
-
-- (void)setupData
-{
-    // Set the cover from the issue cover tapped
-    [self.issue getCoverWithCompletionBlock:^(UIImage *img) {
-        [self.imageView setImage:img];
-        [self.imageView setNeedsLayout];
-    }];
-    
-    self.labelTitle.text = self.issue.title;
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"MMMM yyyy"];
-    self.labelNumberAndDate.text = [NSString stringWithFormat: @"%@ - %@", self.issue.name, [dateFormatter stringFromDate:self.issue.publication]];
-    self.labelEditor.text = [NSString stringWithFormat:@"Editor's letter by %@", self.issue.editorsName];
-    self.editorsLetterTextView.text = self.issue.editorsLetter;
-    
-    [self.editorImageView setImage:[UIImage imageNamed:@"default_editors_photo"]];
-    // Load the real editor's image
-    [self.issue getEditorsImageWithCompletionBlock:^(UIImage *img) {
-        [self.editorImageView setImage:img];
-        [self.editorImageView setNeedsLayout];
-    }];
-    [self applyRoundMask:self.editorImageView];
-}
-
-- (void)applyRoundMask:(UIImageView *)imageView
-{
-    // Draw a round mask for images.. i.e. the editor's photo
-    imageView.layer.masksToBounds = YES;
-    imageView.layer.cornerRadius = self.editorImageView.bounds.size.width / 2.;
-}
-
-- (void)updateEditorsLetterTextViewExclusionPath
-{
-    // Wrap the text around the editor's photo
-    
-    // TODO: Work out how to only exclude words not characters. For now I'll just use a square exclusionPath.
-    // self.editorsLetterTextView.textContainer.exclusionPaths = @[[UIBezierPath bezierPathWithRoundedRect:editorImageViewRect cornerRadius:self.editorImageView.layer.cornerRadius]];
-    
-    self.editorsLetterTextView.textContainer.exclusionPaths = nil;
-    CGRect editorImageViewRect = [self.editorsLetterTextView convertRect:self.editorImageView.frame fromView:self.view];
-    self.editorsLetterTextView.textContainer.exclusionPaths = @[[UIBezierPath bezierPathWithRect:editorImageViewRect]];
 }
 
 - (void)updateEditorsLetterTextViewHeightToContent
@@ -245,6 +79,187 @@
         contentRect = CGRectUnion(contentRect, view.frame);
     }
     self.scrollView.contentSize = contentRect.size;
+}
+
+#pragma mark - Table view data source
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return [self.issue numberOfArticles];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    id cell = [self.cellDictionary objectForKey:[NSNumber numberWithInt:indexPath.row]];
+    if (cell != nil) {
+//        NSLog(@"Cell cache hit");
+    } else {
+//        NSLog(@"Index path: %@",[NSNumber numberWithInt:indexPath.row]);
+        cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        if (cell == nil) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+        }
+        [self setupCellForHeight:cell atIndexPath:indexPath];
+        [self.cellDictionary setObject:cell forKey:[NSNumber numberWithInt:indexPath.row]];
+    }
+    
+    return cell;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+//    NSLog(@"cellForRow.. %ld",(long)indexPath.row);
+    UITableViewCell *cell = [self tableView:tableView cellForHeightForRowAtIndexPath:indexPath];
+    [self setupCell:cell atIndexPath:indexPath];
+    return cell;
+}
+
+- (CGSize)calculateCellSize:(UITableViewCell *)cell inTableView:(UITableView *)tableView {
+    
+    CGSize fittingSize = CGSizeMake(tableView.bounds.size.width, 0);
+    CGSize size = [cell.contentView systemLayoutSizeFittingSize:fittingSize];
+    
+    int width = size.width;
+    int height = size.height;
+    
+//    NSLog(@"%@ %ix%i",((UILabel *)[cell viewWithTag:101]).text,width,height);
+    
+    return size;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    UITableViewCell *cell = [self tableView:tableView cellForHeightForRowAtIndexPath:indexPath];
+    
+    return [self calculateCellSize:cell inTableView:tableView].height;
+}
+
+- (void)setupCellForHeight: (UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+
+    id teaser = [self.issue articleAtIndex:indexPath.row].teaser;
+    
+    UIImageView *articleImageView = (UIImageView *)[cell viewWithTag:100];
+    articleImageView.image = [UIImage imageNamed:@"default_article_image_table_view.png"];
+    
+    UILabel *articleTitle = (UILabel *)[cell viewWithTag:101];
+    articleTitle.text = [self.issue articleAtIndex:indexPath.row].title;
+    
+    UILabel *articleTeaser = (UILabel *)[cell viewWithTag:102];
+    articleTeaser.text = (teaser==[NSNull null]) ? @"" : teaser;
+    
+//    [self.tableView addSubview:cell];
+//    [cell removeFromSuperview];
+}
+
+- (void)setupCell: (UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+//    [self setupCellForHeight:cell atIndexPath:indexPath];
+//    CGSize size = [self calculateCellSize:cell inTableView:self.tableView];
+//    cell.frame = CGRectMake(cell.frame.origin.x, cell.frame.origin.y, size.width, size.height);
+    UIImageView *articleImageView = (UIImageView *)[cell viewWithTag:100];
+    NIAUArticle *article = [self.issue articleAtIndex:indexPath.row];
+    CGSize thumbSize = CGSizeMake(57,43);
+    if (self.tableView.dragging == NO && self.tableView.decelerating == NO) {
+        if (articleImageView.image == [UIImage imageNamed:@"default_article_image_table_view.png"]) {
+            [article getFeaturedImageThumbWithSize:thumbSize andCompletionBlock:^(UIImage *thumb) {
+
+                //UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+                //[(UIImageView *)[cell viewWithTag:100] setImage:thumb];
+                [articleImageView setImage:thumb];
+                
+            }];
+        } else {
+            //NSLog(@"Cell has an image.");
+        }
+    } else {
+        UIImage *thumb = [article attemptToGetFeaturedImageThumbFromDiskWithSize:thumbSize];
+        if(thumb) {
+            [articleImageView setImage:thumb];
+            //UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+            //[(UIImageView *)[cell viewWithTag:100] setImage:thumb];
+        }
+    }
+}
+
+// -------------------------------------------------------------------------------
+//	loadImagesForOnscreenRows
+//  This method is used in case the user scrolled into a set of cells that don't
+//  have their app icons yet.
+// -------------------------------------------------------------------------------
+- (void)loadImagesForOnscreenRows
+{
+    NSArray *visiblePaths = [self.tableView indexPathsForVisibleRows];
+    [self.tableView reloadRowsAtIndexPaths:visiblePaths withRowAnimation:UITableViewRowAnimationNone];
+    /*
+    for (NSIndexPath *indexPath in visiblePaths)
+    {
+        
+        id cell = [self.cellDictionary objectForKey:[NSNumber numberWithInt:indexPath.row]];
+        
+        if (cell) {
+            [self setupCell:cell atIndexPath:indexPath];
+        }
+        
+    }
+     */
+}
+
+#pragma mark - UIScrollViewDelegate
+
+// -------------------------------------------------------------------------------
+//	scrollViewDidEndDragging:willDecelerate:
+//  Load images for all onscreen rows when scrolling is finished.
+// -------------------------------------------------------------------------------
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    if (!decelerate)
+	{
+        [self loadImagesForOnscreenRows];
+    }
+}
+
+// -------------------------------------------------------------------------------
+//	scrollViewDidEndDecelerating:
+// -------------------------------------------------------------------------------
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    [self loadImagesForOnscreenRows];
+}
+
+
+#pragma mark -
+#pragma mark Setup Data
+
+- (void)setupData
+{
+    // Set the cover from the issue cover tapped
+    [self.issue getCoverWithCompletionBlock:^(UIImage *img) {
+        [self.imageView setImage:img];
+        [self.imageView setNeedsLayout];
+    }];
+    
+//    self.labelTitle.text = self.issue.title;
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"MMMM yyyy"];
+    self.labelNumberAndDate.text = [NSString stringWithFormat: @"%@ - %@", self.issue.name, [dateFormatter stringFromDate:self.issue.publication]];
+    self.labelEditor.text = [NSString stringWithFormat:@"Edited by:\n%@", self.issue.editorsName];
+    self.editorsLetterTextView.text = self.issue.editorsLetter;
+    
+//    [self.editorImageView setImage:[UIImage imageNamed:@"default_editors_photo"]];
+    // Load the real editor's image
+    [self.issue getEditorsImageWithCompletionBlock:^(UIImage *img) {
+        [self.editorImageView setImage:img];
+        [self.editorImageView setNeedsLayout];
+    }];
+    [self applyRoundMask:self.editorImageView];
+}
+
+- (void)applyRoundMask:(UIImageView *)imageView
+{
+    // Draw a round mask for images.. i.e. the editor's photo
+    imageView.layer.masksToBounds = YES;
+    imageView.layer.cornerRadius = self.editorImageView.bounds.size.width / 2.;
 }
 
 - (void)addShadowToImageView:(UIImageView *)imageView
@@ -325,15 +340,11 @@
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
-    
-    [self adjustWidthOfMagazineCover];
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
-//    [self updateEditorsLetterTextViewExclusionPath];
     [self updateEditorsLetterTextViewHeightToContent];
-    [self adjustHeightOfTableview];
     [self updateScrollViewContentHeight];
 }
 

@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "NIAUCache.h"
 
 @class NIAUIssue;
 
@@ -16,6 +17,8 @@ extern NSString *ArticleFailedUpdateNotification;
 @interface NIAUArticle : NSObject {
     NSDictionary *dictionary;
     BOOL requestingBody;
+    NIAUCache *featuredImageThumbCache;
+    NIAUCache *featuredImageCache;
 }
 
 @property(nonatomic, strong, readonly) NSString *body;
@@ -30,8 +33,10 @@ extern NSString *ArticleFailedUpdateNotification;
 +(NIAUArticle *)articleWithIssue:(NIAUIssue *)issue andDictionary:(NSDictionary *)dict;
 +(NIAUArticle *)articleFromCacheWithIssue:(NIAUIssue *)issue andId:(NSNumber *)index;
 
--(void)getFeaturedImageWithSize:(CGSize)size andCompletionBlock:(void(^)(UIImage *img)) block;
 -(void)getFeaturedImageWithCompletionBlock:(void(^)(UIImage *img)) block;
+-(void)getFeaturedImageThumbWithSize:(CGSize)size andCompletionBlock:(void(^)(UIImage *img)) block;
+-(UIImage *)attemptToGetFeaturedImageThumbFromDiskWithSize:(CGSize)size;
+
 -(void)requestBody;
 
 - (NSURL *)getWebURL;

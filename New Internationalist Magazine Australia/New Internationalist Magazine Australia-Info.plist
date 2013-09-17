@@ -30,6 +30,21 @@
 	<string>Main_iPad</string>
 	<key>UINewsstandApp</key>
 	<true/>
+	<key>CFBundleIcons</key>
+	<dict>
+		<key>UINewsstandIcon</key>
+		<dict>
+			<key>CFBundleIconFiles</key>
+			<array>
+				<string>cover-icon.png</string>
+				<string>cover-icon@2x.png</string>
+			</array>
+			<key>UINewsstandBindingType</key>
+			<string>UINewsstandBindingTypeMagazine</string>
+			<key>UINewsstandBindingEdge</key>
+			<string>UINewsstandBindingEdgeLeft</string>
+		</dict>
+	</dict>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>

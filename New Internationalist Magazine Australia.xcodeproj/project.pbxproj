@@ -20,6 +20,25 @@
 		0528EC3D17853C1F000175AB /* default_article_image@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0528EC3917853C1F000175AB /* default_article_image@2x.png */; };
 		0528EC3E17853C1F000175AB /* default_featured_image.png in Resources */ = {isa = PBXBuildFile; fileRef = 0528EC3A17853C1F000175AB /* default_featured_image.png */; };
 		0528EC3F17853C1F000175AB /* default_featured_image@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0528EC3B17853C1F000175AB /* default_featured_image@2x.png */; };
+		052A84F817C5E12700D36E6C /* iPad-landscape.png in Resources */ = {isa = PBXBuildFile; fileRef = 055A8F0B1772CF67003D9407 /* iPad-landscape.png */; };
+		052A84F917C5E12900D36E6C /* iPad-landscape@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 055A8F0C1772CF67003D9407 /* iPad-landscape@2x.png */; };
+		052A84FA17C5E12D00D36E6C /* iPad-portrait.png in Resources */ = {isa = PBXBuildFile; fileRef = 055A8F0D1772CF67003D9407 /* iPad-portrait.png */; };
+		052A84FB17C5E13900D36E6C /* iPad-portrait@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 055A8F0E1772CF67003D9407 /* iPad-portrait@2x.png */; };
+		052A84FC17C5E13900D36E6C /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 055A8F091772CBB4003D9407 /* Default-568h@2x.png */; };
+		052A84FD17C5E13900D36E6C /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 055A8F0A1772CBB4003D9407 /* Default@2x.png */; };
+		052A84FE17C5E13900D36E6C /* 29.png in Resources */ = {isa = PBXBuildFile; fileRef = 055A8F021772C72F003D9407 /* 29.png */; };
+		052A84FF17C5E13900D36E6C /* 40.png in Resources */ = {isa = PBXBuildFile; fileRef = 05FA184C17A8B83200E023A0 /* 40.png */; };
+		052A850017C5E13900D36E6C /* 50.png in Resources */ = {isa = PBXBuildFile; fileRef = 055A8F031772C72F003D9407 /* 50.png */; };
+		052A850117C5E13900D36E6C /* 57.png in Resources */ = {isa = PBXBuildFile; fileRef = 05FA185117A8B8AF00E023A0 /* 57.png */; };
+		052A850217C5E13900D36E6C /* 58.png in Resources */ = {isa = PBXBuildFile; fileRef = 055A8F041772C72F003D9407 /* 58.png */; };
+		052A850317C5E13900D36E6C /* 72.png in Resources */ = {isa = PBXBuildFile; fileRef = 055A8F051772C72F003D9407 /* 72.png */; };
+		052A850417C5E13900D36E6C /* 76.png in Resources */ = {isa = PBXBuildFile; fileRef = 05FA185317A8B90000E023A0 /* 76.png */; };
+		052A850517C5E13900D36E6C /* 80.png in Resources */ = {isa = PBXBuildFile; fileRef = 05FA184D17A8B83200E023A0 /* 80.png */; };
+		052A850617C5E13900D36E6C /* 100.png in Resources */ = {isa = PBXBuildFile; fileRef = 055A8F061772C72F003D9407 /* 100.png */; };
+		052A850717C5E13900D36E6C /* 114.png in Resources */ = {isa = PBXBuildFile; fileRef = 05FA185417A8B98000E023A0 /* 114.png */; };
+		052A850817C5E13900D36E6C /* 120.png in Resources */ = {isa = PBXBuildFile; fileRef = 055A8F071772C72F003D9407 /* 120.png */; };
+		052A850917C5E13900D36E6C /* 144.png in Resources */ = {isa = PBXBuildFile; fileRef = 055A8F081772C72F003D9407 /* 144.png */; };
+		052A850A17C5E13900D36E6C /* 152.png in Resources */ = {isa = PBXBuildFile; fileRef = 05FA185217A8B90000E023A0 /* 152.png */; };
 		053878261777D767001E60F6 /* NIAUIssue.m in Sources */ = {isa = PBXBuildFile; fileRef = 053878251777D767001E60F6 /* NIAUIssue.m */; };
 		055A8EC6177290CE003D9407 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 055A8EC5177290CE003D9407 /* Foundation.framework */; };
 		055A8EC8177290CE003D9407 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 055A8EC7177290CE003D9407 /* CoreGraphics.framework */; };
@@ -39,6 +58,7 @@
 		0567082817B1D51400A87818 /* default_article_image_table_view.png in Resources */ = {isa = PBXBuildFile; fileRef = 0567082617B1D50A00A87818 /* default_article_image_table_view.png */; };
 		0567082917B1D51400A87818 /* default_article_image_table_view@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0567082717B1D50A00A87818 /* default_article_image_table_view@2x.png */; };
 		058F738E178BBA3E002CA40C /* NIAUImageZoomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 058F738D178BBA3E002CA40C /* NIAUImageZoomViewController.m */; };
+		05A80DDF17CF1F2E00D59180 /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = 05A80DDE17CF1F2E00D59180 /* UIImage+Resize.m */; };
 		05BD7F2917796B8F00820EF3 /* 0@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 05BD7F1717796B8F00820EF3 /* 0@2x.png */; };
 		05BD7F2A17796B8F00820EF3 /* 1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 05BD7F1817796B8F00820EF3 /* 1@2x.png */; };
 		05BD7F2B17796B8F00820EF3 /* 2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 05BD7F1917796B8F00820EF3 /* 2@2x.png */; };
@@ -77,6 +97,10 @@
 		05BD7F5E17796B9F00820EF3 /* 17.png in Resources */ = {isa = PBXBuildFile; fileRef = 05BD7F4C17796B9F00820EF3 /* 17.png */; };
 		3CA1C435E64C4F6F866B2E9B /* libPods-New Internationalist Magazine Australia.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BC803423D2F743538C4A77A9 /* libPods-New Internationalist Magazine Australia.a */; };
 		52090A62178CF7D1002D5162 /* NIAUPublisher.m in Sources */ = {isa = PBXBuildFile; fileRef = 52090A61178CF7D1002D5162 /* NIAUPublisher.m */; };
+		52CD5EE617D896240038A70C /* NIAUCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 52CD5EE517D896240038A70C /* NIAUCache.m */; };
+		52CD5EE717D896240038A70C /* NIAUCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 52CD5EE517D896240038A70C /* NIAUCache.m */; };
+		52CD5EEC17D8A6DC0038A70C /* NIAUCacheMethod.m in Sources */ = {isa = PBXBuildFile; fileRef = 52CD5EEB17D8A6DC0038A70C /* NIAUCacheMethod.m */; };
+		52CD5EED17D8A6DC0038A70C /* NIAUCacheMethod.m in Sources */ = {isa = PBXBuildFile; fileRef = 52CD5EEB17D8A6DC0038A70C /* NIAUCacheMethod.m */; };
 		C13EF1F7C6F64FA9AEE3C92E /* libPods-New Internationalist Magazine AustraliaTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 404F04905A5F4ACCA9F9CAB7 /* libPods-New Internationalist Magazine AustraliaTests.a */; };
 /* End PBXBuildFile section */
 
@@ -144,6 +168,8 @@
 		0567082717B1D50A00A87818 /* default_article_image_table_view@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "default_article_image_table_view@2x.png"; sourceTree = "<group>"; };
 		058F738C178BBA3E002CA40C /* NIAUImageZoomViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NIAUImageZoomViewController.h; sourceTree = "<group>"; };
 		058F738D178BBA3E002CA40C /* NIAUImageZoomViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NIAUImageZoomViewController.m; sourceTree = "<group>"; };
+		05A80DDD17CF1F2E00D59180 /* UIImage+Resize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Resize.h"; sourceTree = "<group>"; };
+		05A80DDE17CF1F2E00D59180 /* UIImage+Resize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Resize.m"; sourceTree = "<group>"; };
 		05BD7F121779656300820EF3 /* NIAUMagazineArchiveViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NIAUMagazineArchiveViewController.h; sourceTree = "<group>"; };
 		05BD7F131779656300820EF3 /* NIAUMagazineArchiveViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NIAUMagazineArchiveViewController.m; sourceTree = "<group>"; };
 		05BD7F141779671900820EF3 /* NIAUCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NIAUCell.h; sourceTree = "<group>"; };
@@ -195,6 +221,10 @@
 		52090A60178CF7D1002D5162 /* NIAUPublisher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NIAUPublisher.h; sourceTree = "<group>"; };
 		52090A61178CF7D1002D5162 /* NIAUPublisher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NIAUPublisher.m; sourceTree = "<group>"; };
 		52090A65178D4291002D5162 /* local.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = local.h; sourceTree = "<group>"; };
+		52CD5EE417D896240038A70C /* NIAUCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NIAUCache.h; sourceTree = "<group>"; };
+		52CD5EE517D896240038A70C /* NIAUCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NIAUCache.m; sourceTree = "<group>"; };
+		52CD5EEA17D8A6DC0038A70C /* NIAUCacheMethod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NIAUCacheMethod.h; sourceTree = "<group>"; };
+		52CD5EEB17D8A6DC0038A70C /* NIAUCacheMethod.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NIAUCacheMethod.m; sourceTree = "<group>"; };
 		52EFA528179F877A00C93943 /* XCTestCase+MethodSwizzling.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "XCTestCase+MethodSwizzling.h"; sourceTree = "<group>"; };
 		52EFA529179F877A00C93943 /* XCTestCase+MethodSwizzling.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "XCTestCase+MethodSwizzling.m"; sourceTree = "<group>"; };
 		868019326A98489183B0CADE /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
@@ -293,6 +323,7 @@
 		055A8ECB177290CE003D9407 /* New Internationalist Magazine Australia */ = {
 			isa = PBXGroup;
 			children = (
+				05A80DE617CF2FEF00D59180 /* Image Resizing */,
 				0511F13917BB1D55004B5A72 /* Stylesheet */,
 				055A8F011772C70F003D9407 /* Icons */,
 				053878281777E034001E60F6 /* Images */,
@@ -304,6 +335,7 @@
 				053878251777D767001E60F6 /* NIAUIssue.m */,
 				052167E2177BD6DF00A4A81A /* NIAUArticle.h */,
 				052167E3177BD6DF00A4A81A /* NIAUArticle.m */,
+				52CD5EE917D8A68C0038A70C /* Caching */,
 				055A8EDD177290CF003D9407 /* NIAUViewController.h */,
 				055A8EDE177290CF003D9407 /* NIAUViewController.m */,
 				05BD7F121779656300820EF3 /* NIAUMagazineArchiveViewController.h */,
@@ -382,6 +414,15 @@
 			name = Icons;
 			sourceTree = "<group>";
 		};
+		05A80DE617CF2FEF00D59180 /* Image Resizing */ = {
+			isa = PBXGroup;
+			children = (
+				05A80DDD17CF1F2E00D59180 /* UIImage+Resize.h */,
+				05A80DDE17CF1F2E00D59180 /* UIImage+Resize.m */,
+			);
+			name = "Image Resizing";
+			sourceTree = "<group>";
+		};
 		05BD7F1617796B7000820EF3 /* Covers */ = {
 			isa = PBXGroup;
 			children = (
@@ -423,6 +464,17 @@
 				05BD7F2817796B8F00820EF3 /* 17@2x.png */,
 			);
 			name = Covers;
+			sourceTree = "<group>";
+		};
+		52CD5EE917D8A68C0038A70C /* Caching */ = {
+			isa = PBXGroup;
+			children = (
+				52CD5EE417D896240038A70C /* NIAUCache.h */,
+				52CD5EE517D896240038A70C /* NIAUCache.m */,
+				52CD5EEA17D8A6DC0038A70C /* NIAUCacheMethod.h */,
+				52CD5EEB17D8A6DC0038A70C /* NIAUCacheMethod.m */,
+			);
+			name = Caching;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -506,43 +558,59 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				052A84F917C5E12900D36E6C /* iPad-landscape@2x.png in Resources */,
 				05BD7F5517796B9F00820EF3 /* 8.png in Resources */,
 				05BD7F5E17796B9F00820EF3 /* 17.png in Resources */,
+				052A850A17C5E13900D36E6C /* 152.png in Resources */,
 				0528EC3C17853C1F000175AB /* default_article_image.png in Resources */,
 				05BD7F3817796B8F00820EF3 /* 15@2x.png in Resources */,
+				052A850417C5E13900D36E6C /* 76.png in Resources */,
+				052A850117C5E13900D36E6C /* 57.png in Resources */,
 				05BD7F2B17796B8F00820EF3 /* 2@2x.png in Resources */,
 				055A8EDC177290CF003D9407 /* Main_iPad.storyboard in Resources */,
 				05BD7F2D17796B8F00820EF3 /* 4@2x.png in Resources */,
 				05BD7F3517796B8F00820EF3 /* 12@2x.png in Resources */,
+				052A850217C5E13900D36E6C /* 58.png in Resources */,
+				052A850717C5E13900D36E6C /* 114.png in Resources */,
 				05BD7F4E17796B9F00820EF3 /* 1.png in Resources */,
 				05BD7F2C17796B8F00820EF3 /* 3@2x.png in Resources */,
 				05BD7F3A17796B8F00820EF3 /* 17@2x.png in Resources */,
 				05BD7F5A17796B9F00820EF3 /* 13.png in Resources */,
+				052A850017C5E13900D36E6C /* 50.png in Resources */,
 				0528EC3717850989000175AB /* default_editors_photo.png in Resources */,
 				05BD7F5617796B9F00820EF3 /* 9.png in Resources */,
 				05BD7F5917796B9F00820EF3 /* 12.png in Resources */,
 				05BD7F3417796B8F00820EF3 /* 11@2x.png in Resources */,
+				052A850617C5E13900D36E6C /* 100.png in Resources */,
 				05BD7F5B17796B9F00820EF3 /* 14.png in Resources */,
 				05BD7F3617796B8F00820EF3 /* 13@2x.png in Resources */,
 				0567082817B1D51400A87818 /* default_article_image_table_view.png in Resources */,
 				05BD7F5D17796B9F00820EF3 /* 16.png in Resources */,
 				05BD7F5C17796B9F00820EF3 /* 15.png in Resources */,
 				05BD7F3917796B8F00820EF3 /* 16@2x.png in Resources */,
+				052A84FC17C5E13900D36E6C /* Default-568h@2x.png in Resources */,
 				051A72B1177950D600BDD346 /* default_cover.png in Resources */,
 				055A8EE1177290CF003D9407 /* Images.xcassets in Resources */,
+				052A84FB17C5E13900D36E6C /* iPad-portrait@2x.png in Resources */,
 				05BD7F5717796B9F00820EF3 /* 10.png in Resources */,
 				05BD7F5317796B9F00820EF3 /* 6.png in Resources */,
+				052A850917C5E13900D36E6C /* 144.png in Resources */,
+				052A850517C5E13900D36E6C /* 80.png in Resources */,
 				05BD7F2E17796B8F00820EF3 /* 5@2x.png in Resources */,
 				05BD7F5417796B9F00820EF3 /* 7.png in Resources */,
+				052A84FF17C5E13900D36E6C /* 40.png in Resources */,
 				0528EC3F17853C1F000175AB /* default_featured_image@2x.png in Resources */,
 				05BD7F2917796B8F00820EF3 /* 0@2x.png in Resources */,
 				05BD7F4F17796B9F00820EF3 /* 2.png in Resources */,
 				0528EC3D17853C1F000175AB /* default_article_image@2x.png in Resources */,
 				055A8ED9177290CF003D9407 /* Main_iPhone.storyboard in Resources */,
+				052A850317C5E13900D36E6C /* 72.png in Resources */,
+				052A84FE17C5E13900D36E6C /* 29.png in Resources */,
 				051A72B2177950D600BDD346 /* default_cover@2x.png in Resources */,
 				05BD7F3017796B8F00820EF3 /* 7@2x.png in Resources */,
 				05BD7F5017796B9F00820EF3 /* 3.png in Resources */,
 				0511F13B17BB1E25004B5A72 /* article-body.css in Resources */,
+				052A84FD17C5E13900D36E6C /* Default@2x.png in Resources */,
 				05BD7F5117796B9F00820EF3 /* 4.png in Resources */,
 				05BD7F5217796B9F00820EF3 /* 5.png in Resources */,
 				05BD7F2A17796B8F00820EF3 /* 1@2x.png in Resources */,
@@ -556,6 +624,9 @@
 				055A8ED0177290CE003D9407 /* InfoPlist.strings in Resources */,
 				05BD7F3217796B8F00820EF3 /* 9@2x.png in Resources */,
 				05BD7F2F17796B8F00820EF3 /* 6@2x.png in Resources */,
+				052A84FA17C5E12D00D36E6C /* iPad-portrait.png in Resources */,
+				052A850817C5E13900D36E6C /* 120.png in Resources */,
+				052A84F817C5E12700D36E6C /* iPad-landscape.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -639,9 +710,12 @@
 			files = (
 				058F738E178BBA3E002CA40C /* NIAUImageZoomViewController.m in Sources */,
 				053878261777D767001E60F6 /* NIAUIssue.m in Sources */,
+				52CD5EEC17D8A6DC0038A70C /* NIAUCacheMethod.m in Sources */,
 				052167E4177BD6DF00A4A81A /* NIAUArticle.m in Sources */,
 				52090A62178CF7D1002D5162 /* NIAUPublisher.m in Sources */,
 				055A8EDF177290CF003D9407 /* NIAUViewController.m in Sources */,
+				05A80DDF17CF1F2E00D59180 /* UIImage+Resize.m in Sources */,
+				52CD5EE617D896240038A70C /* NIAUCache.m in Sources */,
 				05287A24177983E400501F5F /* NIAUCell.m in Sources */,
 				0507DB6A177AA0F60099540D /* NIAUTableOfContentsViewController.m in Sources */,
 				055A8ED2177290CF003D9407 /* main.m in Sources */,
@@ -656,6 +730,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				055A8EF4177290CF003D9407 /* New_Internationalist_Magazine_AustraliaTests.m in Sources */,
+				52CD5EED17D8A6DC0038A70C /* NIAUCacheMethod.m in Sources */,
+				52CD5EE717D896240038A70C /* NIAUCache.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

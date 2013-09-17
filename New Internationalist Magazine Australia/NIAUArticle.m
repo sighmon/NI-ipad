@@ -9,6 +9,7 @@
 #import "NIAUArticle.h"
 #import "NIAUIssue.h"
 #import "local.h"
+#import "UIImage+Resize.h"
 
 
 NSString *ArticleDidUpdateNotification = @"ArticleDidUpdate";
@@ -44,12 +45,76 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
     [self writeBodyToCache];
 }
 
+-(NIAUCache *)buildFeaturedImageCache {
+    __weak NIAUArticle *weakSelf = self;
+    NIAUCache *cache = [[NIAUCache alloc] init];
+    [cache addMethod:[[NIAUCacheMethod alloc] initMethod:@"memory" withReadBlock:^id(id options, id state) {
+        return state[@"featuredImage"];
+    } andWriteBlock:^(id object, id options, id state) {
+        state[@"featuredImage"] = object;
+    }]];
+    [cache addMethod:[[NIAUCacheMethod alloc] initMethod:@"disk" withReadBlock:^id(id options, id state) {
+        NSData *imageData = [NSData dataWithContentsOfURL:[weakSelf featuredImageCacheURL]];
+        return [UIImage imageWithData:imageData];
+    } andWriteBlock:^(id object, id options, id state) {
+        [UIImagePNGRepresentation(object) writeToURL:[weakSelf featuredImageCacheURL] atomically:YES];
+    }]];
+    [cache addMethod:[[NIAUCacheMethod alloc] initMethod:@"net" withReadBlock:^id(id options, id state) {
+        NSData *imageData = [NSData dataWithContentsOfURL:[weakSelf featuredImageURL]];
+        return [UIImage imageWithData:imageData];
+    } andWriteBlock:^(id object, id options, id state) {
+        // noop
+    }]];
+    return cache;
+}
+
+-(NIAUCache *)buildFeaturedImageThumbCache {
+    __weak NIAUArticle *weakSelf = self;
+    NIAUCache *cache = [[NIAUCache alloc] init];
+    [cache addMethod:[[NIAUCacheMethod alloc] initMethod:@"memory" withReadBlock:^id(id options, id state) {
+        id entry = state[@"size"];
+        if(!entry) return nil;
+        CGSize cachedSize = [(NSValue *)entry CGSizeValue];
+        CGSize size = [(NSValue *)options[@"size"] CGSizeValue];
+        if(CGSizeEqualToSize(cachedSize,size)) {
+            return state[@"thumb"];
+        } else {
+            return nil;
+        }
+    } andWriteBlock:^(id object, id options, id state) {
+        state[@"size"]=options[@"size"];
+        state[@"thumb"]=object;
+    }]];
+    [cache addMethod:[[NIAUCacheMethod alloc] initMethod:@"disk" withReadBlock:^id(id options, id state) {
+        CGSize size = [(NSValue *)options[@"size"] CGSizeValue];
+        UIImage *image = [weakSelf getFeaturedImageThumbFromDisk];
+        if(image && CGSizeEqualToSize([image size], size)) {
+            return image;
+        } else {
+            return nil;
+        }
+    } andWriteBlock:^(id object, id options, id state) {
+        // writeFeaturedImageThumbToDisk
+        [UIImagePNGRepresentation(object) writeToURL:[self featuredImageThumbCacheURL] atomically:YES];
+    }]];
+    [cache addMethod:[[NIAUCacheMethod alloc] initMethod:@"generate" withReadBlock:^id(id options, id state) {
+        CGSize size = [(NSValue *)options[@"size"] CGSizeValue];
+        return [weakSelf generateFeaturedImageThumbWithSize:size];
+    } andWriteBlock:^(id object, id options, id state) {
+        // no op
+    }]];
+    return cache;
+}
+
 -(NIAUArticle *)initWithIssue:(NIAUIssue *)_issue andDictionary:(NSDictionary *)_dictionary {
-    
-    issue = _issue;
-    
-    dictionary = _dictionary;
-    
+    self = [super init];
+    if(self) {
+        issue = _issue;
+        dictionary = _dictionary;
+        
+        featuredImageCache = [self buildFeaturedImageCache];
+        featuredImageThumbCache = [self buildFeaturedImageThumbCache];
+    }
     
     return self;
 }
@@ -146,57 +211,92 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
     }
 }
 
-+(UIImage *)imageThatFitsWidth:(float)width fromImage:(UIImage *)image {
-    NSLog(@"scale width from  %f to %f",[image size].width,width);
-    NSLog(@"image.cgimage: %@",image.CGImage);
-    NSLog(@"image.ciimage: %@",image.CIImage);
-    float xScale = [image size].width/width;
-    NSLog(@"scaling by %f",xScale);
-    return [UIImage imageWithCGImage:image.CGImage scale:xScale orientation:image.imageOrientation];
-}
-
--(void)getFeaturedImageWithCompletionBlock:(void(^)(UIImage *img)) block {
-    [self getFeaturedImageWithSize:CGSizeZero andCompletionBlock:block];
-}
-
--(void)getFeaturedImageWithSize:(CGSize)size andCompletionBlock:(void(^)(UIImage *img)) block {
+-(NSURL *)featuredImageThumbCacheURL {
     NSString *url = [[dictionary objectForKey:@"featured_image"] objectForKey:@"url"];
     NSURL *featuredImageURL = [NSURL URLWithString:url relativeToURL:[NSURL URLWithString:SITE_URL]];
-    NSString *featuredImageFileName = [featuredImageURL lastPathComponent];
-    NSURL *featuredImageCacheURL = [NSURL URLWithString:featuredImageFileName relativeToURL:[self cacheURL]];
-    NSData *imageData = [NSData dataWithContentsOfURL:featuredImageCacheURL];
-    UIImage *image = [UIImage imageWithData:imageData];
-    
-    if(image) {
-        NSLog(@"successfully read image from %@",featuredImageCacheURL);
-        if(CGSizeEqualToSize(size,CGSizeZero)) {
-            block(image);
-        } else {
-            block([NIAUArticle imageThatFitsWidth:size.width fromImage:image]);
-        }
-    } else {
-        NSLog(@"trying to read image from %@",featuredImageURL);
-
-        dispatch_async(dispatch_get_global_queue
-                       (DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0),
-                       ^{
-                           NSData *imageData = [NSData dataWithContentsOfURL:featuredImageURL];
-                           UIImage *image = [UIImage imageWithData:imageData];
-                           if(image) {
-                               NSLog(@"successfully read image from %@",featuredImageURL);
-                               [imageData writeToURL:	featuredImageCacheURL atomically:YES];
-                               // very undry, copied from above
-                               if(CGSizeEqualToSize(size,CGSizeZero)) {
-                                   block(image);
-                               } else {
-                                   block([NIAUArticle imageThatFitsWidth:size.width fromImage:image]);
-                               }
-                           } else {
-                               NSLog(@"failed to read image from %@",featuredImageURL);
-                           }
-                       });
-    }
+    NSString *featuredImageBaseName = [[featuredImageURL lastPathComponent] stringByDeletingPathExtension];
+    return [NSURL URLWithString:[featuredImageBaseName stringByAppendingPathExtension:@"_thumb.png"] relativeToURL:[self cacheURL]];
 }
+
+-(UIImage *)getFeaturedImageThumbFromDisk {
+    NSData *thumbData = [NSData dataWithContentsOfURL:[self featuredImageThumbCacheURL]];
+    return [UIImage imageWithData:thumbData scale:[[UIScreen mainScreen] scale]];
+}
+
+-(UIImage *)generateFeaturedImageThumbWithSize:(CGSize)thumbSize {
+    UIImage *image = [self getFeaturedImage];
+    
+    // don't make blank thumbnails ;)
+    if(!image) return nil;
+    
+    UIGraphicsBeginImageContextWithOptions(thumbSize, NO, 0.0f);
+    float thumbAspect = thumbSize.width/thumbSize.height;
+    float imageAspect = [image size].width/[image size].height;
+    CGRect drawRect;
+    if(imageAspect > thumbAspect) {
+        // image is wider than thumb
+        float drawWidth = thumbSize.height*imageAspect;
+        drawRect = CGRectMake(-(drawWidth-thumbSize.width)/2.0, 0.0, drawWidth, thumbSize.height);
+    } else {
+        // image is taller than thumb
+        float drawHeight = thumbSize.width/imageAspect;
+        drawRect = CGRectMake(0.0, -(drawHeight-thumbSize.height)/2.0, thumbSize.width, drawHeight);
+    }
+    [image drawInRect:drawRect];
+    UIImage *thumb = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return thumb;
+}
+
+
+
+-(void)getFeaturedImageThumbWithSize:(CGSize)size andCompletionBlock:(void (^)(UIImage *))block {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0),
+                   ^{
+                       UIImage *thumb = [self getFeaturedImageThumbWithSize:size];
+                       // run the block on the main queue so it can do ui stuff
+                       dispatch_async(dispatch_get_main_queue(), ^{
+                           block(thumb);
+                       });
+                   });
+}
+
+-(UIImage *)getFeaturedImageThumbWithSize:(CGSize)size {
+    return [featuredImageThumbCache readWithOptions:@{@"size":[NSValue valueWithCGSize:size]}];
+}
+
+-(UIImage *)attemptToGetFeaturedImageThumbFromDiskWithSize:(CGSize)size {
+    return [featuredImageThumbCache readWithOptions:@{@"size":[NSValue valueWithCGSize:size]} stoppingAt:@"generate"];
+}
+
+
+-(void)getFeaturedImageWithCompletionBlock:(void(^)(UIImage *img)) block {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0),
+                   ^{
+                       UIImage *image = [self getFeaturedImage];
+                       // run the block on the main queue so it can 	do ui stuff
+                       dispatch_async(dispatch_get_main_queue(), ^{
+                           block(image);
+                       });
+
+                   });
+}
+
+-(NSURL *) featuredImageURL {
+    NSString *url = [[dictionary objectForKey:@"featured_image"] objectForKey:@"url"];
+    return [NSURL URLWithString:url relativeToURL:[NSURL URLWithString:SITE_URL]];
+}
+
+-(NSURL *) featuredImageCacheURL {
+    NSString *featuredImageFileName = [[self featuredImageURL]lastPathComponent];
+    return [NSURL URLWithString:featuredImageFileName relativeToURL:[self cacheURL]];
+}
+
+//TODO: restructure to use the same pattern as FeaturedImageThumb
+-(UIImage *)getFeaturedImage {
+    return [featuredImageCache readWithOptions:nil];
+}
+
 
 -(void)requestBody {
     if(!requestingBody) {

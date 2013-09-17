@@ -171,7 +171,10 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
                UIImage *image = [UIImage imageWithData:imageData];
                if(image) {
                    [imageData writeToURL:coverCacheURL atomically:YES];
-                   block(image);
+                   // call block on main queue so it can do UI stuff
+                   dispatch_async(dispatch_get_main_queue(), ^{
+                       block(image);	
+                   });
                }
            });
     }
@@ -226,45 +229,49 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [[NSNotificationCenter defaultCenter] postNotificationName:ArticlesDidUpdateNotification object:self];
                 });
+//                NSLog(@"cache hit. stoppimg");
             } else {
                 NSLog(@"no articles found in cache");
+                [self downloadArticles];
             }
-            
-            NSURL *issueURL = [NSURL URLWithString:[NSString stringWithFormat:@"issues/%@.json", [self index]] relativeToURL:[NSURL URLWithString:SITE_URL]];
-            NSData *data = [NSData dataWithContentsOfURL:issueURL];
-            if(data) {
-                NSError *error;
-                NSDictionary *dict = [NSJSONSerialization
-                                      JSONObjectWithData:data
-                                      options:kNilOptions
-                                      error:&error];
-                
-                [[dict objectForKey:@"articles"] enumerateObjectsUsingBlock:^(id dict, NSUInteger idx, BOOL *stop) {
-                    
-                    // discard the returned objects and re-read cache after adding them (will preserve locally cached but remotely deleted data)
-                    [NIAUArticle articleWithIssue:self andDictionary:dict];
-                    
-                }];
-                articles = [NIAUArticle articlesFromIssue:self];
-                
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [[NSNotificationCenter defaultCenter] postNotificationName:ArticlesDidUpdateNotification object:self];
-                });
-                
-            } else {
-                
-                // only send failure notification if there is nothing in the cache
-                if ([articles count]<1) {
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        [[NSNotificationCenter defaultCenter] postNotificationName:ArticlesFailedUpdateNotification object:self];
-                    });
-                }
-
-            }
-            
             requestingArticles = FALSE;
         });
     }
+}
+
+- (void)downloadArticles {
+    NSURL *issueURL = [NSURL URLWithString:[NSString stringWithFormat:@"issues/%@.json", [self index]] relativeToURL:[NSURL URLWithString:SITE_URL]];
+    NSData *data = [NSData dataWithContentsOfURL:issueURL];
+    if(data) {
+        NSError *error;
+        NSDictionary *dict = [NSJSONSerialization
+                              JSONObjectWithData:data
+                              options:kNilOptions
+                              error:&error];
+        
+        [[dict objectForKey:@"articles"] enumerateObjectsUsingBlock:^(id dict, NSUInteger idx, BOOL *stop) {
+            
+            // discard the returned objects and re-read cache after adding them (will preserve locally cached but remotely deleted data)
+            [NIAUArticle articleWithIssue:self andDictionary:dict];
+            
+        }];
+        articles = [NIAUArticle articlesFromIssue:self];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [[NSNotificationCenter defaultCenter] postNotificationName:ArticlesDidUpdateNotification object:self];
+        });
+        
+    } else {
+        
+        // only send failure notification if there is nothing in the cache
+        if ([articles count]<1) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [[NSNotificationCenter defaultCenter] postNotificationName:ArticlesFailedUpdateNotification object:self];
+            });
+        }
+        
+    }
+
 }
 
 - (NSURL *)getWebURL
