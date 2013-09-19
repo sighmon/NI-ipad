@@ -147,28 +147,49 @@ static NSString *CellIdentifier = @"articleCell";
     articleTitle.text = [self.issue articleAtIndex:indexPath.row].title;
     
     UILabel *articleTeaser = (UILabel *)[cell viewWithTag:102];
- 
     
     // this is copied from NIAUArticleController, could be DRYer.
     
     // Load CSS from the filesystem
     NSURL *cssURL = [[NSBundle mainBundle] URLForResource:@"article-body" withExtension:@"css"];
     
-    // Load the article into the webview
+    // Load the article teaser into the attributedText
     NSString *teaserHTML = [NSString stringWithFormat:@"<html> \n"
                                  "<head> \n"
                                  "<link rel=\"stylesheet\" type=\"text/css\" href=\"%@\">"
                                  "</head> \n"
-                                 "<body>%@</body> \n"
+                                 "<body><div class='table-of-contents-article-teaser'>%@</div></body> \n"
                                  "</html>", cssURL, teaser];
     
-    articleTeaser.attributedText = [[NSAttributedString alloc] initWithData:[teaserHTML dataUsingEncoding:NSUTF8StringEncoding]
-                                                                    options:@{NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType}
-                                                         documentAttributes:nil
-                                                                      error:nil];
+    NSMutableAttributedString *articleTeaserAttributedString = [[NSMutableAttributedString alloc] initWithData:[teaserHTML dataUsingEncoding:NSUTF8StringEncoding]
+                                                                                         options:@{NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType}
+                                                                              documentAttributes:nil
+                                                                                           error:nil];
+    // TODO: isn't listening to stylesheet.
     
+//    // TODO: These override the bolds. :-(
+//    [articleTeaserAttributedString addAttributes:@{NSFontAttributeName: [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline]}
+//                                           range:NSMakeRange(0, [articleTeaserAttributedString length])];
     
+//    [articleTeaserAttributedString enumerateAttribute:NSFontAttributeName
+//                            inRange:NSMakeRange(0, [articleTeaserAttributedString length])
+//                            options:0
+//                         usingBlock:^(id value,
+//                                      NSRange range,
+//                                      BOOL * stop)
+//     {
+//         UIFontDescriptor *fd = [[value fontDescriptor] fontDescriptorWithFamily:[UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline].familyName];
+//         UIFont *font = [UIFont fontWithDescriptor:fd size:[UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline].pointSize];
+//         if (font != nil) {
+//             [articleTeaserAttributedString removeAttribute:NSFontAttributeName
+//                                    range:range];
+//             [articleTeaserAttributedString addAttribute:NSFontAttributeName
+//                                 value:font
+//                                 range:range];
+//         }
+//     }];
     
+    articleTeaser.attributedText = articleTeaserAttributedString;
 }
 
 - (void)setupCell: (UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {

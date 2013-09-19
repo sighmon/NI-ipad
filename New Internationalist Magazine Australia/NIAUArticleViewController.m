@@ -96,11 +96,24 @@
     NSLog(@"post getFeaturedImageWIthCompletionBlock");
 
     self.titleLabel.text = WITH_DEFAULT(self.article.title,IF_DEBUG(@"!!!NOTITLE!!!",@""));
-    self.teaserLabel.text = WITH_DEFAULT(self.article.teaser,IF_DEBUG(@"!!!NOTEASER!!!",@""));
+//    self.teaserLabel.text = WITH_DEFAULT(self.article.teaser,IF_DEBUG(@"!!!NOTEASER!!!",@""));
     self.authorLabel.text = WITH_DEFAULT(self.article.author,IF_DEBUG(@"!!!NOAUTHOR!!!",@""));
     
     // Load CSS from the filesystem
     NSURL *cssURL = [[NSBundle mainBundle] URLForResource:@"article-body" withExtension:@"css"];
+    
+    // Load the article teaser into the attributedText
+    NSString *teaserHTML = [NSString stringWithFormat:@"<html> \n"
+                            "<head> \n"
+                            "<link rel=\"stylesheet\" type=\"text/css\" href=\"%@\">"
+                            "</head> \n"
+                            "<body><div class='article-teaser'>%@</div></body> \n"
+                            "</html>", cssURL, WITH_DEFAULT(self.article.teaser,IF_DEBUG(@"!!!NOTEASER!!!",@""))];
+    
+    self.teaserLabel.attributedText = [[NSAttributedString alloc] initWithData:[teaserHTML dataUsingEncoding:NSUTF8StringEncoding]
+                                                                    options:@{NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType}
+                                                         documentAttributes:nil
+                                                                      error:nil];
     
     // Load the article into the webview
     NSString *bodyWebViewHTML = [NSString stringWithFormat:@"<html> \n"

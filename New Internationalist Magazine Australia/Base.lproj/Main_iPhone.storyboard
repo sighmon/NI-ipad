@@ -558,7 +558,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="fFr-gL-mDW"/>
         <segue reference="mdp-6r-s59"/>
+        <segue reference="fFr-gL-mDW"/>
     </inferredMetricsTieBreakers>
 </document>
