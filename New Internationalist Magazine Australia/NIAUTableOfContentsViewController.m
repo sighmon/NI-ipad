@@ -148,9 +148,26 @@ static NSString *CellIdentifier = @"articleCell";
     
     UILabel *articleTeaser = (UILabel *)[cell viewWithTag:102];
  
-    articleTeaser.attributedText = [[NSAttributedString alloc] initWithData:[teaser dataUsingEncoding:NSUTF8StringEncoding]
-                                                          options:@{NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType}
-                                               documentAttributes:nil error:nil];
+    
+    // this is copied from NIAUArticleController, could be DRYer.
+    
+    // Load CSS from the filesystem
+    NSURL *cssURL = [[NSBundle mainBundle] URLForResource:@"article-body" withExtension:@"css"];
+    
+    // Load the article into the webview
+    NSString *teaserHTML = [NSString stringWithFormat:@"<html> \n"
+                                 "<head> \n"
+                                 "<link rel=\"stylesheet\" type=\"text/css\" href=\"%@\">"
+                                 "</head> \n"
+                                 "<body>%@</body> \n"
+                                 "</html>", cssURL, teaser];
+    
+    articleTeaser.attributedText = [[NSAttributedString alloc] initWithData:[teaserHTML dataUsingEncoding:NSUTF8StringEncoding]
+                                                                    options:@{NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType}
+                                                         documentAttributes:nil
+                                                                      error:nil];
+    
+    
     
 }
 
