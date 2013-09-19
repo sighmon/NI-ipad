@@ -138,6 +138,7 @@ static NSString *CellIdentifier = @"articleCell";
 - (void)setupCellForHeight: (UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
 
     id teaser = [self.issue articleAtIndex:indexPath.row].teaser;
+    teaser = (teaser==[NSNull null]) ? @"" : teaser;
     
     UIImageView *articleImageView = (UIImageView *)[cell viewWithTag:100];
     articleImageView.image = [UIImage imageNamed:@"default_article_image_table_view.png"];
@@ -146,16 +147,15 @@ static NSString *CellIdentifier = @"articleCell";
     articleTitle.text = [self.issue articleAtIndex:indexPath.row].title;
     
     UILabel *articleTeaser = (UILabel *)[cell viewWithTag:102];
-    articleTeaser.text = (teaser==[NSNull null]) ? @"" : teaser;
+ 
+    articleTeaser.attributedText = [[NSAttributedString alloc] initWithData:[teaser dataUsingEncoding:NSUTF8StringEncoding]
+                                                          options:@{NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType}
+                                               documentAttributes:nil error:nil];
     
-//    [self.tableView addSubview:cell];
-//    [cell removeFromSuperview];
 }
 
 - (void)setupCell: (UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
-//    [self setupCellForHeight:cell atIndexPath:indexPath];
-//    CGSize size = [self calculateCellSize:cell inTableView:self.tableView];
-//    cell.frame = CGRectMake(cell.frame.origin.x, cell.frame.origin.y, size.width, size.height);
+
     UIImageView *articleImageView = (UIImageView *)[cell viewWithTag:100];
     NIAUArticle *article = [self.issue articleAtIndex:indexPath.row];
     CGSize thumbSize = CGSizeMake(57,43);
@@ -163,8 +163,7 @@ static NSString *CellIdentifier = @"articleCell";
         if (articleImageView.image == [UIImage imageNamed:@"default_article_image_table_view.png"]) {
             [article getFeaturedImageThumbWithSize:thumbSize andCompletionBlock:^(UIImage *thumb) {
 
-                //UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
-                //[(UIImageView *)[cell viewWithTag:100] setImage:thumb];
+                
                 [articleImageView setImage:thumb];
                 
             }];
