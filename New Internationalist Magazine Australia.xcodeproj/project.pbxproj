@@ -323,6 +323,7 @@
 				0511F13917BB1D55004B5A72 /* Stylesheet */,
 				055A8F011772C70F003D9407 /* Icons */,
 				053878281777E034001E60F6 /* Images */,
+				52CD5EE917D8A68C0038A70C /* Caching */,
 				055A8ED4177290CF003D9407 /* NIAUAppDelegate.h */,
 				055A8ED5177290CF003D9407 /* NIAUAppDelegate.m */,
 				055A8ED7177290CF003D9407 /* Main_iPhone.storyboard */,
@@ -331,7 +332,6 @@
 				053878251777D767001E60F6 /* NIAUIssue.m */,
 				052167E2177BD6DF00A4A81A /* NIAUArticle.h */,
 				052167E3177BD6DF00A4A81A /* NIAUArticle.m */,
-				52CD5EE917D8A68C0038A70C /* Caching */,
 				055A8EDD177290CF003D9407 /* NIAUViewController.h */,
 				055A8EDE177290CF003D9407 /* NIAUViewController.m */,
 				05BD7F121779656300820EF3 /* NIAUMagazineArchiveViewController.h */,
@@ -516,6 +516,9 @@
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "New Internationalist Australia";
 				TargetAttributes = {
+					055A8EC1177290CE003D9407 = {
+						DevelopmentTeam = CUMP7ABFVY;
+					};
 					055A8EE5177290CF003D9407 = {
 						TestTargetID = 055A8EC1177290CE003D9407;
 					};
@@ -843,10 +846,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "New Internationalist Magazine Australia/New Internationalist Magazine Australia-Prefix.pch";
 				INFOPLIST_FILE = "New Internationalist Magazine Australia/New Internationalist Magazine Australia-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -857,10 +863,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "New Internationalist Magazine Australia/New Internationalist Magazine Australia-Prefix.pch";
 				INFOPLIST_FILE = "New Internationalist Magazine Australia/New Internationalist Magazine Australia-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

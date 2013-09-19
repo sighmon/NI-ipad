@@ -108,7 +108,7 @@
                                    "<link rel=\"stylesheet\" type=\"text/css\" href=\"%@\">"
                                    "</head> \n"
                                    "<body>%@</body> \n"
-                                   "</html>", cssURL, [self.article attemptToGetBodyFromDisk]];
+                                   "</html>", cssURL, WITH_DEFAULT([self.article attemptToGetBodyFromDisk], @"")];
     [self.bodyWebView loadHTMLString:bodyWebViewHTML baseURL:nil];
     
     // Prevent webview from scrolling
