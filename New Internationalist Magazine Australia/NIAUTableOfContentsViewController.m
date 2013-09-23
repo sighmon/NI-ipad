@@ -163,7 +163,8 @@ static NSString *CellIdentifier = @"articleCell";
                                  "</html>", cssURL, teaser];
     
     articleTeaser.attributedText = [[NSAttributedString alloc] initWithData:[teaserHTML dataUsingEncoding:NSUTF8StringEncoding]
-                                                                    options:@{NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType}
+                                                                    options:@{NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType,
+                                                                              NSCharacterEncodingDocumentAttribute: [NSNumber numberWithInt:NSUTF8StringEncoding]}
                                                          documentAttributes:nil
                                                                       error:nil];
     
