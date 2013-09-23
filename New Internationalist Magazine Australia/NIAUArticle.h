@@ -28,6 +28,7 @@ extern NSString *ArticleFailedUpdateNotification;
 -(NSString *)title;
 -(NSString *)teaser;
 -(NSString *)author;
+-(NSArray *)categories;
 
 +(NSArray *)articlesFromIssue:(NIAUIssue *)issue;
 +(NIAUArticle *)articleWithIssue:(NIAUIssue *)issue andDictionary:(NSDictionary *)dict;

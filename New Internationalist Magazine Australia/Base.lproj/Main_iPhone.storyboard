@@ -194,7 +194,7 @@
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <imageView multipleTouchEnabled="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="XBT-LF-UKS">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="288"/>
+                                            <rect key="frame" x="0.0" y="20" width="320" height="268"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <gestureRecognizers/>
                                             <connections>
@@ -215,7 +215,7 @@
                                         <constraint firstAttribute="trailing" secondItem="tpj-tl-sET" secondAttribute="trailing" constant="20" symbolic="YES" id="POE-cZ-hct"/>
                                         <constraint firstItem="tpj-tl-sET" firstAttribute="top" secondItem="XBT-LF-UKS" secondAttribute="bottom" constant="8" symbolic="YES" id="cOg-pf-uaW"/>
                                         <constraint firstAttribute="trailing" secondItem="XBT-LF-UKS" secondAttribute="trailing" id="dqY-Ef-yAK"/>
-                                        <constraint firstItem="XBT-LF-UKS" firstAttribute="top" secondItem="1hg-fr-PgB" secondAttribute="top" id="glm-bW-Vsf"/>
+                                        <constraint firstItem="XBT-LF-UKS" firstAttribute="top" secondItem="1hg-fr-PgB" secondAttribute="top" constant="20" id="glm-bW-Vsf"/>
                                         <constraint firstAttribute="bottom" secondItem="tpj-tl-sET" secondAttribute="bottom" constant="20" symbolic="YES" id="vVN-On-Iau"/>
                                     </constraints>
                                 </view>
@@ -297,7 +297,7 @@
                         <outlet property="editorsLetterTextView" destination="smq-UL-Oxn" id="rcI-gR-2aK"/>
                         <outlet property="imageView" destination="XBT-LF-UKS" id="mOA-z4-05p"/>
                         <outlet property="labelEditor" destination="vj2-0b-v5W" id="yiv-aD-Xzw"/>
-                        <outlet property="labelNumberAndDate" destination="tpj-tl-sET" id="Xcd-5K-IJ7"/>
+                        <outlet property="labelNumberAndDate" destination="tpj-tl-sET" id="1sU-Ac-YiU"/>
                         <outlet property="labelTitle" destination="vcO-aH-kkm" id="4wD-CR-Xzl"/>
                         <outlet property="shareAction" destination="mI9-oR-uci" id="rMW-qw-47Q"/>
                         <outlet property="tableView" destination="tJH-G9-L0y" id="4hc-uk-IUa"/>
