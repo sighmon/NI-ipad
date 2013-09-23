@@ -57,6 +57,8 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     
+    [self setupView];
+    
     //publisher = [[NIAUPublisher alloc] init];
     
 #ifdef DEBUG
@@ -71,6 +73,15 @@
     } else {
         [self loadIssues];
     }
+}
+
+- (void) setupView
+{
+//    How to set the navigation tint colour.
+//    [self.navigationController.navigationBar setBarTintColor:[UIColor blueColor]];
+    
+    // Style buttons
+//    [self.magazineArchiveButton setBackgroundColor:[UIColor clearColor]];
 }
 
 - (void)loadLatestMagazineCover

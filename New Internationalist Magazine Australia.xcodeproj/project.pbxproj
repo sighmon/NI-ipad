@@ -39,6 +39,10 @@
 		052A850817C5E13900D36E6C /* 120.png in Resources */ = {isa = PBXBuildFile; fileRef = 055A8F071772C72F003D9407 /* 120.png */; };
 		052A850917C5E13900D36E6C /* 144.png in Resources */ = {isa = PBXBuildFile; fileRef = 055A8F081772C72F003D9407 /* 144.png */; };
 		052A850A17C5E13900D36E6C /* 152.png in Resources */ = {isa = PBXBuildFile; fileRef = 05FA185217A8B90000E023A0 /* 152.png */; };
+		052BBF8717EFF31D00B12071 /* cover-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 052BBF8517EFF31D00B12071 /* cover-icon.png */; };
+		052BBF8817EFF31D00B12071 /* cover-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 052BBF8617EFF31D00B12071 /* cover-icon@2x.png */; };
+		052BBF8B17EFF6E100B12071 /* home-background.png in Resources */ = {isa = PBXBuildFile; fileRef = 052BBF8917EFF6E100B12071 /* home-background.png */; };
+		052BBF8C17EFF6E100B12071 /* home-background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 052BBF8A17EFF6E100B12071 /* home-background@2x.png */; };
 		053878261777D767001E60F6 /* NIAUIssue.m in Sources */ = {isa = PBXBuildFile; fileRef = 053878251777D767001E60F6 /* NIAUIssue.m */; };
 		055A8EC6177290CE003D9407 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 055A8EC5177290CE003D9407 /* Foundation.framework */; };
 		055A8EC8177290CE003D9407 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 055A8EC7177290CE003D9407 /* CoreGraphics.framework */; };
@@ -128,6 +132,10 @@
 		0528EC3917853C1F000175AB /* default_article_image@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "default_article_image@2x.png"; sourceTree = "<group>"; };
 		0528EC3A17853C1F000175AB /* default_featured_image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = default_featured_image.png; sourceTree = "<group>"; };
 		0528EC3B17853C1F000175AB /* default_featured_image@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "default_featured_image@2x.png"; sourceTree = "<group>"; };
+		052BBF8517EFF31D00B12071 /* cover-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cover-icon.png"; sourceTree = "<group>"; };
+		052BBF8617EFF31D00B12071 /* cover-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cover-icon@2x.png"; sourceTree = "<group>"; };
+		052BBF8917EFF6E100B12071 /* home-background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "home-background.png"; sourceTree = "<group>"; };
+		052BBF8A17EFF6E100B12071 /* home-background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "home-background@2x.png"; sourceTree = "<group>"; };
 		053878241777D767001E60F6 /* NIAUIssue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NIAUIssue.h; sourceTree = "<group>"; };
 		053878251777D767001E60F6 /* NIAUIssue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NIAUIssue.m; sourceTree = "<group>"; };
 		055A8EC2177290CE003D9407 /* New Internationalist Magazine Australia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "New Internationalist Magazine Australia.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -267,6 +275,10 @@
 		053878281777E034001E60F6 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				052BBF8917EFF6E100B12071 /* home-background.png */,
+				052BBF8A17EFF6E100B12071 /* home-background@2x.png */,
+				052BBF8517EFF31D00B12071 /* cover-icon.png */,
+				052BBF8617EFF31D00B12071 /* cover-icon@2x.png */,
 				0567082617B1D50A00A87818 /* default_article_image_table_view.png */,
 				0567082717B1D50A00A87818 /* default_article_image_table_view@2x.png */,
 				0528EC3817853C1F000175AB /* default_article_image.png */,
@@ -557,6 +569,7 @@
 				052A850417C5E13900D36E6C /* 76.png in Resources */,
 				052A850117C5E13900D36E6C /* 57.png in Resources */,
 				05BD7F2B17796B8F00820EF3 /* 2@2x.png in Resources */,
+				052BBF8817EFF31D00B12071 /* cover-icon@2x.png in Resources */,
 				055A8EDC177290CF003D9407 /* Main_iPad.storyboard in Resources */,
 				05BD7F2D17796B8F00820EF3 /* 4@2x.png in Resources */,
 				05BD7F3517796B8F00820EF3 /* 12@2x.png in Resources */,
@@ -565,6 +578,7 @@
 				05BD7F4E17796B9F00820EF3 /* 1.png in Resources */,
 				05BD7F2C17796B8F00820EF3 /* 3@2x.png in Resources */,
 				05BD7F3A17796B8F00820EF3 /* 17@2x.png in Resources */,
+				052BBF8C17EFF6E100B12071 /* home-background@2x.png in Resources */,
 				05BD7F5A17796B9F00820EF3 /* 13.png in Resources */,
 				052A850017C5E13900D36E6C /* 50.png in Resources */,
 				0528EC3717850989000175AB /* default_editors_photo.png in Resources */,
@@ -599,6 +613,7 @@
 				051A72B2177950D600BDD346 /* default_cover@2x.png in Resources */,
 				05BD7F3017796B8F00820EF3 /* 7@2x.png in Resources */,
 				05BD7F5017796B9F00820EF3 /* 3.png in Resources */,
+				052BBF8B17EFF6E100B12071 /* home-background.png in Resources */,
 				0511F13B17BB1E25004B5A72 /* article-body.css in Resources */,
 				052A84FD17C5E13900D36E6C /* Default@2x.png in Resources */,
 				05BD7F5117796B9F00820EF3 /* 4.png in Resources */,
@@ -608,6 +623,7 @@
 				05BD7F3117796B8F00820EF3 /* 8@2x.png in Resources */,
 				05BD7F3317796B8F00820EF3 /* 10@2x.png in Resources */,
 				05BD7F5817796B9F00820EF3 /* 11.png in Resources */,
+				052BBF8717EFF31D00B12071 /* cover-icon.png in Resources */,
 				0528EC3E17853C1F000175AB /* default_featured_image.png in Resources */,
 				0567082917B1D51400A87818 /* default_article_image_table_view@2x.png in Resources */,
 				05BD7F4D17796B9F00820EF3 /* 0.png in Resources */,
