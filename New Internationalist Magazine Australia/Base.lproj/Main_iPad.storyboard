@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4504" systemVersion="12E55" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="oKe-c9-yQ2">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4510" systemVersion="12F37" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="oKe-c9-yQ2">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3734.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3742"/>
     </dependencies>
     <scenes>
         <!--View Controller - New Internationalist-->
@@ -16,51 +16,39 @@
                         <rect key="frame" x="0.0" y="64" width="768" height="960"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sCG-7l-LMd">
-                                <rect key="frame" x="244" y="792" width="280" height="44"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sCG-7l-LMd">
+                                <rect key="frame" x="244" y="792" width="280" height="45"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.89249320649999997" green="0.89249320649999997" blue="0.89249320649999997" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="280" id="TYj-o2-NU6"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="27"/>
-                                <state key="normal" title="Magazine archive">
-                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
+                                <fontDescription key="fontDescription" type="system" pointSize="27"/>
+                                <state key="normal" title="Magazine archive"/>
                                 <connections>
                                     <action selector="magazineArchiveButtonTapped:" destination="dkx-z0-nzr" eventType="touchUpInside" id="f50-v2-hti"/>
                                     <segue destination="c8m-8K-4BD" kind="push" identifier="presentMagazineArchive" id="Pd3-3K-itc"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4cE-wm-UVR">
-                                <rect key="frame" x="244" y="844" width="280" height="44"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4cE-wm-UVR">
+                                <rect key="frame" x="244" y="845" width="280" height="45"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.89249320649999997" green="0.89249320649999997" blue="0.89249320649999997" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="27"/>
-                                <state key="normal" title="Subscribe">
-                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
+                                <fontDescription key="fontDescription" type="system" pointSize="27"/>
+                                <state key="normal" title="Subscribe"/>
                                 <connections>
                                     <action selector="subscribeButtonTapped:" destination="dkx-z0-nzr" eventType="touchUpInside" id="CCa-3v-qgc"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QGH-kd-WQM">
-                                <rect key="frame" x="244" y="896" width="280" height="44"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QGH-kd-WQM">
+                                <rect key="frame" x="244" y="898" width="280" height="45"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.89249320649999997" green="0.89249320649999997" blue="0.89249320649999997" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="27"/>
-                                <state key="normal" title="Login">
-                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
+                                <fontDescription key="fontDescription" type="system" pointSize="27"/>
+                                <state key="normal" title="Login"/>
                                 <connections>
                                     <action selector="loginButtonTapped:" destination="dkx-z0-nzr" eventType="touchUpInside" id="tnL-cT-n8D"/>
                                 </connections>
                             </button>
                             <imageView multipleTouchEnabled="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="sGR-UI-43W">
-                                <rect key="frame" x="0.0" y="0.0" width="768" height="784"/>
+                                <rect key="frame" x="0.0" y="20" width="768" height="744"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <gestureRecognizers/>
                                 <connections>
@@ -74,13 +62,13 @@
                             <constraint firstItem="QGH-kd-WQM" firstAttribute="top" secondItem="4cE-wm-UVR" secondAttribute="bottom" constant="8" symbolic="YES" id="9eX-VG-eWA"/>
                             <constraint firstItem="4cE-wm-UVR" firstAttribute="top" secondItem="sCG-7l-LMd" secondAttribute="bottom" constant="8" symbolic="YES" id="9yU-pS-tbH"/>
                             <constraint firstItem="4cE-wm-UVR" firstAttribute="centerX" secondItem="sGR-UI-43W" secondAttribute="centerX" id="AFN-ax-icV"/>
-                            <constraint firstItem="sCG-7l-LMd" firstAttribute="top" secondItem="sGR-UI-43W" secondAttribute="bottom" constant="8" symbolic="YES" id="P66-oj-EoP"/>
+                            <constraint firstItem="sCG-7l-LMd" firstAttribute="top" secondItem="sGR-UI-43W" secondAttribute="bottom" constant="28" id="P66-oj-EoP"/>
                             <constraint firstItem="4cE-wm-UVR" firstAttribute="leading" secondItem="QGH-kd-WQM" secondAttribute="leading" id="RzW-Gm-36O"/>
+                            <constraint firstItem="sGR-UI-43W" firstAttribute="top" secondItem="57J-QL-wcM" secondAttribute="bottom" constant="20" id="cNE-GQ-TuB"/>
                             <constraint firstAttribute="centerY" secondItem="sGR-UI-43W" secondAttribute="centerY" constant="88" id="dPo-uL-oFk"/>
                             <constraint firstItem="4cE-wm-UVR" firstAttribute="trailing" secondItem="sCG-7l-LMd" secondAttribute="trailing" id="gqq-yF-B2t"/>
                             <constraint firstItem="QGH-kd-WQM" firstAttribute="trailing" secondItem="4cE-wm-UVR" secondAttribute="trailing" id="hRX-aE-Ygb"/>
                             <constraint firstAttribute="centerX" secondItem="sGR-UI-43W" secondAttribute="centerX" id="pf9-Oa-S4c"/>
-                            <constraint firstAttribute="bottom" secondItem="sGR-UI-43W" secondAttribute="bottom" constant="176" id="qqG-xT-4Cj"/>
                             <constraint firstItem="sGR-UI-43W" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailing" id="tI2-bK-1QX"/>
                             <constraint firstItem="4cE-wm-UVR" firstAttribute="leading" secondItem="sCG-7l-LMd" secondAttribute="leading" id="yxI-Vz-q9g"/>
                         </constraints>
@@ -224,6 +212,7 @@
                                                 <constraint firstItem="gfD-ya-ZQ0" firstAttribute="top" secondItem="dBf-Hi-UbN" secondAttribute="top" constant="8" id="zwo-G7-Ep9"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <inset key="separatorInset" minX="57" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <connections>
                                             <segue destination="tZW-bR-n1M" kind="push" identifier="tappedArticle" id="WLv-dP-nWF"/>
                                         </connections>
@@ -239,11 +228,11 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <subviews>
                                     <imageView multipleTouchEnabled="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ebt-QH-0s8">
-                                        <rect key="frame" x="0.0" y="64" width="384" height="451"/>
+                                        <rect key="frame" x="0.0" y="84" width="384" height="431"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <gestureRecognizers/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="451" id="NZQ-5e-fH3"/>
+                                            <constraint firstAttribute="height" constant="431" id="NZQ-5e-fH3"/>
                                         </constraints>
                                         <connections>
                                             <outletCollection property="gestureRecognizers" destination="12T-Lf-AiD" appends="YES" id="MUA-4E-ZgC"/>
@@ -293,7 +282,7 @@
                                     <constraint firstItem="2Jy-dG-VkX" firstAttribute="top" secondItem="ebt-QH-0s8" secondAttribute="bottom" constant="8" id="Q8s-3o-Zvo"/>
                                     <constraint firstItem="ebt-QH-0s8" firstAttribute="leading" secondItem="Zqd-QL-8wn" secondAttribute="leading" id="Rv4-4q-Z2G"/>
                                     <constraint firstAttribute="trailing" secondItem="2Jy-dG-VkX" secondAttribute="trailing" constant="20" symbolic="YES" id="ZIN-x6-bbI"/>
-                                    <constraint firstItem="ebt-QH-0s8" firstAttribute="top" secondItem="Zqd-QL-8wn" secondAttribute="top" constant="64" id="aOr-iJ-gnv"/>
+                                    <constraint firstItem="ebt-QH-0s8" firstAttribute="top" secondItem="Zqd-QL-8wn" secondAttribute="top" constant="84" id="aOr-iJ-gnv"/>
                                     <constraint firstItem="2Jy-dG-VkX" firstAttribute="leading" secondItem="Zqd-QL-8wn" secondAttribute="leading" symbolic="YES" id="b6J-q8-yB4"/>
                                     <constraint firstAttribute="bottom" secondItem="ewB-NK-0ve" secondAttribute="bottom" id="bmJ-y0-soP"/>
                                     <constraint firstItem="i6V-Mh-aMJ" firstAttribute="leading" secondItem="fpA-Cj-zEf" secondAttribute="trailing" constant="8" symbolic="YES" id="h44-lY-EN3"/>
@@ -548,13 +537,14 @@
             <point key="canvasLocation" x="-656" y="-517"/>
         </scene>
     </scenes>
+    <color key="tintColor" red="0.29803921568627451" green="0.64547217153284675" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackOpaque"/>
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="TYl-bi-yIk"/>
-        <segue reference="JBV-bs-efO"/>
+        <segue reference="7r1-dy-lxK"/>
+        <segue reference="fFO-5s-0tA"/>
     </inferredMetricsTieBreakers>
 </document>

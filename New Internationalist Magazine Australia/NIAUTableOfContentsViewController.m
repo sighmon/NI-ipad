@@ -41,10 +41,10 @@ static NSString *CellIdentifier = @"articleCell";
     [self setupData];
     
     // Set the editorsLetterTextView height to its content.
-//    [self updateEditorsLetterTextViewHeightToContent];
+    [self updateEditorsLetterTextViewHeightToContent];
     
     // Set the scrollView content height to the editorsLetterTextView.
-//    [self updateScrollViewContentHeight];
+    [self updateScrollViewContentHeight];
 }
 
 -(void)publisherReady:(NSNotification *)not
@@ -55,8 +55,8 @@ static NSString *CellIdentifier = @"articleCell";
 -(void)showArticles
 {
     [self.tableView reloadData];
-//    [self updateEditorsLetterTextViewHeightToContent];
-//    [self updateScrollViewContentHeight];
+    [self updateEditorsLetterTextViewHeightToContent];
+    [self updateScrollViewContentHeight];
 }
 
 - (void)updateEditorsLetterTextViewHeightToContent
@@ -247,16 +247,32 @@ static NSString *CellIdentifier = @"articleCell";
     self.labelNumberAndDate.text = [NSString stringWithFormat: @"%@ - %@", self.issue.name, [dateFormatter stringFromDate:self.issue.publication]];
     
     self.labelEditor.text = [NSString stringWithFormat:@"Edited by:\n%@", self.issue.editorsName];
-    self.editorsLetterTextView.text = self.issue.editorsLetter;
-
+//    self.editorsLetterTextView.text = self.issue.editorsLetter;
+    
+    // Load CSS from the filesystem
+    NSURL *cssURL = [[NSBundle mainBundle] URLForResource:@"article-body" withExtension:@"css"];
+    
+    // Load the article teaser into the attributedText
+    NSString *teaserHTML = [NSString stringWithFormat:@"<html> \n"
+                            "<head> \n"
+                            "<link rel=\"stylesheet\" type=\"text/css\" href=\"%@\">"
+                            "</head> \n"
+                            "<body><div class='table-of-contents-editors-letter'>%@</div></body> \n"
+                            "</html>", cssURL, self.issue.editorsLetter];
+    
+    self.editorsLetterTextView.attributedText = [[NSAttributedString alloc] initWithData:[teaserHTML dataUsingEncoding:NSUTF8StringEncoding]
+                                                                    options:@{NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType,
+                                                                              NSCharacterEncodingDocumentAttribute: [NSNumber numberWithInt:NSUTF8StringEncoding]}
+                                                         documentAttributes:nil
+                                                                      error:nil];
     [self.tableView layoutIfNeeded];
     
-//    [self.editorImageView setImage:[UIImage imageNamed:@"default_editors_photo"]];
+    [self.editorImageView setImage:[UIImage imageNamed:@"default_editors_photo"]];
     // Load the real editor's image
-//    [self.issue getEditorsImageWithCompletionBlock:^(UIImage *img) {
-//        [self.editorImageView setImage:img];
-//    }];
-//    [self applyRoundMask:self.editorImageView];
+    [self.issue getEditorsImageWithCompletionBlock:^(UIImage *img) {
+        [self.editorImageView setImage:img];
+    }];
+    [self applyRoundMask:self.editorImageView];
 }
 
 - (void)applyRoundMask:(UIImageView *)imageView
