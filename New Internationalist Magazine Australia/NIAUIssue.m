@@ -120,7 +120,7 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
 }
 
 -(NSString *)editorsLetter {
-    return [dictionary objectForKey:@"editors_letter"];
+    return [dictionary objectForKey:@"editors_letter_html"];
 }
 
 -(NSString *)editorsName {
