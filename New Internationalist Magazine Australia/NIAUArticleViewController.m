@@ -45,9 +45,10 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
-    
-    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(publisherReady:) name:ArticleDidUpdateNotification object:self.article];
+    
+    // Add observer for the user changing the text size
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(preferredContentSizeChanged:) name:UIContentSizeCategoryDidChangeNotification object:nil];
     
     [self.article requestBody];
     
@@ -60,6 +61,19 @@
 {
     [self setupData];
     [self showArticle];
+}
+
+- (void)preferredContentSizeChanged:(NSNotification *)aNotification
+{
+    NSLog(@"Notification received for text change!");
+    
+    // adjust the layout of the cells
+    self.titleLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
+    
+    // TODO: work out how to update the webView & textView.attributedText font sizes.
+//    self.teaserLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
+    
+    [self.view setNeedsLayout];
 }
 
 -(void)showArticle
