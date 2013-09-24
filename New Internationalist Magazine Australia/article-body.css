@@ -6,9 +6,9 @@ body {
 }
 
 
-//////////////////
-// Link colours //
-//////////////////
+/****************/
+/* Link colours */
+/****************/
 
 a:visited {
 	color: #80bfde;
@@ -22,22 +22,22 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
     color: #fff;
 }
 
+/*****************************/
+/* Table of Contents styling */
+/*****************************/
 
-///////////////////////////////
-// Table of Contents styling //
-///////////////////////////////
 
 .table-of-contents-article-teaser {
-    font-size: 30px;
+    font-size: 14px;
 }
 
 
-/////////////////////
-// Article styling //
-/////////////////////
+/*******************/
+/* Article styling */
+/*******************/
 
 .article-teaser {
-    font-size: 30px;
+    font-size: 14px;
 }
 
 .image-uploader form {
