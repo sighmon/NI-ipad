@@ -35,6 +35,9 @@ static NSString *CellIdentifier = @"articleCell";
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(publisherReady:) name:ArticlesDidUpdateNotification object:self.issue];
     
+    // Add observer for the user changing the text size
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(preferredContentSizeChanged:) name:UIContentSizeCategoryDidChangeNotification object:nil];
+    
     [self.issue requestArticles];
     
     // Add the data for the view
@@ -50,6 +53,21 @@ static NSString *CellIdentifier = @"articleCell";
 -(void)publisherReady:(NSNotification *)not
 {
     [self showArticles];
+}
+
+- (void)preferredContentSizeChanged:(NSNotification *)aNotification
+{
+    NSLog(@"Notification received for text change!");
+    
+    // adjust the layout of the cells
+    self.labelNumberAndDate.font = [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
+    self.labelEditor.font = [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
+    [self.view setNeedsLayout];
+    
+    // refresh view...
+    // TODO: work out why the titles aren't wrapping at the biggest size.
+//    self.cellDictionary = [NSMutableDictionary dictionary];
+    [self.tableView reloadData];
 }
 
 -(void)showArticles
@@ -112,6 +130,8 @@ static NSString *CellIdentifier = @"articleCell";
 //    NSLog(@"cellForRow.. %ld",(long)indexPath.row);
     UITableViewCell *cell = [self tableView:tableView cellForHeightForRowAtIndexPath:indexPath];
     [self setupCell:cell atIndexPath:indexPath];
+    UILabel *articleTitle = (UILabel *)[cell viewWithTag:101];
+    articleTitle.font = [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
     return cell;
 }
 
@@ -150,6 +170,7 @@ static NSString *CellIdentifier = @"articleCell";
     
     UILabel *articleTitle = (UILabel *)[cell viewWithTag:101];
     articleTitle.text = [self.issue articleAtIndex:indexPath.row].title;
+    articleTitle.font = [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
     
     UILabel *articleTeaser = (UILabel *)[cell viewWithTag:102];
     
