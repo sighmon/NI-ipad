@@ -262,6 +262,7 @@
                                                 <constraint firstItem="yTC-Ai-12J" firstAttribute="top" secondItem="DHD-CO-mrV" secondAttribute="top" id="pHv-wp-leT"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <inset key="separatorInset" minX="57" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <connections>
                                             <segue destination="T5k-23-5nF" kind="push" identifier="tappedArticle" id="W9z-A8-KEC"/>
                                         </connections>
