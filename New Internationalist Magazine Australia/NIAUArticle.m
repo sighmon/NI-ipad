@@ -39,6 +39,10 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
     return [dictionary objectForKey:@"id"];
 }
 
+-(NSArray *)categories {
+    return [dictionary objectForKey:@"categories"];
+}
+
 
 -(NIAUCache *)buildFeaturedImageCache {
     __weak NIAUArticle *weakSelf = self;

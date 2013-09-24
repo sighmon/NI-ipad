@@ -49,8 +49,8 @@ NSString *kCellID = @"magazineCellID";              // UICollectionViewCell stor
     }];
     
     // Set a border for the magazine covers
-    cell.layer.borderColor = [UIColor colorWithRed:242/255.0f green:242/255.0f blue:242/255.0f alpha:1.0f].CGColor;
-    cell.layer.borderWidth = 1.0;
+//    cell.layer.borderColor = [UIColor colorWithRed:242/255.0f green:242/255.0f blue:242/255.0f alpha:1.0f].CGColor;
+//    cell.layer.borderWidth = 1.0;
     
     return cell;
 }

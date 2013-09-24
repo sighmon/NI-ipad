@@ -41,10 +41,10 @@ static NSString *CellIdentifier = @"articleCell";
     [self setupData];
     
     // Set the editorsLetterTextView height to its content.
-    [self updateEditorsLetterTextViewHeightToContent];
+//    [self updateEditorsLetterTextViewHeightToContent];
     
     // Set the scrollView content height to the editorsLetterTextView.
-    [self updateScrollViewContentHeight];
+//    [self updateScrollViewContentHeight];
 }
 
 -(void)publisherReady:(NSNotification *)not
@@ -55,8 +55,8 @@ static NSString *CellIdentifier = @"articleCell";
 -(void)showArticles
 {
     [self.tableView reloadData];
-    [self updateEditorsLetterTextViewHeightToContent];
-    [self updateScrollViewContentHeight];
+//    [self updateEditorsLetterTextViewHeightToContent];
+//    [self updateScrollViewContentHeight];
 }
 
 - (void)updateEditorsLetterTextViewHeightToContent
@@ -142,24 +142,28 @@ static NSString *CellIdentifier = @"articleCell";
     
     UIImageView *articleImageView = (UIImageView *)[cell viewWithTag:100];
     articleImageView.image = [UIImage imageNamed:@"default_article_image_table_view.png"];
+    // Set background colour to the category colour.
+    NSDictionary *firstCategory = [self.issue articleAtIndex:indexPath.row].categories.firstObject;
+    id categoryColour = [firstCategory objectForKey:@"colour"];
+    #define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
+    cell.backgroundColor = UIColorFromRGB([categoryColour integerValue]);
     
     UILabel *articleTitle = (UILabel *)[cell viewWithTag:101];
     articleTitle.text = [self.issue articleAtIndex:indexPath.row].title;
     
     UILabel *articleTeaser = (UILabel *)[cell viewWithTag:102];
- 
     
     // this is copied from NIAUArticleController, could be DRYer.
     
     // Load CSS from the filesystem
     NSURL *cssURL = [[NSBundle mainBundle] URLForResource:@"article-body" withExtension:@"css"];
     
-    // Load the article into the webview
+    // Load the article teaser into the attributedText
     NSString *teaserHTML = [NSString stringWithFormat:@"<html> \n"
                                  "<head> \n"
                                  "<link rel=\"stylesheet\" type=\"text/css\" href=\"%@\">"
                                  "</head> \n"
-                                 "<body>%@</body> \n"
+                                 "<body><div class='table-of-contents-article-teaser'>%@</div></body> \n"
                                  "</html>", cssURL, teaser];
     
     articleTeaser.attributedText = [[NSAttributedString alloc] initWithData:[teaserHTML dataUsingEncoding:NSUTF8StringEncoding]
@@ -168,8 +172,29 @@ static NSString *CellIdentifier = @"articleCell";
                                                          documentAttributes:nil
                                                                       error:nil];
     
+//    // TODO: These override the bolds. :-(
+//    [articleTeaserAttributedString addAttributes:@{NSFontAttributeName: [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline]}
+//                                           range:NSMakeRange(0, [articleTeaserAttributedString length])];
     
+//    [articleTeaserAttributedString enumerateAttribute:NSFontAttributeName
+//                            inRange:NSMakeRange(0, [articleTeaserAttributedString length])
+//                            options:0
+//                         usingBlock:^(id value,
+//                                      NSRange range,
+//                                      BOOL * stop)
+//     {
+//         UIFontDescriptor *fd = [[value fontDescriptor] fontDescriptorWithFamily:[UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline].familyName];
+//         UIFont *font = [UIFont fontWithDescriptor:fd size:[UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline].pointSize];
+//         if (font != nil) {
+//             [articleTeaserAttributedString removeAttribute:NSFontAttributeName
+//                                    range:range];
+//             [articleTeaserAttributedString addAttribute:NSFontAttributeName
+//                                 value:font
+//                                 range:range];
+//         }
+//     }];
     
+    articleTeaser.attributedText = articleTeaserAttributedString;
 }
 
 - (void)setupCell: (UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
@@ -180,10 +205,7 @@ static NSString *CellIdentifier = @"articleCell";
     if (self.tableView.dragging == NO && self.tableView.decelerating == NO) {
         if (articleImageView.image == [UIImage imageNamed:@"default_article_image_table_view.png"]) {
             [article getFeaturedImageThumbWithSize:thumbSize andCompletionBlock:^(UIImage *thumb) {
-
-                
                 [articleImageView setImage:thumb];
-                
             }];
         } else {
             //NSLog(@"Cell has an image.");
@@ -192,8 +214,6 @@ static NSString *CellIdentifier = @"articleCell";
         UIImage *thumb = [article attemptToGetFeaturedImageThumbFromDiskWithSize:thumbSize];
         if(thumb) {
             [articleImageView setImage:thumb];
-            //UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
-            //[(UIImageView *)[cell viewWithTag:100] setImage:thumb];
         }
     }
 }
@@ -207,18 +227,6 @@ static NSString *CellIdentifier = @"articleCell";
 {
     NSArray *visiblePaths = [self.tableView indexPathsForVisibleRows];
     [self.tableView reloadRowsAtIndexPaths:visiblePaths withRowAnimation:UITableViewRowAnimationNone];
-    /*
-    for (NSIndexPath *indexPath in visiblePaths)
-    {
-        
-        id cell = [self.cellDictionary objectForKey:[NSNumber numberWithInt:indexPath.row]];
-        
-        if (cell) {
-            [self setupCell:cell atIndexPath:indexPath];
-        }
-        
-    }
-     */
 }
 
 #pragma mark - UIScrollViewDelegate
@@ -252,7 +260,6 @@ static NSString *CellIdentifier = @"articleCell";
     // Set the cover from the issue cover tapped
     [self.issue getCoverWithCompletionBlock:^(UIImage *img) {
         [self.imageView setImage:img];
-        [self.imageView setNeedsLayout];
     }];
     
 //    self.labelTitle.text = self.issue.title;
@@ -264,11 +271,10 @@ static NSString *CellIdentifier = @"articleCell";
     
 //    [self.editorImageView setImage:[UIImage imageNamed:@"default_editors_photo"]];
     // Load the real editor's image
-    [self.issue getEditorsImageWithCompletionBlock:^(UIImage *img) {
-        [self.editorImageView setImage:img];
-        [self.editorImageView setNeedsLayout];
-    }];
-    [self applyRoundMask:self.editorImageView];
+//    [self.issue getEditorsImageWithCompletionBlock:^(UIImage *img) {
+//        [self.editorImageView setImage:img];
+//    }];
+//    [self applyRoundMask:self.editorImageView];
 }
 
 - (void)applyRoundMask:(UIImageView *)imageView
