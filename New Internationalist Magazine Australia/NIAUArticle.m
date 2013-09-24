@@ -224,9 +224,7 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
 }
 
 -(NSURL *)featuredImageThumbCacheURL {
-    NSString *url = [[dictionary objectForKey:@"featured_image"] objectForKey:@"url"];
-    NSURL *featuredImageURL = [NSURL URLWithString:url relativeToURL:[NSURL URLWithString:SITE_URL]];
-    NSString *featuredImageBaseName = [[featuredImageURL lastPathComponent] stringByDeletingPathExtension];
+    NSString *featuredImageBaseName = [[[self featuredImageURL] lastPathComponent] stringByDeletingPathExtension];
     return [NSURL URLWithString:[featuredImageBaseName stringByAppendingPathExtension:@"_thumb.png"] relativeToURL:[self cacheURL]];
 }
 
@@ -296,7 +294,12 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
 
 -(NSURL *) featuredImageURL {
     NSString *url = [[dictionary objectForKey:@"featured_image"] objectForKey:@"url"];
-    return [NSURL URLWithString:url relativeToURL:[NSURL URLWithString:SITE_URL]];
+    if ((url != (id)[NSNull null]) && url) {
+        return [NSURL URLWithString:url relativeToURL:[NSURL URLWithString:SITE_URL]];
+    } else {
+//        return [[NSBundle mainBundle] URLForResource:@"default_article_image_table_view" withExtension:@"png"];
+        return nil;
+    }
 }
 
 -(NSURL *) featuredImageCacheURL {

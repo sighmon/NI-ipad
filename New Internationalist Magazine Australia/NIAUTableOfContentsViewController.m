@@ -141,12 +141,12 @@ static NSString *CellIdentifier = @"articleCell";
     teaser = (teaser==[NSNull null]) ? @"" : teaser;
     
     UIImageView *articleImageView = (UIImageView *)[cell viewWithTag:100];
-    articleImageView.image = [UIImage imageNamed:@"default_article_image_table_view.png"];
+    articleImageView.image = nil;
     // Set background colour to the category colour.
     NSDictionary *firstCategory = [self.issue articleAtIndex:indexPath.row].categories.firstObject;
-    id categoryColour = [firstCategory objectForKey:@"colour"];
+    id categoryColour = WITH_DEFAULT([firstCategory objectForKey:@"colour"],[NSNumber numberWithInt:0xFFFFFF]);
     #define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
-    cell.backgroundColor = UIColorFromRGB([categoryColour integerValue]);
+    articleImageView.backgroundColor = UIColorFromRGB([categoryColour integerValue]);
     
     UILabel *articleTitle = (UILabel *)[cell viewWithTag:101];
     articleTitle.text = [self.issue articleAtIndex:indexPath.row].title;
@@ -171,30 +171,8 @@ static NSString *CellIdentifier = @"articleCell";
                                                                               NSCharacterEncodingDocumentAttribute: [NSNumber numberWithInt:NSUTF8StringEncoding]}
                                                          documentAttributes:nil
                                                                       error:nil];
-    
-//    // TODO: These override the bolds. :-(
-//    [articleTeaserAttributedString addAttributes:@{NSFontAttributeName: [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline]}
-//                                           range:NSMakeRange(0, [articleTeaserAttributedString length])];
-    
-//    [articleTeaserAttributedString enumerateAttribute:NSFontAttributeName
-//                            inRange:NSMakeRange(0, [articleTeaserAttributedString length])
-//                            options:0
-//                         usingBlock:^(id value,
-//                                      NSRange range,
-//                                      BOOL * stop)
-//     {
-//         UIFontDescriptor *fd = [[value fontDescriptor] fontDescriptorWithFamily:[UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline].familyName];
-//         UIFont *font = [UIFont fontWithDescriptor:fd size:[UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline].pointSize];
-//         if (font != nil) {
-//             [articleTeaserAttributedString removeAttribute:NSFontAttributeName
-//                                    range:range];
-//             [articleTeaserAttributedString addAttribute:NSFontAttributeName
-//                                 value:font
-//                                 range:range];
-//         }
-//     }];
-    
-    articleTeaser.attributedText = articleTeaserAttributedString;
+  
+    // TODO: isn't listening to stylesheet.
 }
 
 - (void)setupCell: (UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
@@ -203,7 +181,7 @@ static NSString *CellIdentifier = @"articleCell";
     NIAUArticle *article = [self.issue articleAtIndex:indexPath.row];
     CGSize thumbSize = CGSizeMake(57,43);
     if (self.tableView.dragging == NO && self.tableView.decelerating == NO) {
-        if (articleImageView.image == [UIImage imageNamed:@"default_article_image_table_view.png"]) {
+        if (articleImageView.image == nil) {
             [article getFeaturedImageThumbWithSize:thumbSize andCompletionBlock:^(UIImage *thumb) {
                 [articleImageView setImage:thumb];
             }];
@@ -265,9 +243,13 @@ static NSString *CellIdentifier = @"articleCell";
 //    self.labelTitle.text = self.issue.title;
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"MMMM yyyy"];
+    
     self.labelNumberAndDate.text = [NSString stringWithFormat: @"%@ - %@", self.issue.name, [dateFormatter stringFromDate:self.issue.publication]];
+    
     self.labelEditor.text = [NSString stringWithFormat:@"Edited by:\n%@", self.issue.editorsName];
     self.editorsLetterTextView.text = self.issue.editorsLetter;
+
+    [self.tableView layoutIfNeeded];
     
 //    [self.editorImageView setImage:[UIImage imageNamed:@"default_editors_photo"]];
     // Load the real editor's image
