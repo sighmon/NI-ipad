@@ -165,7 +165,6 @@ static NSString *CellIdentifier = @"articleCell";
     // Set background colour to the category colour.
     NSDictionary *firstCategory = [self.issue articleAtIndex:indexPath.row].categories.firstObject;
     id categoryColour = WITH_DEFAULT([firstCategory objectForKey:@"colour"],[NSNumber numberWithInt:0xFFFFFF]);
-    #define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
     articleImageView.backgroundColor = UIColorFromRGB([categoryColour integerValue]);
     
     UILabel *articleTitle = (UILabel *)[cell viewWithTag:101];

@@ -68,12 +68,22 @@
     NSLog(@"Notification received for text change!");
     
     // adjust the layout of the cells
-    self.titleLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
+    self.titleLabel.font = [NIAUArticleViewController headlineFontWithScale:2];
     
     // TODO: work out how to update the webView & textView.attributedText font sizes.
 //    self.teaserLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
     
     [self.view setNeedsLayout];
+}
+
++ (UIFont *)headlineFontWithScale: (float)scale
+{
+    UIFont *currentDynamicFontSize = [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
+    if (IS_IPAD()) {
+        return [currentDynamicFontSize fontWithSize:currentDynamicFontSize.pointSize*scale];
+    } else {
+        return [currentDynamicFontSize fontWithSize:currentDynamicFontSize.pointSize*scale*.8];
+    }
 }
 
 -(void)showArticle
@@ -102,14 +112,15 @@
     // #define kbodyWebViewFont @"-apple-system-body"
     
     //Get the real article images.
-    NSLog(@"pre getFeaturedImageWIthCompletionBlock");
     [self.article getFeaturedImageWithCompletionBlock:^(UIImage *img) {
         [self.featuredImage setImage:img];
-        //[self.featuredImage setNeedsLayout];
     }];
-    NSLog(@"post getFeaturedImageWIthCompletionBlock");
+    NSDictionary *firstCategory = self.article.categories.firstObject;
+    id categoryColour = WITH_DEFAULT([firstCategory objectForKey:@"colour"],[NSNumber numberWithInt:0xFFFFFF]);
+    self.featuredImage.backgroundColor = UIColorFromRGB([categoryColour integerValue]);
 
     self.titleLabel.text = WITH_DEFAULT(self.article.title,IF_DEBUG(@"!!!NOTITLE!!!",@""));
+    self.titleLabel.font = [NIAUArticleViewController headlineFontWithScale:2];
 //    self.teaserLabel.text = WITH_DEFAULT(self.article.teaser,IF_DEBUG(@"!!!NOTEASER!!!",@""));
     self.authorLabel.text = WITH_DEFAULT(self.article.author,IF_DEBUG(@"!!!NOAUTHOR!!!",@""));
     

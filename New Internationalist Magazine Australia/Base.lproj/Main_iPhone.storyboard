@@ -402,14 +402,14 @@
                                             <outletCollection property="gestureRecognizers" destination="HgU-zu-L5t" appends="YES" id="5Hb-t7-UvC"/>
                                         </connections>
                                     </imageView>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Article title" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="fuM-gI-7Bu">
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Article title" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="fuM-gI-7Bu">
                                         <rect key="frame" x="20" y="143" width="280" height="20"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Article teaser" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="ulX-QY-4Wv">
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Article teaser" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="ulX-QY-4Wv">
                                         <rect key="frame" x="20" y="171" width="280" height="17"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
@@ -417,11 +417,11 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PoX-gg-8cE">
-                                        <rect key="frame" x="0.0" y="196" width="320" height="372"/>
+                                        <rect key="frame" x="0.0" y="210" width="320" height="358"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="372" id="Zu2-h1-NqP"/>
+                                            <constraint firstAttribute="height" constant="358" id="Zu2-h1-NqP"/>
                                         </constraints>
                                         <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES"/>
                                         <connections>
@@ -448,7 +448,7 @@
                                     <constraint firstItem="fuM-gI-7Bu" firstAttribute="top" secondItem="PAM-Qv-IM5" secondAttribute="bottom" constant="8" symbolic="YES" id="nce-JX-yH3"/>
                                     <constraint firstAttribute="trailing" secondItem="ulX-QY-4Wv" secondAttribute="trailing" constant="20" symbolic="YES" id="qwM-Wm-Pd8"/>
                                     <constraint firstItem="PAM-Qv-IM5" firstAttribute="width" secondItem="ftA-uH-mfj" secondAttribute="width" id="t4a-6H-DJF"/>
-                                    <constraint firstItem="PoX-gg-8cE" firstAttribute="top" secondItem="ulX-QY-4Wv" secondAttribute="bottom" constant="8" symbolic="YES" id="vsl-5g-aEp"/>
+                                    <constraint firstItem="PoX-gg-8cE" firstAttribute="top" secondItem="ulX-QY-4Wv" secondAttribute="bottom" constant="22" id="vsl-5g-aEp"/>
                                 </constraints>
                             </scrollView>
                         </subviews>
@@ -561,6 +561,6 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="fFr-gL-mDW"/>
-        <segue reference="fI5-Du-KTZ"/>
+        <segue reference="mdp-6r-s59"/>
     </inferredMetricsTieBreakers>
 </document>

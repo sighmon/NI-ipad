@@ -29,7 +29,7 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 
 .table-of-contents-article-teaser {
     font-size: 14px;
-    color: #333;
+    color: #363636;
 }
 
 .table-of-contents-editors-letter {
@@ -42,8 +42,8 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 /*******************/
 
 .article-teaser {
-    font-size: 16px;
-    color: #333;
+    font-size: 18px;
+    color: #363636;
 }
 
 .image-uploader form {
