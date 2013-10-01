@@ -38,16 +38,13 @@ static NSString *CellIdentifier = @"articleCell";
     // Add observer for the user changing the text size
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(preferredContentSizeChanged:) name:UIContentSizeCategoryDidChangeNotification object:nil];
     
-    [self.issue requestArticles];
-    
     // Add the data for the view
     [self setupData];
     
     // Set the editorsLetterTextView height to its content.
     [self updateEditorsLetterTextViewHeightToContent];
     
-    // Set the scrollView content height to the editorsLetterTextView.
-    [self updateScrollViewContentHeight];
+    [self.issue requestArticles];
 }
 
 -(void)publisherReady:(NSNotification *)not
@@ -73,29 +70,17 @@ static NSString *CellIdentifier = @"articleCell";
 -(void)showArticles
 {
     [self.tableView reloadData];
-    [self updateEditorsLetterTextViewHeightToContent];
-    [self updateScrollViewContentHeight];
 }
 
 - (void)updateEditorsLetterTextViewHeightToContent
-{
-    CGFloat editorsLetterTextViewHeight = self.editorsLetterTextView.contentSize.height;
+{    
+    // HACK: This magically makes it set the editorsLetterTextView to the correct height
+    self.editorsLetterTextViewHeightConstraint.constant = 0;
     
-    // now set the height constraint accordingly
+    [self.scrollView setNeedsLayout];
+    [self.scrollView layoutIfNeeded];
     
-    [UIView animateWithDuration:0.25 animations:^{
-        self.editorsLetterTextViewHeightConstraint.constant = editorsLetterTextViewHeight;
-        [self.view needsUpdateConstraints];
-    }];
-}
-
-- (void)updateScrollViewContentHeight
-{
-    CGRect contentRect = CGRectZero;
-    for (UIView *view in self.scrollView.subviews) {
-        contentRect = CGRectUnion(contentRect, view.frame);
-    }
-    self.scrollView.contentSize = contentRect.size;
+    self.editorsLetterTextViewHeightConstraint.constant = self.editorsLetterTextView.contentSize.height;
 }
 
 #pragma mark - Table view data source
@@ -191,8 +176,6 @@ static NSString *CellIdentifier = @"articleCell";
                                                                               NSCharacterEncodingDocumentAttribute: [NSNumber numberWithInt:NSUTF8StringEncoding]}
                                                          documentAttributes:nil
                                                                       error:nil];
-  
-    // TODO: isn't listening to stylesheet.
 }
 
 - (void)setupCell: (UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
@@ -285,7 +268,9 @@ static NSString *CellIdentifier = @"articleCell";
                                                                               NSCharacterEncodingDocumentAttribute: [NSNumber numberWithInt:NSUTF8StringEncoding]}
                                                          documentAttributes:nil
                                                                       error:nil];
-    [self.tableView layoutIfNeeded];
+    NSLog(@"\nScrollView height: %f \neditorsLetter height: %f",self.scrollView.contentSize.height, self.editorsLetterTextView.attributedText.size.height);
+//    [self.tableView layoutIfNeeded];
+//    [self.editorsLetterTextView setNeedsLayout];
     
     [self.editorImageView setImage:[UIImage imageNamed:@"default_editors_photo"]];
     // Load the real editor's image
@@ -385,7 +370,6 @@ static NSString *CellIdentifier = @"articleCell";
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
     [self updateEditorsLetterTextViewHeightToContent];
-    [self updateScrollViewContentHeight];
 }
 
 @end
