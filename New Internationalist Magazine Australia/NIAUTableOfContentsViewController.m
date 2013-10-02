@@ -73,7 +73,7 @@ static NSString *CellIdentifier = @"articleCell";
 }
 
 - (void)updateEditorsLetterTextViewHeightToContent
-{    
+{
     // HACK: This magically makes it set the editorsLetterTextView to the correct height
     self.editorsLetterTextViewHeightConstraint.constant = 0;
     

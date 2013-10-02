@@ -205,11 +205,12 @@
 
 - (IBAction)shareActionTapped:(id)sender
 {
-    NSLog(@"Share tapped!");
+    NSMutableArray *itemsToShare = [[NSMutableArray alloc] initWithArray:@[[NSString stringWithFormat:@"I'm reading '%@'",self.article.title], self.article.getWebURL]];
     
-    // TODO: Check that the image isn't a default image.
-    
-    NSArray *itemsToShare = @[[NSString stringWithFormat:@"I'm reading '%@'",self.article.title], self.featuredImage.image, self.article.getWebURL];
+    // Only add the featured image if it exists
+    if (self.featuredImage.image != nil) {
+        [itemsToShare addObject:self.featuredImage.image];
+    }
     
     UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:itemsToShare applicationActivities:nil];
     [self presentViewController:activityController animated:YES completion:nil];
