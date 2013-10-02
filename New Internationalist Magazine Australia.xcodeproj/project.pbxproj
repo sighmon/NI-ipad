@@ -61,6 +61,8 @@
 		055A8EF4177290CF003D9407 /* New_Internationalist_Magazine_AustraliaTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 055A8EF3177290CF003D9407 /* New_Internationalist_Magazine_AustraliaTests.m */; };
 		0567082817B1D51400A87818 /* default_article_image_table_view.png in Resources */ = {isa = PBXBuildFile; fileRef = 0567082617B1D50A00A87818 /* default_article_image_table_view.png */; };
 		0567082917B1D51400A87818 /* default_article_image_table_view@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0567082717B1D50A00A87818 /* default_article_image_table_view@2x.png */; };
+		0577E07617FBED0400A52A8E /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0577E07517FBED0400A52A8E /* StoreKit.framework */; };
+		0577E07917FBF2B400A52A8E /* NIAUInAppPurchaseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0577E07817FBF2B400A52A8E /* NIAUInAppPurchaseManager.m */; };
 		058F738E178BBA3E002CA40C /* NIAUImageZoomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 058F738D178BBA3E002CA40C /* NIAUImageZoomViewController.m */; };
 		05BD7F2917796B8F00820EF3 /* 0@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 05BD7F1717796B8F00820EF3 /* 0@2x.png */; };
 		05BD7F2A17796B8F00820EF3 /* 1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 05BD7F1817796B8F00820EF3 /* 1@2x.png */; };
@@ -173,6 +175,9 @@
 		055A8F0E1772CF67003D9407 /* iPad-portrait@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPad-portrait@2x.png"; sourceTree = "<group>"; };
 		0567082617B1D50A00A87818 /* default_article_image_table_view.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = default_article_image_table_view.png; sourceTree = "<group>"; };
 		0567082717B1D50A00A87818 /* default_article_image_table_view@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "default_article_image_table_view@2x.png"; sourceTree = "<group>"; };
+		0577E07517FBED0400A52A8E /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		0577E07717FBF2B400A52A8E /* NIAUInAppPurchaseManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NIAUInAppPurchaseManager.h; sourceTree = "<group>"; };
+		0577E07817FBF2B400A52A8E /* NIAUInAppPurchaseManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NIAUInAppPurchaseManager.m; sourceTree = "<group>"; };
 		058F738C178BBA3E002CA40C /* NIAUImageZoomViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NIAUImageZoomViewController.h; sourceTree = "<group>"; };
 		058F738D178BBA3E002CA40C /* NIAUImageZoomViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NIAUImageZoomViewController.m; sourceTree = "<group>"; };
 		05BD7F121779656300820EF3 /* NIAUMagazineArchiveViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NIAUMagazineArchiveViewController.h; sourceTree = "<group>"; };
@@ -243,6 +248,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0577E07617FBED0400A52A8E /* StoreKit.framework in Frameworks */,
 				055A8EC8177290CE003D9407 /* CoreGraphics.framework in Frameworks */,
 				055A8ECA177290CE003D9407 /* UIKit.framework in Frameworks */,
 				055A8EC6177290CE003D9407 /* Foundation.framework in Frameworks */,
@@ -318,6 +324,7 @@
 		055A8EC4177290CE003D9407 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0577E07517FBED0400A52A8E /* StoreKit.framework */,
 				055A8EC5177290CE003D9407 /* Foundation.framework */,
 				055A8EC7177290CE003D9407 /* CoreGraphics.framework */,
 				055A8EC9177290CE003D9407 /* UIKit.framework */,
@@ -344,6 +351,10 @@
 				053878251777D767001E60F6 /* NIAUIssue.m */,
 				052167E2177BD6DF00A4A81A /* NIAUArticle.h */,
 				052167E3177BD6DF00A4A81A /* NIAUArticle.m */,
+				52090A60178CF7D1002D5162 /* NIAUPublisher.h */,
+				52090A61178CF7D1002D5162 /* NIAUPublisher.m */,
+				0577E07717FBF2B400A52A8E /* NIAUInAppPurchaseManager.h */,
+				0577E07817FBF2B400A52A8E /* NIAUInAppPurchaseManager.m */,
 				055A8EDD177290CF003D9407 /* NIAUViewController.h */,
 				055A8EDE177290CF003D9407 /* NIAUViewController.m */,
 				05BD7F121779656300820EF3 /* NIAUMagazineArchiveViewController.h */,
@@ -352,8 +363,6 @@
 				0507DB69177AA0F60099540D /* NIAUTableOfContentsViewController.m */,
 				052167E5177BDF8900A4A81A /* NIAUArticleViewController.h */,
 				052167E6177BDF8900A4A81A /* NIAUArticleViewController.m */,
-				52090A60178CF7D1002D5162 /* NIAUPublisher.h */,
-				52090A61178CF7D1002D5162 /* NIAUPublisher.m */,
 				058F738C178BBA3E002CA40C /* NIAUImageZoomViewController.h */,
 				058F738D178BBA3E002CA40C /* NIAUImageZoomViewController.m */,
 				05BD7F141779671900820EF3 /* NIAUCell.h */,
@@ -722,6 +731,7 @@
 				055A8EDF177290CF003D9407 /* NIAUViewController.m in Sources */,
 				52CD5EE617D896240038A70C /* NIAUCache.m in Sources */,
 				05287A24177983E400501F5F /* NIAUCell.m in Sources */,
+				0577E07917FBF2B400A52A8E /* NIAUInAppPurchaseManager.m in Sources */,
 				0507DB6A177AA0F60099540D /* NIAUTableOfContentsViewController.m in Sources */,
 				055A8ED2177290CF003D9407 /* main.m in Sources */,
 				05287A23177983AD00501F5F /* NIAUMagazineArchiveViewController.m in Sources */,

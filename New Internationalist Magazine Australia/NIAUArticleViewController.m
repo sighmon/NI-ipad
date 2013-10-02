@@ -201,6 +201,11 @@
 }
 
 #pragma mark -
+#pragma mark Store Kit purchasing an issue.
+
+
+
+#pragma mark -
 #pragma mark Social sharing
 
 - (IBAction)shareActionTapped:(id)sender
