@@ -11,6 +11,9 @@
 #import "NIAUTableOfContentsViewController.h"
 
 @interface NIAUViewController ()
+{
+    NSArray *_products;
+}
 
 @end
 
@@ -73,6 +76,15 @@
     } else {
         [self loadIssues];
     }
+    
+    // Test InApp products
+    _products = nil;
+    [[NIAUInAppPurchaseHelper sharedInstance] requestProductsWithCompletionHandler:^(BOOL success, NSArray *products) {
+        if (success) {
+            _products = products;
+            NSLog(@"Products returned OK: %@", _products);
+        }
+    }];
 }
 
 - (void) setupView

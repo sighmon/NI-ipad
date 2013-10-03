@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "NIAUIssue.h"
 #import "NIAUPublisher.h"
-#import "NIAUInAppPurchaseManager.h"
+#import "NIAUInAppPurchaseHelper.h"
 
 @interface NIAUViewController : UIViewController <UIGestureRecognizerDelegate>
 
