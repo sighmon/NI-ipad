@@ -9,7 +9,9 @@
 #import "NIAUStoreViewController.h"
 
 @interface NIAUStoreViewController ()
-
+{
+    NSArray *_products;
+}
 @end
 
 @implementation NIAUStoreViewController
@@ -32,6 +34,15 @@
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    
+    // Load the products from iTunesConnect
+    _products = nil;
+    [[NIAUInAppPurchaseHelper sharedInstance] requestProductsWithCompletionHandler:^(BOOL success, NSArray *products) {
+        if (success) {
+            _products = products;
+            [self.tableView reloadData];
+        }
+    }];
 }
 
 - (void)didReceiveMemoryWarning
@@ -51,20 +62,56 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return 1;
+    if (_products) {
+        return _products.count;
+    } else {
+        // TODO: set a default response for no products.
+        return 0;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"storeViewCell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
     // Configure the cell...
     
-    cell.textLabel.text = @"Product title";
-    cell.detailTextLabel.text = @"Price";
+    if (_products) {
+        SKProduct *product = _products[indexPath.row];
+        UIImageView *productImageView = (UIImageView *)[cell viewWithTag:100];
+        productImageView.image = nil;
+        
+        UILabel *productTitle = (UILabel *)[cell viewWithTag:101];
+        productTitle.text = [product localizedTitle];
+        
+        UILabel *productPrice = (UILabel *)[cell viewWithTag:102];
+        productPrice.text = [NSString stringWithFormat:@"$%0.2f",[product price].floatValue];
+        
+        UILabel *productDescription = (UILabel *)[cell viewWithTag:103];
+        productDescription.text = [product localizedDescription];
+        
+        UIButton *productBuyButton = (UIButton *)[cell viewWithTag:104];
+        // TODO: change the label depending on whether the product has been purchased yet or not.
+        productBuyButton.titleLabel.text = @"Buy";
+    }
     
     return cell;
+}
+
+- (CGSize)calculateCellSize:(UITableViewCell *)cell inTableView:(UITableView *)tableView {
+    
+    CGSize fittingSize = CGSizeMake(tableView.bounds.size.width, 0);
+    CGSize size = [cell.contentView systemLayoutSizeFittingSize:fittingSize];
+    
+    return size;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    UITableViewCell *cell = [self tableView:tableView cellForRowAtIndexPath:indexPath];
+    
+    return [self calculateCellSize:cell inTableView:tableView].height;
 }
 
 /*
