@@ -44,6 +44,8 @@
 		052BBF8B17EFF6E100B12071 /* home-background.png in Resources */ = {isa = PBXBuildFile; fileRef = 052BBF8917EFF6E100B12071 /* home-background.png */; };
 		052BBF8C17EFF6E100B12071 /* home-background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 052BBF8A17EFF6E100B12071 /* home-background@2x.png */; };
 		053878261777D767001E60F6 /* NIAUIssue.m in Sources */ = {isa = PBXBuildFile; fileRef = 053878251777D767001E60F6 /* NIAUIssue.m */; };
+		05424C361803AD0400399194 /* NIAUStoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05424C351803AD0400399194 /* NIAUStoreViewController.m */; };
+		05424C391803BD7000399194 /* NIAULoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05424C381803BD7000399194 /* NIAULoginViewController.m */; };
 		055A8EC6177290CE003D9407 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 055A8EC5177290CE003D9407 /* Foundation.framework */; };
 		055A8EC8177290CE003D9407 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 055A8EC7177290CE003D9407 /* CoreGraphics.framework */; };
 		055A8ECA177290CE003D9407 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 055A8EC9177290CE003D9407 /* UIKit.framework */; };
@@ -140,6 +142,10 @@
 		052BBF8A17EFF6E100B12071 /* home-background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "home-background@2x.png"; sourceTree = "<group>"; };
 		053878241777D767001E60F6 /* NIAUIssue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NIAUIssue.h; sourceTree = "<group>"; };
 		053878251777D767001E60F6 /* NIAUIssue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NIAUIssue.m; sourceTree = "<group>"; };
+		05424C341803AD0400399194 /* NIAUStoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NIAUStoreViewController.h; sourceTree = "<group>"; };
+		05424C351803AD0400399194 /* NIAUStoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NIAUStoreViewController.m; sourceTree = "<group>"; };
+		05424C371803BD7000399194 /* NIAULoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NIAULoginViewController.h; sourceTree = "<group>"; };
+		05424C381803BD7000399194 /* NIAULoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NIAULoginViewController.m; sourceTree = "<group>"; };
 		055A8EC2177290CE003D9407 /* New Internationalist Magazine Australia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "New Internationalist Magazine Australia.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		055A8EC5177290CE003D9407 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		055A8EC7177290CE003D9407 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -355,6 +361,10 @@
 				52090A61178CF7D1002D5162 /* NIAUPublisher.m */,
 				0577E07717FBF2B400A52A8E /* NIAUInAppPurchaseHelper.h */,
 				0577E07817FBF2B400A52A8E /* NIAUInAppPurchaseHelper.m */,
+				05424C341803AD0400399194 /* NIAUStoreViewController.h */,
+				05424C351803AD0400399194 /* NIAUStoreViewController.m */,
+				05424C371803BD7000399194 /* NIAULoginViewController.h */,
+				05424C381803BD7000399194 /* NIAULoginViewController.m */,
 				055A8EDD177290CF003D9407 /* NIAUViewController.h */,
 				055A8EDE177290CF003D9407 /* NIAUViewController.m */,
 				05BD7F121779656300820EF3 /* NIAUMagazineArchiveViewController.h */,
@@ -723,6 +733,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				05424C361803AD0400399194 /* NIAUStoreViewController.m in Sources */,
 				058F738E178BBA3E002CA40C /* NIAUImageZoomViewController.m in Sources */,
 				053878261777D767001E60F6 /* NIAUIssue.m in Sources */,
 				52CD5EEC17D8A6DC0038A70C /* NIAUCacheMethod.m in Sources */,
@@ -731,6 +742,7 @@
 				055A8EDF177290CF003D9407 /* NIAUViewController.m in Sources */,
 				52CD5EE617D896240038A70C /* NIAUCache.m in Sources */,
 				05287A24177983E400501F5F /* NIAUCell.m in Sources */,
+				05424C391803BD7000399194 /* NIAULoginViewController.m in Sources */,
 				0577E07917FBF2B400A52A8E /* NIAUInAppPurchaseHelper.m in Sources */,
 				0507DB6A177AA0F60099540D /* NIAUTableOfContentsViewController.m in Sources */,
 				055A8ED2177290CF003D9407 /* main.m in Sources */,

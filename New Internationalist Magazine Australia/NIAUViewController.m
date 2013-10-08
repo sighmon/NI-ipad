@@ -31,6 +31,12 @@
         
         NIAUTableOfContentsViewController *tableOfContentsViewController = [segue destinationViewController];
         tableOfContentsViewController.issue = [[NIAUPublisher getInstance] issueAtIndex:0];
+        
+    } else if ([[segue identifier] isEqualToString:@"subscribeButtonToStoreView"])
+    {
+        // Send the products to the Store UITableViewController
+        
+        NSLog(@"TODO: Send the products to the Store view controller.");
     }
 }
 
@@ -42,12 +48,12 @@
 
 - (IBAction)magazineArchiveButtonTapped:(id)sender
 {
-    NSLog(@"TODO: Load the UICollectionView of magazine covers.");
+    
 }
 
 - (IBAction)subscribeButtonTapped:(id)sender
 {
-    NSLog(@"TODO: Load the Subscription options view.");
+    
 }
 
 - (IBAction)loginButtonTapped:(id)sender
