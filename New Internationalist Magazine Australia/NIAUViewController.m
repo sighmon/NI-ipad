@@ -11,6 +11,9 @@
 #import "NIAUTableOfContentsViewController.h"
 
 @interface NIAUViewController ()
+{
+    NSArray *_products;
+}
 
 @end
 
@@ -28,6 +31,12 @@
         
         NIAUTableOfContentsViewController *tableOfContentsViewController = [segue destinationViewController];
         tableOfContentsViewController.issue = [[NIAUPublisher getInstance] issueAtIndex:0];
+        
+    } else if ([[segue identifier] isEqualToString:@"subscribeButtonToStoreView"])
+    {
+        // Send the products to the Store UITableViewController
+        
+        NSLog(@"TODO: Send the products to the Store view controller.");
     }
 }
 
@@ -39,12 +48,12 @@
 
 - (IBAction)magazineArchiveButtonTapped:(id)sender
 {
-    NSLog(@"TODO: Load the UICollectionView of magazine covers.");
+    
 }
 
 - (IBAction)subscribeButtonTapped:(id)sender
 {
-    NSLog(@"TODO: Load the Subscription options view.");
+    
 }
 
 - (IBAction)loginButtonTapped:(id)sender
@@ -73,6 +82,15 @@
     } else {
         [self loadIssues];
     }
+    
+    // Test InApp products
+    _products = nil;
+    [[NIAUInAppPurchaseHelper sharedInstance] requestProductsWithCompletionHandler:^(BOOL success, NSArray *products) {
+        if (success) {
+            _products = products;
+            NSLog(@"Products returned OK: %@", _products);
+        }
+    }];
 }
 
 - (void) setupView

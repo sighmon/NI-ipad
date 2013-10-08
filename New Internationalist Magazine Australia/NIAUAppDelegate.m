@@ -9,11 +9,15 @@
 #import "NIAUAppDelegate.h"
 
 #import "NIAUViewController.h"
+#import "NIAUInAppPurchaseHelper.h"
 
 @implementation NIAUAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    // Load the In App Purchase Helper at launch to check for unfinished purchases.
+    [NIAUInAppPurchaseHelper sharedInstance];
+    
     // Override point for customization after application launch.
     return YES;
 }
