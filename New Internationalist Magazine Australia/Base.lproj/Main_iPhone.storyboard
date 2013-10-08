@@ -281,6 +281,9 @@
                                             <state key="normal" title="Buy">
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
+                                            <connections>
+                                                <action selector="buyButtonTapped:" destination="qrh-8f-IqL" eventType="touchUpInside" id="UaT-KR-F6A"/>
+                                            </connections>
                                         </button>
                                     </subviews>
                                     <constraints>

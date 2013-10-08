@@ -11,6 +11,7 @@
 @interface NIAUStoreViewController ()
 {
     NSArray *_products;
+    NSNumberFormatter *_priceFormatter;
 }
 @end
 
@@ -43,12 +44,37 @@
             [self.tableView reloadData];
         }
     }];
+    
+    // Format the price of each product for different locales.
+    _priceFormatter = [[NSNumberFormatter alloc] init];
+    [_priceFormatter setFormatterBehavior:NSNumberFormatterBehavior10_4];
+    [_priceFormatter setNumberStyle:NSNumberFormatterCurrencyStyle];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(productPurchased:) name:IAPHelperProductPurchasedNotification object:nil];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)productPurchased:(NSNotification *)notification {
+    
+    NSString *productIdentifier = notification.object;
+    [_products enumerateObjectsUsingBlock:^(SKProduct *product, NSUInteger idx, BOOL *stop) {
+        if ([product.productIdentifier isEqualToString:productIdentifier]) {
+            [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:idx inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
+            *stop = YES;
+        }
+    }];
+    
 }
 
 #pragma mark - Table view data source
@@ -86,14 +112,24 @@
         productTitle.text = [product localizedTitle];
         
         UILabel *productPrice = (UILabel *)[cell viewWithTag:102];
-        productPrice.text = [NSString stringWithFormat:@"$%0.2f",[product price].floatValue];
+        [_priceFormatter setLocale:product.priceLocale];
+//        productPrice.text = [NSString stringWithFormat:@"$%0.2f",[product price].floatValue];
+        productPrice.text = [_priceFormatter stringFromNumber:product.price];
         
         UILabel *productDescription = (UILabel *)[cell viewWithTag:103];
         productDescription.text = [product localizedDescription];
         
         UIButton *productBuyButton = (UIButton *)[cell viewWithTag:104];
         // TODO: change the label depending on whether the product has been purchased yet or not.
-        productBuyButton.titleLabel.text = @"Buy";
+        
+        if ([[NIAUInAppPurchaseHelper sharedInstance] productPurchased:product.productIdentifier]) {
+            productBuyButton = nil;
+            cell.accessoryType = UITableViewCellAccessoryCheckmark;
+            cell.accessoryView = nil;
+        } else {
+            productBuyButton.titleLabel.text = @"Buy";
+            productBuyButton.tag = indexPath.row;
+        }
     }
     
     return cell;
@@ -112,6 +148,16 @@
     UITableViewCell *cell = [self tableView:tableView cellForRowAtIndexPath:indexPath];
     
     return [self calculateCellSize:cell inTableView:tableView].height;
+}
+
+- (IBAction)buyButtonTapped:(id)sender {
+    
+    UIButton *buyButton = (UIButton *)sender;
+    SKProduct *product = _products[buyButton.tag];
+    
+    NSLog(@"Buying %@...", product.productIdentifier);
+    [[NIAUInAppPurchaseHelper sharedInstance] buyProduct:product];
+    
 }
 
 /*
