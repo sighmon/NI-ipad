@@ -10,4 +10,9 @@
 
 @interface NIAULoginViewController : UIViewController
 
+@property (nonatomic, weak) IBOutlet UITextField *username;
+@property (nonatomic, weak) IBOutlet UITextField *password;
+
+@property (nonatomic, weak) IBOutlet UIButton *loginButton;
+
 @end

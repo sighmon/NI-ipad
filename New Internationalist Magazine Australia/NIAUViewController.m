@@ -9,6 +9,7 @@
 #import "NIAUViewController.h"
 #import "NIAUMagazineArchiveViewController.h"
 #import "NIAUTableOfContentsViewController.h"
+#import "NIAUStoreViewController.h"
 
 @interface NIAUViewController ()
 {
@@ -34,9 +35,7 @@
         
     } else if ([[segue identifier] isEqualToString:@"subscribeButtonToStoreView"])
     {
-        // Send the products to the Store UITableViewController
-        
-        NSLog(@"TODO: Send the products to the Store view controller.");
+        // If there's anything to do, do it here.
     }
 }
 
@@ -82,15 +81,6 @@
     } else {
         [self loadIssues];
     }
-    
-    // Test InApp products
-    _products = nil;
-    [[NIAUInAppPurchaseHelper sharedInstance] requestProductsWithCompletionHandler:^(BOOL success, NSArray *products) {
-        if (success) {
-            _products = products;
-            NSLog(@"Products returned OK: %@", _products);
-        }
-    }];
 }
 
 - (void) setupView
