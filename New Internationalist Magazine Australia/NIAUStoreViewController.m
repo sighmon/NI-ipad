@@ -123,9 +123,10 @@
         // TODO: change the label depending on whether the product has been purchased yet or not.
         
         if ([[NIAUInAppPurchaseHelper sharedInstance] productPurchased:product.productIdentifier]) {
-            productBuyButton = nil;
+            [productBuyButton removeFromSuperview];
             cell.accessoryType = UITableViewCellAccessoryCheckmark;
             cell.accessoryView = nil;
+            cell.backgroundColor = [[self.navigationController.navigationBar tintColor] colorWithAlphaComponent:0.1];
         } else {
             productBuyButton.titleLabel.text = @"Buy";
             productBuyButton.tag = indexPath.row;
@@ -150,14 +151,36 @@
     return [self calculateCellSize:cell inTableView:tableView].height;
 }
 
-- (IBAction)buyButtonTapped:(id)sender {
-    
+#pragma mark -
+#pragma mark - Actions
+
+- (IBAction)buyButtonTapped:(id)sender
+{
     UIButton *buyButton = (UIButton *)sender;
     SKProduct *product = _products[buyButton.tag];
     
     NSLog(@"Buying %@...", product.productIdentifier);
     [[NIAUInAppPurchaseHelper sharedInstance] buyProduct:product];
+}
+
+- (IBAction)restorePurchasesButtonTapped:(id)sender
+{
+    [[NIAUInAppPurchaseHelper sharedInstance] restoreCompletedTransactions];
+}
+
+#pragma mark -
+#pragma mark - Rotation
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    NSLog(@"TODO: Work out how to recalculate the cell height and then reload it.");
     
+//    Not working!
+    
+//    for (int i = 0; i < self.tableView.indexPathsForVisibleRows.count; i++) {
+//        [self tableView:self.tableView heightForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
+//    }
+    [self.tableView reloadData];
 }
 
 /*
