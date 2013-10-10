@@ -53,23 +53,26 @@
 
 - (IBAction)loginButtonTapped:(id)sender
 {
-    NSLog(@"TODO: Do stuff.");
     
-    // delete all entries from keychain (probably a bad idea, we are testing)
-    [[SSKeychain accountsForService:@"NIWebApp"] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        [SSKeychain deletePasswordForService:obj[@"svce"] account:obj[@"acct"]];
-    }];
+    NSString *username = self.username.text;
+    NSString *password = self.password.text;
     
-    [SSKeychain setPassword:self.password.text forService:@"NIWebApp" account:self.username.text];
-    
-    if([self.password.text isEqual:@"topseekret"]) {
-        UIAlertView *theAlert = [[UIAlertView alloc] initWithTitle:@"Warning"
-                                                           message:[NSString   stringWithFormat:@"%@ is a dumb password", self.password.text]
-                                                          delegate:self
-                                                 cancelButtonTitle:@"I'm sorry"
-                                                 otherButtonTitles:nil];
-        [theAlert show];
+    NSError *error;
+    if ([SSKeychain setPassword:password forService:@"NIWebApp" account:username error:&error]) {
+        [[[UIAlertView alloc] initWithTitle:@"Password saved" message:@"Your password has been successfully saved" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
+
+        // delete all other entries from keychain (maybe a bad idea, but we are testing)
+        [[SSKeychain accountsForService:@"NIWebApp"] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            NSString *acct = obj[@"acct"];
+            if(![acct isEqualToString:username]) {
+                [SSKeychain deletePasswordForService:obj[@"svce"] account:obj[@"acct"]];
+            }
+        }];
+
+    } else {
+        [[[UIAlertView alloc] initWithTitle:@"Error" message:[NSString stringWithFormat:@"There was a problem storing your password: %@", error] delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:nil] show];
     }
+    
 }
 
 @end
