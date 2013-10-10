@@ -43,6 +43,7 @@
             _products = products;
             [self.tableView reloadData];
             [self.tableViewLoadingIndicator stopAnimating];
+            
             // TODO: Get expiry date if you have a subscription.
             self.subscriptionExpiryDateLabel.text = @"TODO: date here.";
         }
@@ -56,6 +57,9 @@
     // Start Activity Indicator.
     self.subscriptionExpiryDateLabel.text = @"";
     [self.tableViewLoadingIndicator startAnimating];
+    
+    // TODO: Convert receipt to base64, and then check it with the iTunes Store.
+    NSLog(@"RECEIPT: %@",[NSString stringWithContentsOfURL:[[NSBundle mainBundle] appStoreReceiptURL] encoding:NSUTF8StringEncoding error:nil]);
 }
 
 - (void)didReceiveMemoryWarning
