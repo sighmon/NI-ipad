@@ -11,4 +11,8 @@
 
 @interface NIAUStoreViewController : UITableViewController
 
+@property (nonatomic, weak) IBOutlet UIActivityIndicatorView *tableViewLoadingIndicator;
+
+@property (nonatomic, weak) IBOutlet UILabel *subscriptionExpiryDateLabel;
+
 @end

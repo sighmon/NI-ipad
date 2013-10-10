@@ -42,6 +42,9 @@
         if (success) {
             _products = products;
             [self.tableView reloadData];
+            [self.tableViewLoadingIndicator stopAnimating];
+            // TODO: Get expiry date if you have a subscription.
+            self.subscriptionExpiryDateLabel.text = @"TODO: date here.";
         }
     }];
     
@@ -49,6 +52,10 @@
     _priceFormatter = [[NSNumberFormatter alloc] init];
     [_priceFormatter setFormatterBehavior:NSNumberFormatterBehavior10_4];
     [_priceFormatter setNumberStyle:NSNumberFormatterCurrencyStyle];
+    
+    // Start Activity Indicator.
+    self.subscriptionExpiryDateLabel.text = @"";
+    [self.tableViewLoadingIndicator startAnimating];
 }
 
 - (void)didReceiveMemoryWarning
@@ -159,7 +166,7 @@
     UIButton *buyButton = (UIButton *)sender;
     SKProduct *product = _products[buyButton.tag];
     
-    NSLog(@"Buying %@...", product.productIdentifier);
+    NSLog(@"Starting purchase: %@...", product.productIdentifier);
     [[NIAUInAppPurchaseHelper sharedInstance] buyProduct:product];
 }
 
