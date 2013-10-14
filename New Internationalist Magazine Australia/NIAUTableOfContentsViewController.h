@@ -27,6 +27,7 @@
 @property (nonatomic, weak) IBOutlet UIImageView *imageView;
 @property (nonatomic, weak) IBOutlet UITextView *editorsLetterTextView;
 @property (nonatomic, weak) IBOutlet UIImageView *editorImageView;
+@property (nonatomic, weak) IBOutlet UIView *tableViewFooterView;
 
 @property (weak, nonatomic) IBOutlet UILabel *labelTitle;
 @property (weak, nonatomic) IBOutlet UILabel *labelNumberAndDate;
