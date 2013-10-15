@@ -43,6 +43,7 @@ static NSString *CellIdentifier = @"articleCell";
     
     // Set the editorsLetterTextView height to its content.
     [self updateEditorsLetterTextViewHeightToContent];
+    self.editorsLetterTextView.scrollsToTop = NO;
     
     [self.issue requestArticles];
 }
@@ -85,8 +86,6 @@ static NSString *CellIdentifier = @"articleCell";
     // TODO: Get this right for the iPhone view.
     
     self.tableViewFooterView.frame = CGRectMake(self.tableViewFooterView.frame.origin.x, self.tableViewFooterView.frame.origin.y, self.editorsLetterTextView.attributedText.size.width, self.editorsLetterTextView.attributedText.size.height *5);
-    
-    self.editorsLetterTextView.scrollsToTop = NO;
 }
 
 #pragma mark - Table view data source
