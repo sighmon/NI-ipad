@@ -23,6 +23,17 @@
     return self;
 }
 
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        // Initialize the arrays
+        self.issuesArray = [[NSMutableArray alloc] init];
+        self.filteredIssuesArray = [[NSMutableArray alloc] init];
+    }
+    return self;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -34,9 +45,6 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
     // Get all of the issues, and when that's done get all of the articles
-    
-    self.issuesArray = [[NSMutableArray alloc] init];
-    self.articlesArray = [[NSMutableArray alloc] init];
     
     if([[NIAUPublisher getInstance] isReady]) {
         [self loadArticles];
@@ -113,30 +121,55 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections. (number of issues)
-    return [self.issuesArray count];
+    
+    if (tableView == self.searchDisplayController.searchResultsTableView) {
+        return [self.filteredIssuesArray count];
+    } else {
+        return [self.issuesArray count];
+    }
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
-{
-    NSString *sectionTitle = [NSString stringWithFormat:@"%@ - %@", [[self.issuesArray objectAtIndex:section] name], [[self.issuesArray objectAtIndex:section] title]];
-    tableView.sectionIndexTrackingBackgroundColor = [UIColor greenColor];
-    return sectionTitle;
+{    
+    if (tableView == self.searchDisplayController.searchResultsTableView) {
+        return [NSString stringWithFormat:@"%@ - %@", [[self.filteredIssuesArray objectAtIndex:section] name], [[self.filteredIssuesArray objectAtIndex:section] title]];
+    } else {
+        return [NSString stringWithFormat:@"%@ - %@", [[self.issuesArray objectAtIndex:section] name], [[self.issuesArray objectAtIndex:section] title]];
+    }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return [self.issuesArray[section] numberOfArticles];
+    
+    if (tableView == self.searchDisplayController.searchResultsTableView) {
+        return [self.filteredIssuesArray[section] numberOfArticles];
+    } else {
+        return [self.issuesArray[section] numberOfArticles];
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"searchViewCell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    
+    UITableViewCell *cell = nil;
+    
+    if (tableView == self.searchDisplayController.searchResultsTableView) {
+        cell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    } else {
+        cell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    }
     
     // Configure the cell...
     
-    NIAUArticle *article = [self.issuesArray[indexPath.section] articleAtIndex:indexPath.row];
+    NIAUArticle *article = nil;
+    
+    if (tableView == self.searchDisplayController.searchResultsTableView) {
+        article = [self.filteredIssuesArray[indexPath.section] articleAtIndex:indexPath.row];
+    } else {
+        article = [self.issuesArray[indexPath.section] articleAtIndex:indexPath.row];
+    }
     
     // Hack to check against NULL teasers.
     id teaser = article.teaser;
@@ -144,10 +177,11 @@
     
     cell.textLabel.text = article.title;
     
-    // Regex to remove <strong> and <b>
+    // Regex to remove <strong> and <b> and any other <html>
     NSError *error = NULL;
     NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"<[^>]*>" options:NSRegularExpressionCaseInsensitive error:&error];
     NSString *cleanTeaser = [regex stringByReplacingMatchesInString:teaser options:0 range:NSMakeRange(0, [teaser length]) withTemplate:@""];
+    
     cell.detailTextLabel.text = cleanTeaser;
     
     return cell;
@@ -156,14 +190,20 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Using technique from http://stackoverflow.com/questions/18897896/replacement-for-deprecated-sizewithfont-in-ios-7
+        
+    NIAUArticle *article = nil;
     
-    NIAUArticle *article = [self.issuesArray[indexPath.section] articleAtIndex:indexPath.row];
+    if (tableView == self.searchDisplayController.searchResultsTableView) {
+        article = [self.filteredIssuesArray[indexPath.section] articleAtIndex:indexPath.row];
+    } else {
+        article = [self.issuesArray[indexPath.section] articleAtIndex:indexPath.row];
+    }
     
     id teaser = article.teaser;
     teaser = (teaser==[NSNull null]) ? @"" : teaser;
     
     NSString *articleTitle = article.title;
-    CGFloat width = tableView.frame.size.width - 30;
+    CGFloat width = tableView.frame.size.width - 50;
     UIFont *font = [UIFont fontWithName:@"Helvetica" size:18];
     NSAttributedString *attributedText = [[NSAttributedString alloc] initWithString:articleTitle attributes:@{ NSFontAttributeName : font }];
     CGRect rect = [attributedText boundingRectWithSize:(CGSize){width, CGFLOAT_MAX}
@@ -179,6 +219,40 @@
     CGSize sizeofTeaser = teaserRect.size;
     
     return ceilf(sizeofTitle.height + sizeofTeaser.height) + 30.;
+}
+
+#pragma mark -
+#pragma mark Search filtering
+
+-(void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope
+{
+    // Update the filtered array based on the search text and scope.
+    // Remove all objects from the filtered search array
+    [self.filteredIssuesArray removeAllObjects];
+    // Filter the array using NSPredicate
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF.title contains[c] %@",searchText];
+    self.filteredIssuesArray = [NSMutableArray arrayWithArray:[self.issuesArray filteredArrayUsingPredicate:predicate]];
+}
+
+#pragma mark - 
+#pragma mark UISearchDisplayController Delegate Methods
+
+-(BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
+{
+    // Tells the table data source to reload when text changes
+    [self filterContentForSearchText:searchString scope:
+     [[self.searchDisplayController.searchBar scopeButtonTitles] objectAtIndex:[self.searchDisplayController.searchBar selectedScopeButtonIndex]]];
+    // Return YES to cause the search result table view to be reloaded.
+    return YES;
+}
+
+-(BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchScope:(NSInteger)searchOption
+{
+    // Tells the table data source to reload when scope bar selection changes
+    [self filterContentForSearchText:self.searchDisplayController.searchBar.text scope:
+     [[self.searchDisplayController.searchBar scopeButtonTitles] objectAtIndex:searchOption]];
+    // Return YES to cause the search result table view to be reloaded.
+    return YES;
 }
 
 /*
@@ -227,10 +301,17 @@
 {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
-    NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
     
     NIAUArticleViewController *articleViewController = [segue destinationViewController];
-    articleViewController.article = [[self.issuesArray objectAtIndex:selectedIndexPath.section] articleAtIndex:selectedIndexPath.row];
+    
+    if([sender isDescendantOfView:self.searchDisplayController.searchResultsTableView]) {
+        NSIndexPath *selectedIndexPath = [self.searchDisplayController.searchResultsTableView indexPathForSelectedRow];
+        articleViewController.article = [[self.filteredIssuesArray objectAtIndex:selectedIndexPath.section] articleAtIndex:selectedIndexPath.row];
+    }
+    else {
+        NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
+        articleViewController.article = [[self.issuesArray objectAtIndex:selectedIndexPath.section] articleAtIndex:selectedIndexPath.row];
+    }
 }
 
 @end

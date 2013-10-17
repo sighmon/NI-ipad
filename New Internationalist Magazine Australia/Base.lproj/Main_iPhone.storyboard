@@ -196,9 +196,17 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <searchBar key="tableHeaderView" contentMode="redraw" placeholder="Search" id="ecp-Ky-zYV">
+                            <rect key="frame" x="0.0" y="64" width="320" height="44"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <textInputTraits key="textInputTraits"/>
+                            <connections>
+                                <outlet property="delegate" destination="qxS-SN-8Pj" id="QFH-Yf-HcA"/>
+                            </connections>
+                        </searchBar>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="searchViewCell" textLabel="iJc-EY-7gW" detailTextLabel="Gf2-61-p1V" style="IBUITableViewCellStyleSubtitle" id="T4o-Lt-PHX">
-                                <rect key="frame" x="0.0" y="108" width="320" height="60"/>
+                                <rect key="frame" x="0.0" y="152" width="320" height="60"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="T4o-Lt-PHX" id="6Xn-W3-ZUr">
                                     <rect key="frame" x="0.0" y="0.0" width="287" height="59"/>
@@ -221,7 +229,7 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="T5k-23-5nF" kind="push" identifier="tappedArticle" id="0rF-W7-D7Y"/>
+                                    <segue destination="T5k-23-5nF" kind="push" identifier="searchToArticleDetail" id="0rF-W7-D7Y"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -233,8 +241,21 @@
                     <navigationItem key="navigationItem" title="Article search" id="ida-2b-nde">
                         <barButtonItem key="backBarButtonItem" title="Search" id="DEh-HG-nWP"/>
                     </navigationItem>
+                    <connections>
+                        <outlet property="articleSearchBar" destination="ecp-Ky-zYV" id="xWj-wZ-z8o"/>
+                        <outlet property="searchDisplayController" destination="6IN-Bg-2Wx" id="66g-Wm-gUB"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iEL-ag-SjM" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <searchDisplayController id="6IN-Bg-2Wx">
+                    <connections>
+                        <outlet property="delegate" destination="qxS-SN-8Pj" id="mBz-P3-6Yy"/>
+                        <outlet property="searchBar" destination="ecp-Ky-zYV" id="MjS-yB-Nk6"/>
+                        <outlet property="searchContentsController" destination="qxS-SN-8Pj" id="xDD-HB-MSK"/>
+                        <outlet property="searchResultsDataSource" destination="qxS-SN-8Pj" id="CcB-ne-Y2U"/>
+                        <outlet property="searchResultsDelegate" destination="qxS-SN-8Pj" id="2IK-mi-e0m"/>
+                    </connections>
+                </searchDisplayController>
             </objects>
             <point key="canvasLocation" x="361" y="-1000"/>
         </scene>

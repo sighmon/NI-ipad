@@ -11,10 +11,12 @@
 #import "NIAUIssue.h"
 #import "NIAUArticleViewController.h"
 
-@interface NIAUSearchViewController : UITableViewController
+@interface NIAUSearchViewController : UITableViewController <UISearchBarDelegate, UISearchDisplayDelegate>
 
 @property (nonatomic, strong) NIAUIssue *issue;
 @property (nonatomic, strong) NSMutableArray *issuesArray;
-@property (nonatomic, strong) NSMutableArray *articlesArray;
+@property (nonatomic, strong) NSMutableArray *filteredIssuesArray;
+
+@property IBOutlet UISearchBar *articleSearchBar;
 
 @end
