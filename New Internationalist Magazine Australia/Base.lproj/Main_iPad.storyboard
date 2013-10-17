@@ -166,7 +166,7 @@
         <scene sceneID="kMe-hh-Wh8">
             <objects>
                 <tableViewController id="Ust-fQ-OJf" customClass="NIAUSearchViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="60" sectionHeaderHeight="44" sectionFooterHeight="22" id="3C7-Fu-1d9">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="60" sectionHeaderHeight="22" sectionFooterHeight="22" id="3C7-Fu-1d9">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -180,7 +180,7 @@
                         </searchBar>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="searchViewCell" textLabel="pLI-g5-XM1" detailTextLabel="XJC-wC-CwL" style="IBUITableViewCellStyleSubtitle" id="aWi-2H-faU">
-                                <rect key="frame" x="0.0" y="152" width="768" height="60"/>
+                                <rect key="frame" x="0.0" y="130" width="768" height="60"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="aWi-2H-faU" id="FSp-uX-0xu">
                                     <rect key="frame" x="0.0" y="0.0" width="735" height="59"/>

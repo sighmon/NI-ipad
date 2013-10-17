@@ -15,7 +15,8 @@
 
 @property (nonatomic, strong) NIAUIssue *issue;
 @property (nonatomic, strong) NSMutableArray *issuesArray;
-@property (nonatomic, strong) NSMutableArray *filteredIssuesArray;
+//@property (nonatomic, strong) NSMutableArray *filteredIssuesArray;
+@property (nonatomic, strong) NSMutableArray *filteredIssueArticlesArray;
 
 @property IBOutlet UISearchBar *articleSearchBar;
 

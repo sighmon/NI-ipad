@@ -29,7 +29,8 @@
     if (self) {
         // Initialize the arrays
         self.issuesArray = [[NSMutableArray alloc] init];
-        self.filteredIssuesArray = [[NSMutableArray alloc] init];
+//        self.filteredIssuesArray = [[NSMutableArray alloc] init];
+        self.filteredIssueArticlesArray = [[NSMutableArray alloc] init];
     }
     return self;
 }
@@ -123,7 +124,7 @@
     // Return the number of sections. (number of issues)
     
     if (tableView == self.searchDisplayController.searchResultsTableView) {
-        return [self.filteredIssuesArray count];
+        return [self.filteredIssueArticlesArray count];
     } else {
         return [self.issuesArray count];
     }
@@ -132,7 +133,8 @@
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {    
     if (tableView == self.searchDisplayController.searchResultsTableView) {
-        return [NSString stringWithFormat:@"%@ - %@", [[self.filteredIssuesArray objectAtIndex:section] name], [[self.filteredIssuesArray objectAtIndex:section] title]];
+        NIAUIssue *issue = [(NIAUArticle *)[[self.filteredIssueArticlesArray objectAtIndex:section] firstObject] issue];
+        return [NSString stringWithFormat:@"%@ - %@", [issue name], [issue title]];
     } else {
         return [NSString stringWithFormat:@"%@ - %@", [[self.issuesArray objectAtIndex:section] name], [[self.issuesArray objectAtIndex:section] title]];
     }
@@ -143,7 +145,7 @@
     // Return the number of rows in the section.
     
     if (tableView == self.searchDisplayController.searchResultsTableView) {
-        return [self.filteredIssuesArray[section] numberOfArticles];
+        return [self.filteredIssueArticlesArray[section] count];
     } else {
         return [self.issuesArray[section] numberOfArticles];
     }
@@ -166,7 +168,7 @@
     NIAUArticle *article = nil;
     
     if (tableView == self.searchDisplayController.searchResultsTableView) {
-        article = [self.filteredIssuesArray[indexPath.section] articleAtIndex:indexPath.row];
+        article = self.filteredIssueArticlesArray[indexPath.section][indexPath.row];
     } else {
         article = [self.issuesArray[indexPath.section] articleAtIndex:indexPath.row];
     }
@@ -194,7 +196,7 @@
     NIAUArticle *article = nil;
     
     if (tableView == self.searchDisplayController.searchResultsTableView) {
-        article = [self.filteredIssuesArray[indexPath.section] articleAtIndex:indexPath.row];
+        article = self.filteredIssueArticlesArray[indexPath.section][indexPath.row];
     } else {
         article = [self.issuesArray[indexPath.section] articleAtIndex:indexPath.row];
     }
@@ -228,10 +230,40 @@
 {
     // Update the filtered array based on the search text and scope.
     // Remove all objects from the filtered search array
-    [self.filteredIssuesArray removeAllObjects];
+
+    [self.filteredIssueArticlesArray removeAllObjects];
+    
     // Filter the array using NSPredicate
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF.title contains[c] %@",searchText];
-    self.filteredIssuesArray = [NSMutableArray arrayWithArray:[self.issuesArray filteredArrayUsingPredicate:predicate]];
+    
+    [self.issuesArray enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        
+        NSMutableArray *filteredArticlesArray = [[NSMutableArray alloc] initWithCapacity:[obj numberOfArticles]];
+        for (int i = 0; i < [obj numberOfArticles]; i++) {
+            [filteredArticlesArray addObject:[obj articleAtIndex:i]];
+        }
+        
+        NSArray *searchArray = [searchText componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@" ,\t"]];
+        
+        NSMutableArray *andPredicateArray = [NSMutableArray array];
+        
+        [searchArray enumerateObjectsUsingBlock:^(NSString *subString, NSUInteger idx, BOOL *stop) {
+            if ([subString length] > 0) {
+                NSMutableArray *searchArticleTitleAndTeaser = [NSMutableArray array];
+                [searchArticleTitleAndTeaser addObject:[NSPredicate predicateWithFormat:@"SELF.title contains[c] %@",subString]];
+                [searchArticleTitleAndTeaser addObject:[NSPredicate predicateWithFormat:@"SELF.teaser contains[c] %@",subString]];
+                NSPredicate *orPredicate = [NSCompoundPredicate orPredicateWithSubpredicates:searchArticleTitleAndTeaser];
+                [andPredicateArray addObject:orPredicate];
+            }
+        }];
+        
+        NSPredicate *compoundPredicate = [NSCompoundPredicate andPredicateWithSubpredicates:andPredicateArray];
+
+        [filteredArticlesArray filterUsingPredicate:compoundPredicate];
+        
+        if ([filteredArticlesArray count] > 0) {
+            [self.filteredIssueArticlesArray addObject:filteredArticlesArray];
+        }
+    }];
 }
 
 #pragma mark - 
@@ -306,7 +338,7 @@
     
     if([sender isDescendantOfView:self.searchDisplayController.searchResultsTableView]) {
         NSIndexPath *selectedIndexPath = [self.searchDisplayController.searchResultsTableView indexPathForSelectedRow];
-        articleViewController.article = [[self.filteredIssuesArray objectAtIndex:selectedIndexPath.section] articleAtIndex:selectedIndexPath.row];
+        articleViewController.article = self.filteredIssueArticlesArray[selectedIndexPath.section][selectedIndexPath.row];
     }
     else {
         NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
