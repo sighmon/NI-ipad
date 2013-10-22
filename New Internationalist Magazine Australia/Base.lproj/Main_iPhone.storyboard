@@ -33,10 +33,6 @@
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="home-background.png" translatesAutoresizingMaskIntoConstraints="NO" id="5zn-CW-m3V">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yAi-yu-vep">
                                 <rect key="frame" x="20" y="308" width="280" height="38"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -94,10 +90,7 @@
                             <constraint firstItem="yAi-yu-vep" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="20" id="3aE-aQ-naj"/>
                             <constraint firstAttribute="centerY" secondItem="0Uh-Tb-k55" secondAttribute="centerY" constant="92" id="62e-I4-3Hb"/>
                             <constraint firstItem="D13-Uv-IQI" firstAttribute="top" secondItem="yAi-yu-vep" secondAttribute="bottom" constant="8" id="6Mm-60-y0i"/>
-                            <constraint firstAttribute="trailing" secondItem="5zn-CW-m3V" secondAttribute="trailing" id="8iJ-kt-jNh"/>
                             <constraint firstItem="zKw-Ww-8lt" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="20" id="C0W-Gi-lhN"/>
-                            <constraint firstItem="5zn-CW-m3V" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="Dg5-Ya-3CQ"/>
-                            <constraint firstItem="UGn-Ob-J5l" firstAttribute="top" secondItem="5zn-CW-m3V" secondAttribute="bottom" id="F8t-mZ-6cm"/>
                             <constraint firstItem="SMJ-ul-KqX" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="20" id="JCp-el-6qR"/>
                             <constraint firstAttribute="trailing" secondItem="SMJ-ul-KqX" secondAttribute="trailing" constant="20" id="Pgn-wr-f2a"/>
                             <constraint firstItem="0Uh-Tb-k55" firstAttribute="top" secondItem="CXJ-uP-klC" secondAttribute="bottom" constant="20" id="Pok-1R-cxG"/>
@@ -109,7 +102,6 @@
                             <constraint firstItem="yAi-yu-vep" firstAttribute="top" secondItem="0Uh-Tb-k55" secondAttribute="bottom" constant="8" id="oYi-fJ-2MN"/>
                             <constraint firstAttribute="trailing" secondItem="zKw-Ww-8lt" secondAttribute="trailing" constant="20" id="pJn-BN-jrg"/>
                             <constraint firstAttribute="centerX" secondItem="0Uh-Tb-k55" secondAttribute="centerX" id="uM2-8z-q1g"/>
-                            <constraint firstItem="5zn-CW-m3V" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="top" id="yvv-1r-gxg"/>
                             <constraint firstItem="SMJ-ul-KqX" firstAttribute="top" secondItem="zKw-Ww-8lt" secondAttribute="bottom" constant="8" id="zBn-cW-LYb"/>
                         </constraints>
                     </view>
@@ -797,7 +789,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XOZ-NO-5Yp">
+                                    <imageView multipleTouchEnabled="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XOZ-NO-5Yp">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <gestureRecognizers/>
@@ -806,7 +798,6 @@
                                 <gestureRecognizers/>
                                 <connections>
                                     <outlet property="delegate" destination="GGn-sZ-3sw" id="Y7X-5g-ifg"/>
-                                    <outletCollection property="gestureRecognizers" destination="aPD-Kz-khq" appends="YES" id="RuQ-WU-zsT"/>
                                 </connections>
                             </scrollView>
                         </subviews>
@@ -827,18 +818,10 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yW5-7P-xCk" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="aPD-Kz-khq">
-                    <connections>
-                        <action selector="tapToHideNavigation:" destination="GGn-sZ-3sw" id="lAZ-WN-ZrH"/>
-                    </connections>
-                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1750" y="-164"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="home-background.png" width="320" height="568"/>
-    </resources>
     <color key="tintColor" red="0.29803921568627451" green="0.6470588235294118" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
@@ -846,10 +829,10 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="SUv-P7-9yc"/>
-        <segue reference="0rF-W7-D7Y"/>
+        <segue reference="qUJ-ry-144"/>
+        <segue reference="jkZ-Dh-FHT"/>
         <segue reference="fFr-gL-mDW"/>
-        <segue reference="joJ-Rh-K6j"/>
-        <segue reference="mdp-6r-s59"/>
+        <segue reference="fI5-Du-KTZ"/>
+        <segue reference="W9z-A8-KEC"/>
     </inferredMetricsTieBreakers>
 </document>

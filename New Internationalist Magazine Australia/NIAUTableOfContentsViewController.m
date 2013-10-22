@@ -85,8 +85,21 @@ static NSString *CellIdentifier = @"articleCell";
     
     // TODO: Get this right for the iPhone view.
     
-    self.tableViewFooterView.frame = CGRectMake(self.tableViewFooterView.frame.origin.x, self.tableViewFooterView.frame.origin.y, self.editorsLetterTextView.attributedText.size.width, self.editorsLetterTextView.attributedText.size.height *5);
+    [self updateFooterViewHight];
+    
+//    self.tableViewFooterView.frame = CGRectMake(self.tableViewFooterView.frame.origin.x, self.tableViewFooterView.frame.origin.y, self.editorsLetterTextView.attributedText.size.width, self.editorsLetterTextView.attributedText.size.height *5);
 }
+
+- (void)updateFooterViewHight
+{
+    // Set the footer size
+    CGSize size = [self.editorsLetterTextView sizeThatFits: CGSizeMake(320., 1.)];
+    CGRect frame = self.editorsLetterTextView.frame;
+    frame.size.height = size.height + self.editorImageView.frame.size.height + self.labelEditor.frame.size.height + 40;
+    self.tableViewFooterView.frame = frame;
+}
+
+
 
 #pragma mark - Table view data source
 
@@ -375,6 +388,7 @@ static NSString *CellIdentifier = @"articleCell";
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
     [self updateEditorsLetterTextViewHeightToContent];
+    [self.tableView reloadData];
 }
 
 @end

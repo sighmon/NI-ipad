@@ -92,6 +92,7 @@
                     <navigationItem key="navigationItem" title="New Internationalist" id="7ZE-IO-8Wi">
                         <barButtonItem key="backBarButtonItem" title="Home" id="2W3-e3-N8n"/>
                     </navigationItem>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="cover" destination="sGR-UI-43W" id="2Ti-vF-qRH"/>
                         <outlet property="loginButton" destination="QGH-kd-WQM" id="7kk-Ei-KnO"/>
@@ -784,7 +785,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
-                                    <imageView multipleTouchEnabled="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gQN-3f-mic">
+                                    <imageView multipleTouchEnabled="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gQN-3f-mic">
                                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     </imageView>
@@ -792,7 +793,6 @@
                                 <gestureRecognizers/>
                                 <connections>
                                     <outlet property="delegate" destination="p7L-KM-t4i" id="FLr-ZO-JPn"/>
-                                    <outletCollection property="gestureRecognizers" destination="e3T-Gt-aoB" appends="YES" id="Jzk-aU-OX3"/>
                                 </connections>
                             </scrollView>
                         </subviews>
@@ -812,11 +812,6 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0gm-Ym-ecm" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="e3T-Gt-aoB">
-                    <connections>
-                        <action selector="tapToHideNavigation:" destination="p7L-KM-t4i" id="UY6-V4-GIQ"/>
-                    </connections>
-                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="4143" y="-517"/>
         </scene>
@@ -844,10 +839,10 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="Wy9-lq-uVY"/>
         <segue reference="7r1-dy-lxK"/>
+        <segue reference="EBU-8G-ECI"/>
+        <segue reference="MS4-LT-1l5"/>
+        <segue reference="Wy9-lq-uVY"/>
         <segue reference="JBV-bs-efO"/>
-        <segue reference="w2Z-Bz-DtP"/>
-        <segue reference="d5N-e1-WGj"/>
     </inferredMetricsTieBreakers>
 </document>

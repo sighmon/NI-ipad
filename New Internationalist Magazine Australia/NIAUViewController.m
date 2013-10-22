@@ -24,46 +24,6 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    if ([[segue identifier] isEqualToString:@"homeCoverToContentsView"])
-    {        
-        // Send you to the latest issue
-        
-        NIAUTableOfContentsViewController *tableOfContentsViewController = [segue destinationViewController];
-        tableOfContentsViewController.issue = [[NIAUPublisher getInstance] issueAtIndex:0];
-        
-    } else if ([[segue identifier] isEqualToString:@"subscribeButtonToStoreView"])
-    {
-        // If there's anything to do, do it here.
-        
-    } else if ([[segue identifier] isEqualToString:@"searchButtonToSearchView"])
-    {
-        // If there's anything to do, do it here.
-    }
-}
-
-- (IBAction)coverTapped:(UITapGestureRecognizer *)recognizer
-{
-    NSLog(@"Cover tapped!");
-    [self performSegueWithIdentifier:@"homeCoverToContentsView" sender:self];
-}
-
-- (IBAction)magazineArchiveButtonTapped:(id)sender
-{
-    
-}
-
-- (IBAction)subscribeButtonTapped:(id)sender
-{
-    
-}
-
-- (IBAction)loginButtonTapped:(id)sender
-{
-    NSLog(@"TODO: Load the page to login to rails.");
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -72,6 +32,9 @@
     [self setupView];
     
     //publisher = [[NIAUPublisher alloc] init];
+    
+    // Set the navigation bar to a colour.
+//    self.navigationController.navigationBar.barTintColor = [UIColor redColor];
     
 #ifdef DEBUG
     if ([[[NSProcessInfo processInfo] environment] objectForKey:@"TESTING"]) {
@@ -147,5 +110,50 @@
     //[self.navigationItem setRightBarButtonItem:refreshButton];
 }
 
+#pragma mark -
+#pragma mark Segue
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([[segue identifier] isEqualToString:@"homeCoverToContentsView"])
+    {
+        // Send you to the latest issue
+        
+        NIAUTableOfContentsViewController *tableOfContentsViewController = [segue destinationViewController];
+        tableOfContentsViewController.issue = [[NIAUPublisher getInstance] issueAtIndex:0];
+        
+    } else if ([[segue identifier] isEqualToString:@"subscribeButtonToStoreView"])
+    {
+        // If there's anything to do, do it here.
+        
+    } else if ([[segue identifier] isEqualToString:@"searchButtonToSearchView"])
+    {
+        // If there's anything to do, do it here.
+    }
+}
+
+#pragma mark -
+#pragma mark Tap recognizers
+
+- (IBAction)coverTapped:(UITapGestureRecognizer *)recognizer
+{
+    NSLog(@"Cover tapped!");
+    [self performSegueWithIdentifier:@"homeCoverToContentsView" sender:self];
+}
+
+- (IBAction)magazineArchiveButtonTapped:(id)sender
+{
+    
+}
+
+- (IBAction)subscribeButtonTapped:(id)sender
+{
+    
+}
+
+- (IBAction)loginButtonTapped:(id)sender
+{
+    NSLog(@"TODO: Load the page to login to rails.");
+}
 
 @end
