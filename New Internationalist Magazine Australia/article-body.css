@@ -3,6 +3,7 @@
 body {
     font-family: "HelveticaNeue";
     margin: 0 25px 0 25px;
+    -webkit-text-size-adjust: none;
 }
 
 

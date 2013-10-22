@@ -273,6 +273,7 @@
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
+    // TODO: Fix the scrollview height for landscape.
     [self updateWebViewHight];
     [self updateScrollViewContentHeight];
 }
