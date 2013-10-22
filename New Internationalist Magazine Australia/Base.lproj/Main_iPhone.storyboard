@@ -317,6 +317,7 @@
                             <constraint firstItem="OJ7-H6-3is" firstAttribute="leading" secondItem="fBw-WN-eOn" secondAttribute="leading" constant="137" id="f3S-QC-E6v"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="96l-qq-yna"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="loginButton" destination="OJ7-H6-3is" id="hoY-kP-WqE"/>
@@ -451,6 +452,7 @@
                             <outlet property="delegate" destination="qrh-8f-IqL" id="WqD-JR-fZ4"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" id="8Et-U1-kZ5"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="subscriptionExpiryDateLabel" destination="NdR-ge-LiW" id="jfn-jw-A72"/>
@@ -761,6 +763,8 @@
                         <outlet property="titleLabel" destination="fuM-gI-7Bu" id="Hyr-De-3YJ"/>
                         <outlet property="webViewLoadingIndicator" destination="aWi-L9-HiD" id="gdT-wy-9FC"/>
                         <segue destination="GGn-sZ-3sw" kind="push" identifier="showImageZoom" id="mdp-6r-s59"/>
+                        <segue destination="qrh-8f-IqL" kind="push" identifier="alertToSubscribe" id="SUv-P7-9yc"/>
+                        <segue destination="fEr-qG-YdO" kind="push" identifier="alertToLogin" id="joJ-Rh-K6j"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nmL-1b-WQV" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -842,8 +846,10 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="fI5-Du-KTZ"/>
-        <segue reference="fFr-gL-mDW"/>
+        <segue reference="SUv-P7-9yc"/>
         <segue reference="0rF-W7-D7Y"/>
+        <segue reference="fFr-gL-mDW"/>
+        <segue reference="joJ-Rh-K6j"/>
+        <segue reference="mdp-6r-s59"/>
     </inferredMetricsTieBreakers>
 </document>

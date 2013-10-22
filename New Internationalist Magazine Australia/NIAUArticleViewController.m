@@ -45,7 +45,8 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(publisherReady:) name:ArticleDidUpdateNotification object:self.article];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(articleBodyLoaded:) name:ArticleDidUpdateNotification object:self.article];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(articleBodyDidntLoad:) name:ArticleFailedUpdateNotification object:self.article];
     
     // Add observer for the user changing the text size
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(preferredContentSizeChanged:) name:UIContentSizeCategoryDidChangeNotification object:nil];
@@ -57,10 +58,15 @@
     [self updateScrollViewContentHeight];
 }
 
--(void)publisherReady:(NSNotification *)notification
+- (void)articleBodyLoaded:(NSNotification *)notification
 {
     [self setupData];
-    [self showArticle];
+}
+
+- (void)articleBodyDidntLoad:(NSNotification *)notification
+{
+    // Pop up an alert asking the user to subscribe!
+    [[[UIAlertView alloc] initWithTitle:@"Are you a subscriber?" message:@"Uh oh, it doesn't look like you're a subscriber or if you are, perhaps you havn't logged in yet. What would you like to do?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Subscribe", @"Log-in", nil] show];
 }
 
 - (void)preferredContentSizeChanged:(NSNotification *)aNotification
@@ -85,26 +91,6 @@
         return [currentDynamicFontSize fontWithSize:currentDynamicFontSize.pointSize*scale*.8];
     }
 }
-
--(void)showArticle
-{
-    [self adjustHeightOfWebView];
-}
-
-- (void)adjustHeightOfWebView
-{
-    // TODO: work out how to find the height of a UIWebView
-    
-//    CGFloat height = self.bodyWebView.contentSize.height;
-//    
-//    // now set the height constraint accordingly
-//    
-//    [UIView animateWithDuration:0.25 animations:^{
-//        self.tableViewHeightConstraint.constant = height;
-//        [self.view needsUpdateConstraints];
-//    }];
-}
-
 
 - (void)setupData
 {
@@ -142,17 +128,39 @@
                                                                       error:nil];
     
     // Load the article into the webview
+    
+    NSString *bodyFromDisk = [self.article attemptToGetBodyFromDisk];
+    
     NSString *bodyWebViewHTML = [NSString stringWithFormat:@"<html> \n"
                                    "<head> \n"
                                    "<link rel=\"stylesheet\" type=\"text/css\" href=\"%@\">"
                                    "</head> \n"
                                    "<body>%@</body> \n"
-                                   "</html>", cssURL, WITH_DEFAULT([self.article attemptToGetBodyFromDisk], @"")];
+                                   "</html>", cssURL, WITH_DEFAULT(bodyFromDisk, @"")];
     [self.bodyWebView loadHTMLString:bodyWebViewHTML baseURL:nil];
     
     // Prevent webview from scrolling
     if ([self.bodyWebView respondsToSelector:@selector(scrollView)]) {
         self.bodyWebView.scrollView.scrollEnabled = NO;
+    }
+}
+
+-(void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    switch (buttonIndex) {
+        case 0:
+            // Cancel pressed
+            break;
+        case 1:
+            // Segue to subscription
+            [self performSegueWithIdentifier:@"alertToSubscribe" sender:nil];
+            break;
+        case 2:
+            // Segue to log-in
+            [self performSegueWithIdentifier:@"alertToLogin" sender:nil];
+            break;
+        default:
+            break;
     }
 }
 
