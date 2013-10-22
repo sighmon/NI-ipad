@@ -8,6 +8,7 @@
 
 #import "NIAUArticleViewController.h"
 #import "NIAUImageZoomViewController.h"
+#import "Reachability.h"
 
 @interface NIAUArticleViewController ()
 
@@ -65,8 +66,16 @@
 
 - (void)articleBodyDidntLoad:(NSNotification *)notification
 {
-    // Pop up an alert asking the user to subscribe!
-    [[[UIAlertView alloc] initWithTitle:@"Are you a subscriber?" message:@"Uh oh, it doesn't look like you're a subscriber or if you are, perhaps you havn't logged in yet. What would you like to do?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Subscribe", @"Log-in", nil] show];
+    Reachability *reachability = [Reachability reachabilityForInternetConnection];
+    NetworkStatus netStatus = [reachability currentReachabilityStatus];
+    
+    if (netStatus == NotReachable) {
+        // Ask them to turn on wifi or get internet access.
+        [[[UIAlertView alloc] initWithTitle:@"Internet access?" message:@"It doesn't seem like you have internet access, turn it on to subscribe or download this article." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+    } else {
+        // Pop up an alert asking the user to subscribe!
+        [[[UIAlertView alloc] initWithTitle:@"Are you a subscriber?" message:@"Uh oh, it doesn't look like you're a subscriber or if you are, perhaps you havn't logged in yet. What would you like to do?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Subscribe", @"Log-in", nil] show];
+    }
 }
 
 - (void)preferredContentSizeChanged:(NSNotification *)aNotification
@@ -145,25 +154,6 @@
     }
 }
 
--(void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    switch (buttonIndex) {
-        case 0:
-            // Cancel pressed
-            break;
-        case 1:
-            // Segue to subscription
-            [self performSegueWithIdentifier:@"alertToSubscribe" sender:nil];
-            break;
-        case 2:
-            // Segue to log-in
-            [self performSegueWithIdentifier:@"alertToLogin" sender:nil];
-            break;
-        default:
-            break;
-    }
-}
-
 - (void)updateScrollViewContentHeight
 {
     CGRect contentRect = CGRectZero;
@@ -187,6 +177,29 @@
     self.bodyWebViewHeightConstraint.constant = contentHeight;
     [self.view needsUpdateConstraints];
     NSLog(@"Updated webview height");
+}
+
+#pragma mark -
+#pragma mark AlertView delegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    switch (buttonIndex) {
+        case 0:
+            // Cancel pressed
+            [self.navigationController popViewControllerAnimated:YES];
+            break;
+        case 1:
+            // Segue to subscription
+            [self performSegueWithIdentifier:@"alertToSubscribe" sender:nil];
+            break;
+        case 2:
+            // Segue to log-in
+            [self performSegueWithIdentifier:@"alertToLogin" sender:nil];
+            break;
+        default:
+            break;
+    }
 }
 
 #pragma mark -
