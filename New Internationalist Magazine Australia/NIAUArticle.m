@@ -119,8 +119,7 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
         [(NSString*)object writeToURL:[self bodyCacheURL] atomically:FALSE encoding:NSUTF8StringEncoding error:nil];
     }]];
     [cache addMethod:[[NIAUCacheMethod alloc] initMethod:@"net" withReadBlock:^id(id options, id state) {
-        NSURL *articleURL = [NSURL URLWithString:[NSString stringWithFormat:@"issues/%@/articles/%@/body", [[weakSelf issue] index], [weakSelf index]] relativeToURL:[NSURL URLWithString:SITE_URL]];
-        NSData *data = [NSData dataWithContentsOfURL:articleURL];
+        NSData *data = [self downloadArticleBodyWith: [[weakSelf issue] index] and: [weakSelf index]];
         if(data)
             return [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
         else return nil;
@@ -128,6 +127,39 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
         // no op
     }]];
     return cache;
+}
+
+- (NSData *)downloadArticleBodyWith: (NSNumber *)issueIndex and: (NSNumber *)articleIndex
+{
+    // POSTs the receipt to Rails, and then onto iTunes to check for a valid purchase
+    // If there's a valid purchase, it returns the article body
+    
+    NSURL *articleURL = [NSURL URLWithString:[NSString stringWithFormat:@"issues/%@/articles/%@/body", issueIndex, articleIndex] relativeToURL:[NSURL URLWithString:SITE_URL]];
+
+    NSData *receiptData = [NSData dataWithContentsOfURL:[[NSBundle mainBundle] appStoreReceiptURL]];
+    
+    NSString *base64receipt = [receiptData base64EncodedStringWithOptions:0];
+    NSData *postData = [base64receipt dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+    NSString *postLength = [NSString stringWithFormat:@"%d", [postData length]];
+
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+    [request setURL:articleURL];
+    [request setHTTPMethod:@"POST"];
+    [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
+    [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+    [request setHTTPBody:postData];
+
+    NSError *error;
+    NSURLResponse *response;
+    NSData *responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
+    NSString *data = [[NSString alloc]initWithData:responseData encoding:NSUTF8StringEncoding];
+    if (!error) {
+        NSLog(@"Response from Rails: %@", data);
+    } else {
+        NSLog(@"Rails returned an error: %@\nAnd data: %@", error, data);
+    }
+    
+    return responseData;
 }
 
 -(NIAUArticle *)initWithIssue:(NIAUIssue *)_issue andDictionary:(NSDictionary *)_dictionary {

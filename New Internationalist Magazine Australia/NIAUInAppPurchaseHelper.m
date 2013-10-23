@@ -102,6 +102,8 @@ NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurcha
     
     [self provideContentForProductIdentifier:transaction.payment.productIdentifier];
     [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
+    
+    [self sendReceiptToRails];
 }
 
 - (void)restoreTransaction:(SKPaymentTransaction *)transaction {
@@ -109,6 +111,8 @@ NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurcha
     
     [self provideContentForProductIdentifier:transaction.originalTransaction.payment.productIdentifier];
     [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
+    
+    [self sendReceiptToRails];
 }
 
 - (void)failedTransaction:(SKPaymentTransaction *)transaction {
@@ -135,6 +139,38 @@ NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurcha
     [[SKPaymentQueue defaultQueue] restoreCompletedTransactions];
     
     // TODO: Add code to the Products UI to handle restoring purchases after an app has been deleted, or syncing across devices.
+}
+
+- (void)sendReceiptToRails
+{
+    // TODO: Send the receipt to rails for validation with iTunes and syncing with the user's subscription
+    
+    // TODO: Check if the user is logged in, and only send the data if they are.
+    
+//    NSData *receiptData = [NSData dataWithContentsOfURL:[[NSBundle mainBundle] appStoreReceiptURL]];
+//    
+//    NSString *postString = [[NSString alloc] initWithData:receiptData encoding:NSUTF8StringEncoding];
+//    NSData *postData = [postString dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+//    NSString *postLength = [NSString stringWithFormat:@"%d", [postData length]];
+//    
+//    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+//    [request setURL:[NSURL URLWithString:@"http://10.0.1.102:3000/users"]];
+//    [request setHTTPMethod:@"POST"];
+//    [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
+//    [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+//    [request setHTTPBody:postData];
+//    
+//    // TODO: Add in username to the request
+//    
+//    NSError *error;
+//    NSURLResponse *response;
+//    NSData *urlData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
+//    NSString *data = [[NSString alloc]initWithData:urlData encoding:NSUTF8StringEncoding];
+//    if (!error) {
+//        NSLog(@"Response from Rails: %@", data);
+//    } else {
+//        NSLog(@"Rails returned an error: %@\nAnd data: %@", error, data);
+//    }
 }
 
 #pragma mark -
