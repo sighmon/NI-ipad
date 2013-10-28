@@ -74,7 +74,7 @@
         [[[UIAlertView alloc] initWithTitle:@"Internet access?" message:@"It doesn't seem like you have internet access, turn it on to subscribe or download this article." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
     } else {
         // Pop up an alert asking the user to subscribe!
-        [[[UIAlertView alloc] initWithTitle:@"Are you a subscriber?" message:@"Uh oh, it doesn't look like you're a subscriber or if you are, perhaps you havn't logged in yet. What would you like to do?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Subscribe", @"Log-in", nil] show];
+        [[[UIAlertView alloc] initWithTitle:@"Subscribe?" message:@"It doesn't look like you're a subscriber or if you are, perhaps you haven't logged in yet. What would you like to do?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Subscribe", @"Log-in", nil] show];
     }
 }
 
@@ -231,7 +231,7 @@
 
 - (IBAction)shareActionTapped:(id)sender
 {
-    NSMutableArray *itemsToShare = [[NSMutableArray alloc] initWithArray:@[[NSString stringWithFormat:@"I'm reading '%@'",self.article.title], self.article.getWebURL]];
+    NSMutableArray *itemsToShare = [[NSMutableArray alloc] initWithArray:@[[NSString stringWithFormat:@"I'm reading '%@' from New Internationalist magazine.",self.article.title], self.article.getWebURL]];
     
     // Only add the featured image if it exists
     if (self.featuredImage.image != nil) {
@@ -239,6 +239,7 @@
     }
     
     UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:itemsToShare applicationActivities:nil];
+    [activityController setValue:[NSString stringWithFormat:@"%@", self.article.title] forKey:@"subject"];
     [self presentViewController:activityController animated:YES completion:nil];
 }
 
