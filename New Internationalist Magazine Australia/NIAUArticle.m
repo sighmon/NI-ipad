@@ -150,13 +150,15 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
     [request setHTTPBody:postData];
 
     NSError *error;
-    NSURLResponse *response;
+    NSHTTPURLResponse *response;
     NSData *responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
+    int statusCode = [response statusCode];
     NSString *data = [[NSString alloc]initWithData:responseData encoding:NSUTF8StringEncoding];
-    if (!error) {
+    if (!error && statusCode >= 200 && statusCode < 300) {
         NSLog(@"Response from Rails: %@", data);
     } else {
-        NSLog(@"Rails returned an error: %@\nAnd data: %@", error, data);
+        NSLog(@"Rails returned statusCode: %d\n an error: %@\nAnd data: %@", statusCode, error, data);
+        responseData = nil;
     }
     
     return responseData;

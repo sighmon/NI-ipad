@@ -7,6 +7,7 @@
 //
 
 #import "NIAUInAppPurchaseHelper.h"
+#import "local.h"
 
 NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurchasedNotification";
 
@@ -48,13 +49,18 @@ NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurcha
     static dispatch_once_t once;
     static NIAUInAppPurchaseHelper *sharedInstance;
     dispatch_once(&once, ^{
-        // TODO: Pull productIdentifiers from a JSON feed rather than hard coded.
-        NSSet *productIdentifiers = [NSSet setWithObjects:
-                                     @"ni1yearauto",
-                                     @"ni3monthauto",
-                                     @"nisingleissuepurchase",
-                                     nil];
-        sharedInstance = [[self alloc] initWithProductIdentifiers:productIdentifiers];
+        // Pull productIdentifiers from a JSON feed.
+        NSError *error;
+        NSURL *jsonURL = [NSURL URLWithString:@"newsstand.json" relativeToURL:[NSURL URLWithString:SITE_URL]];
+        NSData *data = [NSData dataWithContentsOfURL:jsonURL];
+        if (data) {
+            NSDictionary *jsonDictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+            
+            NSSet *subscriptionsSet = [NSSet setWithArray:jsonDictionary[@"subscriptions"]];
+            NSSet *issuesSet = [NSSet setWithArray:jsonDictionary[@"issues"]];
+            NSSet *productIdentifiers = [subscriptionsSet setByAddingObjectsFromSet:issuesSet];
+            sharedInstance = [[self alloc] initWithProductIdentifiers:productIdentifiers];
+        }
     });
     return sharedInstance;
 }
