@@ -356,7 +356,7 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
             
             id body = [bodyCache readWithOptions:nil];
 //            NSLog(@"requestBody. body==%@",body);
-            // TODO: Make sure app handles a forbidden reply from Rails, and doesn't save it to cache.
+
             if(body) {
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [[NSNotificationCenter defaultCenter] postNotificationName:ArticleDidUpdateNotification object:self];

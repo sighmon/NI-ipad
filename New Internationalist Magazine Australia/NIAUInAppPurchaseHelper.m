@@ -187,7 +187,12 @@ NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurcha
     NSLog(@"Loaded list of products...");
     _productsRequest = nil;
     
-    NSArray *skProducts = response.products;
+    NSMutableArray *skProducts = [NSMutableArray arrayWithArray:response.products];
+    
+    // TODO: Get this sorting working so that the issues are ordered from newest to oldest.
+    NSSortDescriptor *lowestIdentifierToHighest = [NSSortDescriptor sortDescriptorWithKey:@"productIdentifier" ascending:YES];
+    [skProducts sortedArrayUsingDescriptors:[NSArray arrayWithObject:lowestIdentifierToHighest]];
+    
     for (SKProduct *skProduct in skProducts) {
         NSLog(@"Found product: %@ %@ %0.2f",
               skProduct.productIdentifier,
