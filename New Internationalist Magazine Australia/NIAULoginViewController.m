@@ -8,6 +8,7 @@
 
 #import "NIAULoginViewController.h"
 #import <SSKeychain.h>
+#import "local.h"
 
 @interface NIAULoginViewController ()
 
@@ -29,8 +30,7 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
-    NSLog(@"TODO: do rails login here.");
- 
+    
     NSArray *accounts = [SSKeychain accountsForService:@"NIWebApp"];
     if([accounts count]>0) {
         NSDictionary *dict = accounts[0];
@@ -68,7 +68,30 @@
                 [SSKeychain deletePasswordForService:obj[@"svce"] account:obj[@"acct"]];
             }
         }];
-
+        
+        NSLog(@"TODO: do rails login here.");
+        NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+        [request setURL:[NSURL URLWithString:[NSString stringWithFormat:@"users/sign_in.json?password=%@&username=%@", password, username] relativeToURL:[NSURL URLWithString:SITE_URL]]];
+        [request setHTTPMethod:@"POST"];
+        [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+        NSData *postData = [[NSString stringWithFormat:@"user[login]=%@&user[password]=%@",username,password] dataUsingEncoding:NSUTF8StringEncoding];
+        NSString *postLength = [NSString stringWithFormat:@"%d", [postData length]];
+        [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
+        [request setHTTPBody:postData];
+        
+        
+        NSError *error;
+        NSHTTPURLResponse *response;
+        [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
+        int statusCode = [response statusCode];
+        if(statusCode >= 200 && statusCode < 300) {
+            [[[UIAlertView alloc] initWithTitle:@"Success" message:@"successfully logged in!" delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:nil] show];
+        } else {
+            [[[UIAlertView alloc] initWithTitle:@"Error" message:@"login failed" delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:nil] show];
+        }
+        
+        
+        
     } else {
         [[[UIAlertView alloc] initWithTitle:@"Error" message:[NSString stringWithFormat:@"There was a problem storing your password: %@", error] delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:nil] show];
     }
