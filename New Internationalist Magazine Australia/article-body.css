@@ -155,14 +155,12 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
     margin-top: 1em;
 }
 .article-image {
-    float: right;
-    max-width: 340px;
-    margin: 0px 0px 2em 2em;
+    width: 100%;
+    position: relative;
+    margin: 2em 0px 2em 0px;
 }
 .article-image img {
-    -moz-box-shadow: 0px 2px 5px #999999;
-    -webkit-box-shadow: 0px 2px 5px #999999;
-    box-shadow: 0px 2px 5px #999999;
+    width: 100%;
     margin-bottom: 1em;
 }
 .article-image-small {
@@ -171,7 +169,7 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 .new-image-caption {
     text-align: left;
     max-width: 280px;
-    font-size: 0.9em;
+    font-size: 0.8em;
     line-height: 1.6em;
     color: #555555;
 }
@@ -339,4 +337,15 @@ ul.ui-autocomplete li a:active {
 }
 .red {
     color: #f00d16;
+}
+
+
+/***********************/
+/* iPhone size styling */
+/***********************/
+
+@media (max-width: 767px) {
+    body {
+        margin: 0 20px 0 20px;
+    }
 }

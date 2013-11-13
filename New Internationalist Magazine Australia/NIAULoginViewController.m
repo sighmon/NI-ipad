@@ -70,7 +70,6 @@
             }
         }];
         
-        NSLog(@"TODO: do rails login here.");
         NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
         [request setURL:[NSURL URLWithString:[NSString stringWithFormat:@"users/sign_in.json?password=%@&username=%@", password, username] relativeToURL:[NSURL URLWithString:SITE_URL]]];
         [request setHTTPMethod:@"POST"];

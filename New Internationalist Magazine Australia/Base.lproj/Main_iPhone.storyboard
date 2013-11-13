@@ -679,21 +679,21 @@
                                         </connections>
                                     </imageView>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Article title" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="fuM-gI-7Bu">
-                                        <rect key="frame" x="20" y="143" width="280" height="20"/>
+                                        <rect key="frame" x="20" y="157" width="280" height="20"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Article teaser" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="ulX-QY-4Wv">
-                                        <rect key="frame" x="20" y="171" width="280" height="17"/>
+                                        <rect key="frame" x="20" y="189" width="280" height="17"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PoX-gg-8cE">
-                                        <rect key="frame" x="0.0" y="210" width="320" height="358"/>
+                                        <rect key="frame" x="0.0" y="228" width="320" height="358"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
@@ -711,7 +711,7 @@
                                     </activityIndicatorView>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="ulX-QY-4Wv" firstAttribute="top" secondItem="fuM-gI-7Bu" secondAttribute="bottom" constant="8" symbolic="YES" id="3Ck-sT-KiC"/>
+                                    <constraint firstItem="ulX-QY-4Wv" firstAttribute="top" secondItem="fuM-gI-7Bu" secondAttribute="bottom" constant="12" id="3Ck-sT-KiC"/>
                                     <constraint firstAttribute="trailing" secondItem="fuM-gI-7Bu" secondAttribute="trailing" constant="20" symbolic="YES" id="3rS-tL-ofa"/>
                                     <constraint firstItem="PAM-Qv-IM5" firstAttribute="top" secondItem="ftA-uH-mfj" secondAttribute="top" id="8sk-8V-xJQ"/>
                                     <constraint firstItem="PoX-gg-8cE" firstAttribute="bottom" secondItem="ftA-uH-mfj" secondAttribute="bottom" id="G1B-GT-nfP"/>
@@ -721,7 +721,7 @@
                                     <constraint firstItem="fuM-gI-7Bu" firstAttribute="leading" secondItem="ftA-uH-mfj" secondAttribute="leading" constant="20" symbolic="YES" id="h7W-aA-u6j"/>
                                     <constraint firstItem="PAM-Qv-IM5" firstAttribute="trailing" secondItem="ftA-uH-mfj" secondAttribute="trailing" id="k68-sx-VHl"/>
                                     <constraint firstItem="PoX-gg-8cE" firstAttribute="trailing" secondItem="ftA-uH-mfj" secondAttribute="trailing" id="mCw-oi-6nn"/>
-                                    <constraint firstItem="fuM-gI-7Bu" firstAttribute="top" secondItem="PAM-Qv-IM5" secondAttribute="bottom" constant="8" symbolic="YES" id="nce-JX-yH3"/>
+                                    <constraint firstItem="fuM-gI-7Bu" firstAttribute="top" secondItem="PAM-Qv-IM5" secondAttribute="bottom" constant="22" id="nce-JX-yH3"/>
                                     <constraint firstAttribute="trailing" secondItem="ulX-QY-4Wv" secondAttribute="trailing" constant="20" symbolic="YES" id="qwM-Wm-Pd8"/>
                                     <constraint firstItem="PAM-Qv-IM5" firstAttribute="width" secondItem="ftA-uH-mfj" secondAttribute="width" id="t4a-6H-DJF"/>
                                     <constraint firstItem="PoX-gg-8cE" firstAttribute="top" secondItem="ulX-QY-4Wv" secondAttribute="bottom" constant="22" id="vsl-5g-aEp"/>
@@ -829,10 +829,10 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="qUJ-ry-144"/>
-        <segue reference="jkZ-Dh-FHT"/>
         <segue reference="fFr-gL-mDW"/>
-        <segue reference="fI5-Du-KTZ"/>
         <segue reference="W9z-A8-KEC"/>
+        <segue reference="joJ-Rh-K6j"/>
+        <segue reference="mdp-6r-s59"/>
+        <segue reference="SUv-P7-9yc"/>
     </inferredMetricsTieBreakers>
 </document>

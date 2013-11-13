@@ -130,11 +130,16 @@
                             "<body><div class='article-teaser'>%@</div></body> \n"
                             "</html>", cssURL, WITH_DEFAULT(self.article.teaser,IF_DEBUG(@"!!!NOTEASER!!!",@""))];
     
-    self.teaserLabel.attributedText = [[NSAttributedString alloc] initWithData:[teaserHTML dataUsingEncoding:NSUTF8StringEncoding]
-                                                                    options:@{NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType,
-                                                                              NSCharacterEncodingDocumentAttribute: [NSNumber numberWithInt:NSUTF8StringEncoding]}
-                                                         documentAttributes:nil
-                                                                      error:nil];
+    if ([self.article.teaser isEqualToString:@""]) {
+        NSLog(@"Article doesn't have a teaser");
+        self.teaserLabel.text = nil;
+    } else {
+        self.teaserLabel.attributedText = [[NSAttributedString alloc] initWithData:[teaserHTML dataUsingEncoding:NSUTF8StringEncoding]
+                                                                           options:@{NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType,
+                                                                                     NSCharacterEncodingDocumentAttribute: [NSNumber numberWithInt:NSUTF8StringEncoding]}
+                                                                documentAttributes:nil
+                                                                             error:nil];
+    }
     
     // Load the article into the webview
     

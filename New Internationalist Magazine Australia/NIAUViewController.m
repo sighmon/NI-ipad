@@ -153,7 +153,7 @@
 
 - (IBAction)loginButtonTapped:(id)sender
 {
-    NSLog(@"TODO: Load the page to login to rails.");
+    
 }
 
 @end
