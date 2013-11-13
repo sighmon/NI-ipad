@@ -151,6 +151,9 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
 
     NSError *error;
     NSHTTPURLResponse *response;
+    
+//    NSArray *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:[NSURL URLWithString:SITE_URL]];
+    
     NSData *responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
     int statusCode = [response statusCode];
     NSString *data = [[NSString alloc]initWithData:responseData encoding:NSUTF8StringEncoding];
