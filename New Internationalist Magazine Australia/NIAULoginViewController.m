@@ -59,7 +59,8 @@
     
     NSError *error;
     if ([SSKeychain setPassword:password forService:@"NIWebApp" account:username error:&error]) {
-        [[[UIAlertView alloc] initWithTitle:@"Password saved" message:@"Your password has been successfully saved" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
+        
+//        [[[UIAlertView alloc] initWithTitle:@"Password saved" message:@"Your password has been successfully saved" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
 
         // delete all other entries from keychain (maybe a bad idea, but we are testing)
         [[SSKeychain accountsForService:@"NIWebApp"] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
@@ -85,17 +86,29 @@
         [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
         int statusCode = [response statusCode];
         if(statusCode >= 200 && statusCode < 300) {
-            [[[UIAlertView alloc] initWithTitle:@"Success" message:@"successfully logged in!" delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:nil] show];
+            [[[UIAlertView alloc] initWithTitle:@"Success" message:@"Excellent, you've successfully logged in!" delegate:self cancelButtonTitle:@"Thanks!" otherButtonTitles:nil] show];
         } else {
-            [[[UIAlertView alloc] initWithTitle:@"Error" message:@"login failed" delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:nil] show];
+            [[[UIAlertView alloc] initWithTitle:@"Error" message:@"Uh oh, did you get your username or password wrong?" delegate:self cancelButtonTitle:@"Try again." otherButtonTitles:nil] show];
         }
         
         
         
     } else {
-        [[[UIAlertView alloc] initWithTitle:@"Error" message:[NSString stringWithFormat:@"There was a problem storing your password: %@", error] delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:nil] show];
+        [[[UIAlertView alloc] initWithTitle:@"Error" message:[NSString stringWithFormat:@"Sorry, there was a problem with the keychain: %@", error] delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:nil] show];
     }
     
+}
+
+#pragma mark -
+#pragma mark AlertView delegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    NSString *buttonTitle = [alertView buttonTitleAtIndex:buttonIndex];
+    
+    if ([buttonTitle isEqualToString:@"Thanks!"]) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 
 @end
