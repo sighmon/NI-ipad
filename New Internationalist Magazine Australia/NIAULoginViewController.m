@@ -70,6 +70,16 @@
             }
         }];
         
+        // Delete old cookies
+        NSHTTPCookieStorage *cookieStorage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+        for (NSHTTPCookie *cookie in cookieStorage.cookies) {
+            if ([cookie.domain isEqualToString:[[NSURL URLWithString:SITE_URL] host]]) {
+                NSLog(@"Deleting old cookie: %@", cookie);
+                [cookieStorage deleteCookie:cookie];
+            }
+        }
+        
+        // Try logging in to Rails.
         NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
         [request setURL:[NSURL URLWithString:[NSString stringWithFormat:@"users/sign_in.json?password=%@&username=%@", password, username] relativeToURL:[NSURL URLWithString:SITE_URL]]];
         [request setHTTPMethod:@"POST"];
@@ -78,7 +88,6 @@
         NSString *postLength = [NSString stringWithFormat:@"%d", [postData length]];
         [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
         [request setHTTPBody:postData];
-        
         
         NSError *error;
         NSHTTPURLResponse *response;

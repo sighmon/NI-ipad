@@ -10,6 +10,8 @@
 #import "NIAUMagazineArchiveViewController.h"
 #import "NIAUTableOfContentsViewController.h"
 #import "NIAUStoreViewController.h"
+#import <SSKeychain.h>
+#import "local.h"
 
 @interface NIAUViewController ()
 {
@@ -48,6 +50,9 @@
     } else {
         [self loadIssues];
     }
+    
+    // Check for a saved username/password in the keychain and then try and login
+    [self loginToRails];
 }
 
 - (void) setupView
@@ -108,6 +113,46 @@
     [alert show];
     //[alert release];
     //[self.navigationItem setRightBarButtonItem:refreshButton];
+}
+
+- (void)loginToRails
+{    
+    // Get keychain details
+    NSError *keychainError = nil;
+    id keychainAccount = [[SSKeychain accountsForService:@"NIWebApp"] firstObject];
+    NSString *username = keychainAccount[@"acct"];
+    NSString *password = [SSKeychain passwordForService:@"NIWebApp" account:keychainAccount[@"acct"] error:&keychainError];
+    
+    if (keychainError == nil) {
+        NSLog(@"Account found: %@", username);
+        
+        // Try logging in to Rails.
+        NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+        [request setURL:[NSURL URLWithString:[NSString stringWithFormat:@"users/sign_in.json?password=%@&username=%@", password, username] relativeToURL:[NSURL URLWithString:SITE_URL]]];
+        [request setHTTPMethod:@"POST"];
+        [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+        NSData *postData = [[NSString stringWithFormat:@"user[login]=%@&user[password]=%@",username,password] dataUsingEncoding:NSUTF8StringEncoding];
+        NSString *postLength = [NSString stringWithFormat:@"%d", [postData length]];
+        [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
+        [request setHTTPBody:postData];
+        
+        NSError *error;
+        NSHTTPURLResponse *response;
+        //        NSData *responseData =
+        [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
+        //        NSArray *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:[NSURL URLWithString:SITE_URL]];
+        int statusCode = [response statusCode];
+        if(statusCode >= 200 && statusCode < 300) {
+            // Logged in!
+            NSLog(@"Logged in user: %@", username);
+        } else {
+            // Something went wrong, but don't show the user.
+            NSLog(@"Couldn't log in user: %@", username);
+        }
+    } else {
+        NSLog(@"Uh oh: %@", keychainError);
+    }
+
 }
 
 #pragma mark -
