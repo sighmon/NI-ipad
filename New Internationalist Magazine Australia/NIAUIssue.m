@@ -7,6 +7,7 @@
 //
 
 #import "NIAUIssue.h"
+#import "NSData+Cookieless.h"
 #import "local.h"
 
 NSString *ArticlesDidUpdateNotification = @"ArticlesDidUpdate";
@@ -166,7 +167,7 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0),
            ^{
                // download image data
-               NSData *imageData = [NSData dataWithContentsOfURL:coverURL];
+               NSData *imageData = [NSData dataWithContentsOfCookielessURL:coverURL];
                // what if imageData is nil? - seems to cope
                UIImage *image = [UIImage imageWithData:imageData];
                if(image) {
@@ -200,7 +201,7 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0),
                        ^{
                            // download image data
-                           NSData *imageData = [NSData dataWithContentsOfURL:photoURL];
+                           NSData *imageData = [NSData dataWithContentsOfCookielessURL:photoURL];
                            // what if imageData is nil? - seems to cope
                            UIImage *image = [UIImage imageWithData:imageData];
                            if(image) {
@@ -241,7 +242,7 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
 
 - (void)downloadArticles {
     NSURL *issueURL = [NSURL URLWithString:[NSString stringWithFormat:@"issues/%@.json", [self index]] relativeToURL:[NSURL URLWithString:SITE_URL]];
-    NSData *data = [NSData dataWithContentsOfURL:issueURL];
+    NSData *data = [NSData dataWithContentsOfCookielessURL:issueURL];
     if(data) {
         NSError *error;
         NSDictionary *dict = [NSJSONSerialization

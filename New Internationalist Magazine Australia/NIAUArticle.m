@@ -8,6 +8,7 @@
 
 #import "NIAUArticle.h"
 #import "NIAUIssue.h"
+#import "NSData+Cookieless.h"
 #import "local.h"
 //#import "UIImage+Resize.h"
 
@@ -59,7 +60,7 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
         [UIImagePNGRepresentation(object) writeToURL:[weakSelf featuredImageCacheURL] atomically:YES];
     }]];
     [cache addMethod:[[NIAUCacheMethod alloc] initMethod:@"net" withReadBlock:^id(id options, id state) {
-        NSData *imageData = [NSData dataWithContentsOfURL:[weakSelf featuredImageURL]];
+        NSData *imageData = [NSData dataWithContentsOfCookielessURL:[weakSelf featuredImageURL]];
         return [UIImage imageWithData:imageData];
     } andWriteBlock:^(id object, id options, id state) {
         // noop
@@ -152,7 +153,7 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
     NSError *error;
     NSHTTPURLResponse *response;
     
-//    NSArray *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:[NSURL URLWithString:SITE_URL]];
+    NSArray *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:[NSURL URLWithString:SITE_URL]];
     
     NSData *responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
     int statusCode = [response statusCode];
