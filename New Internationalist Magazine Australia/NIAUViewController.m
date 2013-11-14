@@ -142,7 +142,7 @@
         NSHTTPURLResponse *response;
         //        NSData *responseData =
         [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
-        NSArray *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:[NSURL URLWithString:SITE_URL]];
+//        NSArray *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:[NSURL URLWithString:SITE_URL]];
         int statusCode = [response statusCode];
         if(statusCode >= 200 && statusCode < 300) {
             // Logged in!

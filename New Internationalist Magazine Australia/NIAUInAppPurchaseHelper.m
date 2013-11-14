@@ -54,7 +54,7 @@ NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurcha
         NSError *error;
         NSURL *jsonURL = [NSURL URLWithString:@"newsstand.json" relativeToURL:[NSURL URLWithString:SITE_URL]];
         NSData *data = [NSData dataWithContentsOfCookielessURL:jsonURL];
-        NSArray *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:[NSURL URLWithString:SITE_URL]];
+//        NSArray *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:[NSURL URLWithString:SITE_URL]];
         if (data) {
             NSDictionary *jsonDictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
             

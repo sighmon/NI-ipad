@@ -71,7 +71,7 @@ static NIAUPublisher *instance =nil;
                NSURL *issuesURL = [NSURL URLWithString:@"issues.json" relativeToURL:[NSURL URLWithString:SITE_URL]];
                NSLog(@"try to download issues.json from %@", issuesURL);
                NSData *data = [NSData dataWithContentsOfCookielessURL:issuesURL];
-               NSArray *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:[NSURL URLWithString:SITE_URL]];
+//               NSArray *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:[NSURL URLWithString:SITE_URL]];
                
                if(data) {
                    NSError *error;
