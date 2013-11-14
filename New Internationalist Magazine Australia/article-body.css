@@ -155,12 +155,14 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
     margin-top: 1em;
 }
 .article-image {
-    width: 100%;
-    position: relative;
-    margin: 2em 0px 2em 0px;
+    float: right;
+    max-width: 340px;
+    margin: 0px 0px 2em 2em;
 }
 .article-image img {
-    width: 100%;
+    -moz-box-shadow: 0px 2px 5px #999999;
+    -webkit-box-shadow: 0px 2px 5px #999999;
+    box-shadow: 0px 2px 5px #999999;
     margin-bottom: 1em;
 }
 .article-image-small {
@@ -347,5 +349,14 @@ ul.ui-autocomplete li a:active {
 @media (max-width: 767px) {
     body {
         margin: 0 20px 0 20px;
+    }
+    .article-image {
+        width: 100%;
+        position: relative;
+        margin: 1em 0px 1.5em 0px;
+    }
+    .article-image img {
+        width: 100%;
+        margin-bottom: 1em;
     }
 }
