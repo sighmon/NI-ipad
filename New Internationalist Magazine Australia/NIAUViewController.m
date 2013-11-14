@@ -44,6 +44,10 @@
         return;
     }
 #endif
+
+    // Check for a saved username/password in the keychain and then try and login
+    [self loginToRails];
+
     
     if([[NIAUPublisher getInstance] isReady]) {
         [self showIssues];
@@ -51,8 +55,6 @@
         [self loadIssues];
     }
     
-    // Check for a saved username/password in the keychain and then try and login
-    [self loginToRails];
 }
 
 - (void) setupView
@@ -140,7 +142,7 @@
         NSHTTPURLResponse *response;
         //        NSData *responseData =
         [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
-        //        NSArray *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:[NSURL URLWithString:SITE_URL]];
+        NSArray *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:[NSURL URLWithString:SITE_URL]];
         int statusCode = [response statusCode];
         if(statusCode >= 200 && statusCode < 300) {
             // Logged in!

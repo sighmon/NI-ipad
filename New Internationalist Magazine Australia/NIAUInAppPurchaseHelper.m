@@ -7,6 +7,7 @@
 //
 
 #import "NIAUInAppPurchaseHelper.h"
+#import "NSData+Cookieless.h"
 #import "local.h"
 
 NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurchasedNotification";
@@ -52,7 +53,8 @@ NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurcha
         // Pull productIdentifiers from a JSON feed.
         NSError *error;
         NSURL *jsonURL = [NSURL URLWithString:@"newsstand.json" relativeToURL:[NSURL URLWithString:SITE_URL]];
-        NSData *data = [NSData dataWithContentsOfURL:jsonURL];
+        NSData *data = [NSData dataWithContentsOfCookielessURL:jsonURL];
+        NSArray *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:[NSURL URLWithString:SITE_URL]];
         if (data) {
             NSDictionary *jsonDictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
             

@@ -106,6 +106,7 @@
 		05BD7F5E17796B9F00820EF3 /* 17.png in Resources */ = {isa = PBXBuildFile; fileRef = 05BD7F4C17796B9F00820EF3 /* 17.png */; };
 		3CA1C435E64C4F6F866B2E9B /* libPods-New Internationalist Magazine Australia.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BC803423D2F743538C4A77A9 /* libPods-New Internationalist Magazine Australia.a */; };
 		52090A62178CF7D1002D5162 /* NIAUPublisher.m in Sources */ = {isa = PBXBuildFile; fileRef = 52090A61178CF7D1002D5162 /* NIAUPublisher.m */; };
+		528FC17818344C86006BCB44 /* NSData+Cookieless.m in Sources */ = {isa = PBXBuildFile; fileRef = 528FC17718344C86006BCB44 /* NSData+Cookieless.m */; };
 		52CD5EE617D896240038A70C /* NIAUCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 52CD5EE517D896240038A70C /* NIAUCache.m */; };
 		52CD5EE717D896240038A70C /* NIAUCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 52CD5EE517D896240038A70C /* NIAUCache.m */; };
 		52CD5EEC17D8A6DC0038A70C /* NIAUCacheMethod.m in Sources */ = {isa = PBXBuildFile; fileRef = 52CD5EEB17D8A6DC0038A70C /* NIAUCacheMethod.m */; };
@@ -243,6 +244,8 @@
 		52090A60178CF7D1002D5162 /* NIAUPublisher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NIAUPublisher.h; sourceTree = "<group>"; };
 		52090A61178CF7D1002D5162 /* NIAUPublisher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NIAUPublisher.m; sourceTree = "<group>"; };
 		52090A65178D4291002D5162 /* local.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = local.h; sourceTree = "<group>"; };
+		528FC17618344C86006BCB44 /* NSData+Cookieless.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Cookieless.h"; sourceTree = "<group>"; };
+		528FC17718344C86006BCB44 /* NSData+Cookieless.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Cookieless.m"; sourceTree = "<group>"; };
 		52CD5EE417D896240038A70C /* NIAUCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NIAUCache.h; sourceTree = "<group>"; };
 		52CD5EE517D896240038A70C /* NIAUCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NIAUCache.m; sourceTree = "<group>"; };
 		52CD5EEA17D8A6DC0038A70C /* NIAUCacheMethod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NIAUCacheMethod.h; sourceTree = "<group>"; };
@@ -357,6 +360,8 @@
 				053878281777E034001E60F6 /* Images */,
 				52CD5EE917D8A68C0038A70C /* Caching */,
 				055A8ED4177290CF003D9407 /* NIAUAppDelegate.h */,
+				528FC17618344C86006BCB44 /* NSData+Cookieless.h */,
+				528FC17718344C86006BCB44 /* NSData+Cookieless.m */,
 				055A8ED5177290CF003D9407 /* NIAUAppDelegate.m */,
 				055A8ED7177290CF003D9407 /* Main_iPhone.storyboard */,
 				055A8EDA177290CF003D9407 /* Main_iPad.storyboard */,
@@ -768,6 +773,7 @@
 				05287A23177983AD00501F5F /* NIAUMagazineArchiveViewController.m in Sources */,
 				052167E7177BDF8900A4A81A /* NIAUArticleViewController.m in Sources */,
 				05B910A0181632050027E5BF /* Reachability.m in Sources */,
+				528FC17818344C86006BCB44 /* NSData+Cookieless.m in Sources */,
 				055A8ED6177290CF003D9407 /* NIAUAppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

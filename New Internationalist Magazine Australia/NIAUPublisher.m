@@ -8,6 +8,7 @@
 
 #import "NIAUPublisher.h"
 #import <NewsstandKit/NewsstandKit.h>
+#import "NSData+Cookieless.h"
 #import "local.h"
 
 #import "NIAUIssue.h"
@@ -69,7 +70,9 @@ static NIAUPublisher *instance =nil;
                
                NSURL *issuesURL = [NSURL URLWithString:@"issues.json" relativeToURL:[NSURL URLWithString:SITE_URL]];
                NSLog(@"try to download issues.json from %@", issuesURL);
-               NSData *data = [NSData dataWithContentsOfURL:issuesURL];
+               NSData *data = [NSData dataWithContentsOfCookielessURL:issuesURL];
+               NSArray *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:[NSURL URLWithString:SITE_URL]];
+               
                if(data) {
                    NSError *error;
                    NSArray *tmpIssues = [NSJSONSerialization
