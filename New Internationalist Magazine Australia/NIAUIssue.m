@@ -24,6 +24,68 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
     return self;
 }
 
+- (NSURL *)coverURL
+{
+    NSString *url = [[[dictionary objectForKey:@"cover"] objectForKey:@"png"] objectForKey:@"url"];
+    // online location of cover
+    return [NSURL URLWithString:url relativeToURL:[NSURL URLWithString:SITE_URL]];
+}
+
+- (NSURL *)coverCacheURLForSize:(CGSize)size
+{
+    NSString *coverFileName = [[self coverURL] lastPathComponent];
+    // local URL to where the cover is/would be stored
+    NSString *coverCacheFileName = [coverFileName stringByAppendingPathExtension:[NSString stringWithFormat:@".thumb%fx%f.png",size.width,size.height]];
+    return [NSURL URLWithString:coverCacheFileName relativeToURL:[self.nkIssue contentURL]];
+}
+
+- (NIAUCache *)buildCoverCache
+{
+    __weak NIAUIssue *weakSelf = self;
+    
+    NIAUCache *cache = [[NIAUCache alloc] init];
+    [cache addMethod:[[NIAUCacheMethod alloc] initMethod:@"memory" withReadBlock:^id(id options, id state) {
+        return state[@"cover"];
+    } andWriteBlock:^(id object, id options, id state) {
+        state[@"cover"] = object;
+    }]];
+    [cache addMethod:[[NIAUCacheMethod alloc] initMethod:@"disk" withReadBlock:^id(id options, id state) {
+        // TODO: Pull the CGSize out of the options string.
+        NSLog(@"trying to read cached image from %@",[weakSelf coverCacheURLForSize:<#(CGSize)#>]);
+        return [UIImage imageWithData:[NSData dataWithContentsOfURL:[weakSelf coverCacheURLForSize:<#(CGSize)#>]]];
+    } andWriteBlock:^(id object, id options, id state) {
+        [UIImagePNGRepresentation(object) writeToURL:[weakSelf coverCacheURLForSize:<#(CGSize)#>] atomically:YES];
+    }]];
+    [cache addMethod:[[NIAUCacheMethod alloc] initMethod:@"generate" withReadBlock:^id(id options, id state) {
+        NSData *imageData = [NSData dataWithContentsOfCookielessURL:[weakSelf coverURL]];
+        // what if imageData is nil? - seems to cope
+        return [UIImage imageWithData:imageData];
+    } andWriteBlock:^(id object, id options, id state) {
+        // Nothing to do, can't write to the net.
+    }]];
+    return cache;
+}
+
+- (NIAUCache *)buildCoverThumbCache
+{
+//    __weak NIAUArticle *weakSelf = self;
+    
+    
+    
+    NIAUCache *cache = [[NIAUCache alloc] init];
+    [cache addMethod:[[NIAUCacheMethod alloc] initMethod:@"memory" withReadBlock:^id(id options, id state) {
+        return state[options[@"size"]];
+    } andWriteBlock:^(id object, id options, id state) {
+        state[options[@"size"]] = object;
+    }]];
+    [cache addMethod:[[NIAUCacheMethod alloc] initMethod:@"disk" withReadBlock:^id(id options, id state) {
+        // code
+    } andWriteBlock:^(id object, id options, id state) {
+        // code
+    }]];
+    return cache;
+}
+
 //build from dictionary (and write to cache)
 // called when downloading issues.json from website
 
