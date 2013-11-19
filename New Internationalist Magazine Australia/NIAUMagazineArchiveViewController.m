@@ -42,7 +42,10 @@ NSString *kCellID = @"magazineCellID";              // UICollectionViewCell stor
     // load the image for this cell
     
     // TODO: calculate this size from screen width
-    CGSize size = CGSizeMake(106,151);
+    
+    CGSize size = CGSizeMake(0,0);
+    
+    size = [self calculateCellSizeForScreenSize:[[UIScreen mainScreen] applicationFrame].size];
     
     [[[NIAUPublisher getInstance] issueAtIndex:indexPath.row] getCoverThumbWithSize:size andCompletionBlock:^(UIImage *img) {
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -55,6 +58,25 @@ NSString *kCellID = @"magazineCellID";              // UICollectionViewCell stor
 //    cell.layer.borderWidth = 1.0;
     
     return cell;
+}
+
+- (CGSize)calculateCellSizeForScreenSize:(CGSize)size
+{
+    BOOL landscape = UIDeviceOrientationIsLandscape(self.interfaceOrientation);
+    int columns = 0;
+    
+    if (landscape) {
+        columns = 5;
+    } else {
+        if (IS_IPAD()) {
+            columns = 4;
+        } else {
+            columns = 3;
+        }
+    }
+    CGSize returnSize = CGSizeMake(size.width/columns, size.width*1415/(1000*columns));
+    NSLog(@"Calculated size: %f, %f", returnSize.width, returnSize.height);
+    return returnSize;
 }
 
 // the user tapped a collection item, load and set the image on the detail view controller
@@ -91,8 +113,6 @@ NSString *kCellID = @"magazineCellID";              // UICollectionViewCell stor
     } else {
         [self loadIssues];
     }
-
-    
 }
 
 // doublehandling from NIAUViewController...
@@ -127,11 +147,20 @@ NSString *kCellID = @"magazineCellID";              // UICollectionViewCell stor
     //[self.navigationItem setRightBarButtonItem:refreshButton];
 }
 
-
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark -
+#pragma mark - Rotation handling
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    ((UICollectionViewFlowLayout *)self.collectionViewLayout).itemSize = [self calculateCellSizeForScreenSize:self.view.frame.size];
+    
+    [self.collectionViewLayout invalidateLayout];
 }
 
 @end
