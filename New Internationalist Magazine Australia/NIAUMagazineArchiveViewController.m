@@ -60,6 +60,11 @@ NSString *kCellID = @"magazineCellID";              // UICollectionViewCell stor
     return cell;
 }
 
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout  *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    return [self calculateCellSizeForScreenSize:self.view.frame.size];
+}
+
 - (CGSize)calculateCellSizeForScreenSize:(CGSize)size
 {
     BOOL landscape = UIDeviceOrientationIsLandscape(self.interfaceOrientation);
@@ -156,11 +161,16 @@ NSString *kCellID = @"magazineCellID";              // UICollectionViewCell stor
 #pragma mark -
 #pragma mark - Rotation handling
 
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
-    ((UICollectionViewFlowLayout *)self.collectionViewLayout).itemSize = [self calculateCellSizeForScreenSize:self.view.frame.size];
-    
-    [self.collectionViewLayout invalidateLayout];
+    [self.collectionView performBatchUpdates:nil completion:nil];
 }
+
+//- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+//{
+//    ((UICollectionViewFlowLayout *)self.collectionViewLayout).itemSize = [self calculateCellSizeForScreenSize:self.view.frame.size];
+//    
+//    [self.collectionViewLayout invalidateLayout];
+//}
 
 @end
