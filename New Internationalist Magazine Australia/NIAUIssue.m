@@ -45,8 +45,12 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
 {
     NSString *coverFileName = [[self coverURL] lastPathComponent];
     // local URL to where the cover is/would be stored
-    NSString *coverCacheFileName = [coverFileName stringByAppendingPathExtension:[NSString stringWithFormat:@".thumb%fx%f.png",size.width,size.height]];
+    NSString *coverCacheFileName = [coverFileName stringByAppendingPathExtension:[NSString stringWithFormat:@".thumb%dx%d.png",(int)size.width,(int)size.height]];
     return [NSURL URLWithString:coverCacheFileName relativeToURL:[self.nkIssue contentURL]];
+}
+
+-(UIImage *)attemptToGetCoverThumbFromMemoryForSize:(CGSize)size {
+    return [coverThumbCache readWithOptions:@{@"size":[NSValue valueWithCGSize:size]} stoppingAt:@"disk"];
 }
 
 - (NIAUCache *)buildCoverCache
@@ -119,12 +123,12 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
     CGRect drawRect;
     if(imageAspect > thumbAspect) {
         // image is wider than thumb
-        float drawHeight = thumbSize.width/imageAspect;
-        drawRect = CGRectMake(0.0, -(drawHeight-thumbSize.height)/2.0, thumbSize.width, drawHeight);
-    } else {
-        // image is taller than thumb
         float drawWidth = thumbSize.height*imageAspect;
         drawRect = CGRectMake(-(drawWidth-thumbSize.width)/2.0, 0.0, drawWidth, thumbSize.height);
+    } else {
+        // image is taller than thumb
+        float drawHeight = thumbSize.width/imageAspect;
+        drawRect = CGRectMake(0.0, -(drawHeight-thumbSize.height)/2.0, thumbSize.width, drawHeight);
     }
     [image drawInRect:drawRect];
     UIImage *thumb = UIGraphicsGetImageFromCurrentImageContext();

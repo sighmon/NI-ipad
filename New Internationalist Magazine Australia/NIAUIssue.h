@@ -36,6 +36,8 @@ extern NSString *ArticlesFailedUpdateNotification;
 
 -(void)getCoverThumbWithSize:(CGSize)size andCompletionBlock:(void (^)(UIImage *))block;
 
+-(UIImage *)attemptToGetCoverThumbFromMemoryForSize:(CGSize)size;
+
 -(void)getEditorsImageWithCompletionBlock:(void(^)(UIImage *img))block;
 
 -(NKIssue *)nkIssue;

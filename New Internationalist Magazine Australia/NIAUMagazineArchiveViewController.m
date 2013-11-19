@@ -45,7 +45,8 @@ NSString *kCellID = @"magazineCellID";              // UICollectionViewCell stor
     
     CGSize size = CGSizeMake(0,0);
     
-    size = [self calculateCellSizeForScreenSize:[[UIScreen mainScreen] applicationFrame].size];
+    size = [self calculateCellSizeForScreenSize:self.view.frame.size];
+    cell.image.image = [[[NIAUPublisher getInstance] issueAtIndex:indexPath.row] attemptToGetCoverThumbFromMemoryForSize:size];
     
     [[[NIAUPublisher getInstance] issueAtIndex:indexPath.row] getCoverThumbWithSize:size andCompletionBlock:^(UIImage *img) {
         dispatch_async(dispatch_get_main_queue(), ^{
