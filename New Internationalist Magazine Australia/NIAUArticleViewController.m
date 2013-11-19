@@ -52,11 +52,17 @@
     // Add observer for the user changing the text size
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(preferredContentSizeChanged:) name:UIContentSizeCategoryDidChangeNotification object:nil];
     
-    [self.article requestBody];
+//    [self.article requestBody];
     
     [self setupData];
     
     [self updateScrollViewContentHeight];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [self.article requestBody];
+    NSLog(@"View will appear!!!");
 }
 
 - (void)articleBodyLoaded:(NSNotification *)notification
@@ -168,7 +174,7 @@
     self.scrollView.contentSize = contentRect.size;
 }
 
-- (void)updateWebViewHight
+- (void)updateWebViewHeight
 {
     // Set the webview size
     CGSize size = [self.bodyWebView sizeThatFits: CGSizeMake(320., 1.)];
@@ -219,7 +225,7 @@
 {
     [self.webViewLoadingIndicator stopAnimating];
     [self ensureScrollsToTop: webView];
-    [self updateWebViewHight];
+    [self updateWebViewHeight];
 }
 
 - (void) ensureScrollsToTop: (UIView *) ensureView {
@@ -280,7 +286,7 @@
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
     // TODO: Fix the scrollview height for landscape.
-    [self updateWebViewHight];
+    [self updateWebViewHeight];
     [self updateScrollViewContentHeight];
 }
 

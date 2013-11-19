@@ -39,10 +39,12 @@ NSString *kCellID = @"magazineCellID";              // UICollectionViewCell stor
     // make the cell's title the actual NSIndexPath value
     // cell.label.text = [NSString stringWithFormat:@"{%ld,%ld}", (long)indexPath.row, (long)indexPath.section];
     
-    
-    
     // load the image for this cell
-    [[[NIAUPublisher getInstance] issueAtIndex:indexPath.row] getCoverWithCompletionBlock:^(UIImage *img) {
+    
+    // TODO: calculate this size from screen width
+    CGSize size = CGSizeMake(106,151);
+    
+    [[[NIAUPublisher getInstance] issueAtIndex:indexPath.row] getCoverThumbWithSize:size andCompletionBlock:^(UIImage *img) {
         dispatch_async(dispatch_get_main_queue(), ^{
             cell.image.image = img;
         });

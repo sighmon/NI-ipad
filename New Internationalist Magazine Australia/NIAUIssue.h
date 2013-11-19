@@ -17,6 +17,8 @@ extern NSString *ArticlesFailedUpdateNotification;
     NSDictionary *dictionary;
     NSArray *articles;
     BOOL requestingArticles;
+    NIAUCache *coverThumbCache;
+    NIAUCache *coverCache;
 }
 
 -(NSString *)name;
@@ -31,6 +33,8 @@ extern NSString *ArticlesFailedUpdateNotification;
 +(NIAUIssue *)issueWithDictionary:(NSDictionary *)dict;
 
 -(void)getCoverWithCompletionBlock:(void(^)(UIImage *img))block;
+
+-(void)getCoverThumbWithSize:(CGSize)size andCompletionBlock:(void (^)(UIImage *))block;
 
 -(void)getEditorsImageWithCompletionBlock:(void(^)(UIImage *img))block;
 

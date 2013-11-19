@@ -20,6 +20,9 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
 -(id)init {
     if (self = [super init]) {
         requestingArticles = false;
+        
+        coverCache = [self buildCoverCache];
+        coverThumbCache = [self buildCoverThumbCache];
     }
     return self;
 }
@@ -29,6 +32,13 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
     NSString *url = [[[dictionary objectForKey:@"cover"] objectForKey:@"png"] objectForKey:@"url"];
     // online location of cover
     return [NSURL URLWithString:url relativeToURL:[NSURL URLWithString:SITE_URL]];
+}
+
+- (NSURL *)coverCacheURL
+{
+    NSString *coverFileName = [[self coverURL] lastPathComponent];
+    // local URL to where the cover is/would be stored
+    return [NSURL URLWithString:coverFileName relativeToURL:[self.nkIssue contentURL]];
 }
 
 - (NSURL *)coverCacheURLForSize:(CGSize)size
@@ -51,14 +61,14 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
     }]];
     [cache addMethod:[[NIAUCacheMethod alloc] initMethod:@"disk" withReadBlock:^id(id options, id state) {
         // TODO: Pull the CGSize out of the options string.
-        NSLog(@"trying to read cached image from %@",[weakSelf coverCacheURLForSize:<#(CGSize)#>]);
-        return [UIImage imageWithData:[NSData dataWithContentsOfURL:[weakSelf coverCacheURLForSize:<#(CGSize)#>]]];
+        NSLog(@"trying to read cached image from %@",[weakSelf coverCacheURL]);
+        return [UIImage imageWithData:[NSData dataWithContentsOfURL:[weakSelf coverCacheURL]]];
     } andWriteBlock:^(id object, id options, id state) {
-        [UIImagePNGRepresentation(object) writeToURL:[weakSelf coverCacheURLForSize:<#(CGSize)#>] atomically:YES];
+        [UIImagePNGRepresentation(object) writeToURL:[weakSelf coverCacheURL] atomically:YES];
     }]];
-    [cache addMethod:[[NIAUCacheMethod alloc] initMethod:@"generate" withReadBlock:^id(id options, id state) {
+    [cache addMethod:[[NIAUCacheMethod alloc] initMethod:@"net" withReadBlock:^id(id options, id state) {
+        NSLog(@"NET trying to read cached image from %@",[[weakSelf coverURL] absoluteURL]);
         NSData *imageData = [NSData dataWithContentsOfCookielessURL:[weakSelf coverURL]];
-        // what if imageData is nil? - seems to cope
         return [UIImage imageWithData:imageData];
     } andWriteBlock:^(id object, id options, id state) {
         // Nothing to do, can't write to the net.
@@ -68,9 +78,7 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
 
 - (NIAUCache *)buildCoverThumbCache
 {
-//    __weak NIAUArticle *weakSelf = self;
-    
-    
+    __weak NIAUIssue *weakSelf = self;
     
     NIAUCache *cache = [[NIAUCache alloc] init];
     [cache addMethod:[[NIAUCacheMethod alloc] initMethod:@"memory" withReadBlock:^id(id options, id state) {
@@ -79,11 +87,64 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
         state[options[@"size"]] = object;
     }]];
     [cache addMethod:[[NIAUCacheMethod alloc] initMethod:@"disk" withReadBlock:^id(id options, id state) {
-        // code
+        CGSize size = [(NSValue *)options[@"size"] CGSizeValue];
+        NSLog(@"trying to read cached image from %@",[weakSelf coverCacheURLForSize:size]);
+        return [UIImage imageWithData:[NSData dataWithContentsOfURL:[weakSelf coverCacheURLForSize:size]]];
     } andWriteBlock:^(id object, id options, id state) {
-        // code
+        CGSize size = [(NSValue *)options[@"size"] CGSizeValue];
+        [UIImagePNGRepresentation(object) writeToURL:[weakSelf coverCacheURLForSize:size] atomically:YES];
+    }]];
+    [cache addMethod:[[NIAUCacheMethod alloc] initMethod:@"generate" withReadBlock:^id(id options, id state) {
+        CGSize size = [(NSValue *)options[@"size"] CGSizeValue];
+        return [weakSelf generateCoverCacheThumbWithSize:size];
+    } andWriteBlock:^(id object, id options, id state) {
+        // Nothing to do, can't write to the net.
     }]];
     return cache;
+}
+
+-(UIImage *)getCoverImage {
+    return [coverCache readWithOptions:nil];
+}
+
+-(UIImage *)generateCoverCacheThumbWithSize:(CGSize)thumbSize {
+    UIImage *image = [self getCoverImage];
+    
+    // don't make blank thumbnails ;)
+    if(!image) return nil;
+    
+    UIGraphicsBeginImageContextWithOptions(thumbSize, NO, 0.0f);
+    float thumbAspect = thumbSize.width/thumbSize.height;
+    float imageAspect = [image size].width/[image size].height;
+    CGRect drawRect;
+    if(imageAspect > thumbAspect) {
+        // image is wider than thumb
+        float drawHeight = thumbSize.width/imageAspect;
+        drawRect = CGRectMake(0.0, -(drawHeight-thumbSize.height)/2.0, thumbSize.width, drawHeight);
+    } else {
+        // image is taller than thumb
+        float drawWidth = thumbSize.height*imageAspect;
+        drawRect = CGRectMake(-(drawWidth-thumbSize.width)/2.0, 0.0, drawWidth, thumbSize.height);
+    }
+    [image drawInRect:drawRect];
+    UIImage *thumb = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return thumb;
+}
+
+-(void)getCoverThumbWithSize:(CGSize)size andCompletionBlock:(void (^)(UIImage *))block {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0),
+                   ^{
+                       UIImage *thumb = [self getCoverThumbWithSize:size];
+                       // run the block on the main queue so it can do ui stuff
+                       dispatch_async(dispatch_get_main_queue(), ^{
+                           block(thumb);
+                       });
+                   });
+}
+
+-(UIImage *)getCoverThumbWithSize:(CGSize)size {
+    return [coverThumbCache readWithOptions:@{@"size":[NSValue valueWithCGSize:size]}];
 }
 
 //build from dictionary (and write to cache)
@@ -211,36 +272,16 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
 // TODO: how would we do getCover w/o completion block?
 -(void)getCoverWithCompletionBlock:(void(^)(UIImage *img))block {
     
-    NSString *url = [[[dictionary objectForKey:@"cover"] objectForKey:@"thumb2x"] objectForKey:@"url"];
-    // online location of cover
-    NSURL *coverURL = [NSURL URLWithString:url relativeToURL:[NSURL URLWithString:SITE_URL]];
-    NSString *coverFileName = [coverURL lastPathComponent];
-    // local URL to where the cover is/would be stored
-    NSURL *coverCacheURL = [NSURL URLWithString:coverFileName relativeToURL:[self.nkIssue contentURL]];
-    NSLog(@"trying to read cached image from %@",coverCacheURL);
-    UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:coverCacheURL]];
-    
-    if(image) {
-        // cache hit
-        block(image);
-    } else {
-        // cache miss, download
-        NSLog(@"cache miss, downloading image from %@",coverURL);
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0),
-           ^{
-               // download image data
-               NSData *imageData = [NSData dataWithContentsOfCookielessURL:coverURL];
-               // what if imageData is nil? - seems to cope
-               UIImage *image = [UIImage imageWithData:imageData];
-               if(image) {
-                   [imageData writeToURL:coverCacheURL atomically:YES];
-                   // call block on main queue so it can do UI stuff
-                   dispatch_async(dispatch_get_main_queue(), ^{
-                       block(image);	
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0),
+                   ^{
+                       UIImage *image = [self getCoverImage];
+                       NSLog(@"got cover image %@",image);
+                       // run the block on the main queue so it can 	do ui stuff
+                       dispatch_async(dispatch_get_main_queue(), ^{
+                           block(image);
+                       });
+                       
                    });
-               }
-           });
-    }
 }
 
 -(void)getEditorsImageWithCompletionBlock:(void(^)(UIImage *img))block {
