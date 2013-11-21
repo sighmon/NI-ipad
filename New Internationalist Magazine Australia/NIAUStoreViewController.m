@@ -116,6 +116,18 @@
         UIImageView *productImageView = (UIImageView *)[cell viewWithTag:100];
         productImageView.image = nil;
         
+        if ([self hasProductBeenPurchasedAtRow:indexPath.row]) {
+            // Leave background colour purchase green.
+        } else {
+            if ([self isProductASubscriptionAtRow:indexPath.row]) {
+                // It's a single issue purchase
+                productImageView.backgroundColor = [UIColor colorWithRed:0.184 green:0.431 blue:0.557 alpha:0.7];
+            } else {
+                // It's a subscription
+                productImageView.backgroundColor = [UIColor colorWithRed:0.259 green:0.612 blue:0.718 alpha:0.7];
+            }
+        }
+        
         UILabel *productTitle = (UILabel *)[cell viewWithTag:101];
         productTitle.text = [product localizedTitle];
         
@@ -130,11 +142,12 @@
         UIButton *productBuyButton = (UIButton *)[cell viewWithTag:104];
         // TODO: change the label depending on whether the product has been purchased yet or not.
         
-        if ([[NIAUInAppPurchaseHelper sharedInstance] productPurchased:product.productIdentifier]) {
+        if ([self hasProductBeenPurchasedAtRow:indexPath.row]) {
+            // Product has already been purchased
             [productBuyButton removeFromSuperview];
             cell.accessoryType = UITableViewCellAccessoryCheckmark;
             cell.accessoryView = nil;
-            cell.backgroundColor = [[self.navigationController.navigationBar tintColor] colorWithAlphaComponent:0.1];
+            cell.backgroundColor = [[self.navigationController.navigationBar tintColor] colorWithAlphaComponent:0.1]; // [UIColor colorWithRed:0.282 green:0.729 blue:0.714 alpha:0.5];
         } else {
             productBuyButton.titleLabel.text = @"Buy";
             productBuyButton.tag = indexPath.row;
@@ -179,15 +192,11 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (_products) {
-        SKProduct *product = _products[indexPath.row];
-        
-        if ([[NIAUInAppPurchaseHelper sharedInstance] productPurchased:product.productIdentifier]) {
-            // Product has been purchased, so do nothing
-            [[[UIAlertView alloc] initWithTitle:@"Already purchased!" message:@"Looks like you've already purchased this item!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
-        } else {
-            [self purchaseProductAtRow:indexPath.row];
-        }
+    if ([self hasProductBeenPurchasedAtRow:indexPath.row]) {
+        // Product has been purchased, so do nothing
+        [[[UIAlertView alloc] initWithTitle:@"Already purchased!" message:@"Looks like you've already purchased this item!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+    } else {
+        [self purchaseProductAtRow:indexPath.row];
     }
 }
 
@@ -197,6 +206,39 @@
     
     NSLog(@"Starting purchase: %@...", product.productIdentifier);
     [[NIAUInAppPurchaseHelper sharedInstance] buyProduct:product];
+}
+
+#pragma mark -
+#pragma mark - Product helper methods
+
+- (BOOL)hasProductBeenPurchasedAtRow:(int)row
+{
+    if (_products) {
+        SKProduct *product = _products[row];
+        
+        if ([[NIAUInAppPurchaseHelper sharedInstance] productPurchased:product.productIdentifier]) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    } else {
+        return FALSE;
+    }
+}
+
+- (BOOL)isProductASubscriptionAtRow:(int)row
+{
+    if (_products) {
+        SKProduct *product = _products[row];
+        
+        if ([[product productIdentifier] rangeOfString:@"month"].location == NSNotFound) {
+            return FALSE;
+        } else {
+            return TRUE;
+        }
+    } else {
+        return FALSE;
+    }
 }
 
 #pragma mark -

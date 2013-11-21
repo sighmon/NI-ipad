@@ -436,6 +436,7 @@
                                         <constraint firstAttribute="trailing" secondItem="dVH-us-fd4" secondAttribute="trailing" constant="8" id="kCZ-TS-iOG"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <color key="tintColor" red="0.28235295414924622" green="0.729411780834198" blue="0.7137255072593689" alpha="1" colorSpace="calibratedRGB"/>
                                 <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                             </tableViewCell>
                         </prototypes>
