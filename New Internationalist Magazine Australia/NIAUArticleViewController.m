@@ -52,6 +52,7 @@
     // Add observer for the user changing the text size
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(preferredContentSizeChanged:) name:UIContentSizeCategoryDidChangeNotification object:nil];
     
+    // Doing the requestBody call in viewWillAppear so that it loads after logging in to Rails too.
 //    [self.article requestBody];
     
     [self setupData];
@@ -62,7 +63,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [self.article requestBody];
-    NSLog(@"View will appear!!!");
+//    NSLog(@"View will appear!!!");
 }
 
 - (void)articleBodyLoaded:(NSNotification *)notification

@@ -31,7 +31,7 @@
     [super viewDidLoad];
 
     // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
+    self.clearsSelectionOnViewWillAppear = YES;
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
@@ -165,15 +165,38 @@
 - (IBAction)buyButtonTapped:(id)sender
 {
     UIButton *buyButton = (UIButton *)sender;
-    SKProduct *product = _products[buyButton.tag];
+    // iOS 7 changes the view hierarchy of the cell, use button frame to get the indexPath.
+    CGRect buttonFrameInTableView = [buyButton convertRect:buyButton.bounds toView:self.tableView];
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonFrameInTableView.origin];
     
-    NSLog(@"Starting purchase: %@...", product.productIdentifier);
-    [[NIAUInAppPurchaseHelper sharedInstance] buyProduct:product];
+    [self purchaseProductAtRow:indexPath.row];
 }
 
 - (IBAction)restorePurchasesButtonTapped:(id)sender
 {
     [[NIAUInAppPurchaseHelper sharedInstance] restoreCompletedTransactions];
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (_products) {
+        SKProduct *product = _products[indexPath.row];
+        
+        if ([[NIAUInAppPurchaseHelper sharedInstance] productPurchased:product.productIdentifier]) {
+            // Product has been purchased, so do nothing
+            [[[UIAlertView alloc] initWithTitle:@"Already purchased!" message:@"Looks like you've already purchased this item!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+        } else {
+            [self purchaseProductAtRow:indexPath.row];
+        }
+    }
+}
+
+- (void)purchaseProductAtRow:(int)row
+{
+    SKProduct *product = _products[row];
+    
+    NSLog(@"Starting purchase: %@...", product.productIdentifier);
+    [[NIAUInAppPurchaseHelper sharedInstance] buyProduct:product];
 }
 
 #pragma mark -

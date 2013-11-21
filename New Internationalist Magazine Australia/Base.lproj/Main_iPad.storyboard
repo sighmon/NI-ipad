@@ -549,6 +549,7 @@
                                         <constraint firstItem="MB4-YS-szC" firstAttribute="leading" secondItem="Olk-5b-h9r" secondAttribute="leading" id="sFg-i5-dcQ"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                             </tableViewCell>
                         </prototypes>
                         <connections>
