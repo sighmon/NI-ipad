@@ -44,6 +44,64 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
     return [dictionary objectForKey:@"categories"];
 }
 
+-(NSString*)findImageReferencesInString:(NSString*)body {
+    if(!body) return nil;
+    
+    //NSString *body = [self attemptToGetBodyFromDisk];
+    NSError *error;
+//    /\[File:(?<id>\d+)(?:\|(?<all_options>[^\]]*))?\]/i
+    NSRegularExpression *regex = [NSRegularExpression
+//                                  regularExpressionWithPattern:@"\\[File:(?<id>\\d+)(?:\\|(?<all_options>[^\\]]*))?]"
+                                    regularExpressionWithPattern:@"\\[File:(\\d+)(?:\\|([^\\]]*))?]"
+                                  options:NSRegularExpressionCaseInsensitive
+                                  error:&error];
+    // do we need to do any calculation during search/replace?
+    // we can probably just replace with <img src="ID.png"/> etc...
+    // probably need to set width/height tags
+    // do we have any image metadata already in the article.json?
+    // -- kind of.
+    // but we will at least want a list of which ID's we need to cache from the site.
+    
+    // make a copy of the input string. we are going to edit this one as we iterate
+    NSMutableString *newBody = [NSMutableString stringWithString:body];
+    
+        // keep track of how many additional characters we've added (1 per iteration)
+    __block NSUInteger offset = 0;
+    
+    [regex enumerateMatchesInString:body
+                            options:0
+                              range:NSMakeRange(0, [body length])
+                         usingBlock:^(NSTextCheckingResult *match, NSMatchingFlags flags, BOOL *stop){
+                             		
+                             // Note that Blocks in Objective C are basically closures
+                             // so they will keep a constant copy of variables that were in scope
+                             // when the block was declared
+                             // unless you prefix the variable with the __block qualifier
+                             
+                             // match.range is a C struct
+                             // match.range.location is the character offset of the match
+                             // match.range.length is the length of the match
+                             
+                             NSString *matchedword = [NSString stringWithFormat:@"%@",[body substringWithRange:match.range]];
+                             
+                             //TODO: iterate through the matches and print them
+                             for (int i=0;i<[match numberOfRanges];i++) {
+                                 NSLog(@"match %d: %@",i,[body substringWithRange:[match rangeAtIndex:i]]);
+                             }
+                             
+                             // the matched word with the length appended
+                             NSString *new  = [NSString stringWithFormat:@"<img src=\"%@.png\"/>", matchedword];
+                             
+                             // every iteration, the output string is getting longer
+                             // so we need to adjust the range that we are editing
+                             NSRange newrange = NSMakeRange(match.range.location+offset, match.range.length);
+                             [newBody replaceCharactersInRange:newrange withString:new];
+                             
+                             offset+=[new length]-[matchedword length];
+                             
+                         }];
+    return newBody;
+}
 
 -(NIAUCache *)buildFeaturedImageCache {
     __weak NIAUArticle *weakSelf = self;
@@ -159,7 +217,7 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
     int statusCode = [response statusCode];
     NSString *data = [[NSString alloc]initWithData:responseData encoding:NSUTF8StringEncoding];
     if (!error && statusCode >= 200 && statusCode < 300) {
-        NSLog(@"Response from Rails: %@", data);
+//        NSLog(@"Response from Rails: %@", data);
     } else {
         NSLog(@"Rails returned statusCode: %d\n an error: %@\nAnd data: %@", statusCode, error, data);
         responseData = nil;
@@ -350,7 +408,9 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
 }
 
 -(NSString *)attemptToGetBodyFromDisk {
-    return [bodyCache readWithOptions:nil stoppingAt:@"net"];
+    NSString *body = [bodyCache readWithOptions:nil stoppingAt:@"net"];
+    NSLog(@"fixedbody: %@",[self findImageReferencesInString:body]);
+    return body;
 }
 
 -(void)requestBody {
