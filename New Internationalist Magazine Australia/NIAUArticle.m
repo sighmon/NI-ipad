@@ -44,7 +44,8 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
     return [dictionary objectForKey:@"categories"];
 }
 
--(NSString*)findImageReferencesInString:(NSString*)body {
+// TODO: will need to also return a list of used images for downloading
++(NSString*)expandImageReferencesInString:(NSString*)body {
     if(!body) return nil;
     
     //NSString *body = [self attemptToGetBodyFromDisk];
@@ -82,22 +83,82 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
                              // match.range.location is the character offset of the match
                              // match.range.length is the length of the match
                              
-                             NSString *matchedword = [NSString stringWithFormat:@"%@",[body substringWithRange:match.range]];
                              
                              //TODO: iterate through the matches and print them
+                             /*
+                             NSLog(@"number of ranges: %d",[match numberOfRanges]);
                              for (int i=0;i<[match numberOfRanges];i++) {
-                                 NSLog(@"match %d: %@",i,[body substringWithRange:[match rangeAtIndex:i]]);
+                                 NSLog(@"match.rangeAtIndex[%d].location %d .length %d",i,[match rangeAtIndex:i].location,[match rangeAtIndex:i].length);
+                                 if([match rangeAtIndex:i].length>0) {
+                                     NSLog(@"match %d: %@",i,[body substringWithRange:[match rangeAtIndex:i]]);
+                                 }
+                             }
+                              */
+                             
+                             // bored? dry this up.
+                             NSString *fullMatch = [body substringWithRange:match.range];
+                             NSString *imageId = @"";
+                             if ([match numberOfRanges]>1 && [match rangeAtIndex:1].length>0) {
+                                 imageId = [body substringWithRange:[match rangeAtIndex:1]];
+                             }
+                             NSArray *options = [NSArray array];
+                             if ([match numberOfRanges]>2 && [match rangeAtIndex:2].length>0) {
+                                 NSString *optionString = [body substringWithRange:[match rangeAtIndex:2]];
+                                 options = [optionString componentsSeparatedByString:@"|"];
                              }
                              
-                             // the matched word with the length appended
-                             NSString *new  = [NSString stringWithFormat:@"<img src=\"%@.png\"/>", matchedword];
+                             
+                             NSString *cssClass = @"article-image";
+                             NSString *imageWidth = @"300";
+                             
+                             if([options containsObject:@"full"]) {
+                                 
+                                 cssClass = @"all-article-images article-image-cartoon article-image-full";
+                                 imageWidth = @"945";
+                             } else if([options containsObject:@"cartoon"]) {
+                                 
+                                 cssClass = @"all-article-images article-image-cartoon";
+                                 imageWidth = @"600";
+                             } else if([options containsObject:@"centre"]) {
+                                 cssClass = @"all-article-images article-image-cartoon article-image-centre";
+                                 imageWidth = @"300";
+                             } else if([options containsObject:@"small"]) {
+                                 cssClass = @"article-image article-image-small";
+                                 imageWidth = @"150";
+                             } else if([options containsObject:@"left"]) {
+                                 cssClass = @"article-image article-image-float-none";
+                             }
+                             
+                             if ([options containsObject:@"ns"]) {
+                                 cssClass = [cssClass stringByAppendingString:@" no-shadow"];
+                             }
+                             
+                             // do we have image.credit info?
+                             /*if image.credit
+                                     credit_div = "<div class='new-image-credit'>#{image.credit}</div>"
+                                     end
+                                     if image.caption
+                                         caption_div = "<div class='new-image-caption'>#{image.caption}</div>"
+                                         end
+                                         if media_url
+                                             tag_method = method(:retina_image_tag)
+                                             image_options = {:alt => "#{strip_tags(image.caption)}", :title => "#{strip_tags(image.caption)}", :size => "#{image_width}x#{image_width * image.height / image.width}"}
+                             if options.include?("full")
+                                 tag_method = method(:image_tag)
+                                 end
+                                 "<div class='#{css_class}'>"+tag_method.call(media_url, image_options)+caption_div+credit_div+"</div>"
+                                 else
+                             */
+                             
+                             NSString *replacement  = [NSString stringWithFormat:@"<div class='%@'><img width='%@' src='%@.png'/></div>", cssClass, imageWidth, imageId];
+                             
                              
                              // every iteration, the output string is getting longer
                              // so we need to adjust the range that we are editing
                              NSRange newrange = NSMakeRange(match.range.location+offset, match.range.length);
-                             [newBody replaceCharactersInRange:newrange withString:new];
+                             [newBody replaceCharactersInRange:newrange withString:replacement];
                              
-                             offset+=[new length]-[matchedword length];
+                             offset+=[replacement length]-[fullMatch length];
                              
                          }];
     return newBody;
@@ -409,7 +470,7 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
 
 -(NSString *)attemptToGetBodyFromDisk {
     NSString *body = [bodyCache readWithOptions:nil stoppingAt:@"net"];
-    NSLog(@"fixedbody: %@",[self findImageReferencesInString:body]);
+    NSLog(@"fixedbody: %@",[NIAUArticle expandImageReferencesInString:body]);
     return body;
 }
 
