@@ -45,7 +45,8 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
 }
 
 // TODO: will need to also return a list of used images for downloading
-+(NSString*)expandImageReferencesInString:(NSString*)body {
+// to get images captions we will need access to the issue.json info, so a class method won't work
+-(NSString*)expandImageReferencesInString:(NSString*)body {
     if(!body) return nil;
     
     //NSString *body = [self attemptToGetBodyFromDisk];
@@ -133,7 +134,9 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
                                  cssClass = [cssClass stringByAppendingString:@" no-shadow"];
                              }
                              
-                             // do we have image.credit info?
+                             // Q: do we have image.credit info?
+                             // yes, in the issue.json:articles[].images[].{credit,caption}
+                             
                              /*if image.credit
                                      credit_div = "<div class='new-image-credit'>#{image.credit}</div>"
                                      end
@@ -241,7 +244,8 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
     [cache addMethod:[[NIAUCacheMethod alloc] initMethod:@"net" withReadBlock:^id(id options, id state) {
         NSData *data = [self downloadArticleBodyWith: [[weakSelf issue] index] and: [weakSelf index]];
         if(data)
-            return [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+//            return [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+            return [self expandImageReferencesInString:[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]];
         else return nil;
     } andWriteBlock:^(id object, id options, id state) {
         // no op
@@ -470,7 +474,6 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
 
 -(NSString *)attemptToGetBodyFromDisk {
     NSString *body = [bodyCache readWithOptions:nil stoppingAt:@"net"];
-    NSLog(@"fixedbody: %@",[NIAUArticle expandImageReferencesInString:body]);
     return body;
 }
 
