@@ -44,6 +44,128 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
     return [dictionary objectForKey:@"categories"];
 }
 
+// TODO: will need to also return a list of used images for downloading
+// to get images captions we will need access to the issue.json info, so a class method won't work
+-(NSString*)expandImageReferencesInString:(NSString*)body {
+    if(!body) return nil;
+    
+    //NSString *body = [self attemptToGetBodyFromDisk];
+    NSError *error;
+//    /\[File:(?<id>\d+)(?:\|(?<all_options>[^\]]*))?\]/i
+    NSRegularExpression *regex = [NSRegularExpression
+//                                  regularExpressionWithPattern:@"\\[File:(?<id>\\d+)(?:\\|(?<all_options>[^\\]]*))?]"
+                                    regularExpressionWithPattern:@"\\[File:(\\d+)(?:\\|([^\\]]*))?]"
+                                  options:NSRegularExpressionCaseInsensitive
+                                  error:&error];
+    // do we need to do any calculation during search/replace?
+    // we can probably just replace with <img src="ID.png"/> etc...
+    // probably need to set width/height tags
+    // do we have any image metadata already in the article.json?
+    // -- kind of.
+    // but we will at least want a list of which ID's we need to cache from the site.
+    
+    // make a copy of the input string. we are going to edit this one as we iterate
+    NSMutableString *newBody = [NSMutableString stringWithString:body];
+    
+        // keep track of how many additional characters we've added (1 per iteration)
+    __block NSUInteger offset = 0;
+    
+    [regex enumerateMatchesInString:body
+                            options:0
+                              range:NSMakeRange(0, [body length])
+                         usingBlock:^(NSTextCheckingResult *match, NSMatchingFlags flags, BOOL *stop){
+                             		
+                             // Note that Blocks in Objective C are basically closures
+                             // so they will keep a constant copy of variables that were in scope
+                             // when the block was declared
+                             // unless you prefix the variable with the __block qualifier
+                             
+                             // match.range is a C struct
+                             // match.range.location is the character offset of the match
+                             // match.range.length is the length of the match
+                             
+                             
+                             //TODO: iterate through the matches and print them
+                             /*
+                             NSLog(@"number of ranges: %d",[match numberOfRanges]);
+                             for (int i=0;i<[match numberOfRanges];i++) {
+                                 NSLog(@"match.rangeAtIndex[%d].location %d .length %d",i,[match rangeAtIndex:i].location,[match rangeAtIndex:i].length);
+                                 if([match rangeAtIndex:i].length>0) {
+                                     NSLog(@"match %d: %@",i,[body substringWithRange:[match rangeAtIndex:i]]);
+                                 }
+                             }
+                              */
+                             
+                             // bored? dry this up.
+                             NSString *fullMatch = [body substringWithRange:match.range];
+                             NSString *imageId = @"";
+                             if ([match numberOfRanges]>1 && [match rangeAtIndex:1].length>0) {
+                                 imageId = [body substringWithRange:[match rangeAtIndex:1]];
+                             }
+                             NSArray *options = [NSArray array];
+                             if ([match numberOfRanges]>2 && [match rangeAtIndex:2].length>0) {
+                                 NSString *optionString = [body substringWithRange:[match rangeAtIndex:2]];
+                                 options = [optionString componentsSeparatedByString:@"|"];
+                             }
+                             
+                             
+                             NSString *cssClass = @"article-image";
+                             NSString *imageWidth = @"300";
+                             
+                             if([options containsObject:@"full"]) {
+                                 
+                                 cssClass = @"all-article-images article-image-cartoon article-image-full";
+                                 imageWidth = @"945";
+                             } else if([options containsObject:@"cartoon"]) {
+                                 
+                                 cssClass = @"all-article-images article-image-cartoon";
+                                 imageWidth = @"600";
+                             } else if([options containsObject:@"centre"]) {
+                                 cssClass = @"all-article-images article-image-cartoon article-image-centre";
+                                 imageWidth = @"300";
+                             } else if([options containsObject:@"small"]) {
+                                 cssClass = @"article-image article-image-small";
+                                 imageWidth = @"150";
+                             } else if([options containsObject:@"left"]) {
+                                 cssClass = @"article-image article-image-float-none";
+                             }
+                             
+                             if ([options containsObject:@"ns"]) {
+                                 cssClass = [cssClass stringByAppendingString:@" no-shadow"];
+                             }
+                             
+                             // Q: do we have image.credit info?
+                             // yes, in the issue.json:articles[].images[].{credit,caption}
+                             
+                             /*if image.credit
+                                     credit_div = "<div class='new-image-credit'>#{image.credit}</div>"
+                                     end
+                                     if image.caption
+                                         caption_div = "<div class='new-image-caption'>#{image.caption}</div>"
+                                         end
+                                         if media_url
+                                             tag_method = method(:retina_image_tag)
+                                             image_options = {:alt => "#{strip_tags(image.caption)}", :title => "#{strip_tags(image.caption)}", :size => "#{image_width}x#{image_width * image.height / image.width}"}
+                             if options.include?("full")
+                                 tag_method = method(:image_tag)
+                                 end
+                                 "<div class='#{css_class}'>"+tag_method.call(media_url, image_options)+caption_div+credit_div+"</div>"
+                                 else
+                             */
+                             
+                             NSString *replacement  = [NSString stringWithFormat:@"<div class='%@'><img width='%@' src='%@.png'/></div>", cssClass, imageWidth, imageId];
+                             
+                             
+                             // every iteration, the output string is getting longer
+                             // so we need to adjust the range that we are editing
+                             NSRange newrange = NSMakeRange(match.range.location+offset, match.range.length);
+                             [newBody replaceCharactersInRange:newrange withString:replacement];
+                             
+                             offset+=[replacement length]-[fullMatch length];
+                             
+                         }];
+    return newBody;
+}
 
 -(NIAUCache *)buildFeaturedImageCache {
     __weak NIAUArticle *weakSelf = self;
@@ -122,7 +244,8 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
     [cache addMethod:[[NIAUCacheMethod alloc] initMethod:@"net" withReadBlock:^id(id options, id state) {
         NSData *data = [self downloadArticleBodyWith: [[weakSelf issue] index] and: [weakSelf index]];
         if(data)
-            return [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+//            return [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+            return [self expandImageReferencesInString:[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]];
         else return nil;
     } andWriteBlock:^(id object, id options, id state) {
         // no op
@@ -159,7 +282,7 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
     int statusCode = [response statusCode];
     NSString *data = [[NSString alloc]initWithData:responseData encoding:NSUTF8StringEncoding];
     if (!error && statusCode >= 200 && statusCode < 300) {
-        NSLog(@"Response from Rails: %@", data);
+//        NSLog(@"Response from Rails: %@", data);
     } else {
         NSLog(@"Rails returned statusCode: %d\n an error: %@\nAnd data: %@", statusCode, error, data);
         responseData = nil;
@@ -350,7 +473,8 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
 }
 
 -(NSString *)attemptToGetBodyFromDisk {
-    return [bodyCache readWithOptions:nil stoppingAt:@"net"];
+    NSString *body = [bodyCache readWithOptions:nil stoppingAt:@"net"];
+    return body;
 }
 
 -(void)requestBody {
