@@ -273,9 +273,11 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
     return [articles objectAtIndex:index];
 }
 
--(NIAUArticle *)articleWithRailsID:(NSInteger)railsID {
+-(NIAUArticle *)articleWithRailsID:(NSNumber *)railsID {
+    // TODO: Catch out of bounds exception when the article doesn't get found.
     return [articles objectAtIndex:[articles indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
-        return ([[obj railsID] intValue] == railsID);
+//        NSLog(@"Object: %@, railsID: %@",[obj railsID], railsID);
+        return ([[obj railsID] isEqualToNumber:railsID]);
     }]];
 }
 

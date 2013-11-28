@@ -46,6 +46,7 @@ extern NSString *ArticlesFailedUpdateNotification;
 -(void)forceDownloadArticles;
 -(NSInteger)numberOfArticles;
 -(NIAUArticle *)articleAtIndex:(NSInteger)index;
+-(NIAUArticle *)articleWithRailsID:(NSNumber *)railsID;
 
 
 - (NSURL *)getWebURL;

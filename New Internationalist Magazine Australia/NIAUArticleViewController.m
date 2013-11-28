@@ -94,7 +94,8 @@
 
 - (void)articlesLoaded:(NSNotification *)notification
 {
-    // TODO: get self.issue articleWithRailsID ...
+    // Switch to the new article object
+    self.article = [[self.article issue] articleWithRailsID:self.article.railsID];
     [self setupData];
 }
 
@@ -233,7 +234,8 @@
 -(void)handleRefresh:(UIRefreshControl *)refresh {
     // TODO: set cache object for this article to nil and refresh
     [self.article clearCache];
-    [self.article requestBody];
+    [[self.article issue] forceDownloadArticles];
+    // TODO: self.article.body isn't refreshing.
     [refresh endRefreshing];
 }
 
