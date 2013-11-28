@@ -58,6 +58,11 @@
     [self setupData];
     
     [self updateScrollViewContentHeight];
+    
+    // Setup pull-to-refresh for the UIWebView
+    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+    [refreshControl addTarget:self action:@selector(handleRefresh:) forControlEvents:UIControlEventValueChanged];
+    [self.scrollView addSubview:refreshControl];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -212,6 +217,15 @@
         default:
             break;
     }
+}
+
+#pragma mark -
+#pragma mark Refresh delegate
+
+-(void)handleRefresh:(UIRefreshControl *)refresh {
+    // TODO: set cache object for this article to nil and refresh
+    [self.article requestBody];
+    [refresh endRefreshing];
 }
 
 #pragma mark -
