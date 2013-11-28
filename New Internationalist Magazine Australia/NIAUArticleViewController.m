@@ -49,6 +49,8 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(articleBodyLoaded:) name:ArticleDidUpdateNotification object:self.article];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(articleBodyDidntLoad:) name:ArticleFailedUpdateNotification object:self.article];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(articlesLoaded:) name:ArticlesDidUpdateNotification object:[self.article issue]];
+    
     // Add observer for the user changing the text size
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(preferredContentSizeChanged:) name:UIContentSizeCategoryDidChangeNotification object:nil];
     
@@ -88,6 +90,12 @@
         // Pop up an alert asking the user to subscribe!
         [[[UIAlertView alloc] initWithTitle:@"Subscribe?" message:@"It doesn't look like you're a subscriber or if you are, perhaps you haven't logged in yet. What would you like to do?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Subscribe", @"Log-in", nil] show];
     }
+}
+
+- (void)articlesLoaded:(NSNotification *)notification
+{
+    // TODO: get self.issue articleWithRailsID ...
+    [self setupData];
 }
 
 - (void)preferredContentSizeChanged:(NSNotification *)aNotification
@@ -224,6 +232,7 @@
 
 -(void)handleRefresh:(UIRefreshControl *)refresh {
     // TODO: set cache object for this article to nil and refresh
+    [self.article clearCache];
     [self.article requestBody];
     [refresh endRefreshing];
 }
