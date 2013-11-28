@@ -256,7 +256,7 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
 }
 
 // Q: will a property called "id" cause us woe? yes
--(NSNumber *)index {
+-(NSNumber *)railsID {
     return [dictionary objectForKey:@"id"];
 }
 
@@ -272,6 +272,13 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
 -(NIAUArticle *)articleAtIndex:(NSInteger)index {
     return [articles objectAtIndex:index];
 }
+
+-(NIAUArticle *)articleWithRailsID:(NSInteger)railsID {
+    return [articles objectAtIndex:[articles indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
+        return ([[obj railsID] intValue] == railsID);
+    }]];
+}
+
 
 // TODO: how would we do getCover w/o completion block?
 -(void)getCoverWithCompletionBlock:(void(^)(UIImage *img))block {
@@ -347,8 +354,20 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
     }
 }
 
+-(void)forceDownloadArticles {
+    if(requestingArticles) {
+        NSLog(@"already requesting articles");
+    } else {
+        requestingArticles = TRUE;
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+            [self downloadArticles];
+            requestingArticles = FALSE;
+        });
+    }
+}
+
 - (void)downloadArticles {
-    NSURL *issueURL = [NSURL URLWithString:[NSString stringWithFormat:@"issues/%@.json", [self index]] relativeToURL:[NSURL URLWithString:SITE_URL]];
+    NSURL *issueURL = [NSURL URLWithString:[NSString stringWithFormat:@"issues/%@.json", [self railsID]] relativeToURL:[NSURL URLWithString:SITE_URL]];
     NSData *data = [NSData dataWithContentsOfCookielessURL:issueURL];
     if(data) {
         NSError *error;
@@ -384,7 +403,7 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
 
 - (NSURL *)getWebURL
 {
-    return [NSURL URLWithString:[NSString stringWithFormat:@"issues/%@", self.index] relativeToURL:[NSURL URLWithString:SITE_URL]];
+    return [NSURL URLWithString:[NSString stringWithFormat:@"issues/%@", self.railsID] relativeToURL:[NSURL URLWithString:SITE_URL]];
 }
 
 @end

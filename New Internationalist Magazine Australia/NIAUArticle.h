@@ -29,6 +29,8 @@ extern NSString *ArticleFailedUpdateNotification;
 -(NSString *)teaser;
 -(NSString *)author;
 -(NSArray *)categories;
+-(NSNumber *)railsID;
+
 
 +(NSArray *)articlesFromIssue:(NIAUIssue *)issue;
 +(NIAUArticle *)articleWithIssue:(NIAUIssue *)issue andDictionary:(NSDictionary *)dict;
