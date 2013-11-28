@@ -24,7 +24,7 @@ extern NSString *ArticlesFailedUpdateNotification;
 -(NSString *)name;
 -(NSDate *)publication;
 
--(NSNumber *)index;
+-(NSNumber *)railsID;
 -(NSString *)title;
 -(NSString *)editorsLetter;
 -(NSString *)editorsName;
@@ -43,8 +43,10 @@ extern NSString *ArticlesFailedUpdateNotification;
 -(NKIssue *)nkIssue;
 
 -(void)requestArticles;
+-(void)forceDownloadArticles;
 -(NSInteger)numberOfArticles;
 -(NIAUArticle *)articleAtIndex:(NSInteger)index;
+
 
 - (NSURL *)getWebURL;
 

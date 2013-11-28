@@ -40,7 +40,7 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
     return [dictionary objectForKey:@"title"];
 }
 
--(NSNumber *)index {
+-(NSNumber *)railsID {
     return [dictionary objectForKey:@"id"];
 }
 
@@ -225,7 +225,7 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
         [(NSString*)object writeToURL:[self bodyCacheURL] atomically:FALSE encoding:NSUTF8StringEncoding error:nil];
     }]];
     [cache addMethod:[[NIAUCacheMethod alloc] initMethod:@"net" withReadBlock:^id(id options, id state) {
-        NSData *data = [self downloadArticleBodyWith: [[weakSelf issue] index] and: [weakSelf index]];
+        NSData *data = [self downloadArticleBodyWithIssueRailsID: [[weakSelf issue] railsID] andArticleRailsID: [weakSelf railsID]];
         if(data)
 //            return [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
             return [self expandImageReferencesInString:[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]];
@@ -236,7 +236,7 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
     return cache;
 }
 
-- (NSData *)downloadArticleBodyWith: (NSNumber *)issueIndex and: (NSNumber *)articleIndex
+- (NSData *)downloadArticleBodyWithIssueRailsID: (NSNumber *)issueIndex andArticleRailsID: (NSNumber *)articleIndex
 {
     // POSTs the receipt to Rails, and then onto iTunes to check for a valid purchase
     // If there's a valid purchase, it returns the article body
@@ -292,6 +292,7 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
     
     NIAUArticle *article = [[NIAUArticle alloc] initWithIssue:_issue andDictionary: _dictionary];
 
+    //Q: shouldn't this be in initWithIssue?
     [article writeToCache];
 
     return article;
@@ -305,7 +306,7 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
 }
 
 -(NSURL *) cacheURL {
-    return [NIAUArticle cacheURLWithIssue:[self issue] andId:[self index]];
+    return [NIAUArticle cacheURLWithIssue:[self issue] andId:[self railsID]];
 }
 
 +(NSURL *) metadataURLWithIssue:(NIAUIssue *)issue andId:(NSNumber *)index {
@@ -313,7 +314,7 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
 }
 
 -(NSURL *) metadataURL {
-    return [NIAUArticle metadataURLWithIssue:[self issue] andId:[self index]];
+    return [NIAUArticle metadataURLWithIssue:[self issue] andId:[self railsID]];
 }
 
 -(NSURL *) bodyCacheURL {
@@ -484,7 +485,7 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
 
 - (NSURL *)getWebURL
 {
-    return [NSURL URLWithString:[NSString stringWithFormat:@"issues/%@/articles/%@",self.issue.index, self.index] relativeToURL:[NSURL URLWithString:SITE_URL]];
+    return [NSURL URLWithString:[NSString stringWithFormat:@"issues/%@/articles/%@",self.issue.railsID, self.railsID] relativeToURL:[NSURL URLWithString:SITE_URL]];
 }
 
 
