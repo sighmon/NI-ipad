@@ -64,6 +64,14 @@
     return result;
 }
 
+-(void)clear {
+    [self write:nil withOptions:nil];
+}
+
+-(void)write:(id)object withOptions:(id)options {
+    [self write:object withOptions:options stoppingAt:nil];
+}
+
 -(void)write:(id)object withOptions:(id)options stoppingAt:(NSString*)stopName {
     [self.methods enumerateObjectsUsingBlock:^(NIAUCacheMethod *method, NSUInteger idx, BOOL *stop) {
         if(method.name == stopName) {

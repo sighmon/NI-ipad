@@ -18,5 +18,6 @@
 
 -(id)readWithOptions:(id)options;
 -(id)readWithOptions:(id)options stoppingAt:(NSString *)methodName;
+-(void)clear;
 
 @end

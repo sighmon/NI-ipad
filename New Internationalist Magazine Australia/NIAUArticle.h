@@ -41,6 +41,8 @@ extern NSString *ArticleFailedUpdateNotification;
 -(void)requestBody;
 -(NSString *)attemptToGetBodyFromDisk;
 
+-(void)clearCache;
+
 - (NSURL *)getWebURL;
 
 @end

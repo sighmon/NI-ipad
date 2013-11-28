@@ -22,7 +22,11 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
 // AHA: this makes getters/setters for these readonly properties without exposing them publically
 @synthesize issue;
 
-
+-(void)clearCache {
+    [bodyCache clear];
+    [featuredImageCache clear];
+    [featuredImageThumbCache clear];
+}
 
 -(NSString *)author {
     return [dictionary objectForKey:@"author"];
@@ -44,57 +48,31 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
     return [dictionary objectForKey:@"categories"];
 }
 
-// TODO: will need to also return a list of used images for downloading
-// to get images captions we will need access to the issue.json info, so a class method won't work
+// TODO: will need to also generate a list of used images for downloading
+// to get images captions we will need access to the issue.json info, so a class method won't work here.
 -(NSString*)expandImageReferencesInString:(NSString*)body {
     if(!body) return nil;
     
-    //NSString *body = [self attemptToGetBodyFromDisk];
     NSError *error;
-//    /\[File:(?<id>\d+)(?:\|(?<all_options>[^\]]*))?\]/i
     NSRegularExpression *regex = [NSRegularExpression
-//                                  regularExpressionWithPattern:@"\\[File:(?<id>\\d+)(?:\\|(?<all_options>[^\\]]*))?]"
                                     regularExpressionWithPattern:@"\\[File:(\\d+)(?:\\|([^\\]]*))?]"
                                   options:NSRegularExpressionCaseInsensitive
                                   error:&error];
-    // do we need to do any calculation during search/replace?
-    // we can probably just replace with <img src="ID.png"/> etc...
-    // probably need to set width/height tags
-    // do we have any image metadata already in the article.json?
-    // -- kind of.
-    // but we will at least want a list of which ID's we need to cache from the site.
+    // TODO: we will at least want a list of which ID's we need to cache from the site.
     
     // make a copy of the input string. we are going to edit this one as we iterate
     NSMutableString *newBody = [NSMutableString stringWithString:body];
     
-        // keep track of how many additional characters we've added (1 per iteration)
+    // keep track of how many additional characters we've added
     __block NSUInteger offset = 0;
+    
+    // TODO: build cache object for each article image? trigger background download?
     
     [regex enumerateMatchesInString:body
                             options:0
                               range:NSMakeRange(0, [body length])
                          usingBlock:^(NSTextCheckingResult *match, NSMatchingFlags flags, BOOL *stop){
                              		
-                             // Note that Blocks in Objective C are basically closures
-                             // so they will keep a constant copy of variables that were in scope
-                             // when the block was declared
-                             // unless you prefix the variable with the __block qualifier
-                             
-                             // match.range is a C struct
-                             // match.range.location is the character offset of the match
-                             // match.range.length is the length of the match
-                             
-                             
-                             //TODO: iterate through the matches and print them
-                             /*
-                             NSLog(@"number of ranges: %d",[match numberOfRanges]);
-                             for (int i=0;i<[match numberOfRanges];i++) {
-                                 NSLog(@"match.rangeAtIndex[%d].location %d .length %d",i,[match rangeAtIndex:i].location,[match rangeAtIndex:i].length);
-                                 if([match rangeAtIndex:i].length>0) {
-                                     NSLog(@"match %d: %@",i,[body substringWithRange:[match rangeAtIndex:i]]);
-                                 }
-                             }
-                              */
                              
                              // bored? dry this up.
                              NSString *fullMatch = [body substringWithRange:match.range];
@@ -108,7 +86,7 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
                                  options = [optionString componentsSeparatedByString:@"|"];
                              }
                              
-                             
+                             // ported from NI:/app/helpers/article-helper.rb:expand-image-tags
                              NSString *cssClass = @"article-image";
                              NSString *imageWidth = @"300";
                              
@@ -117,7 +95,6 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
                                  cssClass = @"all-article-images article-image-cartoon article-image-full";
                                  imageWidth = @"945";
                              } else if([options containsObject:@"cartoon"]) {
-                                 
                                  cssClass = @"all-article-images article-image-cartoon";
                                  imageWidth = @"600";
                              } else if([options containsObject:@"centre"]) {
@@ -137,23 +114,29 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
                              // Q: do we have image.credit info?
                              // yes, in the issue.json:articles[].images[].{credit,caption}
                              
+                             NSString *credit_div = @"";
+                             NSString *caption_div = @"";
+                             
+                             //TODO: dig out image metadata and generate credit_div and caption_div
+                             
+                             // ruby code from articles_helper
                              /*if image.credit
-                                     credit_div = "<div class='new-image-credit'>#{image.credit}</div>"
-                                     end
-                                     if image.caption
-                                         caption_div = "<div class='new-image-caption'>#{image.caption}</div>"
-                                         end
-                                         if media_url
-                                             tag_method = method(:retina_image_tag)
-                                             image_options = {:alt => "#{strip_tags(image.caption)}", :title => "#{strip_tags(image.caption)}", :size => "#{image_width}x#{image_width * image.height / image.width}"}
-                             if options.include?("full")
-                                 tag_method = method(:image_tag)
-                                 end
-                                 "<div class='#{css_class}'>"+tag_method.call(media_url, image_options)+caption_div+credit_div+"</div>"
-                                 else
+                              credit_div = "<div class='new-image-credit'>#{image.credit}</div>"
+                              end
+                              if image.caption
+                              caption_div = "<div class='new-image-caption'>#{image.caption}</div>"
+                              end
+                              if media_url
+                              tag_method = method(:retina_image_tag)
+                              image_options = {:alt => "#{strip_tags(image.caption)}", :title => "#{strip_tags(image.caption)}", :size => "#{image_width}x#{image_width * image.height / image.width}"}
+                              if options.include?("full")
+                              tag_method = method(:image_tag)
+                              end
+                              "<div class='#{css_class}'>"+tag_method.call(media_url, image_options)+caption_div+credit_div+"</div>"
+                              else
                              */
                              
-                             NSString *replacement  = [NSString stringWithFormat:@"<div class='%@'><img width='%@' src='%@.png'/></div>", cssClass, imageWidth, imageId];
+                             NSString *replacement  = [NSString stringWithFormat:@"<div class='%@'><img width='%@' src='%@.png'/>%@%@</div>", cssClass, imageWidth, imageId, credit_div, caption_div];
                              
                              
                              // every iteration, the output string is getting longer
