@@ -46,8 +46,9 @@
 #endif
 
     // Check for a saved username/password in the keychain and then try and login
-    [self loginToRails];
-
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+        [self loginToRails];
+    });
     
     if([[NIAUPublisher getInstance] isReady]) {
         [self showIssues];

@@ -831,9 +831,9 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="fFr-gL-mDW"/>
+        <segue reference="fI5-Du-KTZ"/>
         <segue reference="W9z-A8-KEC"/>
-        <segue reference="SUv-P7-9yc"/>
         <segue reference="joJ-Rh-K6j"/>
-        <segue reference="mdp-6r-s59"/>
+        <segue reference="SUv-P7-9yc"/>
     </inferredMetricsTieBreakers>
 </document>

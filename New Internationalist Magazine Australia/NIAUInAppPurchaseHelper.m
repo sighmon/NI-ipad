@@ -47,6 +47,9 @@ NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurcha
 }
 
 + (NIAUInAppPurchaseHelper *)sharedInstance {
+    
+    // TODO: Possible race condition with sharedInstance being nil while dispatch_once is being called.
+    
     static dispatch_once_t once;
     static NIAUInAppPurchaseHelper *sharedInstance;
     dispatch_once(&once, ^{

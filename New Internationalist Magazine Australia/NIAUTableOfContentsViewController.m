@@ -35,6 +35,8 @@ static NSString *CellIdentifier = @"articleCell";
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(publisherReady:) name:ArticlesDidUpdateNotification object:self.issue];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(issuesLoaded:) name:PublisherDidUpdateNotification object:nil];
+    
     // Add observer for the user changing the text size
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(preferredContentSizeChanged:) name:UIContentSizeCategoryDidChangeNotification object:nil];
     
@@ -46,6 +48,11 @@ static NSString *CellIdentifier = @"articleCell";
     self.editorsLetterTextView.scrollsToTop = NO;
     
     [self.issue requestArticles];
+    
+    // Setup pull-to-refresh for the UIWebView
+    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+    [refreshControl addTarget:self action:@selector(handleRefresh:) forControlEvents:UIControlEventValueChanged];
+    [self.tableView addSubview:refreshControl];
 }
 
 -(void)publisherReady:(NSNotification *)not
@@ -313,6 +320,22 @@ static NSString *CellIdentifier = @"articleCell";
     imageView.layer.shadowOpacity = 0.3;
     imageView.layer.shadowRadius = 3.0;
     imageView.clipsToBounds = NO;
+}
+
+#pragma mark -
+#pragma mark Refresh delegate
+
+-(void)handleRefresh:(UIRefreshControl *)refresh {
+    // TODO: set cache object for this issue to nil and refresh
+    // TODO: figure out why it crashes inserting new data to tableView.
+//    [[NIAUPublisher getInstance] forceDownloadIssues];
+    [refresh endRefreshing];
+}
+
+-(void)issuesLoaded:(NSNotification *)notification
+{
+    self.issue = [[NIAUPublisher getInstance] issueWithName:self.issue.name];
+    [self.issue forceDownloadArticles];
 }
 
 #pragma mark -

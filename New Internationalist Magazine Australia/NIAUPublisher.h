@@ -22,7 +22,9 @@ extern  NSString *PublisherFailedUpdateNotification;
 +(NIAUPublisher*)getInstance;
 
 -(void)requestIssues;
+-(void)forceDownloadIssues;
 -(NSInteger)numberOfIssues;
 -(NIAUIssue *)issueAtIndex:(NSInteger)index;
+-(NIAUIssue *)issueWithName:(NSString *)name;
 
 @end

@@ -16,7 +16,9 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Load the In App Purchase Helper at launch to check for unfinished purchases.
-    [NIAUInAppPurchaseHelper sharedInstance];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+        [NIAUInAppPurchaseHelper sharedInstance];
+    });
     
     // Override point for customization after application launch.
     return YES;

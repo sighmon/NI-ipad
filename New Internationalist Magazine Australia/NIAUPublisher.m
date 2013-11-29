@@ -114,6 +114,12 @@ static NIAUPublisher *instance =nil;
     }
 }
 
+-(void)forceDownloadIssues {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+        [self requestIssues];
+    });
+}
+
 -(NSInteger)numberOfIssues {
     if(issues) {
         return [issues count];
@@ -124,6 +130,14 @@ static NIAUPublisher *instance =nil;
 
 -(NIAUIssue *)issueAtIndex:(NSInteger)index {
     return [issues objectAtIndex:index];
+}
+
+-(NIAUIssue *)issueWithName:(NSString *)name {
+    // TODO: Catch out of bounds exception when the article doesn't get found.
+    return [issues objectAtIndex:[issues indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
+        //        NSLog(@"Object: %@, railsID: %@",[obj railsID], railsID);
+        return ([[obj name] isEqualToString:name]);
+    }]];
 }
 
 @end

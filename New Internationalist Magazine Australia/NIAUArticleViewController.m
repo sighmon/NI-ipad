@@ -235,10 +235,8 @@
 #pragma mark Refresh delegate
 
 -(void)handleRefresh:(UIRefreshControl *)refresh {
-    // TODO: set cache object for this article to nil and refresh
     [self.article clearCache];
     [[self.article issue] forceDownloadArticles];
-    // TODO: self.article.body isn't refreshing.
     [refresh endRefreshing];
 }
 
