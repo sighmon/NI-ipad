@@ -46,8 +46,11 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(articleBodyLoaded:) name:ArticleDidUpdateNotification object:self.article];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(articleBodyDidntLoad:) name:ArticleFailedUpdateNotification object:self.article];
+    // Setting object to nil because self.article changes when pulling to refresh
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(articleBodyLoaded:) name:ArticleDidUpdateNotification object:nil];
+    
+    // Setting object to nil because self.article changes when pulling to refresh
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(articleBodyDidntLoad:) name:ArticleFailedUpdateNotification object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(articlesLoaded:) name:ArticlesDidUpdateNotification object:[self.article issue]];
     
@@ -96,7 +99,7 @@
 {
     // Switch to the new article object
     self.article = [[self.article issue] articleWithRailsID:self.article.railsID];
-    [self setupData];
+    [self.article requestBody];
 }
 
 - (void)preferredContentSizeChanged:(NSNotification *)aNotification

@@ -222,7 +222,11 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
     [cache addMethod:[[NIAUCacheMethod alloc] initMethod:@"disk" withReadBlock:^id(id options, id state) {
         return [NSString stringWithContentsOfURL:[weakSelf bodyCacheURL] encoding:NSUTF8StringEncoding error:nil];
     } andWriteBlock:^(id object, id options, id state) {
-        [(NSString*)object writeToURL:[self bodyCacheURL] atomically:FALSE encoding:NSUTF8StringEncoding error:nil];
+        if (object) {
+            [(NSString*)object writeToURL:[self bodyCacheURL] atomically:FALSE encoding:NSUTF8StringEncoding error:nil];
+        } else {
+            [[NSFileManager defaultManager] removeItemAtURL:[self bodyCacheURL] error:nil];
+        }
     }]];
     [cache addMethod:[[NIAUCacheMethod alloc] initMethod:@"net" withReadBlock:^id(id options, id state) {
         NSData *data = [self downloadArticleBodyWithIssueRailsID: [[weakSelf issue] railsID] andArticleRailsID: [weakSelf railsID]];
