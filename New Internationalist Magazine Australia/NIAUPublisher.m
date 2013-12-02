@@ -115,6 +115,7 @@ static NIAUPublisher *instance =nil;
 }
 
 -(void)forceDownloadIssues {
+    // TODO: TOFIX seems to need to pause here for a bit else it crashes.
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
         [self requestIssues];
     });

@@ -328,7 +328,7 @@ static NSString *CellIdentifier = @"articleCell";
 -(void)handleRefresh:(UIRefreshControl *)refresh {
     // TODO: set cache object for this issue to nil and refresh
     // TODO: figure out why it crashes inserting new data to tableView.
-//    [[NIAUPublisher getInstance] forceDownloadIssues];
+    [[NIAUPublisher getInstance] forceDownloadIssues];
     [refresh endRefreshing];
 }
 
