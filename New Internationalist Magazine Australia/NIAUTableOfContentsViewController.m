@@ -35,8 +35,7 @@ static NSString *CellIdentifier = @"articleCell";
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(publisherReady:) name:ArticlesDidUpdateNotification object:self.issue];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(issuesLoaded:) name:PublisherDidUpdateNotification object:nil];
-    
+
     // Add observer for the user changing the text size
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(preferredContentSizeChanged:) name:UIContentSizeCategoryDidChangeNotification object:nil];
     
@@ -330,13 +329,10 @@ static NSString *CellIdentifier = @"articleCell";
     // TODO: figure out why it crashes inserting new data to tableView.
     [self.cellDictionary removeAllObjects];
     [[NIAUPublisher getInstance] forceDownloadIssues];
-    [refresh endRefreshing];
-}
-
--(void)issuesLoaded:(NSNotification *)notification
-{
     self.issue = [[NIAUPublisher getInstance] issueWithName:self.issue.name];
     [self.issue forceDownloadArticles];
+    [self.tableView reloadData];
+    [refresh endRefreshing];
 }
 
 #pragma mark -

@@ -46,79 +46,76 @@ static NIAUPublisher *instance =nil;
     if(self) {
         issues = nil;
         requestingIssues = FALSE;
+        issuesCache = [NIAUPublisher buildIssuesCache];
     }
     return self;
 }
 
--(void)requestIssues {
-    NSLog(@"getIssuesList");
++(NIAUCache *)buildIssuesCache {
+    NIAUCache *cache = [[NIAUCache alloc] init];
     
-    //guard against being called multiple times by impatient people
+    [cache addMethod:[[NIAUCacheMethod alloc] initMethod:@"memory"withReadBlock:^id(id options, id state) {
+        return state[@"issues"];
+    } andWriteBlock:^(id object, id options, id state) {
+        state[@"issues"] = object;
+    }]];
+    [cache addMethod:[[NIAUCacheMethod alloc] initMethod:@"disk"withReadBlock:^id(id options, id state) {
+        return [NIAUIssue issuesFromNKLibrary];
+    } andWriteBlock:^(id object, id options, id state) {
+        // the net read block already writes to the cache (via the initWithDictionary method) so we probably don't need to do anything here.
+        // if leaving this as a no-op causes problems, we could iterate the array and call -writeToCache
+    }]];
+    [cache addMethod:[[NIAUCacheMethod alloc] initMethod:@"net"withReadBlock:^id(id options, id state) {
+        NSURL *issuesURL = [NSURL URLWithString:@"issues.json" relativeToURL:[NSURL URLWithString:SITE_URL]];
+        NSLog(@"try to download issues.json from %@", issuesURL);
+        NSData *data = [NSData dataWithContentsOfCookielessURL:issuesURL];
+        if(data) {
+            NSError *error;
+            NSArray *tmpIssues = [NSJSONSerialization
+                                  JSONObjectWithData:data //1
+                                  
+                                  options:kNilOptions
+                                  error:&error];
+            [tmpIssues enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                
+                // we could add each of these to our issues array
+                // but instead we re-read the nklibrary after building all of the issues
+                // NOTE: this has the side effect of writing to disk
+                [NIAUIssue issueWithDictionary:obj];
+            }];
+            
+            // re-read issues
+            return [NIAUIssue issuesFromNKLibrary];
+        } else {
+            return nil;
+        }
+    } andWriteBlock:^(id object, id options, id state) {
+        //no-op
+    }]];
+    return cache;
+}
+
+-(void)requestIssues {
     if(!requestingIssues) {
         requestingIssues = TRUE;
-    
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0),
-           ^{
-               issues = [NIAUIssue issuesFromNKLibrary];
-               
-               // send notification
-               if ([issues count] > 0) {
-                   dispatch_async(dispatch_get_main_queue(), ^{
-                       [[NSNotificationCenter defaultCenter] postNotificationName:PublisherDidUpdateNotification object:self];
-                   });
-               }
-               
-               NSURL *issuesURL = [NSURL URLWithString:@"issues.json" relativeToURL:[NSURL URLWithString:SITE_URL]];
-               NSLog(@"try to download issues.json from %@", issuesURL);
-               NSData *data = [NSData dataWithContentsOfCookielessURL:issuesURL];
-//               NSArray *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:[NSURL URLWithString:SITE_URL]];
-               
-               if(data) {
-                   NSError *error;
-                   NSArray *tmpIssues = [NSJSONSerialization
-                                JSONObjectWithData:data //1
-                                
-                                options:kNilOptions
-                                error:&error];
-                   [tmpIssues enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-                       
-                       // we could add each of these to our issues array
-                       // but instead we re-read the nklibrary after building all of the issues
-                       [NIAUIssue issueWithDictionary:obj];
-                       
-                   }];
-                   
-                   // re-read issues
-                   issues = [NIAUIssue issuesFromNKLibrary];
-                   
-                   // TODO: make fancy diff of data for collection view
-                   // send second notification
-                   dispatch_async(dispatch_get_main_queue(), ^{
-                       [[NSNotificationCenter defaultCenter] postNotificationName:PublisherDidUpdateNotification object:self];
-                   });
-                   
-               } else {
-                   // TODO: what to do here?
-                   NSLog(@"download failed");
-                   // only send failed notification if there is nothing in the cache
-                   if ([issues count]<1) {
-                       dispatch_async(dispatch_get_main_queue(), ^{
-                           [[NSNotificationCenter defaultCenter] postNotificationName:PublisherFailedUpdateNotification object:self];
-                       });
-                   }
-
-                
-               }
-               requestingIssues = FALSE;
-           });
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+            issues = [issuesCache readWithOptions:nil];
+            if(issues && [issues count]>0) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [[NSNotificationCenter defaultCenter] postNotificationName:PublisherDidUpdateNotification object:self];
+                });
+            } else {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [[NSNotificationCenter defaultCenter] postNotificationName:PublisherFailedUpdateNotification object:self];
+                });
+            }
+            requestingIssues = FALSE;
+        });
     }
 }
 
 -(void)forceDownloadIssues {
-    // TODO: TOFIX seems to need to pause here for a bit else it crashes.
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
-        [self requestIssues];
-    });
+    issues = [issuesCache readWithOptions:nil startingAt:@"net" stoppingAt:nil];
 }
 
 -(NSInteger)numberOfIssues {

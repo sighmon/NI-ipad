@@ -17,7 +17,8 @@
 @property (nonatomic, strong) NSMutableDictionary *state;
 
 -(id)readWithOptions:(id)options;
--(id)readWithOptions:(id)options stoppingAt:(NSString *)methodName;
+-(id)readWithOptions:(id)options startingAt:(NSString *)startMethodName stoppingAt:(NSString *)stopMethodName;
+-(id)readWithOptions:(id)options stoppingAt:(NSString *)stopMethodName;
 -(void)clear;
 
 @end

@@ -29,36 +29,43 @@
     return [self readWithOptions:options stoppingAt:nil];
 }
 
-// TODO: to allow cache refreshes, also accept startingAt
+// to allow cache refreshes, also accepts startingAt
 -(id)readWithOptions:(id)options stoppingAt:(NSString *)stopName {
+    return [self readWithOptions:options startingAt:nil stoppingAt:stopName];
+}
+
+-(id)readWithOptions:(id)options startingAt:(NSString *)startName stoppingAt:(NSString *)stopName {
     __block id result;
     if(![self.methods count]) {
         NSLog(@"*** READING NIAUCache OBJECT WITH NO METHODS ***");
     }
-    // TODO: implement starting at by building an NSIndexSet based on the location of the method given by startingAt
-    //NSLog(@"readWithOptions:%@ stoppingAt:%@",options,stopName);
-    //NSLog(@"methods:%@", self.methods);
-    [self.methods enumerateObjectsUsingBlock:^(NIAUCacheMethod *method, NSUInteger idx, BOOL *stop) {
-        if(stopName!=nil && (method.name == stopName)) {
-            //NSLog(@"read stopping at %@",method.name);
-            *stop = YES;
-        } else {
-            //NSLog(@"method: %@",method.name);
-            result = method.readBlock(options, _state);
-            //NSLog(@"-->%@",result);
-            if (result) {
-                *stop = YES;
-                // write result back to cache in backround queue
-                NSString *secondMethodName = nil;
-                if([self.methods count]>1) {
-                    secondMethodName = self.methods[2];
-                }
-                // make sure we at least write it in to the first level cache before returning
-                [self write:result withOptions:options stoppingAt:secondMethodName];
-                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0),
-                               // startingAt:secondMethodName
-                               ^{ [self write:result withOptions:options stoppingAt:method.name]; });
+    // we implement starting at by building an NSIndexSet based on the location of the method given by startingAt
+    NSUInteger startIndex = [self.methods indexOfObjectPassingTest:^BOOL(NIAUCacheMethod *method, NSUInteger idx, BOOL *stop) {
+        return [method.name isEqualToString:startName];
+    }];
+    if (startIndex==NSNotFound) {
+        startIndex=0;
+    }
+    NSUInteger stopIndex = [self.methods indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
+        return [[obj name] isEqualToString:stopName];
+    }];
+    if (stopIndex==NSNotFound) {
+        stopIndex=[self.methods count]-1;
+    }
+    NSIndexSet *indexSet = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(startIndex,(stopIndex-startIndex)+1)];
+    [self.methods enumerateObjectsAtIndexes:indexSet options:0 usingBlock:^(NIAUCacheMethod *method, NSUInteger idx, BOOL *stop) {
+        result = method.readBlock(options, _state);
+        if (result) {
+            // write result back to cache in background queue
+            NSString *secondMethodName = nil;
+            if([self.methods count]>1) {
+                secondMethodName = self.methods[2];
             }
+            // make sure we at least write it in to the first level cache before returning
+            [self write:result withOptions:options stoppingAt:secondMethodName];
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0),
+                           // startingAt:secondMethodName
+                           ^{ [self write:result withOptions:options stoppingAt:method.name]; });
         }
     }];
     return result;
