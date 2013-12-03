@@ -60,7 +60,12 @@ static NIAUPublisher *instance =nil;
         state[@"issues"] = object;
     }]];
     [cache addMethod:[[NIAUCacheMethod alloc] initMethod:@"disk"withReadBlock:^id(id options, id state) {
-        return [NIAUIssue issuesFromNKLibrary];
+        NSArray *issues = [NIAUIssue issuesFromNKLibrary];
+        if (issues && [issues count]>0) {
+            return issues;
+        } else {
+            return nil;
+        }
     } andWriteBlock:^(id object, id options, id state) {
         // the net read block already writes to the cache (via the initWithDictionary method) so we probably don't need to do anything here.
         // if leaving this as a no-op causes problems, we could iterate the array and call -writeToCache
