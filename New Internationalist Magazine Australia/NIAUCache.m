@@ -51,7 +51,8 @@
         return [[obj name] isEqualToString:stopName];
     }];
     if (stopIndex==NSNotFound) {
-        stopIndex=[self.methods count]-1;
+        // stop index is the first rule NOT to run, so this points to the first out-of-bounds index
+        stopIndex=[self.methods count];
     }
     NSIndexSet *indexSet = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(startIndex,(stopIndex-startIndex))];
     [self.methods enumerateObjectsAtIndexes:indexSet options:0 usingBlock:^(NIAUCacheMethod *method, NSUInteger idx, BOOL *stop) {
