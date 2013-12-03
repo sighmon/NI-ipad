@@ -73,11 +73,6 @@
     return result;
 }
 
--(void)clear {
-    [self write:nil withOptions:nil];
-    self.state = [NSMutableDictionary dictionary];
-}
-
 -(void)write:(id)object withOptions:(id)options {
     [self write:object withOptions:options stoppingAt:nil];
 }

@@ -23,9 +23,11 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
 @synthesize issue;
 
 -(void)clearCache {
-    [bodyCache clear];
-    [featuredImageCache clear];
-    [featuredImageThumbCache clear];
+    [bodyCache readWithOptions:nil startingAt:@"net" stoppingAt:nil];
+    [featuredImageCache readWithOptions:nil startingAt:@"net" stoppingAt:nil];
+    // would need to do a read for every set options we have received since starting.
+    // a good argument for an explicit clear block
+    //[featuredImageThumbCache clear];
 }
 
 -(NSString *)author {
