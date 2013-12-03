@@ -200,7 +200,7 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
         }
     } andWriteBlock:^(id object, id options, id state) {
         // writeFeaturedImageThumbToDisk
-        [UIImagePNGRepresentation(object) writeToURL:[self featuredImageThumbCacheURL] atomically:YES];
+        [UIImagePNGRepresentation(object) writeToURL:[weakSelf featuredImageThumbCacheURL] atomically:YES];
     }]];
     [cache addMethod:[[NIAUCacheMethod alloc] initMethod:@"generate" withReadBlock:^id(id options, id state) {
         CGSize size = [(NSValue *)options[@"size"] CGSizeValue];

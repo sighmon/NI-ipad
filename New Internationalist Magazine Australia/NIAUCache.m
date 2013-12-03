@@ -17,6 +17,7 @@
     self = [super init];
     if (self) {
         self.methods = [NSMutableArray array];
+        self.state = [NSMutableDictionary dictionary];
     }
     return self;
 }
@@ -52,9 +53,9 @@
     if (stopIndex==NSNotFound) {
         stopIndex=[self.methods count]-1;
     }
-    NSIndexSet *indexSet = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(startIndex,(stopIndex-startIndex)+1)];
+    NSIndexSet *indexSet = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(startIndex,(stopIndex-startIndex))];
     [self.methods enumerateObjectsAtIndexes:indexSet options:0 usingBlock:^(NIAUCacheMethod *method, NSUInteger idx, BOOL *stop) {
-        result = method.readBlock(options, _state);
+        result = method.readBlock(options, self.state);
         if (result) {
             // write result back to cache in background queue
             NSString *secondMethodName = nil;
