@@ -58,6 +58,7 @@
     [self.methods enumerateObjectsAtIndexes:indexSet options:0 usingBlock:^(NIAUCacheMethod *method, NSUInteger idx, BOOL *stop) {
         result = method.readBlock(options, self.state);
         if (result) {
+            *stop = YES;
             // write result back to cache in background queue
             NSString *secondMethodName = nil;
             if([self.methods count]>1) {

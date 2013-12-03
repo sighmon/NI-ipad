@@ -66,7 +66,8 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
     [cache addMethod:[[NIAUCacheMethod alloc] initMethod:@"disk" withReadBlock:^id(id options, id state) {
         // TODO: Pull the CGSize out of the options string.
         NSLog(@"trying to read cached image from %@",[weakSelf coverCacheURL]);
-        return [UIImage imageWithData:[NSData dataWithContentsOfURL:[weakSelf coverCacheURL]]];
+        NSData *data = [NSData dataWithContentsOfURL:[weakSelf coverCacheURL]];
+        return [UIImage imageWithData:data];
     } andWriteBlock:^(id object, id options, id state) {
         [UIImagePNGRepresentation(object) writeToURL:[weakSelf coverCacheURL] atomically:YES];
     }]];
@@ -92,7 +93,7 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
     }]];
     [cache addMethod:[[NIAUCacheMethod alloc] initMethod:@"disk" withReadBlock:^id(id options, id state) {
         CGSize size = [(NSValue *)options[@"size"] CGSizeValue];
-        NSLog(@"trying to read cached image from %@",[weakSelf coverCacheURLForSize:size]);
+        NSLog(@"trying to read cached thumb image from %@",[weakSelf coverCacheURLForSize:size]);
         return [UIImage imageWithData:[NSData dataWithContentsOfURL:[weakSelf coverCacheURLForSize:size]]];
     } andWriteBlock:^(id object, id options, id state) {
         CGSize size = [(NSValue *)options[@"size"] CGSizeValue];
