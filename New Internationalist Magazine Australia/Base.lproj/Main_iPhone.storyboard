@@ -34,7 +34,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yAi-yu-vep">
-                                <rect key="frame" x="20" y="308" width="280" height="38"/>
+                                <rect key="frame" x="20" y="308" width="282" height="38"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="21"/>
                                 <state key="normal" title="Magazine archive"/>
@@ -44,7 +44,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="D13-Uv-IQI">
-                                <rect key="frame" x="20" y="354" width="280" height="38"/>
+                                <rect key="frame" x="20" y="354" width="282" height="38"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="21"/>
                                 <state key="normal" title="Subscribe"/>
@@ -54,7 +54,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zKw-Ww-8lt">
-                                <rect key="frame" x="20" y="400" width="280" height="38"/>
+                                <rect key="frame" x="20" y="400" width="282" height="38"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="21"/>
                                 <state key="normal" title="Login"/>
@@ -64,7 +64,7 @@
                                 </connections>
                             </button>
                             <imageView multipleTouchEnabled="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="0Uh-Tb-k55">
-                                <rect key="frame" x="0.0" y="20" width="320" height="280"/>
+                                <rect key="frame" x="0.0" y="20" width="322" height="280"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <accessibility key="accessibilityConfiguration">
                                     <accessibilityTraits key="traits" none="YES" button="YES" image="YES"/>
@@ -75,12 +75,23 @@
                                 </connections>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SMJ-ul-KqX">
-                                <rect key="frame" x="20" y="446" width="280" height="38"/>
+                                <rect key="frame" x="20" y="446" width="141" height="38"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="21"/>
                                 <state key="normal" title="Search"/>
                                 <connections>
                                     <segue destination="qxS-SN-8Pj" kind="push" identifier="searchButtonToSearchView" id="VIE-2A-OQs"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nd0-AE-SQo">
+                                <rect key="frame" x="161" y="446" width="141" height="38"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="21"/>
+                                <state key="normal" title="Categories">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="Zds-oE-i1C" kind="push" identifier="categoriesButtonToCategoriesView" id="dIC-MX-X5V"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -92,8 +103,9 @@
                             <constraint firstItem="D13-Uv-IQI" firstAttribute="top" secondItem="yAi-yu-vep" secondAttribute="bottom" constant="8" id="6Mm-60-y0i"/>
                             <constraint firstItem="zKw-Ww-8lt" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="20" id="C0W-Gi-lhN"/>
                             <constraint firstItem="SMJ-ul-KqX" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="20" id="JCp-el-6qR"/>
-                            <constraint firstAttribute="trailing" secondItem="SMJ-ul-KqX" secondAttribute="trailing" constant="20" id="Pgn-wr-f2a"/>
                             <constraint firstItem="0Uh-Tb-k55" firstAttribute="top" secondItem="CXJ-uP-klC" secondAttribute="bottom" constant="20" id="Pok-1R-cxG"/>
+                            <constraint firstItem="SMJ-ul-KqX" firstAttribute="width" secondItem="nd0-AE-SQo" secondAttribute="width" id="R9z-9L-vyy"/>
+                            <constraint firstItem="nd0-AE-SQo" firstAttribute="leading" secondItem="SMJ-ul-KqX" secondAttribute="trailing" id="UlX-eO-mGu"/>
                             <constraint firstItem="zKw-Ww-8lt" firstAttribute="top" secondItem="D13-Uv-IQI" secondAttribute="bottom" constant="8" id="ViP-Qe-ULt"/>
                             <constraint firstItem="D13-Uv-IQI" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="20" id="fFJ-sY-jqx"/>
                             <constraint firstItem="0Uh-Tb-k55" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="fg0-nS-gUS"/>
@@ -101,7 +113,8 @@
                             <constraint firstAttribute="trailing" secondItem="yAi-yu-vep" secondAttribute="trailing" constant="20" id="ijd-tg-dzS"/>
                             <constraint firstItem="yAi-yu-vep" firstAttribute="top" secondItem="0Uh-Tb-k55" secondAttribute="bottom" constant="8" id="oYi-fJ-2MN"/>
                             <constraint firstAttribute="trailing" secondItem="zKw-Ww-8lt" secondAttribute="trailing" constant="20" id="pJn-BN-jrg"/>
-                            <constraint firstAttribute="centerX" secondItem="0Uh-Tb-k55" secondAttribute="centerX" id="uM2-8z-q1g"/>
+                            <constraint firstAttribute="trailing" secondItem="nd0-AE-SQo" secondAttribute="trailing" constant="20" id="pio-Hy-kTJ"/>
+                            <constraint firstItem="nd0-AE-SQo" firstAttribute="baseline" secondItem="SMJ-ul-KqX" secondAttribute="baseline" id="sjC-Te-8oR"/>
                             <constraint firstItem="SMJ-ul-KqX" firstAttribute="top" secondItem="zKw-Ww-8lt" secondAttribute="bottom" constant="8" id="zBn-cW-LYb"/>
                         </constraints>
                     </view>
@@ -250,6 +263,35 @@
                 </searchDisplayController>
             </objects>
             <point key="canvasLocation" x="361" y="-1000"/>
+        </scene>
+        <!--Categories View Controller - Categories-->
+        <scene sceneID="WyI-JS-FKy">
+            <objects>
+                <tableViewController title="Categories" id="Zds-oE-i1C" customClass="NIAUCategoriesViewController" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="pFI-Iw-uFG">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="categoriesCell" id="mG9-Ve-sro">
+                                <rect key="frame" x="0.0" y="86" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="mG9-Ve-sro" id="7Qd-sU-zZA">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="Zds-oE-i1C" id="XvN-1r-jrU"/>
+                            <outlet property="delegate" destination="Zds-oE-i1C" id="wW2-6Z-vBF"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Categories" id="GDs-we-FbL"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wXI-7J-LoW" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="361" y="-1711"/>
         </scene>
         <!--Login View Controller-->
         <scene sceneID="vOK-mc-1oU">
@@ -830,10 +872,10 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
+        <segue reference="qUJ-ry-144"/>
         <segue reference="fFr-gL-mDW"/>
-        <segue reference="fI5-Du-KTZ"/>
+        <segue reference="jkZ-Dh-FHT"/>
         <segue reference="W9z-A8-KEC"/>
-        <segue reference="joJ-Rh-K6j"/>
-        <segue reference="SUv-P7-9yc"/>
+        <segue reference="fI5-Du-KTZ"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -58,7 +58,7 @@
                                 </connections>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ztv-AX-HV8">
-                                <rect key="frame" x="244" y="895" width="280" height="45"/>
+                                <rect key="frame" x="20" y="895" width="364" height="45"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="27"/>
                                 <state key="normal" title="Search"/>
@@ -67,14 +67,27 @@
                                     <segue destination="Ust-fQ-OJf" kind="push" identifier="searchButtonToSearchView" id="AJo-Ax-UpQ"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hza-Yw-P0j">
+                                <rect key="frame" x="384" y="895" width="364" height="45"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="27"/>
+                                <state key="normal" title="Categories"/>
+                                <connections>
+                                    <action selector="loginButtonTapped:" destination="dkx-z0-nzr" eventType="touchUpInside" id="AEf-yf-5Rr"/>
+                                    <segue destination="8uB-Xj-iot" kind="push" identifier="categoriesButtonToCategoriesView" id="y8s-mL-hp4"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="ztv-AX-HV8" firstAttribute="trailing" secondItem="QGH-kd-WQM" secondAttribute="trailing" id="1aK-7g-7cp"/>
+                            <constraint firstItem="ztv-AX-HV8" firstAttribute="top" secondItem="QGH-kd-WQM" secondAttribute="bottom" constant="8" id="1Hz-RY-0ce"/>
                             <constraint firstItem="sGR-UI-43W" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="65a-eQ-EEq"/>
+                            <constraint firstItem="hza-Yw-P0j" firstAttribute="leading" secondItem="ztv-AX-HV8" secondAttribute="trailing" id="9Xn-Ex-X6c"/>
                             <constraint firstItem="QGH-kd-WQM" firstAttribute="top" secondItem="4cE-wm-UVR" secondAttribute="bottom" constant="8" symbolic="YES" id="9eX-VG-eWA"/>
                             <constraint firstItem="4cE-wm-UVR" firstAttribute="top" secondItem="sCG-7l-LMd" secondAttribute="bottom" constant="8" symbolic="YES" id="9yU-pS-tbH"/>
                             <constraint firstItem="4cE-wm-UVR" firstAttribute="centerX" secondItem="sGR-UI-43W" secondAttribute="centerX" id="AFN-ax-icV"/>
+                            <constraint firstItem="ztv-AX-HV8" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="20" id="Gei-Nb-4fY"/>
+                            <constraint firstAttribute="trailing" secondItem="hza-Yw-P0j" secondAttribute="trailing" constant="20" id="LH2-Zx-hrl"/>
                             <constraint firstItem="sCG-7l-LMd" firstAttribute="top" secondItem="sGR-UI-43W" secondAttribute="bottom" constant="21" id="P66-oj-EoP"/>
                             <constraint firstItem="4cE-wm-UVR" firstAttribute="leading" secondItem="QGH-kd-WQM" secondAttribute="leading" id="RzW-Gm-36O"/>
                             <constraint firstItem="sGR-UI-43W" firstAttribute="top" secondItem="57J-QL-wcM" secondAttribute="bottom" constant="20" id="cNE-GQ-TuB"/>
@@ -82,9 +95,9 @@
                             <constraint firstItem="4cE-wm-UVR" firstAttribute="trailing" secondItem="sCG-7l-LMd" secondAttribute="trailing" id="gqq-yF-B2t"/>
                             <constraint firstItem="QGH-kd-WQM" firstAttribute="trailing" secondItem="4cE-wm-UVR" secondAttribute="trailing" id="hRX-aE-Ygb"/>
                             <constraint firstAttribute="centerX" secondItem="sGR-UI-43W" secondAttribute="centerX" id="pf9-Oa-S4c"/>
-                            <constraint firstItem="ztv-AX-HV8" firstAttribute="top" secondItem="QGH-kd-WQM" secondAttribute="bottom" constant="8" id="s9f-Ne-Aoi"/>
+                            <constraint firstItem="ztv-AX-HV8" firstAttribute="top" secondItem="hza-Yw-P0j" secondAttribute="top" id="sb9-1s-2CE"/>
                             <constraint firstItem="sGR-UI-43W" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailing" id="tI2-bK-1QX"/>
-                            <constraint firstItem="ztv-AX-HV8" firstAttribute="leading" secondItem="QGH-kd-WQM" secondAttribute="leading" id="uGF-gO-GLg"/>
+                            <constraint firstItem="ztv-AX-HV8" firstAttribute="width" secondItem="hza-Yw-P0j" secondAttribute="width" id="wIb-wk-PA3"/>
                             <constraint firstItem="4cE-wm-UVR" firstAttribute="leading" secondItem="sCG-7l-LMd" secondAttribute="leading" id="yxI-Vz-q9g"/>
                         </constraints>
                     </view>
@@ -162,6 +175,35 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AQV-Fx-f3B" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1220" y="-345"/>
+        </scene>
+        <!--Categories View Controller - Categories-->
+        <scene sceneID="Q38-KM-8cA">
+            <objects>
+                <tableViewController id="8uB-Xj-iot" customClass="NIAUCategoriesViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="aan-UU-enL">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="categoriesCell" id="aU3-Rr-7Vp">
+                                <rect key="frame" x="0.0" y="86" width="768" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="aU3-Rr-7Vp" id="BMb-6I-QEz">
+                                    <rect key="frame" x="0.0" y="0.0" width="768" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="8uB-Xj-iot" id="69A-yB-ngA"/>
+                            <outlet property="delegate" destination="8uB-Xj-iot" id="d49-fv-kwS"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Categories" id="nNE-iV-7ef"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0Wd-Sm-CD2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1220" y="-2763"/>
         </scene>
         <!--Search View Controller - Article search-->
         <scene sceneID="kMe-hh-Wh8">
@@ -841,8 +883,8 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="MS4-LT-1l5"/>
+        <segue reference="7r1-dy-lxK"/>
         <segue reference="EBU-8G-ECI"/>
-        <segue reference="TYl-bi-yIk"/>
         <segue reference="WLv-dP-nWF"/>
         <segue reference="fFO-5s-0tA"/>
     </inferredMetricsTieBreakers>

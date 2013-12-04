@@ -170,12 +170,13 @@
         NIAUTableOfContentsViewController *tableOfContentsViewController = [segue destinationViewController];
         tableOfContentsViewController.issue = [[NIAUPublisher getInstance] issueAtIndex:0];
         
-    } else if ([[segue identifier] isEqualToString:@"subscribeButtonToStoreView"])
-    {
+    } else if ([[segue identifier] isEqualToString:@"subscribeButtonToStoreView"]) {
         // If there's anything to do, do it here.
         
-    } else if ([[segue identifier] isEqualToString:@"searchButtonToSearchView"])
-    {
+    } else if ([[segue identifier] isEqualToString:@"searchButtonToSearchView"]) {
+        // If there's anything to do, do it here.
+        
+    } else if ([[segue identifier] isEqualToString:@"categoriesButtonToCategoriesView"]) {
         // If there's anything to do, do it here.
     }
 }
