@@ -31,6 +31,7 @@
         self.issuesArray = [[NSMutableArray alloc] init];
         self.articlesArray = [[NSMutableArray alloc] init];
         self.categoriesArray = [[NSMutableArray alloc] init];
+        self.sectionsArray = [[NSMutableArray alloc] init];
     }
     return self;
 }
@@ -117,6 +118,29 @@
         return [[d1 objectForKey:@"name"] caseInsensitiveCompare:[d2 objectForKey:@"name"]];
     }];
     
+    // Remove the slashs' and get unique first category name
+    
+    for (int i = 0; i < self.categoriesArray.count; i++) {
+        NSArray *categoryParts = @[];
+        NSString *textString = [self.categoriesArray[i] objectForKey:@"name"];
+        categoryParts = [textString componentsSeparatedByString:@"/"];
+        NSString *sectionName = categoryParts[1];
+        if (self.sectionsArray.count > 0) {
+            NSMutableArray *lastSection = self.sectionsArray.lastObject;
+            NSDictionary *lastCategory = lastSection.lastObject;
+            if ([[[lastCategory objectForKey:@"name"] componentsSeparatedByString:@"/"][1] isEqualToString:sectionName]) {
+                // Add ourself to the lastSection
+                [lastSection addObject:self.categoriesArray[i]];
+            } else {
+                // Make a new section
+                [self.sectionsArray addObject:[NSMutableArray arrayWithObject:self.categoriesArray[i]]];
+            }
+        } else {
+            // Make a new section
+            [self.sectionsArray addObject:[NSMutableArray arrayWithObject:self.categoriesArray[i]]];
+        }
+    }
+    
     [self showCategories];
 }
 
@@ -136,17 +160,22 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return 1;
+    return self.sectionsArray.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    if (self.categoriesArray && [self.categoriesArray count] > 0) {
-        return [self.categoriesArray count];
+    if (self.sectionsArray && [self.sectionsArray count] > 0) {
+        return [self.sectionsArray[section] count];
     } else {
         return 0;
     }
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    return [[[self.sectionsArray[section] firstObject] objectForKey:@"name"] componentsSeparatedByString:@"/"][1];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -156,7 +185,22 @@
     
     // Configure the cell...
     
-    cell.textLabel.text = [self.categoriesArray[indexPath.row] objectForKey:@"name"];
+    // Remove the slash and only take the last word
+    NSArray *categoryParts = @[];
+    NSString *textString = [self.sectionsArray[indexPath.section][indexPath.row] objectForKey:@"name"];
+    categoryParts = [textString componentsSeparatedByString:@"/"];
+    cell.textLabel.text = categoryParts[[categoryParts count]-2];
+    
+    // Draw a blank UIImage so that category colours can show through
+    CGSize size = CGSizeMake(57, 43);
+    UIGraphicsBeginImageContextWithOptions(size, YES, 0);
+    id categoryColour = WITH_DEFAULT([self.sectionsArray[indexPath.section][indexPath.row] objectForKey:@"colour"],[NSNumber numberWithInt:0xFFFFFF]);
+    [UIColorFromRGB([categoryColour integerValue]) setFill];
+    UIRectFill(CGRectMake(0, 0, size.width, size.height));
+    UIImage *blankImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    [cell.imageView setImage:blankImage];
     
     return cell;
 }

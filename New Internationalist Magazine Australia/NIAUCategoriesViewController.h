@@ -16,5 +16,6 @@
 @property (nonatomic, strong) NSMutableArray *issuesArray;
 @property (nonatomic, strong) NSMutableArray *articlesArray;
 @property (nonatomic, strong) NSMutableArray *categoriesArray;
+@property (nonatomic, strong) NSMutableArray *sectionsArray;
 
 @end
