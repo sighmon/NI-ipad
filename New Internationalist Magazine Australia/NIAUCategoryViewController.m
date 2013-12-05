@@ -1,18 +1,18 @@
 //
-//  NIAUCategoriesViewController.m
+//  NIAUCategoryViewController.m
 //  New Internationalist Magazine Australia
 //
-//  Created by Simon Loffler on 4/12/2013.
+//  Created by Simon Loffler on 5/12/2013.
 //  Copyright (c) 2013 New Internationalist Australia. All rights reserved.
 //
 
-#import "NIAUCategoriesViewController.h"
+#import "NIAUCategoryViewController.h"
 
-@interface NIAUCategoriesViewController ()
+@interface NIAUCategoryViewController ()
 
 @end
 
-@implementation NIAUCategoriesViewController
+@implementation NIAUCategoryViewController
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -28,10 +28,7 @@
     self = [super initWithCoder:aDecoder];
     if (self) {
         // Initialize the arrays
-        self.issuesArray = [[NSMutableArray alloc] init];
         self.articlesArray = [[NSMutableArray alloc] init];
-        self.categoriesArray = [[NSMutableArray alloc] init];
-        self.sectionsArray = [[NSMutableArray alloc] init];
     }
     return self;
 }
@@ -46,7 +43,11 @@
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
+    // Set the viewController title
+    self.title = self.category;
+    
     // Get all of the issues, and when that's done get all of the articles
+    
     if([[NIAUPublisher getInstance] isReady]) {
         [self loadArticles];
     } else {
@@ -99,52 +100,27 @@
 
 - (void)articlesReady:(NSNotification *)notification
 {
-    for (int i = 0; i < [self.issuesArray count]; i++) {
+    // Load all articles into self.articlesArray
+    NSMutableArray *allArticles = [NSMutableArray array];
+    for (int i = 0; i < self.issuesArray.count; i++) {
         for (int a = 0; a < [self.issuesArray[i] numberOfArticles]; a++) {
-            // Add articles to the articles array
-            [self.articlesArray addObject:[self.issuesArray[i] articleAtIndex:a]];
-            for (int c = 0; c < [[self.issuesArray[i] articleAtIndex:a].categories count]; c++) {
-                // Add categories to the categories array only if they're unique
-                NSDictionary *objectToAdd = [self.issuesArray[i] articleAtIndex:a].categories[c];
-                if (![self.categoriesArray containsObject:objectToAdd]) {
-                    [self.categoriesArray addObject:objectToAdd];
-                }
-            }
-        }
-    }
-    // Sort the categoriesArray
-    [self.categoriesArray sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-        NSDictionary *d1 = obj1, *d2 = obj2;
-        return [[d1 objectForKey:@"name"] caseInsensitiveCompare:[d2 objectForKey:@"name"]];
-    }];
-    
-    // Remove the slashs' and get unique first category name
-    
-    for (int i = 0; i < self.categoriesArray.count; i++) {
-        NSArray *categoryParts = @[];
-        NSString *textString = [self.categoriesArray[i] objectForKey:@"name"];
-        categoryParts = [textString componentsSeparatedByString:@"/"];
-        NSString *sectionName = categoryParts[1];
-        if (self.sectionsArray.count > 0) {
-            NSMutableArray *lastSection = self.sectionsArray.lastObject;
-            NSDictionary *lastCategory = lastSection.lastObject;
-            if ([[[lastCategory objectForKey:@"name"] componentsSeparatedByString:@"/"][1] isEqualToString:sectionName]) {
-                // Add ourself to the lastSection
-                [lastSection addObject:self.categoriesArray[i]];
-            } else {
-                // Make a new section
-                [self.sectionsArray addObject:[NSMutableArray arrayWithObject:self.categoriesArray[i]]];
-            }
-        } else {
-            // Make a new section
-            [self.sectionsArray addObject:[NSMutableArray arrayWithObject:self.categoriesArray[i]]];
+            [allArticles addObject:[self.issuesArray[i] articleAtIndex:a]];
         }
     }
     
-    [self showCategories];
+    // Save only the articles of this category to self.articlesArray
+    for (int a = 0; a < allArticles.count; a++) {
+        for (int c = 0; c < [[allArticles[a] categories] count]; c++) {
+            if ([[[allArticles[a] categories][c] objectForKey:@"name"] isEqualToString:self.category]) {
+                [self.articlesArray addObject:allArticles[a]];
+            }
+        }
+    }
+    
+    [self showCategoryArticles];
 }
 
-- (void)showCategories
+- (void)showCategoryArticles
 {
     [self.tableView reloadData];
 }
@@ -160,47 +136,28 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return self.sectionsArray.count;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    if (self.sectionsArray && [self.sectionsArray count] > 0) {
-        return [self.sectionsArray[section] count];
+    if (self.articlesArray.count > 0) {
+        return self.articlesArray.count;
     } else {
         return 0;
     }
 }
 
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
-{
-    return [[[self.sectionsArray[section] firstObject] objectForKey:@"name"] componentsSeparatedByString:@"/"][1];
-}
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"categoriesCell";
+    static NSString *CellIdentifier = @"articlesInCategoryCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
     // Configure the cell...
     
-    // Remove the slash and only take the last word
-    NSArray *categoryParts = @[];
-    NSString *textString = [self.sectionsArray[indexPath.section][indexPath.row] objectForKey:@"name"];
-    categoryParts = [textString componentsSeparatedByString:@"/"];
-    cell.textLabel.text = categoryParts[[categoryParts count]-2];
-    
-    // Draw a blank UIImage so that category colours can show through
-    CGSize size = CGSizeMake(57, 43);
-    UIGraphicsBeginImageContextWithOptions(size, YES, 0);
-    id categoryColour = WITH_DEFAULT([self.sectionsArray[indexPath.section][indexPath.row] objectForKey:@"colour"],[NSNumber numberWithInt:0xFFFFFF]);
-    [UIColorFromRGB([categoryColour integerValue]) setFill];
-    UIRectFill(CGRectMake(0, 0, size.width, size.height));
-    UIImage *blankImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    
-    [cell.imageView setImage:blankImage];
+    cell.textLabel.text = [self.articlesArray[indexPath.row] title];
+    cell.detailTextLabel.text = [self.articlesArray[indexPath.row] teaser];
     
     return cell;
 }
@@ -244,6 +201,7 @@
 }
 */
 
+/*
 #pragma mark - Navigation
 
 // In a story board-based application, you will often want to do a little preparation before navigation
@@ -251,11 +209,8 @@
 {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
-    
-    NIAUCategoryViewController *categoryViewController = [segue destinationViewController];
-    
-    NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
-    categoryViewController.category = [self.sectionsArray[selectedIndexPath.section][selectedIndexPath.row] objectForKey:@"name"];
 }
+
+ */
 
 @end

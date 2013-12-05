@@ -67,6 +67,7 @@
 		0577E07617FBED0400A52A8E /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0577E07517FBED0400A52A8E /* StoreKit.framework */; };
 		0577E07917FBF2B400A52A8E /* NIAUInAppPurchaseHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 0577E07817FBF2B400A52A8E /* NIAUInAppPurchaseHelper.m */; };
 		058F738E178BBA3E002CA40C /* NIAUImageZoomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 058F738D178BBA3E002CA40C /* NIAUImageZoomViewController.m */; };
+		059FFCA0185026F100422824 /* NIAUCategoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 059FFC9F185026F100422824 /* NIAUCategoryViewController.m */; };
 		05B910A0181632050027E5BF /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B9109F181632050027E5BF /* Reachability.m */; };
 		05BB6B43180E1802000B2FD3 /* NIAUSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05BB6B42180E1802000B2FD3 /* NIAUSearchViewController.m */; };
 		05BD7F2917796B8F00820EF3 /* 0@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 05BD7F1717796B8F00820EF3 /* 0@2x.png */; };
@@ -192,6 +193,8 @@
 		0577E07817FBF2B400A52A8E /* NIAUInAppPurchaseHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NIAUInAppPurchaseHelper.m; sourceTree = "<group>"; };
 		058F738C178BBA3E002CA40C /* NIAUImageZoomViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NIAUImageZoomViewController.h; sourceTree = "<group>"; };
 		058F738D178BBA3E002CA40C /* NIAUImageZoomViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NIAUImageZoomViewController.m; sourceTree = "<group>"; };
+		059FFC9E185026F100422824 /* NIAUCategoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NIAUCategoryViewController.h; sourceTree = "<group>"; };
+		059FFC9F185026F100422824 /* NIAUCategoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NIAUCategoryViewController.m; sourceTree = "<group>"; };
 		05B9109E181632050027E5BF /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		05B9109F181632050027E5BF /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		05BB6B41180E1802000B2FD3 /* NIAUSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NIAUSearchViewController.h; sourceTree = "<group>"; };
@@ -386,6 +389,8 @@
 				05BB6B42180E1802000B2FD3 /* NIAUSearchViewController.m */,
 				051AF557184ECE7D00A91A8C /* NIAUCategoriesViewController.h */,
 				051AF558184ECE7D00A91A8C /* NIAUCategoriesViewController.m */,
+				059FFC9E185026F100422824 /* NIAUCategoryViewController.h */,
+				059FFC9F185026F100422824 /* NIAUCategoryViewController.m */,
 				05BD7F121779656300820EF3 /* NIAUMagazineArchiveViewController.h */,
 				05BD7F131779656300820EF3 /* NIAUMagazineArchiveViewController.m */,
 				0507DB68177AA0F60099540D /* NIAUTableOfContentsViewController.h */,
@@ -779,6 +784,7 @@
 				05287A23177983AD00501F5F /* NIAUMagazineArchiveViewController.m in Sources */,
 				052167E7177BDF8900A4A81A /* NIAUArticleViewController.m in Sources */,
 				05B910A0181632050027E5BF /* Reachability.m in Sources */,
+				059FFCA0185026F100422824 /* NIAUCategoryViewController.m in Sources */,
 				528FC17818344C86006BCB44 /* NSData+Cookieless.m in Sources */,
 				055A8ED6177290CF003D9407 /* NIAUAppDelegate.m in Sources */,
 			);
