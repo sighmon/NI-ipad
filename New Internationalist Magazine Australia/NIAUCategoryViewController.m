@@ -29,6 +29,7 @@
     if (self) {
         // Initialize the arrays
         self.articlesArray = [[NSMutableArray alloc] init];
+        self.issuesArray = [[NSMutableArray alloc] init];
     }
     return self;
 }
@@ -44,7 +45,11 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
     // Set the viewController title
-    self.title = self.category;
+    // Remove the slash and only take the last word
+    NSArray *categoryParts = @[];
+    NSString *textString = self.category;
+    categoryParts = [textString componentsSeparatedByString:@"/"];
+    self.title = categoryParts[[categoryParts count]-2];
     
     // Get all of the issues, and when that's done get all of the articles
     
@@ -66,11 +71,12 @@
 - (void)loadArticles
 {
     // Do this for all issues.
-    for (int i = 0; i < [[NIAUPublisher getInstance] numberOfIssues]; i++) {
+    int numberOfIssuesDownloaded = [[NIAUPublisher getInstance] numberOfIssues];
+    for (int i = 0; i < numberOfIssuesDownloaded; i++) {
         self.issue = [[NIAUPublisher getInstance] issueAtIndex:i];
         [self.issuesArray addObject:self.issue];
         [self.issue requestArticles];
-        if (i == ([[NIAUPublisher getInstance] numberOfIssues] - 1)) {
+        if (i == (numberOfIssuesDownloaded - 1)) {
             NSLog(@"Last issue reached.. setting observer.");
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(articlesReady:) name:ArticlesDidUpdateNotification object:self.issue];
         }
@@ -157,9 +163,47 @@
     // Configure the cell...
     
     cell.textLabel.text = [self.articlesArray[indexPath.row] title];
-    cell.detailTextLabel.text = [self.articlesArray[indexPath.row] teaser];
     
+    // Regex to remove <strong> and <b> and any other <html>
+    NSString *teaser = [self.articlesArray[indexPath.row] teaser];
+    NSError *error = NULL;
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"<[^>]*>" options:NSRegularExpressionCaseInsensitive error:&error];
+    NSString *cleanTeaser = [regex stringByReplacingMatchesInString:teaser options:0 range:NSMakeRange(0, [teaser length]) withTemplate:@""];
+    
+    cell.detailTextLabel.text = cleanTeaser;
+        
     return cell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // Using technique from http://stackoverflow.com/questions/18897896/replacement-for-deprecated-sizewithfont-in-ios-7
+    
+    // Probably should be using http://stackoverflow.com/questions/18746929/using-auto-layout-in-uitableview-for-dynamic-cell-layouts-variable-row-heights
+    
+    NIAUArticle *article = nil;
+    article = self.articlesArray[indexPath.row];
+    
+    id teaser = article.teaser;
+    teaser = (teaser==[NSNull null]) ? @"" : teaser;
+    
+    NSString *articleTitle = article.title;
+    CGFloat width = tableView.frame.size.width - 50;
+    UIFont *font = [UIFont fontWithName:@"Helvetica" size:18];
+    NSAttributedString *attributedText = [[NSAttributedString alloc] initWithString:articleTitle attributes:@{ NSFontAttributeName : font }];
+    CGRect rect = [attributedText boundingRectWithSize:(CGSize){width, CGFLOAT_MAX}
+                                               options:NSStringDrawingUsesLineFragmentOrigin
+                                               context:nil];
+    CGSize sizeofTitle = rect.size;
+    
+    UIFont *teaserFont = [UIFont fontWithName:@"Helvetica" size:12];
+    NSAttributedString *attributedTextTeaser = [[NSAttributedString alloc] initWithString:teaser attributes:@{ NSFontAttributeName : teaserFont }];
+    CGRect teaserRect = [attributedTextTeaser boundingRectWithSize:(CGSize){width, CGFLOAT_MAX}
+                                                           options:NSStringDrawingUsesLineFragmentOrigin
+                                                           context:nil];
+    CGSize sizeofTeaser = teaserRect.size;
+    
+    return ceilf(sizeofTitle.height + sizeofTeaser.height) + 30.;
 }
 
 /*
@@ -201,7 +245,6 @@
 }
 */
 
-/*
 #pragma mark - Navigation
 
 // In a story board-based application, you will often want to do a little preparation before navigation
@@ -209,8 +252,11 @@
 {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+    
+    NIAUArticleViewController *articleViewController = [segue destinationViewController];
+    
+    NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
+    articleViewController.article = self.articlesArray[selectedIndexPath.row];
 }
-
- */
 
 @end
