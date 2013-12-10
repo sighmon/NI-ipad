@@ -158,82 +158,126 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"articlesInCategoryCell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
     // Configure the cell...
     
+    UIImageView *articleImage = (UIImageView *)[cell viewWithTag:100];
+    UILabel *articleTitle = (UILabel *)[cell viewWithTag:101];
+    UILabel *articleTeaser = (UILabel *)[cell viewWithTag:102];
+    UILabel *articleDate = (UILabel *)[cell viewWithTag:103];
     NIAUArticle *article = self.articlesArray[indexPath.row];
-    cell.textLabel.text = [article title];
+    
+    articleTitle.text = [article title];
+    
+//    // Load CSS from the filesystem
+//    NSURL *cssURL = [[NSBundle mainBundle] URLForResource:@"article-body" withExtension:@"css"];
+//    
+//    // Load the article teaser into the attributedText
+//    NSString *teaserHTML = [NSString stringWithFormat:@"<html> \n"
+//                            "<head> \n"
+//                            "<link rel=\"stylesheet\" type=\"text/css\" href=\"%@\">"
+//                            "</head> \n"
+//                            "<body><div class='table-of-contents-article-teaser'>%@</div></body> \n"
+//                            "</html>", cssURL, [article teaser]];
+//    
+//    articleTeaser.attributedText = [[NSAttributedString alloc] initWithData:[teaserHTML dataUsingEncoding:NSUTF8StringEncoding]
+//                                                                    options:@{NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType,
+//                                                                              NSCharacterEncodingDocumentAttribute: [NSNumber numberWithInt:NSUTF8StringEncoding]}
+//                                                         documentAttributes:nil
+//                                                                      error:nil];
     
     // Regex to remove <strong> and <b> and any other <html>
     NSString *teaser = [article teaser];
     NSError *error = NULL;
     NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"<[^>]*>" options:NSRegularExpressionCaseInsensitive error:&error];
     NSString *cleanTeaser = [regex stringByReplacingMatchesInString:teaser options:0 range:NSMakeRange(0, [teaser length]) withTemplate:@""];
-    cell.detailTextLabel.text = cleanTeaser;
+    articleTeaser.text = cleanTeaser;
+    
+    // Set the article date
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"MMMM yyyy"];
+    articleDate.text = [NSString stringWithFormat: @"%@ - %@", [[article issue] name], [dateFormatter stringFromDate:[[article issue] publication]]];
+    
+    // Set background colour to the category colour.
+    NSDictionary *firstCategory = article.categories.firstObject;
+    id categoryColour = WITH_DEFAULT([firstCategory objectForKey:@"colour"],[NSNumber numberWithInt:0xFFFFFF]);
+    articleImage.backgroundColor = UIColorFromRGB([categoryColour integerValue]);
     
 //    // Set the image to the magazine cover the article came from
-//    CGSize thumbSize = CGSizeMake(57,43);
+//    articleImage.image = nil;
+//    CGSize thumbSize = CGSizeMake(57,87);
 //    if (self.tableView.dragging == NO && self.tableView.decelerating == NO) {
-//        if (cell.imageView.image == nil) {
-//            [[article issue] getCoverThumbWithSize:thumbSize andCompletionBlock:^(UIImage *cover) {
-//                [cell.imageView setImage:cover];
-//                [cell setNeedsLayout];
-//                cell.imageView.frame = CGRectMake(0,0,57,43);
-//            }];
-//        }
+//        [[article issue] getCoverThumbWithSize:thumbSize andCompletionBlock:^(UIImage *cover) {
+//            [articleImage setImage:cover];
+//            [cell setNeedsLayout];
+//        }];
 //    }
     
-//    // Get featured image
-//    CGSize thumbSize = CGSizeMake(57,43);
-//    if (self.tableView.dragging == NO && self.tableView.decelerating == NO) {
-//        if (cell.imageView.image == nil) {
-//            [article getFeaturedImageThumbWithSize:thumbSize andCompletionBlock:^(UIImage *thumb) {
-//                [cell.imageView setImage:thumb];
-//            }];
-//        } else {
-//            //NSLog(@"Cell has an image.");
-//        }
-//    } else {
-//        UIImage *thumb = [article attemptToGetFeaturedImageThumbFromDiskWithSize:thumbSize];
-//        if(thumb) {
-//            [cell.imageView setImage:thumb];
-//        }
-//    }
+    // Get featured image
+    articleImage.image = nil;
+    CGSize thumbSize = CGSizeMake(57,87);
+    if (self.tableView.dragging == NO && self.tableView.decelerating == NO) {
+        [article getFeaturedImageThumbWithSize:thumbSize andCompletionBlock:^(UIImage *thumb) {
+            [articleImage setImage:thumb];
+            [cell setNeedsLayout];
+        }];
+    } else {
+        UIImage *thumb = [article attemptToGetFeaturedImageThumbFromDiskWithSize:thumbSize];
+        if(thumb) {
+            [articleImage setImage:thumb];
+            [cell setNeedsLayout];
+        }
+    }
     
     return cell;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Using technique from http://stackoverflow.com/questions/18897896/replacement-for-deprecated-sizewithfont-in-ios-7
+- (CGSize)calculateCellSize:(UITableViewCell *)cell inTableView:(UITableView *)tableView {
     
-    // Probably should be using http://stackoverflow.com/questions/18746929/using-auto-layout-in-uitableview-for-dynamic-cell-layouts-variable-row-heights
+    CGSize fittingSize = CGSizeMake(tableView.bounds.size.width, 0);
+    CGSize size = [cell.contentView systemLayoutSizeFittingSize:fittingSize];
     
-    NIAUArticle *article = nil;
-    article = self.articlesArray[indexPath.row];
-    
-    id teaser = article.teaser;
-    teaser = (teaser==[NSNull null]) ? @"" : teaser;
-    
-    NSString *articleTitle = article.title;
-    CGFloat width = tableView.frame.size.width - 50;
-    UIFont *font = [UIFont fontWithName:@"Helvetica" size:18];
-    NSAttributedString *attributedText = [[NSAttributedString alloc] initWithString:articleTitle attributes:@{ NSFontAttributeName : font }];
-    CGRect rect = [attributedText boundingRectWithSize:(CGSize){width, CGFLOAT_MAX}
-                                               options:NSStringDrawingUsesLineFragmentOrigin
-                                               context:nil];
-    CGSize sizeofTitle = rect.size;
-    
-    UIFont *teaserFont = [UIFont fontWithName:@"Helvetica" size:12];
-    NSAttributedString *attributedTextTeaser = [[NSAttributedString alloc] initWithString:teaser attributes:@{ NSFontAttributeName : teaserFont }];
-    CGRect teaserRect = [attributedTextTeaser boundingRectWithSize:(CGSize){width, CGFLOAT_MAX}
-                                                           options:NSStringDrawingUsesLineFragmentOrigin
-                                                           context:nil];
-    CGSize sizeofTeaser = teaserRect.size;
-    
-    return ceilf(sizeofTitle.height + sizeofTeaser.height) + 30.;
+    return size;
 }
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    UITableViewCell *cell = [self tableView:tableView cellForRowAtIndexPath:indexPath];
+    
+    return [self calculateCellSize:cell inTableView:tableView].height;
+}
+
+//- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    // Using technique from http://stackoverflow.com/questions/18897896/replacement-for-deprecated-sizewithfont-in-ios-7
+//    
+//    // Probably should be using http://stackoverflow.com/questions/18746929/using-auto-layout-in-uitableview-for-dynamic-cell-layouts-variable-row-heights
+//    
+//    NIAUArticle *article = nil;
+//    article = self.articlesArray[indexPath.row];
+//    
+//    id teaser = article.teaser;
+//    teaser = (teaser==[NSNull null]) ? @"" : teaser;
+//    
+//    NSString *articleTitle = article.title;
+//    CGFloat width = tableView.frame.size.width - 50;
+//    UIFont *font = [UIFont fontWithName:@"Helvetica" size:18];
+//    NSAttributedString *attributedText = [[NSAttributedString alloc] initWithString:articleTitle attributes:@{ NSFontAttributeName : font }];
+//    CGRect rect = [attributedText boundingRectWithSize:(CGSize){width, CGFLOAT_MAX}
+//                                               options:NSStringDrawingUsesLineFragmentOrigin
+//                                               context:nil];
+//    CGSize sizeofTitle = rect.size;
+//    
+//    UIFont *teaserFont = [UIFont fontWithName:@"Helvetica" size:12];
+//    NSAttributedString *attributedTextTeaser = [[NSAttributedString alloc] initWithString:teaser attributes:@{ NSFontAttributeName : teaserFont }];
+//    CGRect teaserRect = [attributedTextTeaser boundingRectWithSize:(CGSize){width, CGFLOAT_MAX}
+//                                                           options:NSStringDrawingUsesLineFragmentOrigin
+//                                                           context:nil];
+//    CGSize sizeofTeaser = teaserRect.size;
+//    
+//    return ceilf(sizeofTitle.height + sizeofTeaser.height) + 30.;
+//}
 
 /*
 // Override to support conditional editing of the table view.
