@@ -204,19 +204,10 @@
     id categoryColour = WITH_DEFAULT([firstCategory objectForKey:@"colour"],[NSNumber numberWithInt:0xFFFFFF]);
     articleImage.backgroundColor = UIColorFromRGB([categoryColour integerValue]);
     
-//    // Set the image to the magazine cover the article came from
-//    articleImage.image = nil;
-//    CGSize thumbSize = CGSizeMake(57,87);
-//    if (self.tableView.dragging == NO && self.tableView.decelerating == NO) {
-//        [[article issue] getCoverThumbWithSize:thumbSize andCompletionBlock:^(UIImage *cover) {
-//            [articleImage setImage:cover];
-//            [cell setNeedsLayout];
-//        }];
-//    }
-    
     // Get featured image
     articleImage.image = nil;
-    CGSize thumbSize = CGSizeMake(57,87);
+//    CGSize sizeOfCell = [self calculateCellSize:cell inTableView:tableView]; // Was too time consuming!
+    CGSize thumbSize = CGSizeMake(57,90);
     if (self.tableView.dragging == NO && self.tableView.decelerating == NO) {
         [article getFeaturedImageThumbWithSize:thumbSize andCompletionBlock:^(UIImage *thumb) {
             [articleImage setImage:thumb];
@@ -247,37 +238,6 @@
     
     return [self calculateCellSize:cell inTableView:tableView].height;
 }
-
-//- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    // Using technique from http://stackoverflow.com/questions/18897896/replacement-for-deprecated-sizewithfont-in-ios-7
-//    
-//    // Probably should be using http://stackoverflow.com/questions/18746929/using-auto-layout-in-uitableview-for-dynamic-cell-layouts-variable-row-heights
-//    
-//    NIAUArticle *article = nil;
-//    article = self.articlesArray[indexPath.row];
-//    
-//    id teaser = article.teaser;
-//    teaser = (teaser==[NSNull null]) ? @"" : teaser;
-//    
-//    NSString *articleTitle = article.title;
-//    CGFloat width = tableView.frame.size.width - 50;
-//    UIFont *font = [UIFont fontWithName:@"Helvetica" size:18];
-//    NSAttributedString *attributedText = [[NSAttributedString alloc] initWithString:articleTitle attributes:@{ NSFontAttributeName : font }];
-//    CGRect rect = [attributedText boundingRectWithSize:(CGSize){width, CGFLOAT_MAX}
-//                                               options:NSStringDrawingUsesLineFragmentOrigin
-//                                               context:nil];
-//    CGSize sizeofTitle = rect.size;
-//    
-//    UIFont *teaserFont = [UIFont fontWithName:@"Helvetica" size:12];
-//    NSAttributedString *attributedTextTeaser = [[NSAttributedString alloc] initWithString:teaser attributes:@{ NSFontAttributeName : teaserFont }];
-//    CGRect teaserRect = [attributedTextTeaser boundingRectWithSize:(CGSize){width, CGFLOAT_MAX}
-//                                                           options:NSStringDrawingUsesLineFragmentOrigin
-//                                                           context:nil];
-//    CGSize sizeofTeaser = teaserRect.size;
-//    
-//    return ceilf(sizeofTitle.height + sizeofTeaser.height) + 30.;
-//}
 
 /*
 // Override to support conditional editing of the table view.
