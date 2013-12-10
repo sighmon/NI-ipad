@@ -49,7 +49,7 @@
     NSArray *categoryParts = @[];
     NSString *textString = self.category;
     categoryParts = [textString componentsSeparatedByString:@"/"];
-    self.title = categoryParts[[categoryParts count]-2];
+    self.title = [[categoryParts[[categoryParts count]-2] capitalizedString] stringByReplacingOccurrencesOfString:@"-" withString:@" "];
     
     // Get all of the issues, and when that's done get all of the articles
     
@@ -162,16 +162,45 @@
     
     // Configure the cell...
     
-    cell.textLabel.text = [self.articlesArray[indexPath.row] title];
+    NIAUArticle *article = self.articlesArray[indexPath.row];
+    cell.textLabel.text = [article title];
     
     // Regex to remove <strong> and <b> and any other <html>
-    NSString *teaser = [self.articlesArray[indexPath.row] teaser];
+    NSString *teaser = [article teaser];
     NSError *error = NULL;
     NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"<[^>]*>" options:NSRegularExpressionCaseInsensitive error:&error];
     NSString *cleanTeaser = [regex stringByReplacingMatchesInString:teaser options:0 range:NSMakeRange(0, [teaser length]) withTemplate:@""];
-    
     cell.detailTextLabel.text = cleanTeaser;
-        
+    
+//    // Set the image to the magazine cover the article came from
+//    CGSize thumbSize = CGSizeMake(57,43);
+//    if (self.tableView.dragging == NO && self.tableView.decelerating == NO) {
+//        if (cell.imageView.image == nil) {
+//            [[article issue] getCoverThumbWithSize:thumbSize andCompletionBlock:^(UIImage *cover) {
+//                [cell.imageView setImage:cover];
+//                [cell setNeedsLayout];
+//                cell.imageView.frame = CGRectMake(0,0,57,43);
+//            }];
+//        }
+//    }
+    
+//    // Get featured image
+//    CGSize thumbSize = CGSizeMake(57,43);
+//    if (self.tableView.dragging == NO && self.tableView.decelerating == NO) {
+//        if (cell.imageView.image == nil) {
+//            [article getFeaturedImageThumbWithSize:thumbSize andCompletionBlock:^(UIImage *thumb) {
+//                [cell.imageView setImage:thumb];
+//            }];
+//        } else {
+//            //NSLog(@"Cell has an image.");
+//        }
+//    } else {
+//        UIImage *thumb = [article attemptToGetFeaturedImageThumbFromDiskWithSize:thumbSize];
+//        if(thumb) {
+//            [cell.imageView setImage:thumb];
+//        }
+//    }
+    
     return cell;
 }
 

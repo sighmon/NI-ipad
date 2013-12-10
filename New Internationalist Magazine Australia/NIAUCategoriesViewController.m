@@ -64,6 +64,9 @@
 
 - (void)loadArticles
 {
+    // Clear array
+    self.issuesArray = [NSMutableArray array];
+    
     // Do this for all issues.
     for (int i = 0; i < [[NIAUPublisher getInstance] numberOfIssues]; i++) {
         self.issue = [[NIAUPublisher getInstance] issueAtIndex:i];
@@ -99,6 +102,11 @@
 
 - (void)articlesReady:(NSNotification *)notification
 {
+    // Clear the arrays
+    self.articlesArray = [NSMutableArray array];
+    self.categoriesArray = [NSMutableArray array];
+    self.sectionsArray = [NSMutableArray array];
+    
     for (int i = 0; i < [self.issuesArray count]; i++) {
         for (int a = 0; a < [self.issuesArray[i] numberOfArticles]; a++) {
             // Add articles to the articles array
@@ -106,7 +114,10 @@
             for (int c = 0; c < [[self.issuesArray[i] articleAtIndex:a].categories count]; c++) {
                 // Add categories to the categories array only if they're unique
                 NSDictionary *objectToAdd = [self.issuesArray[i] articleAtIndex:a].categories[c];
-                if (![self.categoriesArray containsObject:objectToAdd]) {
+                NSUInteger categoryIndex = [self.categoriesArray indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
+                    return [[obj objectForKey:@"name"] isEqualToString:[objectToAdd objectForKey:@"name"]];
+                }];
+                if (categoryIndex == NSNotFound) {
                     [self.categoriesArray addObject:objectToAdd];
                 }
             }
@@ -121,24 +132,47 @@
     // Remove the slashs' and get unique first category name
     
     for (int i = 0; i < self.categoriesArray.count; i++) {
+        NSMutableDictionary *category = [NSMutableDictionary dictionaryWithDictionary:self.categoriesArray[i]];
         NSArray *categoryParts = @[];
         NSString *textString = [self.categoriesArray[i] objectForKey:@"name"];
         categoryParts = [textString componentsSeparatedByString:@"/"];
         NSString *sectionName = categoryParts[1];
+        if ([categoryParts containsObject:@"regions"]) {
+            sectionName = [NSString stringWithFormat:@"countries"];
+        }
+        [category setObject:sectionName forKey:@"sectionName"];
+        
+        [category setObject:[[categoryParts[[categoryParts count]-2] capitalizedString] stringByReplacingOccurrencesOfString:@"-" withString:@" "] forKey:@"displayName"];
+        
         if (self.sectionsArray.count > 0) {
-            NSMutableArray *lastSection = self.sectionsArray.lastObject;
-            NSDictionary *lastCategory = lastSection.lastObject;
-            if ([[[lastCategory objectForKey:@"name"] componentsSeparatedByString:@"/"][1] isEqualToString:sectionName]) {
-                // Add ourself to the lastSection
-                [lastSection addObject:self.categoriesArray[i]];
-            } else {
+            NSUInteger sectionIndex = [self.sectionsArray indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
+                return [[[obj firstObject] objectForKey:@"sectionName"] isEqualToString:sectionName];
+            }];
+            
+            if (sectionIndex == NSNotFound) {
                 // Make a new section
-                [self.sectionsArray addObject:[NSMutableArray arrayWithObject:self.categoriesArray[i]]];
+                [self.sectionsArray addObject:[NSMutableArray arrayWithObject:category]];
+            } else {
+                // Add ourselves to the section
+                [self.sectionsArray[sectionIndex] addObject:category];
             }
         } else {
             // Make a new section
-            [self.sectionsArray addObject:[NSMutableArray arrayWithObject:self.categoriesArray[i]]];
+            [self.sectionsArray addObject:[NSMutableArray arrayWithObject:category]];
         }
+    }
+    
+    // Sort the sectionsArray
+    [self.sectionsArray sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        NSDictionary *d1 = [obj1 firstObject], *d2 = [obj2 firstObject];
+        return [[d1 objectForKey:@"sectionName"] caseInsensitiveCompare:[d2 objectForKey:@"sectionName"]];
+    }];
+    
+    // Sort the categories within a section
+    for (int i = 0; i < [self.sectionsArray count]; i++) {
+        [self.sectionsArray[i] sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+            return [[obj1 objectForKey:@"displayName"] caseInsensitiveCompare:[obj2 objectForKey:@"displayName"]];
+        }];
     }
     
     [self showCategories];
@@ -175,7 +209,7 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    return [[[self.sectionsArray[section] firstObject] objectForKey:@"name"] componentsSeparatedByString:@"/"][1];
+    return [[self.sectionsArray[section] firstObject] objectForKey:@"sectionName"];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -189,7 +223,8 @@
     NSArray *categoryParts = @[];
     NSString *textString = [self.sectionsArray[indexPath.section][indexPath.row] objectForKey:@"name"];
     categoryParts = [textString componentsSeparatedByString:@"/"];
-    cell.textLabel.text = categoryParts[[categoryParts count]-2];
+    cell.textLabel.text = [[categoryParts[[categoryParts count]-2] capitalizedString] stringByReplacingOccurrencesOfString:@"-" withString:@" "];
+    cell.detailTextLabel.text = textString;
     
     // Draw a blank UIImage so that category colours can show through
     CGSize size = CGSizeMake(57, 43);
@@ -199,7 +234,6 @@
     UIRectFill(CGRectMake(0, 0, size.width, size.height));
     UIImage *blankImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
     [cell.imageView setImage:blankImage];
     
     return cell;
