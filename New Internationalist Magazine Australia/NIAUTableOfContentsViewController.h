@@ -17,6 +17,8 @@
 
 @property (nonatomic, strong) UIImage *cover;
 
+@property (nonatomic, strong) NSMutableArray *categoriesArray;
+
 @property (nonatomic, strong) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) NSMutableDictionary *cellDictionary;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *tableViewHeightConstraint;
