@@ -960,10 +960,10 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="qUJ-ry-144"/>
         <segue reference="fFr-gL-mDW"/>
-        <segue reference="jkZ-Dh-FHT"/>
-        <segue reference="fI5-Du-KTZ"/>
         <segue reference="W9z-A8-KEC"/>
+        <segue reference="joJ-Rh-K6j"/>
+        <segue reference="SUv-P7-9yc"/>
+        <segue reference="mdp-6r-s59"/>
     </inferredMetricsTieBreakers>
 </document>

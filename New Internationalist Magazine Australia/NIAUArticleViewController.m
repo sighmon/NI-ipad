@@ -60,7 +60,12 @@
     // Doing the requestBody call in viewWillAppear so that it loads after logging in to Rails too.
 //    [self.article requestBody];
     
-    [self setupData];
+    // Only need to call this when the article body is loaded
+//    [self setupData];
+    
+    // In the meantime, blank the placeholder text.
+    self.titleLabel.text = @"";
+    self.teaserLabel.text = @"";
     
     [self updateScrollViewContentHeight];
     
