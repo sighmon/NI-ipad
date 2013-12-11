@@ -170,23 +170,6 @@
     
     articleTitle.text = [article title];
     
-//    // Load CSS from the filesystem
-//    NSURL *cssURL = [[NSBundle mainBundle] URLForResource:@"article-body" withExtension:@"css"];
-//    
-//    // Load the article teaser into the attributedText
-//    NSString *teaserHTML = [NSString stringWithFormat:@"<html> \n"
-//                            "<head> \n"
-//                            "<link rel=\"stylesheet\" type=\"text/css\" href=\"%@\">"
-//                            "</head> \n"
-//                            "<body><div class='table-of-contents-article-teaser'>%@</div></body> \n"
-//                            "</html>", cssURL, [article teaser]];
-//    
-//    articleTeaser.attributedText = [[NSAttributedString alloc] initWithData:[teaserHTML dataUsingEncoding:NSUTF8StringEncoding]
-//                                                                    options:@{NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType,
-//                                                                              NSCharacterEncodingDocumentAttribute: [NSNumber numberWithInt:NSUTF8StringEncoding]}
-//                                                         documentAttributes:nil
-//                                                                      error:nil];
-    
     // Regex to remove <strong> and <b> and any other <html>
     NSString *teaser = [article teaser];
     NSError *error = NULL;
@@ -206,7 +189,6 @@
     
     // Get featured image
     articleImage.image = nil;
-//    CGSize sizeOfCell = [self calculateCellSize:cell inTableView:tableView]; // Was too time consuming!
     CGSize thumbSize = CGSizeMake(57,90);
     if (self.tableView.dragging == NO && self.tableView.decelerating == NO) {
         [article getFeaturedImageThumbWithSize:thumbSize andCompletionBlock:^(UIImage *thumb) {
@@ -220,6 +202,19 @@
             [cell setNeedsLayout];
         }
     }
+    
+    // Aminate the cell loading so that long category lists of articles fade in.
+    [articleImage setAlpha:0.0];
+    [articleTitle setAlpha:0.0];
+    [articleTeaser setAlpha:0.0];
+    [articleDate setAlpha:0.0];
+    
+    [UIView animateWithDuration:0.2 animations:^{
+        [articleImage setAlpha:1.0];
+        [articleTitle setAlpha:1.0];
+        [articleTeaser setAlpha:1.0];
+        [articleDate setAlpha:1.0];
+    }];
     
     return cell;
 }
