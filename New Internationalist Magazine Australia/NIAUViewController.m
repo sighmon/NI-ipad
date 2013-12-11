@@ -70,7 +70,11 @@
 - (void)loadLatestMagazineCover
 {
     [[[NIAUPublisher getInstance] issueAtIndex:0] getCoverWithCompletionBlock:^(UIImage *img) {
+        [self.cover setAlpha:0.0];
         [self.cover setImage:img];
+        [UIView animateWithDuration:0.5 animations:^{
+            [self.cover setAlpha:1.0];
+        }];
     }];
 }
 

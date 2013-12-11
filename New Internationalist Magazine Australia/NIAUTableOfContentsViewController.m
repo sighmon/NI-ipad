@@ -264,7 +264,12 @@ static NSString *CellIdentifier = @"articleCell";
 {
     // Set the cover from the issue cover tapped
     [self.issue getCoverWithCompletionBlock:^(UIImage *img) {
+        [self.imageView setAlpha:0.0];
         [self.imageView setImage:img];
+        [UIView animateWithDuration:0.3 animations:^{
+            [self.imageView setAlpha:1.0];
+        }];
+
     }];
     
 //    self.labelTitle.text = self.issue.title;
@@ -299,7 +304,11 @@ static NSString *CellIdentifier = @"articleCell";
     [self.editorImageView setImage:[UIImage imageNamed:@"default_editors_photo"]];
     // Load the real editor's image
     [self.issue getEditorsImageWithCompletionBlock:^(UIImage *img) {
+        [self.editorImageView setAlpha:0.0];
         [self.editorImageView setImage:img];
+        [UIView animateWithDuration:0.3 animations:^{
+            [self.editorImageView setAlpha:1.0];
+        }];
     }];
     [self applyRoundMask:self.editorImageView];
 }

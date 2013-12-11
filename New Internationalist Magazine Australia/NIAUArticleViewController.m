@@ -132,7 +132,11 @@
     
     //Get the real article images.
     [self.article getFeaturedImageWithCompletionBlock:^(UIImage *img) {
+        [self.featuredImage setAlpha:0.0];
         [self.featuredImage setImage:img];
+        [UIView animateWithDuration:0.3 animations:^{
+            [self.featuredImage setAlpha:1.0];
+        }];
     }];
     NSDictionary *firstCategory = self.article.categories.firstObject;
     id categoryColour = WITH_DEFAULT([firstCategory objectForKey:@"colour"],[NSNumber numberWithInt:0xFFFFFF]);
