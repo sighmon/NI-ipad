@@ -19,6 +19,7 @@ extern NSString *ArticleFailedUpdateNotification;
     NIAUCache *bodyCache;
     NIAUCache *featuredImageThumbCache;
     NIAUCache *featuredImageCache;
+    NSMutableDictionary *imageCaches;
 }
 
 @property(nonatomic, strong) NIAUIssue *issue;
@@ -41,7 +42,7 @@ extern NSString *ArticleFailedUpdateNotification;
 -(UIImage *)attemptToGetFeaturedImageThumbFromDiskWithSize:(CGSize)size;
 
 -(void)requestBody;
--(NSString *)attemptToGetBodyFromDisk;
+-(NSString *)attemptToGetExpandedBodyFromDisk;
 
 -(void)clearCache;
 

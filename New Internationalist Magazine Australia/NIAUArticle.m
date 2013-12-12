@@ -52,12 +52,15 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
 
 // TODO: will need to also generate a list of used images for downloading
 // to get images captions we will need access to the issue.json info, so a class method won't work here.
--(NSString*)expandImageReferencesInString:(NSString*)body {
-    if(!body) return nil;
+-(NSString*)attemptToGetExpandedBodyFromDisk {
+    NSString *body = [self attemptToGetBodyFromDisk];
+    if(!body) {
+        return nil;
+    }
     
     NSError *error;
     NSRegularExpression *regex = [NSRegularExpression
-                                    regularExpressionWithPattern:@"\\[File:(\\d+)(?:\\|([^\\]]*))?]"
+                                  regularExpressionWithPattern:@"\\[File:(\\d+)(?:\\|([^\\]]*))?]"
                                   options:NSRegularExpressionCaseInsensitive
                                   error:&error];
     // TODO: we will at least want a list of which ID's we need to cache from the site.
@@ -70,85 +73,116 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
     
     // TODO: build cache object for each article image? trigger background download?
     
-    [regex enumerateMatchesInString:body
-                            options:0
-                              range:NSMakeRange(0, [body length])
-                         usingBlock:^(NSTextCheckingResult *match, NSMatchingFlags flags, BOOL *stop){
-                             		
-                             
-                             // bored? dry this up.
-                             NSString *fullMatch = [body substringWithRange:match.range];
-                             NSString *imageId = @"";
-                             if ([match numberOfRanges]>1 && [match rangeAtIndex:1].length>0) {
-                                 imageId = [body substringWithRange:[match rangeAtIndex:1]];
-                             }
-                             NSArray *options = [NSArray array];
-                             if ([match numberOfRanges]>2 && [match rangeAtIndex:2].length>0) {
-                                 NSString *optionString = [body substringWithRange:[match rangeAtIndex:2]];
-                                 options = [optionString componentsSeparatedByString:@"|"];
-                             }
-                             
-                             // ported from NI:/app/helpers/article-helper.rb:expand-image-tags
-                             NSString *cssClass = @"article-image";
-                             NSString *imageWidth = @"300";
-                             
-                             if([options containsObject:@"full"]) {
-                                 
-                                 cssClass = @"all-article-images article-image-cartoon article-image-full";
-                                 imageWidth = @"945";
-                             } else if([options containsObject:@"cartoon"]) {
-                                 cssClass = @"all-article-images article-image-cartoon";
-                                 imageWidth = @"600";
-                             } else if([options containsObject:@"centre"]) {
-                                 cssClass = @"all-article-images article-image-cartoon article-image-centre";
-                                 imageWidth = @"300";
-                             } else if([options containsObject:@"small"]) {
-                                 cssClass = @"article-image article-image-small";
-                                 imageWidth = @"150";
-                             } else if([options containsObject:@"left"]) {
-                                 cssClass = @"article-image article-image-float-none";
-                             }
-                             
-                             if ([options containsObject:@"ns"]) {
-                                 cssClass = [cssClass stringByAppendingString:@" no-shadow"];
-                             }
-                             
-                             // Q: do we have image.credit info?
-                             // yes, in the issue.json:articles[].images[].{credit,caption}
-                             
-                             NSString *credit_div = @"";
-                             NSString *caption_div = @"";
-                             
-                             //TODO: dig out image metadata and generate credit_div and caption_div
-                             
-                             // ruby code from articles_helper
-                             /*if image.credit
-                              credit_div = "<div class='new-image-credit'>#{image.credit}</div>"
-                              end
-                              if image.caption
-                              caption_div = "<div class='new-image-caption'>#{image.caption}</div>"
-                              end
-                              if media_url
-                              tag_method = method(:retina_image_tag)
-                              image_options = {:alt => "#{strip_tags(image.caption)}", :title => "#{strip_tags(image.caption)}", :size => "#{image_width}x#{image_width * image.height / image.width}"}
-                              if options.include?("full")
-                              tag_method = method(:image_tag)
-                              end
-                              "<div class='#{css_class}'>"+tag_method.call(media_url, image_options)+caption_div+credit_div+"</div>"
-                              else
-                             */
-                             
-                             NSString *replacement  = [NSString stringWithFormat:@"<div class='%@'><img width='%@' src='%@.png'/>%@%@</div>", cssClass, imageWidth, imageId, credit_div, caption_div];
-                             
-                             
-                             // every iteration, the output string is getting longer
-                             // so we need to adjust the range that we are editing
-                             NSRange newrange = NSMakeRange(match.range.location+offset, match.range.length);
-                             [newBody replaceCharactersInRange:newrange withString:replacement];
-                             
-                             offset+=[replacement length]-[fullMatch length];
-                             
-                         }];
+    [regex enumerateMatchesInString:body options:0 range:NSMakeRange(0, [body length]) usingBlock:^(NSTextCheckingResult *match, NSMatchingFlags flags, BOOL *stop){
+        
+        // bored? dry this up.
+        NSString *fullMatch = [body substringWithRange:match.range];
+        NSString *imageId = @"";
+        if ([match numberOfRanges]>1 && [match rangeAtIndex:1].length>0) {
+            imageId = [body substringWithRange:[match rangeAtIndex:1]];
+        }
+        NSArray *options = [NSArray array];
+        if ([match numberOfRanges]>2 && [match rangeAtIndex:2].length>0) {
+            NSString *optionString = [body substringWithRange:[match rangeAtIndex:2]];
+            options = [optionString componentsSeparatedByString:@"|"];
+        }
+        
+        // Q: what if imageId is still empty here?
+        
+        // ported from NI:/app/helpers/article-helper.rb:expand-image-tags
+        NSString *cssClass = @"article-image";
+        NSString *imageWidth = @"300";
+        
+        if([options containsObject:@"full"]) {
+            cssClass = @"all-article-images article-image-cartoon article-image-full";
+            imageWidth = @"945";
+        } else if([options containsObject:@"cartoon"]) {
+            cssClass = @"all-article-images article-image-cartoon";
+            imageWidth = @"600";
+        } else if([options containsObject:@"centre"]) {
+            cssClass = @"all-article-images article-image-cartoon article-image-centre";
+            imageWidth = @"300";
+        } else if([options containsObject:@"small"]) {
+            cssClass = @"article-image article-image-small";
+            imageWidth = @"150";
+        } else if([options containsObject:@"left"]) {
+            cssClass = @"article-image article-image-float-none";
+        }
+        
+        if ([options containsObject:@"ns"]) {
+            cssClass = [cssClass stringByAppendingString:@" no-shadow"];
+        }
+        
+        NSString *credit_div = @"";
+        NSString *caption_div = @"";
+        
+        //TODO: dig out image metadata and generate credit_div and caption_div
+        
+        // Q: do we have image.credit info?
+        // yes, in the issue.json:articles[].images[].{credit,caption}
+        
+        // ruby code from articles_helper
+        /*if image.credit
+         credit_div = "<div class='new-image-credit'>#{image.credit}</div>"
+         end
+         if image.caption
+         caption_div = "<div class='new-image-caption'>#{image.caption}</div>"
+         end
+         if media_url
+         tag_method = method(:retina_image_tag)
+         image_options = {:alt => "#{strip_tags(image.caption)}", :title => "#{strip_tags(image.caption)}", :size => "#{image_width}x#{image_width * image.height / image.width}"}
+         if options.include?("full")
+         tag_method = method(:image_tag)
+         end
+         "<div class='#{css_class}'>"+tag_method.call(media_url, image_options)+caption_div+credit_div+"</div>"
+         else
+         */
+        
+        // if imageId is blank, replace the tag with nothing.
+        NSString *replacement = @"";
+        
+        if ([imageId length]>0) {
+            // TODO: keep track of article images here
+            
+            NSArray *images = [dictionary objectForKey:@"images"];
+            // catch missing!
+            
+            NSUInteger imageIndex = [images indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
+                return [[obj objectForKey:@"id"] isEqualToNumber:[NSNumber numberWithInteger:[imageId integerValue]]];
+            }];
+            
+            NSDictionary *imageDictionary = nil;
+            // TODO: track down referenced images that aren't attached to this article. For now we ignore them.
+            if(imageIndex!=NSNotFound) {
+                imageDictionary = [images objectAtIndex:imageIndex];
+                
+                // make entry in imageCaches dictionary if necessary
+                if (![imageCaches objectForKey:imageId]) {
+                    NIAUCache *imageCache = [self buildImageCacheFromDictionary:imageDictionary];
+                    [imageCaches setObject:imageCache forKey:imageId];
+                    
+                    // and fire off a background priority cache read
+                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+                        [imageCache readWithOptions:nil];
+                    });
+                }
+                
+                //TODO: can we dry up the image URL (it's also defined in the buildImageCache method
+                replacement = [NSString stringWithFormat:@"<div class='%@'><img width='%@' src='%@'/>%@%@</div>", cssClass, imageWidth, [[self imageCacheURLForId:imageId] absoluteString], credit_div, caption_div];
+            }
+            
+        }
+        
+        
+        
+        // every iteration, the output string is getting longer
+        // so we need to adjust the range that we are editing
+        NSRange newrange = NSMakeRange(match.range.location+offset, match.range.length);
+        [newBody replaceCharactersInRange:newrange withString:replacement];
+        
+        offset+=[replacement length]-[fullMatch length];
+        
+    }];
     return newBody;
 }
 
@@ -174,6 +208,40 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
     }]];
     return cache;
 }
+
+-(NSURL *)imageCacheURLForId:(NSString *)imageId {
+    return [NSURL URLWithString:[imageId stringByAppendingPathExtension:@"png"] relativeToURL:[self cacheURL]];
+}
+
+-(NIAUCache *)buildImageCacheFromDictionary:(NSDictionary*)imageDictionary {
+    NIAUCache *cache = [[NIAUCache alloc] init];
+    NSString *imageId = [[imageDictionary objectForKey:@"id"] stringValue];
+    NSURL *imageCacheURL = [self imageCacheURLForId:imageId];
+    
+    // search our dictionary for the image data
+    NSURL *imageNetURL = [NSURL URLWithString:[[imageDictionary objectForKey:@"data"] objectForKey:@"url"]];
+    
+    [cache addMethod:[[NIAUCacheMethod alloc] initMethod:@"memory" withReadBlock:^id(id options, id state) {
+        return state[@"image"];
+    } andWriteBlock:^(id object, id options, id state) {
+        state[@"image"] = object;
+    }]];
+    [cache addMethod:[[NIAUCacheMethod alloc] initMethod:@"disk" withReadBlock:^id(id options, id state) {
+        NSData *imageData = [NSData dataWithContentsOfURL:imageCacheURL];
+        return [UIImage imageWithData:imageData];
+    } andWriteBlock:^(id object, id options, id state) {
+        [UIImagePNGRepresentation(object) writeToURL:imageCacheURL atomically:YES];
+    }]];
+    [cache addMethod:[[NIAUCacheMethod alloc] initMethod:@"net" withReadBlock:^id(id options, id state) {
+        NSData *imageData = [NSData dataWithContentsOfCookielessURL:imageNetURL];
+        return [UIImage imageWithData:imageData];
+    } andWriteBlock:^(id object, id options, id state) {
+        // noop
+    }]];
+    return cache;
+}
+
+
 
 -(NIAUCache *)buildFeaturedImageThumbCache {
     __weak NIAUArticle *weakSelf = self;
@@ -233,8 +301,8 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
     [cache addMethod:[[NIAUCacheMethod alloc] initMethod:@"net" withReadBlock:^id(id options, id state) {
         NSData *data = [self downloadArticleBodyWithIssueRailsID: [[weakSelf issue] railsID] andArticleRailsID: [weakSelf railsID]];
         if(data)
-//            return [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-            return [self expandImageReferencesInString:[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]];
+            return [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+//            return [self expandImageReferencesInString:[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]];
         else return nil;
     } andWriteBlock:^(id object, id options, id state) {
         // no op

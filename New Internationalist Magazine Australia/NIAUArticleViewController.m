@@ -167,7 +167,7 @@
     
     // Load the article into the webview
     
-    NSString *bodyFromDisk = [self.article attemptToGetBodyFromDisk];
+    NSString *bodyFromDisk = [self.article attemptToGetExpandedBodyFromDisk];
     
     NSString *bodyWebViewHTML = [NSString stringWithFormat:@"<html> \n"
                                    "<head> \n"
