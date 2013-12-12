@@ -50,6 +50,11 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
     return [dictionary objectForKey:@"categories"];
 }
 
+-(BOOL)isKeynote {
+    id value = [dictionary objectForKey:@"keynote"];
+    return value != nil;
+}
+
 // TODO: will need to also generate a list of used images for downloading
 // to get images captions we will need access to the issue.json info, so a class method won't work here.
 -(NSString*)expandImageReferencesInString:(NSString*)body {
@@ -494,5 +499,11 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
     return [NSURL URLWithString:[NSString stringWithFormat:@"issues/%@/articles/%@",self.issue.railsID, self.railsID] relativeToURL:[NSURL URLWithString:SITE_URL]];
 }
 
+- (BOOL)containsCategoryWithSubstring:(NSString *)substring
+{
+    return (NSNotFound != [self.categories indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
+        return [[obj objectForKey:@"name"] rangeOfString:substring].location;
+    }]);
+}
 
 @end

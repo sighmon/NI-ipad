@@ -31,7 +31,13 @@ static NSString *CellIdentifier = @"articleCell";
     self = [super initWithCoder:aDecoder];
     if (self) {
         // Initialize the arrays
-        self.categoriesArray = [[NSMutableArray alloc] init];
+        self.featureArticles = [[NSMutableArray alloc] init];
+        self.agendaArticles = [[NSMutableArray alloc] init];
+        self.mixedMediaArticles = [[NSMutableArray alloc] init];
+        self.opinionArticles = [[NSMutableArray alloc] init];
+        self.alternativesArticles = [[NSMutableArray alloc] init];
+        self.regularArticles = [[NSMutableArray alloc] init];
+        self.uncategorisedArticles = [[NSMutableArray alloc] init];
     }
     return self;
 }
@@ -67,55 +73,47 @@ static NSString *CellIdentifier = @"articleCell";
 -(void)publisherReady:(NSNotification *)not
 {
     // Clear the array
-    self.categoriesArray = [NSMutableArray array];
     
-    // TODO: Sort articles into self.categoriesArray
+    self.featureArticles = [NSMutableArray array];
+    self.agendaArticles = [NSMutableArray array];
+    self.mixedMediaArticles = [NSMutableArray array];
+    self.opinionArticles = [NSMutableArray array];
+    self.alternativesArticles = [NSMutableArray array];
+    self.regularArticles = [NSMutableArray array];
+    self.uncategorisedArticles = [NSMutableArray array];
+    
+    // Sort articles into the section arrays
     
     for (int a = 0; a < [self.issue numberOfArticles]; a++) {
-        for (int c = 0; c < [[self.issue articleAtIndex:a].categories count]; c++) {
-            // Add categories to the categories array only if they're unique
-            NSDictionary *objectToAdd = [self.issue articleAtIndex:a].categories[c];
-            NSUInteger categoryIndex = [self.categoriesArray indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
-                return [[obj objectForKey:@"name"] isEqualToString:[objectToAdd objectForKey:@"name"]];
-            }];
-            if (categoryIndex == NSNotFound) {
-                [self.categoriesArray addObject:objectToAdd];
-            }
+        // Test if there's a category that's features
+        NIAUArticle *articleToAdd = [self.issue articleAtIndex:a];
+        if ([articleToAdd containsCategoryWithSubstring:@"features"]) {
+            [self.featureArticles addObject:articleToAdd];
+        } else if ([articleToAdd containsCategoryWithSubstring:@"agenda"]) {
+            [self.agendaArticles addObject:articleToAdd];
+        } else if ([articleToAdd containsCategoryWithSubstring:@"media"]) {
+            [self.mixedMediaArticles addObject:articleToAdd];
+        } else if ([articleToAdd containsCategoryWithSubstring:@"argument"] ||
+                   [articleToAdd containsCategoryWithSubstring:@"viewfrom"] ||
+                   [articleToAdd containsCategoryWithSubstring:@"mark-engler"]) {
+            [self.opinionArticles addObject:articleToAdd];
+        } else if ([articleToAdd containsCategoryWithSubstring:@"alternatives"]) {
+            [self.alternativesArticles addObject:articleToAdd];
+        } else if ([articleToAdd containsCategoryWithSubstring:@"columns"] &&
+                   ![articleToAdd containsCategoryWithSubstring:@"columns/currents"] &&
+                   ![articleToAdd containsCategoryWithSubstring:@"columns/media"] &&
+                   ![articleToAdd containsCategoryWithSubstring:@"columns/viewfrom"] &&
+                   ![articleToAdd containsCategoryWithSubstring:@"columns/mark-engler"]) {
+            [self.regularArticles addObject:articleToAdd];
+        } else {
+            [self.uncategorisedArticles addObject:articleToAdd];
         }
     }
+    int numberOfArticlesCategorised = self.featureArticles.count + self.agendaArticles.count + self.mixedMediaArticles.count + self.opinionArticles.count + self.alternativesArticles.count + self.regularArticles.count + self.uncategorisedArticles.count;
+    NSLog(@"Number of articles categorised: %d", numberOfArticlesCategorised);
+    NSLog(@"Number of articles in this issue: %d", [self.issue numberOfArticles]);
     
-    // Sort the categoriesArray alphabetically
-    [self.categoriesArray sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-        NSDictionary *d1 = obj1, *d2 = obj2;
-        return [[d1 objectForKey:@"name"] caseInsensitiveCompare:[d2 objectForKey:@"name"]];
-    }];
-    
-    // TODO: FINISH sorting the categoriesArray as Rails site does
-    
-    NSMutableArray *sortedCategoriesArray = [NSMutableArray array];
-    
-    for (int c = 0; c < [self.categoriesArray count]; c++) {
-        NSDictionary *objectToAdd = self.categoriesArray[c];
-        NSUInteger categoryIndex = [self.categoriesArray indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
-            return [[obj objectForKey:@"name"] isEqualToString:@"/features/"];
-        }];
-        if (categoryIndex) {
-            [sortedCategoriesArray addObject:objectToAdd];
-        }
-        categoryIndex = false;
-        categoryIndex = [self.categoriesArray indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
-            return [[obj objectForKey:@"name"] isEqualToString:@"/sections/agenda/"];
-        }];
-        if (categoryIndex) {
-            [sortedCategoriesArray addObject:objectToAdd];
-        }
-    }
-    
-    // Features (keynote)
-    // Agenda
-    // Mixed Media
-    // Opinion
-    // Regulars
+    // TODO: FINISH this controller, check whether the above code works, and then use it to determine the sections.
     
     [self showArticles];
 }

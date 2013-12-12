@@ -17,7 +17,18 @@
 
 @property (nonatomic, strong) UIImage *cover;
 
-@property (nonatomic, strong) NSMutableArray *categoriesArray;
+// Features (keynote)
+// Agenda
+// Mixed Media
+// Opinion
+// Regulars
+@property (nonatomic, strong) NSMutableArray *featureArticles;
+@property (nonatomic, strong) NSMutableArray *agendaArticles;
+@property (nonatomic, strong) NSMutableArray *mixedMediaArticles;
+@property (nonatomic, strong) NSMutableArray *opinionArticles;
+@property (nonatomic, strong) NSMutableArray *alternativesArticles;
+@property (nonatomic, strong) NSMutableArray *regularArticles;
+@property (nonatomic, strong) NSMutableArray *uncategorisedArticles;
 
 @property (nonatomic, strong) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) NSMutableDictionary *cellDictionary;

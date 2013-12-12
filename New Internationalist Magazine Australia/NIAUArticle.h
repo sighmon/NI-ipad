@@ -30,7 +30,7 @@ extern NSString *ArticleFailedUpdateNotification;
 -(NSString *)author;
 -(NSArray *)categories;
 -(NSNumber *)railsID;
-
+-(BOOL)isKeynote;
 
 +(NSArray *)articlesFromIssue:(NIAUIssue *)issue;
 +(NIAUArticle *)articleWithIssue:(NIAUIssue *)issue andDictionary:(NSDictionary *)dict;
@@ -46,6 +46,8 @@ extern NSString *ArticleFailedUpdateNotification;
 -(void)clearCache;
 
 - (NSURL *)getWebURL;
+
+- (BOOL)containsCategoryWithSubstring:(NSString *)substring;
 
 @end
 
