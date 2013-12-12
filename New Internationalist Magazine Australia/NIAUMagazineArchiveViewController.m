@@ -48,11 +48,17 @@ NSString *kCellID = @"magazineCellID";              // UICollectionViewCell stor
     size = [self calculateCellSizeForScreenSize:self.view.frame.size];
     cell.image.image = [[[NIAUPublisher getInstance] issueAtIndex:indexPath.row] attemptToGetCoverThumbFromMemoryForSize:size];
     
-    [[[NIAUPublisher getInstance] issueAtIndex:indexPath.row] getCoverThumbWithSize:size andCompletionBlock:^(UIImage *img) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            cell.image.image = img;
-        });
-    }];
+    if (cell.image.image == nil) {
+        [[[NIAUPublisher getInstance] issueAtIndex:indexPath.row] getCoverThumbWithSize:size andCompletionBlock:^(UIImage *img) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [cell.image setAlpha:0.0];
+                [cell.image setImage:img];
+                [UIView animateWithDuration:0.3 animations:^{
+                    [cell.image setAlpha:1.0];
+                }];
+            });
+        }];
+    }
     
     // Set a border for the magazine covers
 //    cell.layer.borderColor = [UIColor colorWithRed:242/255.0f green:242/255.0f blue:242/255.0f alpha:1.0f].CGColor;

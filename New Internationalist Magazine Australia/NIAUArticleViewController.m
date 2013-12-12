@@ -60,7 +60,12 @@
     // Doing the requestBody call in viewWillAppear so that it loads after logging in to Rails too.
 //    [self.article requestBody];
     
-    [self setupData];
+    // Only need to call this when the article body is loaded
+//    [self setupData];
+    
+    // In the meantime, blank the placeholder text.
+    self.titleLabel.text = @"";
+    self.teaserLabel.text = @"";
     
     [self updateScrollViewContentHeight];
     
@@ -132,7 +137,11 @@
     
     //Get the real article images.
     [self.article getFeaturedImageWithCompletionBlock:^(UIImage *img) {
+        [self.featuredImage setAlpha:0.0];
         [self.featuredImage setImage:img];
+        [UIView animateWithDuration:0.3 animations:^{
+            [self.featuredImage setAlpha:1.0];
+        }];
     }];
     NSDictionary *firstCategory = self.article.categories.firstObject;
     id categoryColour = WITH_DEFAULT([firstCategory objectForKey:@"colour"],[NSNumber numberWithInt:0xFFFFFF]);

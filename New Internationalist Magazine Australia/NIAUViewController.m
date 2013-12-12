@@ -70,7 +70,11 @@
 - (void)loadLatestMagazineCover
 {
     [[[NIAUPublisher getInstance] issueAtIndex:0] getCoverWithCompletionBlock:^(UIImage *img) {
+        [self.cover setAlpha:0.0];
         [self.cover setImage:img];
+        [UIView animateWithDuration:0.5 animations:^{
+            [self.cover setAlpha:1.0];
+        }];
     }];
 }
 
@@ -170,12 +174,13 @@
         NIAUTableOfContentsViewController *tableOfContentsViewController = [segue destinationViewController];
         tableOfContentsViewController.issue = [[NIAUPublisher getInstance] issueAtIndex:0];
         
-    } else if ([[segue identifier] isEqualToString:@"subscribeButtonToStoreView"])
-    {
+    } else if ([[segue identifier] isEqualToString:@"subscribeButtonToStoreView"]) {
         // If there's anything to do, do it here.
         
-    } else if ([[segue identifier] isEqualToString:@"searchButtonToSearchView"])
-    {
+    } else if ([[segue identifier] isEqualToString:@"searchButtonToSearchView"]) {
+        // If there's anything to do, do it here.
+        
+    } else if ([[segue identifier] isEqualToString:@"categoriesButtonToCategoriesView"]) {
         // If there's anything to do, do it here.
     }
 }

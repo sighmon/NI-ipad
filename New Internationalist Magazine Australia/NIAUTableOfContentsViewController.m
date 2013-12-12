@@ -26,6 +26,16 @@ static NSString *CellIdentifier = @"articleCell";
     return self;
 }
 
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        // Initialize the arrays
+        self.categoriesArray = [[NSMutableArray alloc] init];
+    }
+    return self;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -56,6 +66,57 @@ static NSString *CellIdentifier = @"articleCell";
 
 -(void)publisherReady:(NSNotification *)not
 {
+    // Clear the array
+    self.categoriesArray = [NSMutableArray array];
+    
+    // TODO: Sort articles into self.categoriesArray
+    
+    for (int a = 0; a < [self.issue numberOfArticles]; a++) {
+        for (int c = 0; c < [[self.issue articleAtIndex:a].categories count]; c++) {
+            // Add categories to the categories array only if they're unique
+            NSDictionary *objectToAdd = [self.issue articleAtIndex:a].categories[c];
+            NSUInteger categoryIndex = [self.categoriesArray indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
+                return [[obj objectForKey:@"name"] isEqualToString:[objectToAdd objectForKey:@"name"]];
+            }];
+            if (categoryIndex == NSNotFound) {
+                [self.categoriesArray addObject:objectToAdd];
+            }
+        }
+    }
+    
+    // Sort the categoriesArray alphabetically
+    [self.categoriesArray sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        NSDictionary *d1 = obj1, *d2 = obj2;
+        return [[d1 objectForKey:@"name"] caseInsensitiveCompare:[d2 objectForKey:@"name"]];
+    }];
+    
+    // TODO: FINISH sorting the categoriesArray as Rails site does
+    
+    NSMutableArray *sortedCategoriesArray = [NSMutableArray array];
+    
+    for (int c = 0; c < [self.categoriesArray count]; c++) {
+        NSDictionary *objectToAdd = self.categoriesArray[c];
+        NSUInteger categoryIndex = [self.categoriesArray indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
+            return [[obj objectForKey:@"name"] isEqualToString:@"/features/"];
+        }];
+        if (categoryIndex) {
+            [sortedCategoriesArray addObject:objectToAdd];
+        }
+        categoryIndex = false;
+        categoryIndex = [self.categoriesArray indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
+            return [[obj objectForKey:@"name"] isEqualToString:@"/sections/agenda/"];
+        }];
+        if (categoryIndex) {
+            [sortedCategoriesArray addObject:objectToAdd];
+        }
+    }
+    
+    // Features (keynote)
+    // Agenda
+    // Mixed Media
+    // Opinion
+    // Regulars
+    
     [self showArticles];
 }
 
@@ -104,8 +165,6 @@ static NSString *CellIdentifier = @"articleCell";
     frame.size.height = size.height + self.editorImageView.frame.size.height + self.labelEditor.frame.size.height + 40;
     self.tableViewFooterView.frame = frame;
 }
-
-
 
 #pragma mark - Table view data source
 
@@ -206,7 +265,7 @@ static NSString *CellIdentifier = @"articleCell";
 
     UIImageView *articleImageView = (UIImageView *)[cell viewWithTag:100];
     NIAUArticle *article = [self.issue articleAtIndex:indexPath.row];
-    CGSize thumbSize = CGSizeMake(57,43);
+    CGSize thumbSize = CGSizeMake(57,72);
     if (self.tableView.dragging == NO && self.tableView.decelerating == NO) {
         if (articleImageView.image == nil) {
             [article getFeaturedImageThumbWithSize:thumbSize andCompletionBlock:^(UIImage *thumb) {
@@ -264,7 +323,12 @@ static NSString *CellIdentifier = @"articleCell";
 {
     // Set the cover from the issue cover tapped
     [self.issue getCoverWithCompletionBlock:^(UIImage *img) {
+        [self.imageView setAlpha:0.0];
         [self.imageView setImage:img];
+        [UIView animateWithDuration:0.3 animations:^{
+            [self.imageView setAlpha:1.0];
+        }];
+
     }];
     
 //    self.labelTitle.text = self.issue.title;
@@ -299,7 +363,11 @@ static NSString *CellIdentifier = @"articleCell";
     [self.editorImageView setImage:[UIImage imageNamed:@"default_editors_photo"]];
     // Load the real editor's image
     [self.issue getEditorsImageWithCompletionBlock:^(UIImage *img) {
+        [self.editorImageView setAlpha:0.0];
         [self.editorImageView setImage:img];
+        [UIView animateWithDuration:0.3 animations:^{
+            [self.editorImageView setAlpha:1.0];
+        }];
     }];
     [self applyRoundMask:self.editorImageView];
 }
