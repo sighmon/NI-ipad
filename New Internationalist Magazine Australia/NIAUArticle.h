@@ -26,6 +26,8 @@ extern NSString *ArticleFailedUpdateNotification;
 //Q: does atomic mean what i think it means (threadsafety)?
 @property(atomic) BOOL requestingBody;
 
+@property(atomic) BOOL isRailsServerReachable;
+
 -(NSString *)title;
 -(NSString *)teaser;
 -(NSString *)author;

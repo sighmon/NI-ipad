@@ -554,6 +554,7 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
                 });
             } else {
                 dispatch_async(dispatch_get_main_queue(), ^{
+                    self.isRailsServerReachable = FALSE;
                     [[NSNotificationCenter defaultCenter] postNotificationName:ArticleFailedUpdateNotification object:self];
                 });
             }

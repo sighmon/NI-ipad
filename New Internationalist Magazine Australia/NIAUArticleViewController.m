@@ -94,6 +94,9 @@
     if (netStatus == NotReachable) {
         // Ask them to turn on wifi or get internet access.
         [[[UIAlertView alloc] initWithTitle:@"Internet access?" message:@"It doesn't seem like you have internet access, turn it on to subscribe or download this article." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+    } else if (![self.article isRailsServerReachable]) {
+        // Pop an alert saying sorry, it's our problem
+        [[[UIAlertView alloc] initWithTitle:@"Uh oh!" message:@"We're really really sorry! Looks like our server is unavailable. :-(" delegate:self cancelButtonTitle:@"Try again later." otherButtonTitles:nil] show];
     } else {
         // Pop up an alert asking the user to subscribe!
         [[[UIAlertView alloc] initWithTitle:@"Subscribe?" message:@"It doesn't look like you're a subscriber or if you are, perhaps you haven't logged in yet. What would you like to do?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Subscribe", @"Log-in", nil] show];
