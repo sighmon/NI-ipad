@@ -571,7 +571,13 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
 - (BOOL)containsCategoryWithSubstring:(NSString *)substring
 {
     return (NSNotFound != [self.categories indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
-        return [[obj objectForKey:@"name"] rangeOfString:substring].location;
+        NSUInteger returnThing = [[obj objectForKey:@"name"] rangeOfString:substring].location;
+        if (NSNotFound != returnThing) {
+            *stop = YES;
+            return returnThing;
+        } else {
+            return NO;
+        }
     }]);
 }
 

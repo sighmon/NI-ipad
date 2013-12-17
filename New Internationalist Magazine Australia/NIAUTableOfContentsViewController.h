@@ -29,6 +29,7 @@
 @property (nonatomic, strong) NSMutableArray *alternativesArticles;
 @property (nonatomic, strong) NSMutableArray *regularArticles;
 @property (nonatomic, strong) NSMutableArray *uncategorisedArticles;
+@property (nonatomic, strong) NSMutableArray *sortedCategories;
 
 @property (nonatomic, strong) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) NSMutableDictionary *cellDictionary;

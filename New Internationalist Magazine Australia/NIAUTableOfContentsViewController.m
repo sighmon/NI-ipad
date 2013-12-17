@@ -38,6 +38,7 @@ static NSString *CellIdentifier = @"articleCell";
         self.alternativesArticles = [[NSMutableArray alloc] init];
         self.regularArticles = [[NSMutableArray alloc] init];
         self.uncategorisedArticles = [[NSMutableArray alloc] init];
+        self.sortedCategories = [[NSMutableArray alloc] init];
     }
     return self;
 }
@@ -81,6 +82,7 @@ static NSString *CellIdentifier = @"articleCell";
     self.alternativesArticles = [NSMutableArray array];
     self.regularArticles = [NSMutableArray array];
     self.uncategorisedArticles = [NSMutableArray array];
+    self.sortedCategories = [NSMutableArray array];
     
     // Sort articles into the section arrays
     
@@ -109,7 +111,19 @@ static NSString *CellIdentifier = @"articleCell";
             [self.uncategorisedArticles addObject:articleToAdd];
         }
     }
-    int numberOfArticlesCategorised = self.featureArticles.count + self.agendaArticles.count + self.mixedMediaArticles.count + self.opinionArticles.count + self.alternativesArticles.count + self.regularArticles.count + self.uncategorisedArticles.count;
+    [self.sortedCategories addObject:self.featureArticles];
+    [self.sortedCategories addObject:self.agendaArticles];
+    [self.sortedCategories addObject:self.mixedMediaArticles];
+    [self.sortedCategories addObject:self.opinionArticles];
+    [self.sortedCategories addObject:self.alternativesArticles];
+    [self.sortedCategories addObject:self.regularArticles];
+    [self.sortedCategories addObject:self.uncategorisedArticles];
+    
+    int numberOfArticlesCategorised = 0;
+    for (int i = 0; i < self.sortedCategories.count; i++) {
+        numberOfArticlesCategorised += [self.sortedCategories[i] count];
+        NSLog(@"Category #%d has #%d articles", i, [self.sortedCategories[i] count]);
+    }
     NSLog(@"Number of articles categorised: %d", numberOfArticlesCategorised);
     NSLog(@"Number of articles in this issue: %d", [self.issue numberOfArticles]);
     
@@ -167,11 +181,17 @@ static NSString *CellIdentifier = @"articleCell";
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+    return self.sortedCategories.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self.issue numberOfArticles];
+    return [self.sortedCategories[section] count];
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    NSArray *sectionNames = @[@"Features", @"Agenda", @"Film, Book & Music reviews", @"Opinion", @"Alternatives", @"Regulars", @"Others"];
+    return sectionNames[section];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -223,18 +243,20 @@ static NSString *CellIdentifier = @"articleCell";
 
 - (void)setupCellForHeight: (UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
 
-    id teaser = [self.issue articleAtIndex:indexPath.row].teaser;
+    NIAUArticle *article = self.sortedCategories[indexPath.section][indexPath.row];
+    
+    id teaser = article.teaser;
     teaser = (teaser==[NSNull null]) ? @"" : teaser;
     
     UIImageView *articleImageView = (UIImageView *)[cell viewWithTag:100];
     articleImageView.image = nil;
     // Set background colour to the category colour.
-    NSDictionary *firstCategory = [self.issue articleAtIndex:indexPath.row].categories.firstObject;
+    NSDictionary *firstCategory = article.categories.firstObject;
     id categoryColour = WITH_DEFAULT([firstCategory objectForKey:@"colour"],[NSNumber numberWithInt:0xFFFFFF]);
     articleImageView.backgroundColor = UIColorFromRGB([categoryColour integerValue]);
     
     UILabel *articleTitle = (UILabel *)[cell viewWithTag:101];
-    articleTitle.text = [self.issue articleAtIndex:indexPath.row].title;
+    articleTitle.text = article.title;
     articleTitle.font = [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
     
     UILabel *articleTeaser = (UILabel *)[cell viewWithTag:102];
@@ -262,7 +284,7 @@ static NSString *CellIdentifier = @"articleCell";
 - (void)setupCell: (UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
 
     UIImageView *articleImageView = (UIImageView *)[cell viewWithTag:100];
-    NIAUArticle *article = [self.issue articleAtIndex:indexPath.row];
+    NIAUArticle *article = self.sortedCategories[indexPath.section][indexPath.row];
     CGSize thumbSize = CGSizeMake(57,72);
     if (self.tableView.dragging == NO && self.tableView.decelerating == NO) {
         if (articleImageView.image == nil) {
@@ -424,7 +446,7 @@ static NSString *CellIdentifier = @"articleCell";
         NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
         
         NIAUArticleViewController *articleViewController = [segue destinationViewController];
-        articleViewController.article = [self.issue articleAtIndex:selectedIndexPath.row];
+        articleViewController.article = self.sortedCategories[selectedIndexPath.section][selectedIndexPath.row];
         
     }
 }
