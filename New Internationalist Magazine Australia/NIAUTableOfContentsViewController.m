@@ -111,18 +111,18 @@ static NSString *CellIdentifier = @"articleCell";
             [self.uncategorisedArticles addObject:articleToAdd];
         }
     }
-    [self.sortedCategories addObject:self.featureArticles];
-    [self.sortedCategories addObject:self.agendaArticles];
-    [self.sortedCategories addObject:self.mixedMediaArticles];
-    [self.sortedCategories addObject:self.opinionArticles];
-    [self.sortedCategories addObject:self.alternativesArticles];
-    [self.sortedCategories addObject:self.regularArticles];
-    [self.sortedCategories addObject:self.uncategorisedArticles];
+    [self addSectionToSortedCategories:self.featureArticles withName:@"Features"];
+    [self addSectionToSortedCategories:self.agendaArticles withName:@"Agenda"];
+    [self addSectionToSortedCategories:self.mixedMediaArticles withName:@"Film, Book & Music reviews"];
+    [self addSectionToSortedCategories:self.opinionArticles withName:@"Opinion"];
+    [self addSectionToSortedCategories:self.alternativesArticles withName:@"Alternatives"];
+    [self addSectionToSortedCategories:self.regularArticles withName:@"Regulars"];
+    [self addSectionToSortedCategories:self.uncategorisedArticles withName:@"Others"];
     
     int numberOfArticlesCategorised = 0;
     for (int i = 0; i < self.sortedCategories.count; i++) {
-        numberOfArticlesCategorised += [self.sortedCategories[i] count];
-        NSLog(@"Category #%d has #%d articles", i, [self.sortedCategories[i] count]);
+        numberOfArticlesCategorised += [[self.sortedCategories[i] objectForKey:@"articles"] count];
+        NSLog(@"Category #%d has #%d articles", i, [[self.sortedCategories[i] objectForKey:@"articles"] count]);
     }
     NSLog(@"Number of articles categorised: %d", numberOfArticlesCategorised);
     NSLog(@"Number of articles in this issue: %d", [self.issue numberOfArticles]);
@@ -130,6 +130,16 @@ static NSString *CellIdentifier = @"articleCell";
     // TODO: FINISH this controller, check whether the above code works, and then use it to determine the sections.
     
     [self showArticles];
+}
+
+- (void)addSectionToSortedCategories:(NSArray *)section withName:(NSString *)name
+{
+    if (section.count > 0) {
+        NSMutableDictionary *sectionDictionary = [NSMutableDictionary dictionary];
+        [sectionDictionary setObject:section forKey:@"articles"];
+        [sectionDictionary setObject:name forKey:@"name"];
+        [self.sortedCategories addObject:sectionDictionary];
+    }
 }
 
 - (void)preferredContentSizeChanged:(NSNotification *)aNotification
@@ -185,28 +195,29 @@ static NSString *CellIdentifier = @"articleCell";
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self.sortedCategories[section] count];
+    return [[self.sortedCategories[section] objectForKey:@"articles"] count];
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    NSArray *sectionNames = @[@"Features", @"Agenda", @"Film, Book & Music reviews", @"Opinion", @"Alternatives", @"Regulars", @"Others"];
-    return sectionNames[section];
+    return [self.sortedCategories[section] objectForKey:@"name"];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    id cell = [self.cellDictionary objectForKey:[NSNumber numberWithInt:indexPath.row]];
+    NSMutableDictionary *cellSectionDictionary = [NSMutableDictionary dictionary];
+    id cell = [[self.cellDictionary objectForKey:[NSNumber numberWithInt:indexPath.section]] objectForKey:[NSNumber numberWithInt:indexPath.row]];
     if (cell != nil) {
-//        NSLog(@"Cell cache hit");
+        NSLog(@"Cell cache hit");
     } else {
-//        NSLog(@"Index path: %@",[NSNumber numberWithInt:indexPath.row]);
+        NSLog(@"\nSection: %@, Index path: %@",[NSNumber numberWithInt:indexPath.section], [NSNumber numberWithInt:indexPath.row]);
         cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (cell == nil) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
         }
         [self setupCellForHeight:cell atIndexPath:indexPath];
-        [self.cellDictionary setObject:cell forKey:[NSNumber numberWithInt:indexPath.row]];
+        [cellSectionDictionary setObject:cell forKey:[NSNumber numberWithInt:indexPath.row]];
+        [self.cellDictionary setObject:cellSectionDictionary forKey:[NSNumber numberWithInt:indexPath.section]];
     }
     
     return cell;
@@ -243,7 +254,7 @@ static NSString *CellIdentifier = @"articleCell";
 
 - (void)setupCellForHeight: (UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
 
-    NIAUArticle *article = self.sortedCategories[indexPath.section][indexPath.row];
+    NIAUArticle *article = [self.sortedCategories[indexPath.section] objectForKey:@"articles"][indexPath.row];
     
     id teaser = article.teaser;
     teaser = (teaser==[NSNull null]) ? @"" : teaser;
@@ -284,7 +295,7 @@ static NSString *CellIdentifier = @"articleCell";
 - (void)setupCell: (UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
 
     UIImageView *articleImageView = (UIImageView *)[cell viewWithTag:100];
-    NIAUArticle *article = self.sortedCategories[indexPath.section][indexPath.row];
+    NIAUArticle *article = [self.sortedCategories[indexPath.section] objectForKey:@"articles"][indexPath.row];
     CGSize thumbSize = CGSizeMake(57,72);
     if (self.tableView.dragging == NO && self.tableView.decelerating == NO) {
         if (articleImageView.image == nil) {
@@ -446,7 +457,7 @@ static NSString *CellIdentifier = @"articleCell";
         NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
         
         NIAUArticleViewController *articleViewController = [segue destinationViewController];
-        articleViewController.article = self.sortedCategories[selectedIndexPath.section][selectedIndexPath.row];
+        articleViewController.article = [self.sortedCategories[selectedIndexPath.section] objectForKey:@"articles"][selectedIndexPath.row];
         
     }
 }
