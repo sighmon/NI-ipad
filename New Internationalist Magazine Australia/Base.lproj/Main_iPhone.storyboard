@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="13A3017" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="eQs-ol-VW7">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="13B3116" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="eQs-ol-VW7">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
     </dependencies>
@@ -888,6 +888,7 @@
                         <segue destination="GGn-sZ-3sw" kind="push" identifier="showImageZoom" id="mdp-6r-s59"/>
                         <segue destination="qrh-8f-IqL" kind="push" identifier="alertToSubscribe" id="SUv-P7-9yc"/>
                         <segue destination="fEr-qG-YdO" kind="push" identifier="alertToLogin" id="joJ-Rh-K6j"/>
+                        <segue destination="ZjM-Y0-4yQ" kind="push" identifier="articleToCategory" id="2MC-OH-cwI"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nmL-1b-WQV" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -961,8 +962,9 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="fFr-gL-mDW"/>
-        <segue reference="W9z-A8-KEC"/>
-        <segue reference="fI5-Du-KTZ"/>
+        <segue reference="Miu-Qg-BkO"/>
+        <segue reference="2MC-OH-cwI"/>
+        <segue reference="mdp-6r-s59"/>
         <segue reference="joJ-Rh-K6j"/>
         <segue reference="SUv-P7-9yc"/>
     </inferredMetricsTieBreakers>

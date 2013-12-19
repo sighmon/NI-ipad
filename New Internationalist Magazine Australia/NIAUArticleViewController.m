@@ -16,22 +16,6 @@
 
 @implementation NIAUArticleViewController
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    if ([[segue identifier] isEqualToString:@"showImageZoom"])
-    {
-        // TODO: Load the large version of the image to be zoomed.
-        NIAUImageZoomViewController *imageZoomViewController = [segue destinationViewController];
-        
-        if ([sender isKindOfClass:[UIImageView class]]) {
-            UIImageView *imageTapped = (UIImageView *)sender;
-            imageZoomViewController.imageToLoad = imageTapped.image;
-        } else {
-            imageZoomViewController.imageToLoad = [UIImage imageNamed:@"default_article_image.png"];
-        }
-    }
-}
-
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -140,11 +124,18 @@
     
     //Get the real article images.
     [self.article getFeaturedImageWithCompletionBlock:^(UIImage *img) {
-        [self.featuredImage setAlpha:0.0];
-        [self.featuredImage setImage:img];
-        [UIView animateWithDuration:0.3 animations:^{
-            [self.featuredImage setAlpha:1.0];
-        }];
+        if (img) {
+            [self.featuredImage setAlpha:0.0];
+            [self.featuredImage setImage:img];
+            [UIView animateWithDuration:0.3 animations:^{
+                [self.featuredImage setAlpha:1.0];
+            }];
+        } else {
+            [UIView animateWithDuration:0.3 animations:^{
+                // Update the height constraint of self.featuredImage to make it skinny.
+                [self.featuredImage.constraints[0] setConstant:50.0];
+            }];
+        }
     }];
     NSDictionary *firstCategory = self.article.categories.firstObject;
     id categoryColour = WITH_DEFAULT([firstCategory objectForKey:@"colour"],[NSNumber numberWithInt:0xFFFFFF]);
@@ -299,7 +290,15 @@
 - (IBAction)handleFeaturedImageSingleTap:(UITapGestureRecognizer *)recognizer
 {
     // Handle image being tapped
-    [self performSegueWithIdentifier:@"showImageZoom" sender:recognizer.view];
+    
+    // TODO: Fix this test, it's a little brittle...
+    if (recognizer.view.frame.size.height > 130) {
+        [self performSegueWithIdentifier:@"showImageZoom" sender:recognizer.view];
+    } else {
+        // Doesn't have a featured image, so segue to the category tapped
+        [self performSegueWithIdentifier:@"articleToCategory" sender:self];
+    }
+    
 }
 
 - (IBAction)handleSecondTestImageSingleTap:(UITapGestureRecognizer *)recognizer
@@ -312,6 +311,29 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark -
+#pragma mark Segue
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([[segue identifier] isEqualToString:@"showImageZoom"]) {
+        // TODO: Load the large version of the image to be zoomed.
+        NIAUImageZoomViewController *imageZoomViewController = [segue destinationViewController];
+        
+        if ([sender isKindOfClass:[UIImageView class]]) {
+            UIImageView *imageTapped = (UIImageView *)sender;
+            imageZoomViewController.imageToLoad = imageTapped.image;
+        } else {
+            imageZoomViewController.imageToLoad = [UIImage imageNamed:@"default_article_image.png"];
+        }
+    } else if ([[segue identifier] isEqualToString:@"articleToCategory"]) {
+        NIAUCategoryViewController *categoryViewController = [segue destinationViewController];
+        
+        // TODO: when categories are listed on the article page, choose the category tapped.
+        categoryViewController.category = [[self.article.categories firstObject] objectForKey:@"name"];
+    }
 }
 
 #pragma mark -

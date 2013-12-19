@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "NIAUArticle.h"
 #import "NIAUIssue.h"
+#import "NIAUCategoryViewController.h"
 
 @interface NIAUArticleViewController : UIViewController <UIScrollViewDelegate, UIGestureRecognizerDelegate, UIWebViewDelegate>
 
