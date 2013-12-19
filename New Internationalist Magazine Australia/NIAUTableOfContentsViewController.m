@@ -208,16 +208,20 @@ static NSString *CellIdentifier = @"articleCell";
     NSMutableDictionary *cellSectionDictionary = [NSMutableDictionary dictionary];
     id cell = [[self.cellDictionary objectForKey:[NSNumber numberWithInt:indexPath.section]] objectForKey:[NSNumber numberWithInt:indexPath.row]];
     if (cell != nil) {
-        NSLog(@"Cell cache hit");
+//        NSLog(@"Cell cache hit");
     } else {
-        NSLog(@"\nSection: %@, Index path: %@",[NSNumber numberWithInt:indexPath.section], [NSNumber numberWithInt:indexPath.row]);
+//        NSLog(@"\nSection: %@, Index path: %@",[NSNumber numberWithInt:indexPath.section], [NSNumber numberWithInt:indexPath.row]);
         cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (cell == nil) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
         }
         [self setupCellForHeight:cell atIndexPath:indexPath];
         [cellSectionDictionary setObject:cell forKey:[NSNumber numberWithInt:indexPath.row]];
-        [self.cellDictionary setObject:cellSectionDictionary forKey:[NSNumber numberWithInt:indexPath.section]];
+        if ([self.cellDictionary objectForKey:[NSNumber numberWithInt:indexPath.section]]) {
+            [[self.cellDictionary objectForKey:[NSNumber numberWithInt:indexPath.section]] setObject:cell forKey:[NSNumber numberWithInt:indexPath.row]];
+        } else {
+            [self.cellDictionary setObject:cellSectionDictionary forKey:[NSNumber numberWithInt:indexPath.section]];
+        }
     }
     
     return cell;
