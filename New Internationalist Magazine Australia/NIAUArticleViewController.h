@@ -11,7 +11,7 @@
 #import "NIAUIssue.h"
 #import "NIAUCategoryViewController.h"
 
-@interface NIAUArticleViewController : UIViewController <UIScrollViewDelegate, UIGestureRecognizerDelegate, UIWebViewDelegate>
+@interface NIAUArticleViewController : UIViewController <UIScrollViewDelegate, UIGestureRecognizerDelegate, UIWebViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource>
 
 @property (nonatomic, strong) NIAUArticle *article;
 
@@ -27,6 +27,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *authorLabel;
 @property (weak, nonatomic) IBOutlet UIWebView *bodyWebView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bodyWebViewHeightConstraint;
+
+@property (weak, nonatomic) IBOutlet UICollectionView *categoryCollectionView;
 
 @property (weak, nonatomic) IBOutlet UINavigationItem *shareAction;
 

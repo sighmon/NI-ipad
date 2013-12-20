@@ -9,6 +9,9 @@
 #import "NIAUArticleViewController.h"
 #import "NIAUImageZoomViewController.h"
 #import "Reachability.h"
+#import "NIAUArticleCategoryCell.h"
+
+NSString *kCategoryCellID = @"categoryCellID";
 
 @interface NIAUArticleViewController ()
 
@@ -212,6 +215,50 @@
 }
 
 #pragma mark -
+#pragma mark UICollectionView delegate
+
+- (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section;
+{
+    return self.article.categories.count;
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)cv cellForItemAtIndexPath:(NSIndexPath *)indexPath;
+{
+    NIAUArticleCategoryCell *cell = [cv dequeueReusableCellWithReuseIdentifier:kCategoryCellID forIndexPath:indexPath];
+    
+    // make the cell's title the actual NSIndexPath value
+    // cell.label.text = [NSString stringWithFormat:@"{%ld,%ld}", (long)indexPath.row, (long)indexPath.section];
+    
+    NSDictionary *category = self.article.categories[indexPath.row];
+    
+    // Remove the slash and only take the last word
+    NSArray *categoryParts = @[];
+    NSString *textString = [category objectForKey:@"name"];
+    categoryParts = [textString componentsSeparatedByString:@"/"];
+    
+    cell.categoryLabel.text = [[categoryParts[[categoryParts count]-2] capitalizedString] stringByReplacingOccurrencesOfString:@"-" withString:@" "];
+    
+    // Round the cell corners
+    cell.layer.masksToBounds = YES;
+    cell.layer.cornerRadius = 3.;
+    
+    // Adjust the size of the cell to fit the label + 10
+    CGSize labelSize = [cell.categoryLabel intrinsicContentSize];
+    [cell setFrame:CGRectMake(cell.frame.origin.x, cell.frame.origin.y, labelSize.width + 10., 20.)];
+    
+//    // Set the background colour to the category colour
+//    id categoryColour = WITH_DEFAULT([category objectForKey:@"colour"],[NSNumber numberWithInt:0xFFFFFF]);
+//    cell.backgroundColor = UIColorFromRGB([categoryColour integerValue]);
+    
+    return cell;
+}
+
+//- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
+//{
+//    return UIEdgeInsetsMake(0, 0, 0, 10);
+//}
+
+#pragma mark -
 #pragma mark AlertView delegate
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -261,11 +308,6 @@
 - (void) ensureScrollsToTop: (UIView *) ensureView {
     ((UIScrollView *)[[self.bodyWebView subviews] objectAtIndex:0]).scrollsToTop = NO;
 }
-
-#pragma mark -
-#pragma mark Store Kit purchasing an issue.
-
-
 
 #pragma mark -
 #pragma mark Social sharing
@@ -333,6 +375,12 @@
         
         // TODO: when categories are listed on the article page, choose the category tapped.
         categoryViewController.category = [[self.article.categories firstObject] objectForKey:@"name"];
+        
+    } else if ([[segue identifier] isEqualToString:@"showArticlesInCategory"]) {
+        NSIndexPath *selectedIndexPath = [[self.categoryCollectionView indexPathsForSelectedItems] objectAtIndex:0];
+        
+        NIAUCategoryViewController *categoryViewController = [segue destinationViewController];
+        categoryViewController.category = [self.article.categories[selectedIndexPath.row] objectForKey:@"name"];
     }
 }
 

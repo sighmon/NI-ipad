@@ -106,6 +106,7 @@
 		05BD7F5C17796B9F00820EF3 /* 15.png in Resources */ = {isa = PBXBuildFile; fileRef = 05BD7F4A17796B9F00820EF3 /* 15.png */; };
 		05BD7F5D17796B9F00820EF3 /* 16.png in Resources */ = {isa = PBXBuildFile; fileRef = 05BD7F4B17796B9F00820EF3 /* 16.png */; };
 		05BD7F5E17796B9F00820EF3 /* 17.png in Resources */ = {isa = PBXBuildFile; fileRef = 05BD7F4C17796B9F00820EF3 /* 17.png */; };
+		05F856CF1864C67E001D1A75 /* NIAUArticleCategoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 05F856CE1864C67E001D1A75 /* NIAUArticleCategoryCell.m */; };
 		3CA1C435E64C4F6F866B2E9B /* libPods-New Internationalist Magazine Australia.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BC803423D2F743538C4A77A9 /* libPods-New Internationalist Magazine Australia.a */; };
 		52090A62178CF7D1002D5162 /* NIAUPublisher.m in Sources */ = {isa = PBXBuildFile; fileRef = 52090A61178CF7D1002D5162 /* NIAUPublisher.m */; };
 		528FC17818344C86006BCB44 /* NSData+Cookieless.m in Sources */ = {isa = PBXBuildFile; fileRef = 528FC17718344C86006BCB44 /* NSData+Cookieless.m */; };
@@ -239,6 +240,8 @@
 		05BD7F4A17796B9F00820EF3 /* 15.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 15.png; sourceTree = "<group>"; };
 		05BD7F4B17796B9F00820EF3 /* 16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 16.png; sourceTree = "<group>"; };
 		05BD7F4C17796B9F00820EF3 /* 17.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 17.png; sourceTree = "<group>"; };
+		05F856CD1864C67E001D1A75 /* NIAUArticleCategoryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NIAUArticleCategoryCell.h; sourceTree = "<group>"; };
+		05F856CE1864C67E001D1A75 /* NIAUArticleCategoryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NIAUArticleCategoryCell.m; sourceTree = "<group>"; };
 		05FA184C17A8B83200E023A0 /* 40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 40.png; sourceTree = "<group>"; };
 		05FA184D17A8B83200E023A0 /* 80.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 80.png; sourceTree = "<group>"; };
 		05FA185117A8B8AF00E023A0 /* 57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 57.png; sourceTree = "<group>"; };
@@ -401,6 +404,8 @@
 				058F738D178BBA3E002CA40C /* NIAUImageZoomViewController.m */,
 				05BD7F141779671900820EF3 /* NIAUCell.h */,
 				05BD7F151779671900820EF3 /* NIAUCell.m */,
+				05F856CD1864C67E001D1A75 /* NIAUArticleCategoryCell.h */,
+				05F856CE1864C67E001D1A75 /* NIAUArticleCategoryCell.m */,
 				055A8EE0177290CF003D9407 /* Images.xcassets */,
 				52090A65178D4291002D5162 /* local.h */,
 				055A8ECC177290CE003D9407 /* Supporting Files */,
@@ -777,6 +782,7 @@
 				52CD5EE617D896240038A70C /* NIAUCache.m in Sources */,
 				05287A24177983E400501F5F /* NIAUCell.m in Sources */,
 				05424C391803BD7000399194 /* NIAULoginViewController.m in Sources */,
+				05F856CF1864C67E001D1A75 /* NIAUArticleCategoryCell.m in Sources */,
 				051AF559184ECE7D00A91A8C /* NIAUCategoriesViewController.m in Sources */,
 				0577E07917FBF2B400A52A8E /* NIAUInAppPurchaseHelper.m in Sources */,
 				0507DB6A177AA0F60099540D /* NIAUTableOfContentsViewController.m in Sources */,
