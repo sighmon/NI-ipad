@@ -832,7 +832,7 @@
                                         <constraints>
                                             <constraint firstAttribute="height" constant="20" id="SJE-PO-sHh"/>
                                         </constraints>
-                                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="jgH-fW-XN7">
+                                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="0.0" id="jgH-fW-XN7">
                                             <size key="itemSize" width="50" height="20"/>
                                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
@@ -875,11 +875,11 @@
                                         </connections>
                                     </collectionView>
                                     <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PoX-gg-8cE">
-                                        <rect key="frame" x="0.0" y="245" width="320" height="315"/>
+                                        <rect key="frame" x="0.0" y="245" width="320" height="323"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="315" id="Zu2-h1-NqP"/>
+                                            <constraint firstAttribute="height" constant="323" id="Zu2-h1-NqP"/>
                                         </constraints>
                                         <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES"/>
                                         <connections>
@@ -936,6 +936,7 @@
                         <outlet property="bodyWebView" destination="PoX-gg-8cE" id="QH5-Cn-hTF"/>
                         <outlet property="bodyWebViewHeightConstraint" destination="Zu2-h1-NqP" id="tbM-21-nIy"/>
                         <outlet property="categoryCollectionView" destination="6Sc-4I-h9J" id="87z-iK-Q2s"/>
+                        <outlet property="categoryCollectionViewHeightConstraint" destination="SJE-PO-sHh" id="o24-Se-6cf"/>
                         <outlet property="featuredImage" destination="PAM-Qv-IM5" id="Lui-Dn-Ag7"/>
                         <outlet property="scrollView" destination="ftA-uH-mfj" id="uaw-RL-w11"/>
                         <outlet property="shareAction" destination="TQH-mr-pQg" id="cHu-AQ-lui"/>

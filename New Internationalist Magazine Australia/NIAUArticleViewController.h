@@ -29,6 +29,7 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bodyWebViewHeightConstraint;
 
 @property (weak, nonatomic) IBOutlet UICollectionView *categoryCollectionView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *categoryCollectionViewHeightConstraint;
 
 @property (weak, nonatomic) IBOutlet UINavigationItem *shareAction;
 

@@ -56,6 +56,8 @@ NSString *kCategoryCellID = @"categoryCellID";
     
     [self updateScrollViewContentHeight];
     
+    [self updateCategoryCollectionViewHeight];
+    
     // Setup pull-to-refresh for the UIWebView
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
     [refreshControl addTarget:self action:@selector(handleRefresh:) forControlEvents:UIControlEventValueChanged];
@@ -214,6 +216,11 @@ NSString *kCategoryCellID = @"categoryCellID";
     NSLog(@"Updated webview height");
 }
 
+- (void)updateCategoryCollectionViewHeight
+{
+    [self.categoryCollectionViewHeightConstraint setConstant:[self.categoryCollectionView.collectionViewLayout collectionViewContentSize].height];
+}
+
 #pragma mark -
 #pragma mark UICollectionView delegate
 
@@ -243,8 +250,8 @@ NSString *kCategoryCellID = @"categoryCellID";
     cell.layer.cornerRadius = 3.;
     
     // Adjust the size of the cell to fit the label + 10
-    CGSize labelSize = [cell.categoryLabel intrinsicContentSize];
-    [cell setFrame:CGRectMake(cell.frame.origin.x, cell.frame.origin.y, labelSize.width + 10., 20.)];
+//    CGSize labelSize = [cell.categoryLabel intrinsicContentSize];
+//    [cell setFrame:CGRectMake(cell.frame.origin.x, cell.frame.origin.y, labelSize.width + 10., 20.)];
     
 //    // Set the background colour to the category colour
 //    id categoryColour = WITH_DEFAULT([category objectForKey:@"colour"],[NSNumber numberWithInt:0xFFFFFF]);
@@ -253,10 +260,13 @@ NSString *kCategoryCellID = @"categoryCellID";
     return cell;
 }
 
-//- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
-//{
-//    return UIEdgeInsetsMake(0, 0, 0, 10);
-//}
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSDictionary *category = self.article.categories[indexPath.row];
+    id categoryColour = WITH_DEFAULT([category objectForKey:@"colour"],[NSNumber numberWithInt:0xFFFFFF]);
+    UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
+    cell.backgroundColor = UIColorFromRGB([categoryColour integerValue]);
+}
 
 #pragma mark -
 #pragma mark AlertView delegate
