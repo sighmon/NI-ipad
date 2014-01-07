@@ -839,7 +839,7 @@
                                             <inset key="sectionInset" minX="20" minY="0.0" maxX="20" maxY="0.0"/>
                                         </collectionViewFlowLayout>
                                         <cells>
-                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="categoryCellID" id="FEA-az-PMz" customClass="NIAUArticleCategoryCell">
+                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" reuseIdentifier="categoryCellID" id="FEA-az-PMz" customClass="NIAUArticleCategoryCell">
                                                 <rect key="frame" x="20" y="0.0" width="50" height="20"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -1019,11 +1019,11 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="qUJ-ry-144"/>
-        <segue reference="jkZ-Dh-FHT"/>
         <segue reference="fFr-gL-mDW"/>
-        <segue reference="mdp-6r-s59"/>
-        <segue reference="Miu-Qg-BkO"/>
         <segue reference="IfR-jT-MPw"/>
+        <segue reference="Miu-Qg-BkO"/>
+        <segue reference="SUv-P7-9yc"/>
+        <segue reference="mdp-6r-s59"/>
+        <segue reference="joJ-Rh-K6j"/>
     </inferredMetricsTieBreakers>
 </document>

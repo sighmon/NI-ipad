@@ -12,6 +12,7 @@
 #import "NIAUArticleCategoryCell.h"
 
 NSString *kCategoryCellID = @"categoryCellID";
+float cellPadding = 10.;
 
 @interface NIAUArticleViewController ()
 
@@ -57,6 +58,7 @@ NSString *kCategoryCellID = @"categoryCellID";
     [self updateScrollViewContentHeight];
     
     [self updateCategoryCollectionViewHeight];
+    self.categoryCollectionView.scrollsToTop = NO;
     
     // Setup pull-to-refresh for the UIWebView
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
@@ -249,15 +251,36 @@ NSString *kCategoryCellID = @"categoryCellID";
     cell.layer.masksToBounds = YES;
     cell.layer.cornerRadius = 3.;
     
-    // Adjust the size of the cell to fit the label + 10
+    // Adjust the size of the cell to fit the label + cellPadding
 //    CGSize labelSize = [cell.categoryLabel intrinsicContentSize];
-//    [cell setFrame:CGRectMake(cell.frame.origin.x, cell.frame.origin.y, labelSize.width + 10., 20.)];
+//    [cell setFrame:CGRectMake(cell.frame.origin.x, cell.frame.origin.y, labelSize.width + cellPadding, 20.)];
     
 //    // Set the background colour to the category colour
 //    id categoryColour = WITH_DEFAULT([category objectForKey:@"colour"],[NSNumber numberWithInt:0xFFFFFF]);
 //    cell.backgroundColor = UIColorFromRGB([categoryColour integerValue]);
     
     return cell;
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    // TOFIX: Ugly hack creates UILabel to calculate width of cell, pix to fix.
+    
+    UILabel *categoryLabel = [[UILabel alloc] init];
+    categoryLabel.font = [UIFont boldSystemFontOfSize:10];
+    NSDictionary *category = self.article.categories[indexPath.row];
+    // Remove the slash and only take the last word
+    NSArray *categoryParts = @[];
+    NSString *textString = [category objectForKey:@"name"];
+    categoryParts = [textString componentsSeparatedByString:@"/"];
+    categoryLabel.text = [[categoryParts[[categoryParts count]-2] capitalizedString] stringByReplacingOccurrencesOfString:@"-" withString:@" "];
+    
+    return CGSizeMake([categoryLabel intrinsicContentSize].width + cellPadding, 20.);
+}
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section
+{
+    return 10.;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
