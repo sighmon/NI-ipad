@@ -25,9 +25,7 @@
     // Setup Parse for Notifications
     [Parse setApplicationId:PARSE_APPLICATION_ID
                   clientKey:PARSE_CLIENT_KEY];
-    
-    NSLog(@"\nID: %@\nClient: %@",PARSE_APPLICATION_ID, PARSE_CLIENT_KEY);
-    
+        
     // Parse tracking analytics
 //    [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
     if (application.applicationState != UIApplicationStateBackground) {
@@ -46,7 +44,11 @@
     // Setup app to receive UIRemoteNotifications
     [application registerForRemoteNotificationTypes:UIRemoteNotificationTypeBadge|
      UIRemoteNotificationTypeAlert|
-     UIRemoteNotificationTypeSound];
+     UIRemoteNotificationTypeSound|
+     UIRemoteNotificationTypeNewsstandContentAvailability];
+    
+    // TODO: Remove this for launch - allows multiple NewsStand notifications. :-)
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"NKDontThrottleNewsstandContentNotifications"];
     
     // Override point for customization after application launch.
     return YES;
@@ -64,6 +66,7 @@
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
+    NSLog(@"UserInfo: %@", userInfo);
     [PFPush handlePush:userInfo];
     if (application.applicationState == UIApplicationStateInactive) {
         [PFAnalytics trackAppOpenedWithRemoteNotificationPayload:userInfo];

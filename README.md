@@ -8,7 +8,7 @@ New Internationalist Magazine for iPad, iPhone & iPod touch.
 * Apple News-stand subscriptions and automatic renewals
 * Notifications of new magazines
 * Fed by [digital.newint.com.au](https://digital.newint.com.au)
-* Built for iOS 7 (fancy)
+* Built for iOS 7
 
 ## Release date
-* Q4 of 2013 (no promises)
+* Q1 of 2014

@@ -69,6 +69,10 @@ static NSString *CellIdentifier = @"articleCell";
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
     [refreshControl addTarget:self action:@selector(handleRefresh:) forControlEvents:UIControlEventValueChanged];
     [self.tableView addSubview:refreshControl];
+    
+    // User has read the contents page, so clear notifications badge
+    [[UIApplication sharedApplication] setApplicationIconBadgeNumber: 0];
+//    [[UIApplication sharedApplication] cancelAllLocalNotifications]; // Only if you want to cancel local notifications.
 }
 
 -(void)publisherReady:(NSNotification *)not

@@ -982,7 +982,7 @@
 				GCC_PREFIX_HEADER = "New Internationalist Magazine Australia/New Internationalist Magazine Australia-Prefix.pch";
 				INFOPLIST_FILE = "New Internationalist Magazine Australia/New Internationalist Magazine Australia-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "EC9BFC6C-0C20-4D93-B1A7-36D953639F63";
+				PROVISIONING_PROFILE = "C292A042-203B-41C0-AFBC-DB57A384C17A";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1003,7 +1003,7 @@
 				GCC_PREFIX_HEADER = "New Internationalist Magazine Australia/New Internationalist Magazine Australia-Prefix.pch";
 				INFOPLIST_FILE = "New Internationalist Magazine Australia/New Internationalist Magazine Australia-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "EC9BFC6C-0C20-4D93-B1A7-36D953639F63";
+				PROVISIONING_PROFILE = "C292A042-203B-41C0-AFBC-DB57A384C17A";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
