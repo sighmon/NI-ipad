@@ -46,6 +46,8 @@ NSString *kCellID = @"magazineCellID";              // UICollectionViewCell stor
     CGSize size = CGSizeMake(0,0);
     
     size = [self calculateCellSizeForScreenSize:self.view.frame.size];
+    
+    // TODO: need to do this in a background thread, as the cover image is large and causing lag!
     cell.image.image = [[[NIAUPublisher getInstance] issueAtIndex:indexPath.row] attemptToGetCoverThumbFromMemoryForSize:size];
     
     if (cell.image.image == nil) {

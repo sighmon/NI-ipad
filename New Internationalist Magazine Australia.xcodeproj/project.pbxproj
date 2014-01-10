@@ -972,8 +972,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Simon Loffler (XJ725J5Y9Q)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Simon Loffler (XJ725J5Y9Q)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"/Users/simos/Coding/NI/New\\ Internationalist\\ Magazine\\ Australia",
@@ -982,7 +982,7 @@
 				GCC_PREFIX_HEADER = "New Internationalist Magazine Australia/New Internationalist Magazine Australia-Prefix.pch";
 				INFOPLIST_FILE = "New Internationalist Magazine Australia/New Internationalist Magazine Australia-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "C292A042-203B-41C0-AFBC-DB57A384C17A";
+				PROVISIONING_PROFILE = "C60DD063-C6FD-4711-B947-FA61C904AE43";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -993,8 +993,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: New Internationalist Publications Pty Ltd (CUMP7ABFVY)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: New Internationalist Publications Pty Ltd (CUMP7ABFVY)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"/Users/simos/Coding/NI/New\\ Internationalist\\ Magazine\\ Australia",
@@ -1003,7 +1003,7 @@
 				GCC_PREFIX_HEADER = "New Internationalist Magazine Australia/New Internationalist Magazine Australia-Prefix.pch";
 				INFOPLIST_FILE = "New Internationalist Magazine Australia/New Internationalist Magazine Australia-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "C292A042-203B-41C0-AFBC-DB57A384C17A";
+				PROVISIONING_PROFILE = "E1D29A9D-E051-4E47-BE29-5B5AFACE79D6";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

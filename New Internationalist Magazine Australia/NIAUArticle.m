@@ -348,6 +348,13 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
     } else {
         NSLog(@"Rails returned statusCode: %d\n an error: %@\nAnd data: %@", statusCode, error, data);
         responseData = nil;
+        
+        // If status == 403, user doesn't have an account, else probably a server error.
+        if (statusCode == 403) {
+            self.isRailsServerReachable = TRUE;
+        } else {
+            self.isRailsServerReachable = FALSE;
+        }
     }
     
     return responseData;
@@ -554,7 +561,6 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
                 });
             } else {
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    self.isRailsServerReachable = FALSE;
                     [[NSNotificationCenter defaultCenter] postNotificationName:ArticleFailedUpdateNotification object:self];
                 });
             }
