@@ -350,12 +350,12 @@ ul.ui-autocomplete li a:active {
     body {
         margin: 0 20px 0 20px;
     }
-    .article-image {
+    .article-image, .article-image-full, .article-image-cartoon {
         width: 100%;
         position: relative;
         margin: 1em 0px 1.5em 0px;
     }
-    .article-image img {
+    .article-image img, .article-image-full img, .article-image-cartoon img {
         width: 100%;
         margin-bottom: 1em;
     }
