@@ -52,6 +52,8 @@
     } else {
         [self loadIssues];
     }
+    
+    [self.tableViewLoadingIndicator startAnimating];
 }
 
 - (void)loadIssues
@@ -175,12 +177,20 @@
         }];
     }
     
+    // Stop loading indicator & remove it's UIView
+    [self.tableViewLoadingIndicator stopAnimating];
+    [self.loadingIndicatorView removeFromSuperview];
+    self.tableView.tableHeaderView = nil;
+    
     [self showCategories];
 }
 
 - (void)showCategories
 {
     [self.tableView reloadData];
+    NSRange range = NSMakeRange(0, self.sectionsArray.count);
+    NSIndexSet *section = [NSIndexSet indexSetWithIndexesInRange:range];
+    [self.tableView reloadSections:section withRowAnimation:UITableViewRowAnimationFade];
 }
 
 - (void)didReceiveMemoryWarning
