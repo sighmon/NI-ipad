@@ -55,10 +55,9 @@
     } else {
         [self loadIssues];
     }
-    
 }
 
-- (void) setupView
+- (void)setupView
 {
 //    How to set the navigation tint colour.
 //    [self.navigationController.navigationBar setBarTintColor:[UIColor blueColor]];
@@ -75,7 +74,16 @@
         [UIView animateWithDuration:0.5 animations:^{
             [self.cover setAlpha:1.0];
         }];
+        // update the NewsStand icon
+        [self updateNewsStandMagazineCover:img];
     }];
+}
+
+- (void)updateNewsStandMagazineCover: (UIImage *)cover
+{
+    if(cover) {
+        [[UIApplication sharedApplication] setNewsstandIconImage:cover];
+    }
 }
 
 - (void)didReceiveMemoryWarning
