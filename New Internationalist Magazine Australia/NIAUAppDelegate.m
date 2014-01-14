@@ -50,6 +50,20 @@
     // TODO: Remove this for launch - allows multiple NewsStand notifications. :-)
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"NKDontThrottleNewsstandContentNotifications"];
     
+    // When we receive a Remote Notification, grab the issue number from the payload and download it.
+    NSDictionary *payload = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+    if(payload) {
+        NSLog(@"Remote Notification Payload: \n%@", payload);
+        // schedule for issue downloading in background
+//        NKIssue *issue4 = [[NKLibrary sharedLibrary] issueWithName:@"Magazine-4"];
+//        if(issue4) {
+//            NSURL *downloadURL = [NSURL URLWithString:@"http://www.viggiosoft.com/media/data/blog/newsstand/magazine-4.pdf"];
+//            NSURLRequest *req = [NSURLRequest requestWithURL:downloadURL];
+//            NKAssetDownload *assetDownload = [issue4 addAssetWithRequest:req];
+//            [assetDownload downloadWithDelegate:store];
+//        }
+    }
+    
     // Override point for customization after application launch.
     return YES;
 }
