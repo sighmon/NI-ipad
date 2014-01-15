@@ -48,7 +48,7 @@
      UIRemoteNotificationTypeNewsstandContentAvailability];
     
     // TODO: Remove this for launch - allows multiple NewsStand notifications. :-)
-    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"NKDontThrottleNewsstandContentNotifications"];
+//    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"NKDontThrottleNewsstandContentNotifications"];
     
     // When we receive a Remote Notification, grab the issue number from the payload and download it.
     NSDictionary *payload = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
@@ -80,18 +80,32 @@
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
-    NSLog(@"UserInfo: %@", userInfo);
+    [self handleNotification:userInfo];
     [PFPush handlePush:userInfo];
     if (application.applicationState == UIApplicationStateInactive) {
         [PFAnalytics trackAppOpenedWithRemoteNotificationPayload:userInfo];
+        [self turnBadgeIconOn];
     }
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
+    [self handleNotification:userInfo];
     if (application.applicationState == UIApplicationStateInactive) {
         [PFAnalytics trackAppOpenedWithRemoteNotificationPayload:userInfo];
+        [self turnBadgeIconOn];
     }
+}
+
+- (void)handleNotification: (NSDictionary *)userInfo
+{
+    NSLog(@"UserInfo: %@", userInfo);
+    // TODO: 
+}
+
+- (void)turnBadgeIconOn
+{
+    [[UIApplication sharedApplication] setApplicationIconBadgeNumber: 1];
 }
 
 #pragma mark -
