@@ -80,6 +80,7 @@
 		059FFCA0185026F100422824 /* NIAUCategoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 059FFC9F185026F100422824 /* NIAUCategoryViewController.m */; };
 		05B910A0181632050027E5BF /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B9109F181632050027E5BF /* Reachability.m */; };
 		05BB6B43180E1802000B2FD3 /* NIAUSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05BB6B42180E1802000B2FD3 /* NIAUSearchViewController.m */; };
+		05C29EFE188736B1004FC28D /* new-issue.caf in Resources */ = {isa = PBXBuildFile; fileRef = 05C29EFD188736B1004FC28D /* new-issue.caf */; };
 		05F856CF1864C67E001D1A75 /* NIAUArticleCategoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 05F856CE1864C67E001D1A75 /* NIAUArticleCategoryCell.m */; };
 		3CA1C435E64C4F6F866B2E9B /* libPods-New Internationalist Magazine Australia.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BC803423D2F743538C4A77A9 /* libPods-New Internationalist Magazine Australia.a */; };
 		52090A62178CF7D1002D5162 /* NIAUPublisher.m in Sources */ = {isa = PBXBuildFile; fileRef = 52090A61178CF7D1002D5162 /* NIAUPublisher.m */; };
@@ -188,6 +189,7 @@
 		05BD7F131779656300820EF3 /* NIAUMagazineArchiveViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NIAUMagazineArchiveViewController.m; sourceTree = "<group>"; };
 		05BD7F141779671900820EF3 /* NIAUCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NIAUCell.h; sourceTree = "<group>"; };
 		05BD7F151779671900820EF3 /* NIAUCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NIAUCell.m; sourceTree = "<group>"; };
+		05C29EFD188736B1004FC28D /* new-issue.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "new-issue.caf"; sourceTree = "<group>"; };
 		05C95838187DF8EF00FD262F /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		05C9583A187DF9DE00FD262F /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		05F856CD1864C67E001D1A75 /* NIAUArticleCategoryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NIAUArticleCategoryCell.h; sourceTree = "<group>"; };
@@ -334,6 +336,7 @@
 		055A8ECB177290CE003D9407 /* New Internationalist Magazine Australia */ = {
 			isa = PBXGroup;
 			children = (
+				05C29EFC1887369A004FC28D /* Sounds */,
 				05B9109D181631DF0027E5BF /* Network */,
 				0511F13917BB1D55004B5A72 /* Stylesheet */,
 				055A8F011772C70F003D9407 /* Icons */,
@@ -450,6 +453,14 @@
 			name = Network;
 			sourceTree = "<group>";
 		};
+		05C29EFC1887369A004FC28D /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				05C29EFD188736B1004FC28D /* new-issue.caf */,
+			);
+			name = Sounds;
+			sourceTree = "<group>";
+		};
 		52CD5EE917D8A68C0038A70C /* Caching */ = {
 			isa = PBXGroup;
 			children = (
@@ -548,6 +559,7 @@
 				052A84F917C5E12900D36E6C /* iPad-landscape@2x.png in Resources */,
 				052A850A17C5E13900D36E6C /* 152.png in Resources */,
 				0528EC3C17853C1F000175AB /* default_article_image.png in Resources */,
+				05C29EFE188736B1004FC28D /* new-issue.caf in Resources */,
 				052A850417C5E13900D36E6C /* 76.png in Resources */,
 				052A850117C5E13900D36E6C /* 57.png in Resources */,
 				052BBF8817EFF31D00B12071 /* cover-icon@2x.png in Resources */,

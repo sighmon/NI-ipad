@@ -52,16 +52,24 @@
     
     // When we receive a Remote Notification, grab the issue number from the payload and download it.
     NSDictionary *payload = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
-    if(payload) {
-        NSLog(@"Remote Notification Payload: \n%@", payload);
+    if(payload) {        
         // schedule for issue downloading in background
-//        NKIssue *issue4 = [[NKLibrary sharedLibrary] issueWithName:@"Magazine-4"];
-//        if(issue4) {
-//            NSURL *downloadURL = [NSURL URLWithString:@"http://www.viggiosoft.com/media/data/blog/newsstand/magazine-4.pdf"];
-//            NSURLRequest *req = [NSURLRequest requestWithURL:downloadURL];
-//            NKAssetDownload *assetDownload = [issue4 addAssetWithRequest:req];
-//            [assetDownload downloadWithDelegate:store];
-//        }
+        
+        // TODO: Downloading looks something like this
+        //        NKIssue *issue4 = [[NKLibrary sharedLibrary] issueWithName:@"Magazine-4"];
+        //        if(issue4) {
+        //            NSURL *downloadURL = [NSURL URLWithString:@"http://www.viggiosoft.com/media/data/blog/newsstand/magazine-4.pdf"];
+        //            NSURLRequest *req = [NSURLRequest requestWithURL:downloadURL];
+        //            NKAssetDownload *assetDownload = [issue4 addAssetWithRequest:req];
+        //            [assetDownload downloadWithDelegate:store];
+        //        }
+        
+        // So we can see what the payload looks like for testing..
+        NSString *message = [NSString stringWithFormat:@"Downloading issue. Payload: %@", payload];
+        [[[UIAlertView alloc] initWithTitle:@"Downloading..." message:message delegate:self cancelButtonTitle:@"Thanks!" otherButtonTitles:nil] show];
+        
+        // TODO: unzip issue and add to the library based on [payload objectForKey:@"railsID"];
+        
     }
     
     // Override point for customization after application launch.
@@ -76,6 +84,7 @@
     PFInstallation *currentInstallation = [PFInstallation currentInstallation];
     [currentInstallation setDeviceTokenFromData:deviceToken];
     [currentInstallation saveInBackground];
+    NSLog(@"Parse installation objectId: %@", [currentInstallation objectId]);
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
