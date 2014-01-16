@@ -48,28 +48,15 @@
      UIRemoteNotificationTypeNewsstandContentAvailability];
     
     // TODO: Remove this for launch - allows multiple NewsStand notifications. :-)
-//    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"NKDontThrottleNewsstandContentNotifications"];
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"NKDontThrottleNewsstandContentNotifications"];
     
     // When we receive a Remote Notification, grab the issue number from the payload and download it.
     NSDictionary *payload = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
     if(payload) {        
-        // schedule for issue downloading in background
+        // This only fires if the application is launched from a remote notification by the user
+        // Also fires when the newsstand content-available starts the app in the background.
         
-        // TODO: Downloading looks something like this
-        //        NKIssue *issue4 = [[NKLibrary sharedLibrary] issueWithName:@"Magazine-4"];
-        //        if(issue4) {
-        //            NSURL *downloadURL = [NSURL URLWithString:@"http://www.viggiosoft.com/media/data/blog/newsstand/magazine-4.pdf"];
-        //            NSURLRequest *req = [NSURLRequest requestWithURL:downloadURL];
-        //            NKAssetDownload *assetDownload = [issue4 addAssetWithRequest:req];
-        //            [assetDownload downloadWithDelegate:store];
-        //        }
-        
-        // So we can see what the payload looks like for testing..
-        NSString *message = [NSString stringWithFormat:@"Downloading issue. Payload: %@", payload];
-        [[[UIAlertView alloc] initWithTitle:@"Downloading..." message:message delegate:self cancelButtonTitle:@"Thanks!" otherButtonTitles:nil] show];
-        
-        // TODO: unzip issue and add to the library based on [payload objectForKey:@"railsID"];
-        
+        [self handleRemoteNotification:application andUserInfo:payload];
     }
     
     // Override point for customization after application launch.
@@ -89,6 +76,7 @@
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
+    // This notification fires when the user has the app open and a notification comes in.
     [self handleNotification:userInfo];
     [PFPush handlePush:userInfo];
     if (application.applicationState == UIApplicationStateInactive) {
@@ -99,6 +87,7 @@
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
+    // This notification fires when the user has the app open and a notification comes in.
     [self handleNotification:userInfo];
     if (application.applicationState == UIApplicationStateInactive) {
         [PFAnalytics trackAppOpenedWithRemoteNotificationPayload:userInfo];
@@ -106,15 +95,58 @@
     }
 }
 
+- (void)handleRemoteNotification: (UIApplication *)application andUserInfo: (NSDictionary *)userInfo
+{
+    UILocalNotification *localNotif = [[UILocalNotification alloc] init];
+    if (localNotif) {
+        localNotif.alertBody = [NSString stringWithFormat:
+                                NSLocalizedString(@"%@", nil), [[userInfo objectForKey:@"aps"] objectForKey:@"alert"]];
+        localNotif.alertAction = NSLocalizedString(@"Read it now.", nil);
+        localNotif.soundName = [NSString stringWithFormat:
+                                NSLocalizedString(@"%@", nil), [[userInfo objectForKey:@"aps"] objectForKey:@"sound"]];
+        localNotif.applicationIconBadgeNumber = [[[userInfo objectForKey:@"aps"] objectForKey:@"badge"] intValue];
+        [application presentLocalNotificationNow:localNotif];
+    }
+    
+    // TODO: Start background download.
+    [self startBackgroundDownload];
+}
+
 - (void)handleNotification: (NSDictionary *)userInfo
 {
     NSLog(@"UserInfo: %@", userInfo);
-    // TODO: 
+    // Ask the user whether they want to download the new issue now
+    NSString *message = [NSString stringWithFormat:@"%@ Would you like to download it now in the background?", [[userInfo objectForKey:@"aps"] objectForKey:@"alert"]];
+    [[[UIAlertView alloc] initWithTitle:@"New issue available" message:message delegate:self cancelButtonTitle:@"Not now." otherButtonTitles:@"Download", nil] show];
 }
 
 - (void)turnBadgeIconOn
 {
     [[UIApplication sharedApplication] setApplicationIconBadgeNumber: 1];
+}
+
+- (void)startBackgroundDownload
+{
+    // TODO: get zip file from Rails, unpack it and save it to the library.
+    NSString *message = [NSString stringWithFormat:@"Totally doing it."];
+    [[[UIAlertView alloc] initWithTitle:@"Sure thing." message:message delegate:self cancelButtonTitle:@"Cool." otherButtonTitles:nil] show];
+}
+
+#pragma mark AlertView delegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    switch (buttonIndex) {
+        case 0:
+            // Cancel pressed
+            break;
+        case 1:
+            // Download pressed
+            [self startBackgroundDownload];
+            break;
+        default:
+            break;
+    }
 }
 
 #pragma mark -
