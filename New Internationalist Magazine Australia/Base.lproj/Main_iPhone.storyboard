@@ -1039,11 +1039,11 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="MZP-I7-Qx3"/>
-        <segue reference="fFr-gL-mDW"/>
+        <segue reference="joJ-Rh-K6j"/>
         <segue reference="Miu-Qg-BkO"/>
+        <segue reference="2MC-OH-cwI"/>
         <segue reference="SUv-P7-9yc"/>
         <segue reference="mdp-6r-s59"/>
-        <segue reference="joJ-Rh-K6j"/>
+        <segue reference="fFr-gL-mDW"/>
     </inferredMetricsTieBreakers>
 </document>

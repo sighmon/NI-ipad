@@ -965,6 +965,7 @@
                         <segue destination="p7L-KM-t4i" kind="push" identifier="showImageZoom" id="JBV-bs-efO"/>
                         <segue destination="d0z-vn-J25" kind="push" identifier="alertToSubscribe" id="d5N-e1-WGj"/>
                         <segue destination="rZc-6Q-DEj" kind="push" identifier="alertToLogin" id="w2Z-Bz-DtP"/>
+                        <segue destination="obd-BY-qYN" kind="push" identifier="articleToCategory" id="mho-0V-J7B"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="a5Y-94-kse" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1051,11 +1052,11 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
+        <segue reference="JBV-bs-efO"/>
         <segue reference="WLv-dP-nWF"/>
         <segue reference="7r1-dy-lxK"/>
-        <segue reference="wEC-zk-Hnv"/>
+        <segue reference="mho-0V-J7B"/>
         <segue reference="w2Z-Bz-DtP"/>
         <segue reference="d5N-e1-WGj"/>
-        <segue reference="JBV-bs-efO"/>
     </inferredMetricsTieBreakers>
 </document>

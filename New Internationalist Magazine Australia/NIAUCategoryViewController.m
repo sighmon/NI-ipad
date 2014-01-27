@@ -171,7 +171,9 @@
     articleTitle.text = [article title];
     
     // Regex to remove <strong> and <b> and any other <html>
-    NSString *teaser = [article teaser];
+    id teaser = [article teaser];
+    teaser = (teaser==[NSNull null]) ? @"" : teaser;
+    
     NSError *error = NULL;
     NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"<[^>]*>" options:NSRegularExpressionCaseInsensitive error:&error];
     NSString *cleanTeaser = [regex stringByReplacingMatchesInString:teaser options:0 range:NSMakeRange(0, [teaser length]) withTemplate:@""];
