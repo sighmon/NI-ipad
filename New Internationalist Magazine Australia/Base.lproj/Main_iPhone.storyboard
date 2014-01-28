@@ -44,8 +44,11 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="D13-Uv-IQI">
-                                <rect key="frame" x="20" y="354" width="280" height="38"/>
+                                <rect key="frame" x="20" y="400" width="280" height="38"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="38" id="CU9-Gc-9xR"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="21"/>
                                 <state key="normal" title="Subscribe"/>
                                 <connections>
@@ -54,8 +57,11 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zKw-Ww-8lt">
-                                <rect key="frame" x="20" y="400" width="280" height="38"/>
+                                <rect key="frame" x="20" y="446" width="280" height="38"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="38" id="n70-u4-K1O"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="21"/>
                                 <state key="normal" title="Login"/>
                                 <connections>
@@ -75,7 +81,7 @@
                                 </connections>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SMJ-ul-KqX">
-                                <rect key="frame" x="20" y="446" width="141" height="38"/>
+                                <rect key="frame" x="20" y="354" width="141" height="38"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="21"/>
                                 <state key="normal" title="Search"/>
@@ -84,7 +90,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lgx-tv-qp1">
-                                <rect key="frame" x="159" y="446" width="141" height="38"/>
+                                <rect key="frame" x="159" y="354" width="141" height="38"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="21"/>
                                 <state key="normal" title="Categories"/>
@@ -98,9 +104,9 @@
                             <constraint firstItem="0Uh-Tb-k55" firstAttribute="trailing" secondItem="kh9-bI-dsS" secondAttribute="trailing" id="1cz-Ux-0Th"/>
                             <constraint firstItem="yAi-yu-vep" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="20" id="3aE-aQ-naj"/>
                             <constraint firstAttribute="centerY" secondItem="0Uh-Tb-k55" secondAttribute="centerY" constant="92" id="62e-I4-3Hb"/>
-                            <constraint firstItem="D13-Uv-IQI" firstAttribute="top" secondItem="yAi-yu-vep" secondAttribute="bottom" constant="8" id="6Mm-60-y0i"/>
                             <constraint firstItem="lgx-tv-qp1" firstAttribute="leading" secondItem="SMJ-ul-KqX" secondAttribute="trailing" constant="-2" id="8iS-m2-zH7"/>
                             <constraint firstItem="zKw-Ww-8lt" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="20" id="C0W-Gi-lhN"/>
+                            <constraint firstItem="D13-Uv-IQI" firstAttribute="top" secondItem="SMJ-ul-KqX" secondAttribute="bottom" constant="8" id="C4g-pq-Su2"/>
                             <constraint firstItem="SMJ-ul-KqX" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="20" id="JCp-el-6qR"/>
                             <constraint firstItem="0Uh-Tb-k55" firstAttribute="top" secondItem="CXJ-uP-klC" secondAttribute="bottom" constant="20" id="Pok-1R-cxG"/>
                             <constraint firstAttribute="trailing" secondItem="lgx-tv-qp1" secondAttribute="trailing" constant="20" id="Sz9-Sg-Cya"/>
@@ -113,7 +119,7 @@
                             <constraint firstItem="lgx-tv-qp1" firstAttribute="top" secondItem="SMJ-ul-KqX" secondAttribute="top" id="oga-fA-hma"/>
                             <constraint firstAttribute="trailing" secondItem="zKw-Ww-8lt" secondAttribute="trailing" constant="20" id="pJn-BN-jrg"/>
                             <constraint firstItem="lgx-tv-qp1" firstAttribute="width" secondItem="SMJ-ul-KqX" secondAttribute="width" id="tbM-Xg-Mb4"/>
-                            <constraint firstItem="SMJ-ul-KqX" firstAttribute="top" secondItem="zKw-Ww-8lt" secondAttribute="bottom" constant="8" id="zBn-cW-LYb"/>
+                            <constraint firstItem="SMJ-ul-KqX" firstAttribute="top" secondItem="yAi-yu-vep" secondAttribute="bottom" constant="8" id="y97-8D-0U5"/>
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
@@ -334,7 +340,7 @@
                         <inset key="separatorInset" minX="58" minY="0.0" maxX="0.0" maxY="0.0"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="articlesInCategoryCell" id="syL-gP-mez">
-                                <rect key="frame" x="0.0" y="86" width="320" height="88"/>
+                                <rect key="frame" x="0.0" y="22" width="320" height="88"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="syL-gP-mez" id="odb-7R-1sz">
                                     <rect key="frame" x="0.0" y="0.0" width="287" height="87"/>
@@ -1039,11 +1045,11 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="joJ-Rh-K6j"/>
+        <segue reference="jkZ-Dh-FHT"/>
+        <segue reference="fFr-gL-mDW"/>
+        <segue reference="qUJ-ry-144"/>
         <segue reference="Miu-Qg-BkO"/>
         <segue reference="2MC-OH-cwI"/>
-        <segue reference="SUv-P7-9yc"/>
         <segue reference="mdp-6r-s59"/>
-        <segue reference="fFr-gL-mDW"/>
     </inferredMetricsTieBreakers>
 </document>

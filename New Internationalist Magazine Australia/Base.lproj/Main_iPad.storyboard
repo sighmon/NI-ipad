@@ -17,11 +17,8 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sCG-7l-LMd">
-                                <rect key="frame" x="244" y="736" width="280" height="45"/>
+                                <rect key="frame" x="20" y="736" width="728" height="45"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="280" id="TYj-o2-NU6"/>
-                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="27"/>
                                 <state key="normal" title="Magazine archive"/>
                                 <connections>
@@ -30,8 +27,11 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4cE-wm-UVR">
-                                <rect key="frame" x="244" y="789" width="280" height="45"/>
+                                <rect key="frame" x="20" y="842" width="728" height="45"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="45" id="v3Q-bs-LCb"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="27"/>
                                 <state key="normal" title="Subscribe"/>
                                 <connections>
@@ -40,8 +40,11 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QGH-kd-WQM">
-                                <rect key="frame" x="244" y="842" width="280" height="45"/>
+                                <rect key="frame" x="20" y="895" width="728" height="45"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="45" id="4Se-Q6-kbM"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="27"/>
                                 <state key="normal" title="Login"/>
                                 <connections>
@@ -57,8 +60,8 @@
                                     <outletCollection property="gestureRecognizers" destination="dsy-ej-vVf" appends="YES" id="cUl-CG-3Ib"/>
                                 </connections>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ztv-AX-HV8">
-                                <rect key="frame" x="20" y="895" width="364" height="45"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ztv-AX-HV8">
+                                <rect key="frame" x="20" y="789" width="319" height="45"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="27"/>
                                 <state key="normal" title="Search"/>
@@ -67,8 +70,8 @@
                                     <segue destination="Ust-fQ-OJf" kind="push" identifier="searchButtonToSearchView" id="AJo-Ax-UpQ"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hza-Yw-P0j">
-                                <rect key="frame" x="384" y="895" width="364" height="45"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hza-Yw-P0j">
+                                <rect key="frame" x="389" y="789" width="319" height="45"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="27"/>
                                 <state key="normal" title="Categories"/>
@@ -80,25 +83,27 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="ztv-AX-HV8" firstAttribute="top" secondItem="QGH-kd-WQM" secondAttribute="bottom" constant="8" id="1Hz-RY-0ce"/>
+                            <constraint firstItem="sCG-7l-LMd" firstAttribute="top" secondItem="sGR-UI-43W" secondAttribute="bottom" constant="21" id="2Od-Vm-9o0"/>
+                            <constraint firstAttribute="trailing" secondItem="sCG-7l-LMd" secondAttribute="trailing" constant="20" id="5UW-WS-jDU"/>
                             <constraint firstItem="sGR-UI-43W" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="65a-eQ-EEq"/>
-                            <constraint firstItem="hza-Yw-P0j" firstAttribute="leading" secondItem="ztv-AX-HV8" secondAttribute="trailing" id="9Xn-Ex-X6c"/>
-                            <constraint firstItem="QGH-kd-WQM" firstAttribute="top" secondItem="4cE-wm-UVR" secondAttribute="bottom" constant="8" symbolic="YES" id="9eX-VG-eWA"/>
-                            <constraint firstItem="4cE-wm-UVR" firstAttribute="top" secondItem="sCG-7l-LMd" secondAttribute="bottom" constant="8" symbolic="YES" id="9yU-pS-tbH"/>
-                            <constraint firstItem="4cE-wm-UVR" firstAttribute="centerX" secondItem="sGR-UI-43W" secondAttribute="centerX" id="AFN-ax-icV"/>
+                            <constraint firstItem="hza-Yw-P0j" firstAttribute="leading" secondItem="ztv-AX-HV8" secondAttribute="trailing" constant="50" id="9Xn-Ex-X6c"/>
+                            <constraint firstItem="QGH-kd-WQM" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="20" id="F5G-0m-uON"/>
                             <constraint firstItem="ztv-AX-HV8" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="20" id="Gei-Nb-4fY"/>
-                            <constraint firstAttribute="trailing" secondItem="hza-Yw-P0j" secondAttribute="trailing" constant="20" id="LH2-Zx-hrl"/>
-                            <constraint firstItem="sCG-7l-LMd" firstAttribute="top" secondItem="sGR-UI-43W" secondAttribute="bottom" constant="21" id="P66-oj-EoP"/>
-                            <constraint firstItem="4cE-wm-UVR" firstAttribute="leading" secondItem="QGH-kd-WQM" secondAttribute="leading" id="RzW-Gm-36O"/>
+                            <constraint firstItem="8kw-PJ-HHn" firstAttribute="top" secondItem="QGH-kd-WQM" secondAttribute="bottom" constant="20" id="J2G-gJ-c7J"/>
+                            <constraint firstAttribute="trailing" secondItem="hza-Yw-P0j" secondAttribute="trailing" constant="60" id="LH2-Zx-hrl"/>
+                            <constraint firstItem="4cE-wm-UVR" firstAttribute="top" secondItem="ztv-AX-HV8" secondAttribute="bottom" constant="8" id="ORk-ll-964"/>
+                            <constraint firstItem="sCG-7l-LMd" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="20" id="Pss-jm-BQc"/>
+                            <constraint firstItem="4cE-wm-UVR" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="20" id="Raf-xC-l51"/>
                             <constraint firstItem="sGR-UI-43W" firstAttribute="top" secondItem="57J-QL-wcM" secondAttribute="bottom" constant="20" id="cNE-GQ-TuB"/>
+                            <constraint firstAttribute="trailing" secondItem="4cE-wm-UVR" secondAttribute="trailing" constant="20" id="cdf-gZ-oyw"/>
                             <constraint firstAttribute="centerY" secondItem="sGR-UI-43W" secondAttribute="centerY" constant="112.5" id="dPo-uL-oFk"/>
-                            <constraint firstItem="4cE-wm-UVR" firstAttribute="trailing" secondItem="sCG-7l-LMd" secondAttribute="trailing" id="gqq-yF-B2t"/>
-                            <constraint firstItem="QGH-kd-WQM" firstAttribute="trailing" secondItem="4cE-wm-UVR" secondAttribute="trailing" id="hRX-aE-Ygb"/>
+                            <constraint firstItem="QGH-kd-WQM" firstAttribute="top" secondItem="4cE-wm-UVR" secondAttribute="bottom" constant="8" id="nQt-fE-MRA"/>
                             <constraint firstAttribute="centerX" secondItem="sGR-UI-43W" secondAttribute="centerX" id="pf9-Oa-S4c"/>
                             <constraint firstItem="ztv-AX-HV8" firstAttribute="top" secondItem="hza-Yw-P0j" secondAttribute="top" id="sb9-1s-2CE"/>
                             <constraint firstItem="sGR-UI-43W" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailing" id="tI2-bK-1QX"/>
+                            <constraint firstAttribute="trailing" secondItem="QGH-kd-WQM" secondAttribute="trailing" constant="20" id="w5T-pq-ILe"/>
                             <constraint firstItem="ztv-AX-HV8" firstAttribute="width" secondItem="hza-Yw-P0j" secondAttribute="width" id="wIb-wk-PA3"/>
-                            <constraint firstItem="4cE-wm-UVR" firstAttribute="leading" secondItem="sCG-7l-LMd" secondAttribute="leading" id="yxI-Vz-q9g"/>
+                            <constraint firstItem="ztv-AX-HV8" firstAttribute="top" secondItem="sCG-7l-LMd" secondAttribute="bottom" constant="8" id="yKJ-vV-mMA"/>
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
@@ -1052,11 +1057,11 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="JBV-bs-efO"/>
-        <segue reference="WLv-dP-nWF"/>
+        <segue reference="EBU-8G-ECI"/>
+        <segue reference="MS4-LT-1l5"/>
         <segue reference="7r1-dy-lxK"/>
+        <segue reference="WLv-dP-nWF"/>
         <segue reference="mho-0V-J7B"/>
-        <segue reference="w2Z-Bz-DtP"/>
-        <segue reference="d5N-e1-WGj"/>
+        <segue reference="JBV-bs-efO"/>
     </inferredMetricsTieBreakers>
 </document>

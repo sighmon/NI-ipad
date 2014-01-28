@@ -31,6 +31,13 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     
+    self.isUserLoggedIn = false;
+    self.isUserASubscriber = false;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(articleBodyLoaded:) name:ArticleDidUpdateNotification object:self.article];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(articleBodyDidntLoad:) name:ArticleFailedUpdateNotification object:self.article];
+    
     [self setupView];
     
     //publisher = [[NIAUPublisher alloc] init];
@@ -44,17 +51,20 @@
         return;
     }
 #endif
-
-    // Check for a saved username/password in the keychain and then try and login
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
-        [self loginToRails];
-    });
     
     if([[NIAUPublisher getInstance] isReady]) {
         [self showIssues];
     } else {
         [self loadIssues];
     }
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    // Check for a saved username/password in the keychain and then try and login
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+        [self loginToRails];
+    });
 }
 
 - (void)setupView
@@ -92,7 +102,7 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma - mark NIAUPublisher interaction
+#pragma mark - NIAUPublisher interaction
 
 -(void)loadIssues {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(publisherReady:) name:PublisherDidUpdateNotification object:[NIAUPublisher getInstance]];
@@ -108,14 +118,6 @@
     [self loadLatestMagazineCover];
 }
 
--(void)showIssues {
-    // maybe un-grey magazinearchive button here?
-    
-    //[self.navigationItem setRightBarButtonItem:refreshButton];
-    //table_.alpha=1.0;
-    //[table_ reloadData];
-}
-
 -(void)publisherFailed:(NSNotification *)not {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:PublisherDidUpdateNotification object:[NIAUPublisher getInstance]];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:PublisherFailedUpdateNotification object:[NIAUPublisher getInstance]];
@@ -128,6 +130,26 @@
     [alert show];
     //[alert release];
     //[self.navigationItem setRightBarButtonItem:refreshButton];
+}
+
+- (void)articleBodyLoaded:(NSNotification *)notification
+{
+    self.isUserASubscriber = YES;
+    [self updateSubscribeButton];
+}
+
+- (void)articleBodyDidntLoad:(NSNotification *)notification
+{
+    self.isUserASubscriber = NO;
+    [self updateSubscribeButton];
+}
+
+-(void)showIssues {
+    // maybe un-grey magazinearchive button here?
+    
+    //[self.navigationItem setRightBarButtonItem:refreshButton];
+    //table_.alpha=1.0;
+    //[table_ reloadData];
 }
 
 - (void)loginToRails
@@ -160,14 +182,75 @@
         if(statusCode >= 200 && statusCode < 300) {
             // Logged in!
             NSLog(@"Logged in user: %@", username);
+            self.isUserLoggedIn = true;
+            [self updateLoginButton];
+            [self checkIfUserIsASubscriber];
         } else {
             // Something went wrong, but don't show the user.
             NSLog(@"Couldn't log in user: %@", username);
+            self.isUserLoggedIn = false;
+            [self updateLoginButton];
         }
     } else {
         NSLog(@"Uh oh: %@", keychainError);
     }
 
+}
+
+- (void)checkIfUserIsASubscriber
+{
+    self.article = [[[NIAUPublisher getInstance] issueAtIndex:0] articleAtIndex:0];
+    // TODO: Write a method here that checks a specific rails route for a vaild sub or iTunes receipt
+    [self.article requestBody];
+    [self updateSubscribeButton];
+}
+
+- (void)updateLoginButton
+{
+    if (self.isUserLoggedIn) {
+//        self.loginButton.hidden = YES;
+//        [self.loginButton.constraints[0] setConstant:0.01f];
+//        [self.loginButton setNeedsUpdateConstraints];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.loginButton layoutIfNeeded];
+            self.loginButton.enabled = NO;
+            [self.loginButton setTitle:@"Logged in" forState:UIControlStateDisabled];
+            NSLog(@"Login button disabled.");
+        });
+    } else {
+//        self.loginButton.hidden = NO;
+//        [self.loginButton.constraints[0] setConstant:38];
+//        [self.loginButton setNeedsUpdateConstraints];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.loginButton layoutIfNeeded];
+            self.loginButton.enabled = YES;
+            NSLog(@"Login button enabled.");
+        });
+    }
+}
+
+- (void)updateSubscribeButton
+{
+    if (self.isUserASubscriber) {
+//        self.subscribeButton.hidden = YES;
+//        [self.subscribeButton.constraints[0] setConstant:0.01f];
+//        [self.subscribeButton setNeedsUpdateConstraints];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.subscribeButton layoutIfNeeded];
+            self.subscribeButton.enabled = NO;
+            [self.subscribeButton setTitle:@"Expires: xx" forState:UIControlStateDisabled];
+            NSLog(@"Subscription button disabled.");
+        });
+    } else {
+//        self.subscribeButton.hidden = NO;
+//        [self.subscribeButton.constraints[0] setConstant:38];
+//        [self.subscribeButton setNeedsUpdateConstraints];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.subscribeButton layoutIfNeeded];
+            self.subscribeButton.enabled = YES;
+            NSLog(@"Subscription button enabled.");
+        });
+    }
 }
 
 #pragma mark -
