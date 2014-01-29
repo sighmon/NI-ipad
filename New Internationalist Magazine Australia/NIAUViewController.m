@@ -144,12 +144,20 @@
     [self updateSubscribeButton];
 }
 
+- (void)articlesReady:(NSNotification *)notification
+{
+    [self checkIfUserIsASubscriber];
+}
+
 -(void)showIssues {
     // maybe un-grey magazinearchive button here?
     
     //[self.navigationItem setRightBarButtonItem:refreshButton];
     //table_.alpha=1.0;
     //[table_ reloadData];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(articlesReady:) name:ArticlesDidUpdateNotification object:self.issue];
+    self.issue = [[NIAUPublisher getInstance] issueAtIndex:0];
+    [self.issue requestArticles];
 }
 
 - (void)loginToRails
@@ -184,7 +192,7 @@
             NSLog(@"Logged in user: %@", username);
             self.isUserLoggedIn = true;
             [self updateLoginButton];
-            [self checkIfUserIsASubscriber];
+//            [self checkIfUserIsASubscriber];
         } else {
             // Something went wrong, but don't show the user.
             NSLog(@"Couldn't log in user: %@", username);
@@ -199,7 +207,7 @@
 
 - (void)checkIfUserIsASubscriber
 {
-    self.article = [[[NIAUPublisher getInstance] issueAtIndex:0] articleAtIndex:0];
+    self.article = [self.issue articleAtIndex:0];
     // TODO: Write a method here that checks a specific rails route for a vaild sub or iTunes receipt
     [self.article requestBody];
     [self updateSubscribeButton];
@@ -238,7 +246,7 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.subscribeButton layoutIfNeeded];
             self.subscribeButton.enabled = NO;
-            [self.subscribeButton setTitle:@"Expires: xx" forState:UIControlStateDisabled];
+            [self.subscribeButton setTitle:@"Thanks for subscribing" forState:UIControlStateDisabled];
             NSLog(@"Subscription button disabled.");
         });
     } else {
