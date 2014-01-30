@@ -347,7 +347,7 @@ float cellPadding = 10.;
 
 - (IBAction)shareActionTapped:(id)sender
 {
-    NSMutableArray *itemsToShare = [[NSMutableArray alloc] initWithArray:@[[NSString stringWithFormat:@"I'm reading '%@' from New Internationalist magazine.",self.article.title], self.article.getWebURL]];
+    NSMutableArray *itemsToShare = [[NSMutableArray alloc] initWithArray:@[[NSString stringWithFormat:@"I'm reading '%@' from New Internationalist magazine.",self.article.title], self.article.getGuestPassURL]];
     
     // Only add the featured image if it exists
     if (self.featuredImage.image != nil) {

@@ -38,6 +38,8 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(articleBodyDidntLoad:) name:ArticleFailedUpdateNotification object:self.article];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshView:) name:@"refreshViewNotification" object:nil];
+    
     [self setupView];
     
     //publisher = [[NIAUPublisher alloc] init];
@@ -78,7 +80,7 @@
 
 - (void)loadLatestMagazineCover
 {
-    [[[NIAUPublisher getInstance] issueAtIndex:0] getCoverWithCompletionBlock:^(UIImage *img) {
+    [self.issue getCoverWithCompletionBlock:^(UIImage *img) {
         [self.cover setAlpha:0.0];
         [self.cover setImage:img];
         [UIView animateWithDuration:0.5 animations:^{
@@ -147,6 +149,16 @@
 - (void)articlesReady:(NSNotification *)notification
 {
     [self checkIfUserIsASubscriber];
+}
+
+- (void)refreshView:(NSNotification *)notification
+{
+    // Reload self.issue
+    self.issue = [[NIAUPublisher getInstance] issueAtIndex:0];
+    [self loadLatestMagazineCover];
+    
+    // Update the view
+    [self.view setNeedsDisplay];
 }
 
 -(void)showIssues {
@@ -271,7 +283,11 @@
         // Send you to the latest issue
         
         NIAUTableOfContentsViewController *tableOfContentsViewController = [segue destinationViewController];
-        tableOfContentsViewController.issue = [[NIAUPublisher getInstance] issueAtIndex:0];
+        if (self.issue) {
+            tableOfContentsViewController.issue = self.issue;
+        } else {
+            tableOfContentsViewController.issue = [[NIAUPublisher getInstance] issueAtIndex:0];
+        }
         
     } else if ([[segue identifier] isEqualToString:@"subscribeButtonToStoreView"]) {
         // If there's anything to do, do it here.

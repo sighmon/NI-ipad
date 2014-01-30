@@ -574,6 +574,17 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
     return [NSURL URLWithString:[NSString stringWithFormat:@"issues/%@/articles/%@",self.issue.railsID, self.railsID] relativeToURL:[NSURL URLWithString:SITE_URL]];
 }
 
+- (NSURL *)getGuestPassURL
+{
+    // TODO: login to rails
+    
+    // TODO: create a guest pass
+    
+    // TODO: parse the returned .json and return the guestpass string.
+    
+    return [NSURL URLWithString:[NSString stringWithFormat:@"issues/%@/articles/%@",self.issue.railsID, self.railsID] relativeToURL:[NSURL URLWithString:SITE_URL]];
+}
+
 - (BOOL)containsCategoryWithSubstring:(NSString *)substring
 {
     return (NSNotFound != [self.categories indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {

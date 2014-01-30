@@ -50,6 +50,8 @@ extern NSString *ArticleFailedUpdateNotification;
 
 - (NSURL *)getWebURL;
 
+- (NSURL *)getGuestPassURL;
+
 - (BOOL)containsCategoryWithSubstring:(NSString *)substring;
 
 @end

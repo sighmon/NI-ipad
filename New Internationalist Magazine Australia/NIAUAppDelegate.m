@@ -12,6 +12,7 @@
 #import "NIAUInAppPurchaseHelper.h"
 #import <Parse/Parse.h>
 #import "local.h"
+#import "NIAUPublisher.h"
 
 @implementation NIAUAppDelegate
 
@@ -108,7 +109,7 @@
         [application presentLocalNotificationNow:localNotif];
     }
     
-    // TODO: Start background download.
+    // Start background download.
     [self startBackgroundDownload];
 }
 
@@ -128,6 +129,12 @@
 - (void)startBackgroundDownload
 {
     // TODO: get zip file from Rails, unpack it and save it to the library.
+    
+    // For now lets just force update the issues
+    [[NIAUPublisher getInstance] forceDownloadIssues];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshViewNotification" object:nil];
+    
+    // So we know this has run...
     NSString *message = [NSString stringWithFormat:@"Totally doing it."];
     [[[UIAlertView alloc] initWithTitle:@"Sure thing." message:message delegate:self cancelButtonTitle:@"Cool." otherButtonTitles:nil] show];
 }
