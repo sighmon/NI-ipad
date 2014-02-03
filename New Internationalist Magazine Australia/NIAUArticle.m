@@ -576,13 +576,46 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
 
 - (NSURL *)getGuestPassURL
 {
-    // TODO: login to rails
+    // If the user has a rails account or has purchased this issue, they can create a guest pass and share it.
     
-    // TODO: create a guest pass
+    // Check/create a guest pass
     
-    // TODO: parse the returned .json and return the guestpass string.
+    NSURL *articleURL = [NSURL URLWithString:[NSString stringWithFormat:@"issues/%@/articles/%@/ios_share.json",self.issue.railsID, self.railsID] relativeToURL:[NSURL URLWithString:SITE_URL]];
     
-    return [NSURL URLWithString:[NSString stringWithFormat:@"issues/%@/articles/%@",self.issue.railsID, self.railsID] relativeToURL:[NSURL URLWithString:SITE_URL]];
+    NSData *receiptData = [NSData dataWithContentsOfURL:[[NSBundle mainBundle] appStoreReceiptURL]];
+    
+    NSString *base64receipt = [receiptData base64EncodedStringWithOptions:0];
+    NSData *postData = [base64receipt dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+    NSString *postLength = [NSString stringWithFormat:@"%d", [postData length]];
+    
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+    [request setURL:articleURL];
+    [request setHTTPMethod:@"POST"];
+    [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
+    [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+    [request setHTTPBody:postData];
+    
+    NSError *error;
+    NSHTTPURLResponse *response;
+    NSMutableDictionary *tmpGuestPassJsonData = [[NSMutableDictionary alloc] init];
+    
+    NSData *responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
+    int statusCode = [response statusCode];
+    NSString *data = [[NSString alloc]initWithData:responseData encoding:NSUTF8StringEncoding];
+    
+    if (!error && statusCode >= 200 && statusCode < 300) {
+        // If there aren't any errors, they have a subscription or have purchased this issue, so return the guest pass url.
+        NSLog(@"Guest Pass: %@", data);
+        tmpGuestPassJsonData = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
+        
+        return [NSURL URLWithString:[NSString stringWithFormat:@"issues/%@/articles/%@?utm_source=%@",self.issue.railsID, self.railsID, [tmpGuestPassJsonData objectForKey:@"key"]] relativeToURL:[NSURL URLWithString:SITE_URL]];
+    } else {
+        // Else, they don't have permission to create a guest pass. Just return the article url.
+        NSLog(@"Rails returned statusCode: %d\n an error: %@\nAnd data: %@", statusCode, error, data);
+        responseData = nil;
+        
+        return [NSURL URLWithString:[NSString stringWithFormat:@"issues/%@/articles/%@",self.issue.railsID, self.railsID] relativeToURL:[NSURL URLWithString:SITE_URL]];
+    }
 }
 
 - (BOOL)containsCategoryWithSubstring:(NSString *)substring
