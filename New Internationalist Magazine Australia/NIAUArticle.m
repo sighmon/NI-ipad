@@ -118,21 +118,8 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
             cssClass = [cssClass stringByAppendingString:@" no-shadow"];
         }
         
-        NSString *credit_div = @"";
-        NSString *caption_div = @"";
-        
-        //TODO: dig out image metadata and generate credit_div and caption_div
-        
-        // Q: do we have image.credit info?
-        // yes, in the issue.json:articles[].images[].{credit,caption}
-        
         // ruby code from articles_helper
-        /*if image.credit
-         credit_div = "<div class='new-image-credit'>#{image.credit}</div>"
-         end
-         if image.caption
-         caption_div = "<div class='new-image-caption'>#{image.caption}</div>"
-         end
+        /*
          if media_url
          tag_method = method(:retina_image_tag)
          image_options = {:alt => "#{strip_tags(image.caption)}", :title => "#{strip_tags(image.caption)}", :size => "#{image_width}x#{image_width * image.height / image.width}"}
@@ -172,13 +159,24 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
                     });
                 }
                 
+                NSString *credit_div = @"";
+                NSString *caption_div = @"";
+                NSString *imageCredit = [imageDictionary objectForKey:@"credit"];
+                NSString *imageCaption = [imageDictionary objectForKey:@"caption"];
+                
+                if (imageCredit) {
+                    credit_div = [NSString stringWithFormat:@"<div class='new-image-credit'>%@</div>", imageCredit];
+                }
+                
+                if (imageCaption) {
+                    caption_div = [NSString stringWithFormat:@"<div class='new-image-caption'>%@</div>",imageCaption];
+                }
+                
                 //TODO: can we dry up the image URL (it's also defined in the buildImageCache method
-                replacement = [NSString stringWithFormat:@"<div class='%@'><img width='%@' src='%@'/>%@%@</div>", cssClass, imageWidth, [[self imageCacheURLForId:imageId] absoluteString], credit_div, caption_div];
+                replacement = [NSString stringWithFormat:@"<div class='%@'><img width='%@' src='%@'/>%@%@</div>", cssClass, imageWidth, [[self imageCacheURLForId:imageId] absoluteString], caption_div, credit_div];
             }
             
         }
-        
-        
         
         // every iteration, the output string is getting longer
         // so we need to adjust the range that we are editing
