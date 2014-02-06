@@ -173,7 +173,7 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
                 }
                 
                 //TODO: can we dry up the image URL (it's also defined in the buildImageCache method
-                replacement = [NSString stringWithFormat:@"<div class='%@'><img width='%@' src='%@'/>%@%@</div>", cssClass, imageWidth, [[self imageCacheURLForId:imageId] absoluteString], caption_div, credit_div];
+                replacement = [NSString stringWithFormat:@"<div class='%@'><a href='%@'><img width='%@' src='%@'/></a>%@%@</div>", cssClass, [[self imageCacheURLForId:imageId] absoluteString], imageWidth, [[self imageCacheURLForId:imageId] absoluteString], caption_div, credit_div];
             }
             
         }

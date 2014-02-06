@@ -326,6 +326,19 @@ float cellPadding = 10.;
 #pragma mark -
 #pragma mark WebView delegate
 
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
+{
+    // TODO: Clean this up.
+    if ([[[request URL] absoluteString] rangeOfString:@"Newsstand"].location == NSNotFound) {
+        // Normal request, so load the UIWebView
+        return YES;
+    } else {
+        // Request URL includes Newsstand, so we assume it's an image clicked within an article.
+        [self performSegueWithIdentifier:@"showImageZoom" sender:request.URL];
+        return NO;
+    }
+}
+
 - (void)webViewDidStartLoad:(UIWebView *)webView
 {
     [self.webViewLoadingIndicator startAnimating];
@@ -398,9 +411,15 @@ float cellPadding = 10.;
         NIAUImageZoomViewController *imageZoomViewController = [segue destinationViewController];
         
         if ([sender isKindOfClass:[UIImageView class]]) {
+            // User tapped a native UIImage, so zoom it.
             UIImageView *imageTapped = (UIImageView *)sender;
             imageZoomViewController.imageToLoad = imageTapped.image;
+        } else if (!([[sender absoluteString] rangeOfString:@"Newsstand"].location == NSNotFound)) {
+            // User tapped an image in an article (embedded in a UIWebView), so zoom it.
+            // TODO: Work out why this isn't working - I think it's because of the path having %20's in there.
+            imageZoomViewController.imageToLoad = [UIImage imageWithContentsOfFile:[sender absoluteString]];
         } else {
+            // Not sure what the image is, zoom a default
             imageZoomViewController.imageToLoad = [UIImage imageNamed:@"default_article_image.png"];
         }
     } else if ([[segue identifier] isEqualToString:@"articleToCategory"]) {
