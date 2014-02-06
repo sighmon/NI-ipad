@@ -10,6 +10,7 @@
 #import "NIAUArticle.h"
 #import "NIAUIssue.h"
 #import "NIAUCategoryViewController.h"
+#import "NIAUWebsiteViewController.h"
 
 @interface NIAUArticleViewController : UIViewController <UIScrollViewDelegate, UIGestureRecognizerDelegate, UIWebViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource>
 
@@ -20,7 +21,6 @@
 @property (nonatomic, weak) IBOutlet UIScrollView *scrollView;
 
 @property (nonatomic, strong) IBOutlet UIImageView *featuredImage;
-@property (nonatomic, strong) IBOutlet UIImageView *secondTestImage;
 
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *teaserLabel;

@@ -973,6 +973,7 @@
                         <segue destination="qrh-8f-IqL" kind="push" identifier="alertToSubscribe" id="SUv-P7-9yc"/>
                         <segue destination="fEr-qG-YdO" kind="push" identifier="alertToLogin" id="joJ-Rh-K6j"/>
                         <segue destination="ZjM-Y0-4yQ" kind="push" identifier="articleToCategory" id="2MC-OH-cwI"/>
+                        <segue destination="aFP-ao-u02" kind="modal" identifier="webLinkTapped" id="Qwc-Oh-1W1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nmL-1b-WQV" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -981,13 +982,60 @@
                         <action selector="handleFeaturedImageSingleTap:" destination="T5k-23-5nF" id="DWN-cH-QYh"/>
                     </connections>
                 </tapGestureRecognizer>
-                <tapGestureRecognizer id="eSN-qn-lkW">
-                    <connections>
-                        <action selector="handleSecondTestImageSingleTap:" destination="T5k-23-5nF" id="PiL-Fj-wmG"/>
-                    </connections>
-                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1298" y="-290"/>
+        </scene>
+        <!--Website View Controller-->
+        <scene sceneID="aVH-TW-kaJ">
+            <objects>
+                <viewController id="aFP-ao-u02" customClass="NIAUWebsiteViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="ecJ-Fm-5m3"/>
+                        <viewControllerLayoutGuide type="bottom" id="Nse-3K-yRK"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="bR3-Iz-HnC">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <webView multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Ix-NF-gZW">
+                                <rect key="frame" x="0.0" y="44" width="320" height="524"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES"/>
+                                <connections>
+                                    <outlet property="delegate" destination="aFP-ao-u02" id="OFr-Vp-RNQ"/>
+                                </connections>
+                            </webView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lLt-cQ-fC9">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <items>
+                                    <barButtonItem systemItem="stop" id="2Aa-rS-0Rh"/>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="Kpm-6g-DW8"/>
+                                    <barButtonItem systemItem="refresh" id="h5d-rm-L0f"/>
+                                </items>
+                            </toolbar>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="lLt-cQ-fC9" firstAttribute="leading" secondItem="bR3-Iz-HnC" secondAttribute="leading" id="0Hd-uy-Dew"/>
+                            <constraint firstAttribute="trailing" secondItem="lLt-cQ-fC9" secondAttribute="trailing" id="ah5-HO-BHy"/>
+                            <constraint firstAttribute="trailing" secondItem="6Ix-NF-gZW" secondAttribute="trailing" id="f6s-M5-FM0"/>
+                            <constraint firstItem="Nse-3K-yRK" firstAttribute="top" secondItem="6Ix-NF-gZW" secondAttribute="bottom" id="ftT-Ip-bOG"/>
+                            <constraint firstItem="6Ix-NF-gZW" firstAttribute="leading" secondItem="bR3-Iz-HnC" secondAttribute="leading" id="hgj-01-Cs6"/>
+                            <constraint firstItem="lLt-cQ-fC9" firstAttribute="top" secondItem="bR3-Iz-HnC" secondAttribute="top" id="lZl-Hc-8kE"/>
+                            <constraint firstItem="6Ix-NF-gZW" firstAttribute="top" secondItem="lLt-cQ-fC9" secondAttribute="bottom" id="uU8-3l-TRd"/>
+                        </constraints>
+                    </view>
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
+                    <navigationItem key="navigationItem" id="d9L-y3-fMf"/>
+                    <connections>
+                        <outlet property="webView" destination="6Ix-NF-gZW" id="Vdw-TP-bst"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2MK-Bt-2Wy" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1754" y="-860"/>
         </scene>
         <!--Image Zoom View Controller-->
         <scene sceneID="0jx-9X-rFs">
@@ -1045,11 +1093,11 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="jkZ-Dh-FHT"/>
-        <segue reference="fFr-gL-mDW"/>
-        <segue reference="qUJ-ry-144"/>
-        <segue reference="Miu-Qg-BkO"/>
         <segue reference="2MC-OH-cwI"/>
+        <segue reference="Miu-Qg-BkO"/>
         <segue reference="mdp-6r-s59"/>
+        <segue reference="joJ-Rh-K6j"/>
+        <segue reference="SUv-P7-9yc"/>
+        <segue reference="fFr-gL-mDW"/>
     </inferredMetricsTieBreakers>
 </document>

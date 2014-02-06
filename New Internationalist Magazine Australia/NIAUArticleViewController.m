@@ -329,13 +329,22 @@ float cellPadding = 10.;
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
     // TODO: Clean this up.
-    if ([[[request URL] absoluteString] rangeOfString:@"Newsstand"].location == NSNotFound) {
+    if (navigationType == UIWebViewNavigationTypeLinkClicked) {
+        // User tapped something in the UIWebView
+        if (!([[request.URL absoluteString] rangeOfString:@".png"].location == NSNotFound)) {
+            // An image was tapped
+            // Request URL includes Newsstand, so we assume it's an image clicked within an article.
+            [self performSegueWithIdentifier:@"showImageZoom" sender:request.URL];
+            return NO;
+        } else {
+            // A link was tapped
+            // Segue to NIAUWebsiteViewController so users don't leave the app.
+            [self performSegueWithIdentifier:@"webLinkTapped" sender:request];
+            return NO;
+        }
+    } else {
         // Normal request, so load the UIWebView
         return YES;
-    } else {
-        // Request URL includes Newsstand, so we assume it's an image clicked within an article.
-        [self performSegueWithIdentifier:@"showImageZoom" sender:request.URL];
-        return NO;
     }
 }
 
@@ -389,12 +398,6 @@ float cellPadding = 10.;
     
 }
 
-- (IBAction)handleSecondTestImageSingleTap:(UITapGestureRecognizer *)recognizer
-{
-    // Handle image being tapped
-    [self performSegueWithIdentifier:@"showImageZoom" sender:recognizer.view];
-}
-
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -414,9 +417,9 @@ float cellPadding = 10.;
             // User tapped a native UIImage, so zoom it.
             UIImageView *imageTapped = (UIImageView *)sender;
             imageZoomViewController.imageToLoad = imageTapped.image;
-        } else if (!([[sender absoluteString] rangeOfString:@"Newsstand"].location == NSNotFound)) {
+        } else if (!([[sender absoluteString] rangeOfString:@".png"].location == NSNotFound)) {
             // User tapped an image in an article (embedded in a UIWebView), so zoom it.
-            // TODO: Work out why this isn't working - I think it's because of the path having %20's in there.
+            // TODO: Work out why this isn't working.
             imageZoomViewController.imageToLoad = [UIImage imageWithContentsOfFile:[sender absoluteString]];
         } else {
             // Not sure what the image is, zoom a default
@@ -425,7 +428,7 @@ float cellPadding = 10.;
     } else if ([[segue identifier] isEqualToString:@"articleToCategory"]) {
         NIAUCategoryViewController *categoryViewController = [segue destinationViewController];
         
-        // TODO: when categories are listed on the article page, choose the category tapped.
+        // Choose the category tapped.
         categoryViewController.category = [[self.article.categories firstObject] objectForKey:@"name"];
         
     } else if ([[segue identifier] isEqualToString:@"showArticlesInCategory"]) {
@@ -433,6 +436,10 @@ float cellPadding = 10.;
         
         NIAUCategoryViewController *categoryViewController = [segue destinationViewController];
         categoryViewController.category = [self.article.categories[selectedIndexPath.row] objectForKey:@"name"];
+    } else if ([[segue identifier] isEqualToString:@"webLinkTapped"]) {
+        // Send the weblink
+        NIAUWebsiteViewController *websiteViewController = [segue destinationViewController];
+        websiteViewController.linkToLoad = sender;
     }
 }
 
