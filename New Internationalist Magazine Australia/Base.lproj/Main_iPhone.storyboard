@@ -997,8 +997,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <webView multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Ix-NF-gZW">
-                                <rect key="frame" x="0.0" y="44" width="320" height="524"/>
+                            <webView multipleTouchEnabled="YES" contentMode="scaleToFill" scalesPageToFit="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6Ix-NF-gZW">
+                                <rect key="frame" x="0.0" y="66" width="320" height="502"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES"/>
@@ -1007,12 +1007,41 @@
                                 </connections>
                             </webView>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lLt-cQ-fC9">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                <rect key="frame" x="0.0" y="22" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <items>
-                                    <barButtonItem systemItem="stop" id="2Aa-rS-0Rh"/>
+                                    <barButtonItem systemItem="stop" id="2Aa-rS-0Rh">
+                                        <color key="tintColor" red="0.29803921570000003" green="0.64705882349999999" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <action selector="dismissButtonTapped:" destination="aFP-ao-u02" id="Pan-SJ-JHq"/>
+                                        </connections>
+                                    </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="Kpm-6g-DW8"/>
-                                    <barButtonItem systemItem="refresh" id="h5d-rm-L0f"/>
+                                    <barButtonItem image="UIWebViewBack.png" id="QEo-cD-nig">
+                                        <connections>
+                                            <action selector="backButtonTapped:" destination="aFP-ao-u02" id="feE-SR-7gM"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem width="29" style="plain" systemItem="fixedSpace" id="R01-1P-ysB"/>
+                                    <barButtonItem image="UIWebViewNext.png" id="9m6-vJ-LLs">
+                                        <connections>
+                                            <action selector="forwardButtonTapped:" destination="aFP-ao-u02" id="R3t-47-UXR"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem width="29" style="plain" systemItem="fixedSpace" id="bFu-2K-n8a"/>
+                                    <barButtonItem systemItem="refresh" id="h5d-rm-L0f">
+                                        <color key="tintColor" red="0.29803921570000003" green="0.64705882349999999" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <action selector="refreshButtonTapped:" destination="aFP-ao-u02" id="AZE-Ej-IFC"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem width="29" style="plain" systemItem="fixedSpace" id="Lbb-9c-D75"/>
+                                    <barButtonItem systemItem="action" id="Cvb-eZ-tz1">
+                                        <color key="tintColor" red="0.29803921570000003" green="0.64705882349999999" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <action selector="shareButtonTapped:" destination="aFP-ao-u02" id="N0w-So-oEU"/>
+                                        </connections>
+                                    </barButtonItem>
                                 </items>
                             </toolbar>
                         </subviews>
@@ -1023,13 +1052,18 @@
                             <constraint firstAttribute="trailing" secondItem="6Ix-NF-gZW" secondAttribute="trailing" id="f6s-M5-FM0"/>
                             <constraint firstItem="Nse-3K-yRK" firstAttribute="top" secondItem="6Ix-NF-gZW" secondAttribute="bottom" id="ftT-Ip-bOG"/>
                             <constraint firstItem="6Ix-NF-gZW" firstAttribute="leading" secondItem="bR3-Iz-HnC" secondAttribute="leading" id="hgj-01-Cs6"/>
-                            <constraint firstItem="lLt-cQ-fC9" firstAttribute="top" secondItem="bR3-Iz-HnC" secondAttribute="top" id="lZl-Hc-8kE"/>
+                            <constraint firstItem="lLt-cQ-fC9" firstAttribute="top" secondItem="bR3-Iz-HnC" secondAttribute="top" constant="22" id="lZl-Hc-8kE"/>
                             <constraint firstItem="6Ix-NF-gZW" firstAttribute="top" secondItem="lLt-cQ-fC9" secondAttribute="bottom" id="uU8-3l-TRd"/>
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <navigationItem key="navigationItem" id="d9L-y3-fMf"/>
                     <connections>
+                        <outlet property="browserBack" destination="QEo-cD-nig" id="7EB-aW-8gc"/>
+                        <outlet property="browserForward" destination="9m6-vJ-LLs" id="9Yb-JF-0Wb"/>
+                        <outlet property="browserRefresh" destination="h5d-rm-L0f" id="Z1f-ZV-tev"/>
+                        <outlet property="browserShare" destination="Cvb-eZ-tz1" id="48h-pQ-FVD"/>
+                        <outlet property="dismissModal" destination="2Aa-rS-0Rh" id="nhb-xV-lPL"/>
                         <outlet property="webView" destination="6Ix-NF-gZW" id="Vdw-TP-bst"/>
                     </connections>
                 </viewController>
@@ -1086,6 +1120,10 @@
             <point key="canvasLocation" x="1750" y="-164"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="UIWebViewBack.png" width="12" height="21"/>
+        <image name="UIWebViewNext.png" width="12" height="21"/>
+    </resources>
     <color key="tintColor" red="0.29803921568627451" green="0.6470588235294118" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

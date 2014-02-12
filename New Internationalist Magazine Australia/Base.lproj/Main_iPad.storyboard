@@ -971,6 +971,7 @@
                         <segue destination="d0z-vn-J25" kind="push" identifier="alertToSubscribe" id="d5N-e1-WGj"/>
                         <segue destination="rZc-6Q-DEj" kind="push" identifier="alertToLogin" id="w2Z-Bz-DtP"/>
                         <segue destination="obd-BY-qYN" kind="push" identifier="articleToCategory" id="mho-0V-J7B"/>
+                        <segue destination="Mze-ob-E7u" kind="modal" identifier="webLinkTapped" id="PvO-ql-dqR"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="a5Y-94-kse" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -986,6 +987,93 @@
                 </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="3146" y="-409"/>
+        </scene>
+        <!--Website View Controller-->
+        <scene sceneID="wZ6-0T-Rq0">
+            <objects>
+                <viewController id="Mze-ob-E7u" customClass="NIAUWebsiteViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="hjY-I3-4dW"/>
+                        <viewControllerLayoutGuide type="bottom" id="jlP-B5-NKo"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Z3Y-72-Lhz">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cj5-tj-WO3">
+                                <rect key="frame" x="0.0" y="22" width="768" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <items>
+                                    <barButtonItem systemItem="stop" id="oJW-ZT-un2">
+                                        <color key="tintColor" red="0.29803921570000003" green="0.64705882349999999" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <action selector="dismissButtonTapped:" destination="Mze-ob-E7u" id="jui-JE-y9B"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem width="42" style="plain" systemItem="fixedSpace" id="HVK-cF-yA9"/>
+                                    <barButtonItem enabled="NO" title="website" id="ws9-UA-Atw"/>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="U6s-pM-GIl"/>
+                                    <barButtonItem image="UIWebViewBack.png" id="54m-KT-UlB">
+                                        <connections>
+                                            <action selector="backButtonTapped:" destination="Mze-ob-E7u" id="390-HP-iku"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem width="42" style="plain" systemItem="fixedSpace" id="Ub5-DS-ncX"/>
+                                    <barButtonItem image="UIWebViewNext.png" id="XIa-AT-Inh">
+                                        <connections>
+                                            <action selector="forwardButtonTapped:" destination="Mze-ob-E7u" id="h2K-Bh-bjA"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem width="42" style="plain" systemItem="fixedSpace" id="RTg-zM-Dje"/>
+                                    <barButtonItem systemItem="refresh" id="rmM-pQ-j6P">
+                                        <color key="tintColor" red="0.29803921570000003" green="0.64705882349999999" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <action selector="refreshButtonTapped:" destination="Mze-ob-E7u" id="OW5-PZ-GBX"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem width="42" style="plain" systemItem="fixedSpace" id="L2p-6R-e3G"/>
+                                    <barButtonItem systemItem="action" id="usd-Of-4oa">
+                                        <color key="tintColor" red="0.29803921570000003" green="0.64705882349999999" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <action selector="shareButtonTapped:" destination="Mze-ob-E7u" id="63b-gy-LJC"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
+                            <webView contentMode="scaleToFill" scalesPageToFit="YES" translatesAutoresizingMaskIntoConstraints="NO" id="R0X-fd-Q3G">
+                                <rect key="frame" x="0.0" y="66" width="768" height="958"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES"/>
+                                <connections>
+                                    <outlet property="delegate" destination="Mze-ob-E7u" id="s2G-S9-BP7"/>
+                                </connections>
+                            </webView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="cj5-tj-WO3" firstAttribute="top" secondItem="Z3Y-72-Lhz" secondAttribute="top" constant="22" id="Ing-EK-yE0"/>
+                            <constraint firstItem="R0X-fd-Q3G" firstAttribute="leading" secondItem="Z3Y-72-Lhz" secondAttribute="leading" id="RGu-hn-W6u"/>
+                            <constraint firstAttribute="trailing" secondItem="R0X-fd-Q3G" secondAttribute="trailing" id="WJu-rl-6IY"/>
+                            <constraint firstItem="R0X-fd-Q3G" firstAttribute="top" secondItem="cj5-tj-WO3" secondAttribute="bottom" id="XPc-1F-TNs"/>
+                            <constraint firstItem="jlP-B5-NKo" firstAttribute="top" secondItem="R0X-fd-Q3G" secondAttribute="bottom" id="fQf-iI-RRo"/>
+                            <constraint firstAttribute="trailing" secondItem="cj5-tj-WO3" secondAttribute="trailing" id="u9q-zY-L02"/>
+                            <constraint firstItem="cj5-tj-WO3" firstAttribute="leading" secondItem="Z3Y-72-Lhz" secondAttribute="leading" id="wyy-Kf-H7A"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="browserBack" destination="54m-KT-UlB" id="KvV-NM-Tbq"/>
+                        <outlet property="browserForward" destination="XIa-AT-Inh" id="9kL-5D-n05"/>
+                        <outlet property="browserRefresh" destination="rmM-pQ-j6P" id="DtR-a3-jpk"/>
+                        <outlet property="browserShare" destination="usd-Of-4oa" id="iwn-Ql-93T"/>
+                        <outlet property="browserURL" destination="ws9-UA-Atw" id="7YH-2B-bdN"/>
+                        <outlet property="dismissModal" destination="oJW-ZT-un2" id="I2v-l3-H5D"/>
+                        <outlet property="webView" destination="R0X-fd-Q3G" id="wnQ-Jd-hOL"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0Um-cb-csw" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4145" y="-1678"/>
         </scene>
         <!--Image Zoom View Controller-->
         <scene sceneID="vNm-R5-kbx">
@@ -1050,6 +1138,10 @@
             <point key="canvasLocation" x="-656" y="-517"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="UIWebViewBack.png" width="12" height="21"/>
+        <image name="UIWebViewNext.png" width="12" height="21"/>
+    </resources>
     <color key="tintColor" red="0.29803921568627451" green="0.64547217153284675" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackOpaque"/>

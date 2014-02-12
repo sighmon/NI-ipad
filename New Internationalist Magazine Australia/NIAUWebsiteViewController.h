@@ -7,11 +7,21 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "NIAUArticle.h"
 
 @interface NIAUWebsiteViewController : UIViewController <UIWebViewDelegate>
 
-@property (nonatomic, strong) NSURLRequest *linkToLoad;
+@property (nonatomic, weak) NIAUArticle *article;
 
-@property (nonatomic, strong) IBOutlet UIWebView *webView;
+@property (nonatomic, weak) NSURLRequest *linkToLoad;
+
+@property (nonatomic, weak) IBOutlet UIWebView *webView;
+
+@property (nonatomic, weak) IBOutlet UIBarButtonItem *dismissModal;
+@property (nonatomic, weak) IBOutlet UIBarButtonItem *browserBack;
+@property (nonatomic, weak) IBOutlet UIBarButtonItem *browserForward;
+@property (nonatomic, weak) IBOutlet UIBarButtonItem *browserRefresh;
+@property (nonatomic, weak) IBOutlet UIBarButtonItem *browserShare;
+@property (nonatomic, weak) IBOutlet UIBarButtonItem *browserURL;
 
 @end

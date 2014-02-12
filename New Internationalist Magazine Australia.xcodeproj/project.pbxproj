@@ -12,6 +12,10 @@
 		051A72B1177950D600BDD346 /* default_cover.png in Resources */ = {isa = PBXBuildFile; fileRef = 051A72AF177950D600BDD346 /* default_cover.png */; };
 		051A72B2177950D600BDD346 /* default_cover@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 051A72B0177950D600BDD346 /* default_cover@2x.png */; };
 		051AF559184ECE7D00A91A8C /* NIAUCategoriesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 051AF558184ECE7D00A91A8C /* NIAUCategoriesViewController.m */; };
+		051FB64518AC15BF00FA734C /* UIWebViewBack.png in Resources */ = {isa = PBXBuildFile; fileRef = 051FB64118AC15BF00FA734C /* UIWebViewBack.png */; };
+		051FB64618AC15BF00FA734C /* UIWebViewBack@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 051FB64218AC15BF00FA734C /* UIWebViewBack@2x.png */; };
+		051FB64718AC15BF00FA734C /* UIWebViewNext.png in Resources */ = {isa = PBXBuildFile; fileRef = 051FB64318AC15BF00FA734C /* UIWebViewNext.png */; };
+		051FB64818AC15BF00FA734C /* UIWebViewNext@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 051FB64418AC15BF00FA734C /* UIWebViewNext@2x.png */; };
 		052167E4177BD6DF00A4A81A /* NIAUArticle.m in Sources */ = {isa = PBXBuildFile; fileRef = 052167E3177BD6DF00A4A81A /* NIAUArticle.m */; };
 		052167E7177BDF8900A4A81A /* NIAUArticleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 052167E6177BDF8900A4A81A /* NIAUArticleViewController.m */; };
 		05287A23177983AD00501F5F /* NIAUMagazineArchiveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05BD7F131779656300820EF3 /* NIAUMagazineArchiveViewController.m */; };
@@ -111,6 +115,10 @@
 		051A72B0177950D600BDD346 /* default_cover@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "default_cover@2x.png"; sourceTree = "<group>"; };
 		051AF557184ECE7D00A91A8C /* NIAUCategoriesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NIAUCategoriesViewController.h; sourceTree = "<group>"; };
 		051AF558184ECE7D00A91A8C /* NIAUCategoriesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NIAUCategoriesViewController.m; sourceTree = "<group>"; };
+		051FB64118AC15BF00FA734C /* UIWebViewBack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = UIWebViewBack.png; sourceTree = "<group>"; };
+		051FB64218AC15BF00FA734C /* UIWebViewBack@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "UIWebViewBack@2x.png"; sourceTree = "<group>"; };
+		051FB64318AC15BF00FA734C /* UIWebViewNext.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = UIWebViewNext.png; sourceTree = "<group>"; };
+		051FB64418AC15BF00FA734C /* UIWebViewNext@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "UIWebViewNext@2x.png"; sourceTree = "<group>"; };
 		052167E2177BD6DF00A4A81A /* NIAUArticle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NIAUArticle.h; sourceTree = "<group>"; };
 		052167E3177BD6DF00A4A81A /* NIAUArticle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NIAUArticle.m; sourceTree = "<group>"; };
 		052167E5177BDF8900A4A81A /* NIAUArticleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NIAUArticleViewController.h; sourceTree = "<group>"; };
@@ -270,6 +278,10 @@
 		053878281777E034001E60F6 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				051FB64118AC15BF00FA734C /* UIWebViewBack.png */,
+				051FB64218AC15BF00FA734C /* UIWebViewBack@2x.png */,
+				051FB64318AC15BF00FA734C /* UIWebViewNext.png */,
+				051FB64418AC15BF00FA734C /* UIWebViewNext@2x.png */,
 				052BBF8917EFF6E100B12071 /* home-background.png */,
 				052BBF8A17EFF6E100B12071 /* home-background@2x.png */,
 				052BBF8517EFF31D00B12071 /* cover-icon.png */,
@@ -569,7 +581,10 @@
 				052A850117C5E13900D36E6C /* 57.png in Resources */,
 				052BBF8817EFF31D00B12071 /* cover-icon@2x.png in Resources */,
 				055A8EDC177290CF003D9407 /* Main_iPad.storyboard in Resources */,
+				051FB64518AC15BF00FA734C /* UIWebViewBack.png in Resources */,
+				051FB64618AC15BF00FA734C /* UIWebViewBack@2x.png in Resources */,
 				052A850217C5E13900D36E6C /* 58.png in Resources */,
+				051FB64718AC15BF00FA734C /* UIWebViewNext.png in Resources */,
 				052A850717C5E13900D36E6C /* 114.png in Resources */,
 				052BBF8C17EFF6E100B12071 /* home-background@2x.png in Resources */,
 				052A850017C5E13900D36E6C /* 50.png in Resources */,
@@ -577,6 +592,7 @@
 				052A850617C5E13900D36E6C /* 100.png in Resources */,
 				0567082817B1D51400A87818 /* default_article_image_table_view.png in Resources */,
 				052A84FC17C5E13900D36E6C /* Default-568h@2x.png in Resources */,
+				051FB64818AC15BF00FA734C /* UIWebViewNext@2x.png in Resources */,
 				051A72B1177950D600BDD346 /* default_cover.png in Resources */,
 				055A8EE1177290CF003D9407 /* Images.xcassets in Resources */,
 				052A84FB17C5E13900D36E6C /* iPad-portrait@2x.png in Resources */,

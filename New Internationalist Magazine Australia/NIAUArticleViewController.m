@@ -440,6 +440,7 @@ float cellPadding = 10.;
         // Send the weblink
         NIAUWebsiteViewController *websiteViewController = [segue destinationViewController];
         websiteViewController.linkToLoad = sender;
+        websiteViewController.article = self.article;
     }
 }
 
