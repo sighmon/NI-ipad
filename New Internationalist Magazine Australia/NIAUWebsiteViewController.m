@@ -66,7 +66,7 @@
 - (IBAction)shareButtonTapped:(id)sender
 {
     // Pop share modal
-    NSMutableArray *itemsToShare = [[NSMutableArray alloc] initWithArray:@[[NSString stringWithFormat:@"A link I found reading '%@' from New Internationalist magazine.\n\nThe original article is here:\n%@\n\nThe link is:", self.article.title, [self.article.getGuestPassURL absoluteString]], [self.linkToLoad.URL absoluteString]]];
+    NSMutableArray *itemsToShare = [[NSMutableArray alloc] initWithArray:@[[NSString stringWithFormat:@"A link I found reading '%@' from New Internationalist magazine.\n\nThe original article is here:\n%@\n\nThe link is:", self.article.title, [self.article.getGuestPassURL absoluteString]], self.webView.request.URL.absoluteString]];
     
     UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:itemsToShare applicationActivities:nil];
     [activityController setValue:[NSString stringWithFormat:@"Link from New Internationalist"] forKey:@"subject"];
