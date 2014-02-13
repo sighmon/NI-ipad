@@ -73,9 +73,31 @@
 {
 //    How to set the navigation tint colour.
 //    [self.navigationController.navigationBar setBarTintColor:[UIColor blueColor]];
+    self.navigationController.navigationBarHidden = true;
     
     // Style buttons
 //    [self.magazineArchiveButton setBackgroundColor:[UIColor clearColor]];
+    
+    // Call this to set a nice background gradient - Not sure it works, so leaving it out for now.
+//    [self drawGradientInView:self.view];
+}
+
+- (void)drawGradientInView:(UIView *)view
+{
+    for (__strong CALayer *layer in [self.view.layer sublayers]) {
+        if ([[layer name] isEqualToString: @"backgroundGradient"] == YES) {
+            [layer removeFromSuperlayer];
+            break;
+        }
+    }
+    
+    CAGradientLayer *gradient = [CAGradientLayer layer];
+    gradient.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, self.view.frame.size.width*2, self.view.frame.size.height);
+    UIColor *startColour = [UIColor colorWithHue:0.2361 saturation:0.61 brightness:0.91 alpha:0.5];
+    UIColor *endColour = [UIColor colorWithHue:0.25 saturation:0.89 brightness:0.84 alpha:0.5];
+    gradient.colors = @[(id)[startColour CGColor], (id)[endColour CGColor]];
+    gradient.name = @"backgroundGradient";
+    [view.layer insertSublayer:gradient atIndex:0];
 }
 
 - (void)loadLatestMagazineCover
@@ -322,6 +344,29 @@
 - (IBAction)loginButtonTapped:(id)sender
 {
     
+}
+
+#pragma mark - Navigation Controller show/hide
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    self.navigationController.navigationBar.alpha = 0.0f;
+    [self.navigationController setNavigationBarHidden:NO animated:animated];
+    
+    [UIView animateWithDuration:0.5f animations:^{
+        self.navigationController.navigationBar.alpha = 1.0f;
+    } completion:^(BOOL finished) {}];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self.navigationController setNavigationBarHidden:YES animated:animated];
+    
+    [UIView animateWithDuration:0.5f animations:^{
+        self.navigationController.navigationBar.alpha = 0.0f;
+    } completion:^(BOOL finished) {}];
 }
 
 @end

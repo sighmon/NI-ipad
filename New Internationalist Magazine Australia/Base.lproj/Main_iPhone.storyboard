@@ -1135,12 +1135,12 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
+        <segue reference="jkZ-Dh-FHT"/>
+        <segue reference="qUJ-ry-144"/>
         <segue reference="fFr-gL-mDW"/>
-        <segue reference="W9z-A8-KEC"/>
         <segue reference="fI5-Du-KTZ"/>
+        <segue reference="W9z-A8-KEC"/>
         <segue reference="lhr-aW-Muh"/>
-        <segue reference="joJ-Rh-K6j"/>
-        <segue reference="SUv-P7-9yc"/>
         <segue reference="2MC-OH-cwI"/>
     </inferredMetricsTieBreakers>
 </document>
