@@ -66,7 +66,16 @@
 - (IBAction)shareButtonTapped:(id)sender
 {
     // Pop share modal
-    NSMutableArray *itemsToShare = [[NSMutableArray alloc] initWithArray:@[[NSString stringWithFormat:@"A link I found reading '%@' from New Internationalist magazine.\n\nThe original article is here:\n%@\n\nThe link is:", self.article.title, [self.article.getGuestPassURL absoluteString]], self.webView.request.URL.absoluteString]];
+    NSString *fromLink = @"";
+    NSString *fromTitle = @"";
+    if (self.article) {
+        fromLink = [self.article.getGuestPassURL absoluteString];
+        fromTitle = self.article.title;
+    } else if (self.issue) {
+        fromLink = [[self.issue getWebURL] absoluteString];
+        fromTitle = self.issue.title;
+    }
+    NSMutableArray *itemsToShare = [[NSMutableArray alloc] initWithArray:@[[NSString stringWithFormat:@"A link I found reading '%@' from New Internationalist magazine.\n%@\n\nThe link is:", fromTitle, fromLink], self.webView.request.URL.absoluteString]];
     
     UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:itemsToShare applicationActivities:nil];
     [activityController setValue:[NSString stringWithFormat:@"Link from New Internationalist"] forKey:@"subject"];
@@ -85,6 +94,7 @@
 - (void)webViewDidStartLoad:(UIWebView *)webView
 {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    self.browserURL.title = [[self.webView.request.URL URLByDeletingLastPathComponent] absoluteString];
     [self updateButtons];
 }
 - (void)webViewDidFinishLoad:(UIWebView *)webView

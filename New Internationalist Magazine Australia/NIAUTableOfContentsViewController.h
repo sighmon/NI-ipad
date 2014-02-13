@@ -10,8 +10,9 @@
 #import "NIAUIssue.h"
 #import "NIAUArticleViewController.h"
 #import "NIAUPublisher.h"
+#import "NIAUWebsiteViewController.h"
 
-@interface NIAUTableOfContentsViewController : UIViewController <UIScrollViewDelegate>
+@interface NIAUTableOfContentsViewController : UIViewController <UIScrollViewDelegate, UITextViewDelegate>
 
 @property (nonatomic, strong) NIAUIssue *issue;
 

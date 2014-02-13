@@ -503,6 +503,9 @@
                                         </constraints>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="Pia-vN-nb6" id="kQN-yU-waz"/>
+                                        </connections>
                                     </textView>
                                     <imageView multipleTouchEnabled="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fpA-Cj-zEf">
                                         <rect key="frame" x="20" y="597" width="125" height="125"/>
@@ -573,6 +576,7 @@
                         <outlet property="shareAction" destination="JEv-4t-ZCj" id="h6Z-qa-EvR"/>
                         <outlet property="tableView" destination="SJ4-ca-Goj" id="o7k-zH-Cpf"/>
                         <segue destination="p7L-KM-t4i" kind="push" identifier="showImageZoom" id="fFO-5s-0tA"/>
+                        <segue destination="Mze-ob-E7u" kind="modal" identifier="webLinkTappedFromContents" id="w0v-2Q-MmG"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AQJ-ZV-TLu" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1149,11 +1153,12 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="EBU-8G-ECI"/>
         <segue reference="MS4-LT-1l5"/>
+        <segue reference="EBU-8G-ECI"/>
         <segue reference="7r1-dy-lxK"/>
+        <segue reference="w0v-2Q-MmG"/>
         <segue reference="WLv-dP-nWF"/>
-        <segue reference="mho-0V-J7B"/>
         <segue reference="JBV-bs-efO"/>
+        <segue reference="mho-0V-J7B"/>
     </inferredMetricsTieBreakers>
 </document>

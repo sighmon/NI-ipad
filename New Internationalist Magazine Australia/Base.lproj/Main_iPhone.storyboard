@@ -340,7 +340,7 @@
                         <inset key="separatorInset" minX="58" minY="0.0" maxX="0.0" maxY="0.0"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="articlesInCategoryCell" id="syL-gP-mez">
-                                <rect key="frame" x="0.0" y="22" width="320" height="88"/>
+                                <rect key="frame" x="0.0" y="86" width="320" height="88"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="syL-gP-mez" id="odb-7R-1sz">
                                     <rect key="frame" x="0.0" y="0.0" width="287" height="87"/>
@@ -682,7 +682,10 @@
                                             </constraints>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                            <dataDetectorType key="dataDetectorTypes" link="YES"/>
+                                            <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES"/>
+                                            <connections>
+                                                <outlet property="delegate" destination="4fR-wf-HfG" id="YaU-CL-eFm"/>
+                                            </connections>
                                         </textView>
                                         <imageView multipleTouchEnabled="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="zUP-pp-27x">
                                             <rect key="frame" x="91" y="20" width="138" height="138"/>
@@ -794,6 +797,7 @@
                         <outlet property="tableView" destination="tJH-G9-L0y" id="4hc-uk-IUa"/>
                         <outlet property="tableViewFooterView" destination="9lb-Lk-61p" id="inh-wt-sUE"/>
                         <segue destination="GGn-sZ-3sw" kind="push" identifier="showImageZoom" id="fI5-Du-KTZ"/>
+                        <segue destination="aFP-ao-u02" kind="modal" identifier="webLinkTappedFromContents" id="lhr-aW-Muh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5Ob-iX-ukg" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1131,11 +1135,12 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="2MC-OH-cwI"/>
-        <segue reference="Miu-Qg-BkO"/>
-        <segue reference="mdp-6r-s59"/>
+        <segue reference="fFr-gL-mDW"/>
+        <segue reference="W9z-A8-KEC"/>
+        <segue reference="fI5-Du-KTZ"/>
+        <segue reference="lhr-aW-Muh"/>
         <segue reference="joJ-Rh-K6j"/>
         <segue reference="SUv-P7-9yc"/>
-        <segue reference="fFr-gL-mDW"/>
+        <segue reference="2MC-OH-cwI"/>
     </inferredMetricsTieBreakers>
 </document>

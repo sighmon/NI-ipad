@@ -443,6 +443,17 @@ static NSString *CellIdentifier = @"articleCell";
 }
 
 #pragma mark -
+#pragma mark UITextView delegate
+
+- (BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)URL inRange:(NSRange)characterRange
+{
+    // A link was tapped
+    // Segue to NIAUWebsiteViewController so users don't leave the app.
+    [self performSegueWithIdentifier:@"webLinkTappedFromContents" sender:URL];
+    return NO;
+}
+
+#pragma mark -
 #pragma mark Prepare for Segue
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -458,8 +469,7 @@ static NSString *CellIdentifier = @"articleCell";
         } else {
             imageZoomViewController.imageToLoad = [UIImage imageNamed:@"default_article_image.png"];
         }
-    } else if ([[segue identifier] isEqualToString:@"tappedArticle"])
-    {
+    } else if ([[segue identifier] isEqualToString:@"tappedArticle"]) {
         // Load the article tapped.
         
         NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
@@ -467,6 +477,12 @@ static NSString *CellIdentifier = @"articleCell";
         NIAUArticleViewController *articleViewController = [segue destinationViewController];
         articleViewController.article = [self.sortedCategories[selectedIndexPath.section] objectForKey:@"articles"][selectedIndexPath.row];
         
+    } else if ([[segue identifier] isEqualToString:@"webLinkTappedFromContents"]) {
+        // Send the weblink
+        NIAUWebsiteViewController *websiteViewController = [segue destinationViewController];
+        NSURLRequest *request = [[NSURLRequest alloc] initWithURL:sender];
+        websiteViewController.linkToLoad = request;
+        websiteViewController.issue = self.issue;
     }
 }
 

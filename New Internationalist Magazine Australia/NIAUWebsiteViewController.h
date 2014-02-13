@@ -8,12 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import "NIAUArticle.h"
+#import "NIAUIssue.h"
 
 @interface NIAUWebsiteViewController : UIViewController <UIWebViewDelegate>
 
 @property (nonatomic, weak) NIAUArticle *article;
+@property (nonatomic, weak) NIAUIssue *issue;
 
-@property (nonatomic, weak) NSURLRequest *linkToLoad;
+@property (nonatomic, strong) NSURLRequest *linkToLoad;
 
 @property (nonatomic, weak) IBOutlet UIWebView *webView;
 
