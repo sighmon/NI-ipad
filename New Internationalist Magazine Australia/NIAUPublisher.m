@@ -136,10 +136,19 @@ static NIAUPublisher *instance =nil;
 }
 
 -(NIAUIssue *)issueWithName:(NSString *)name {
-    // TODO: Catch out of bounds exception when the article doesn't get found.
+    // TODO: Catch out of bounds exception when the issue doesn't get found.
     return [issues objectAtIndex:[issues indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
         //        NSLog(@"Object: %@, railsID: %@",[obj railsID], railsID);
         return ([[obj name] isEqualToString:name]);
+    }]];
+}
+
+-(NIAUIssue *)issueWithRailsID:(NSNumber *)railsID
+{
+    // TODO: Catch out of bounds exception when the issue doesn't get found.
+    return [issues objectAtIndex:[issues indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
+        //        NSLog(@"Object: %@, railsID: %@",[obj railsID], railsID);
+        return ([[obj railsID] isEqualToNumber:railsID]);
     }]];
 }
 

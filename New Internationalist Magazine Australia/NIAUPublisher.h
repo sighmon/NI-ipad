@@ -27,5 +27,6 @@ extern  NSString *PublisherFailedUpdateNotification;
 -(NSInteger)numberOfIssues;
 -(NIAUIssue *)issueAtIndex:(NSInteger)index;
 -(NIAUIssue *)issueWithName:(NSString *)name;
+-(NIAUIssue *)issueWithRailsID:(NSNumber *)railsID;
 
 @end

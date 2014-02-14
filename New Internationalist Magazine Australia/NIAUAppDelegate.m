@@ -13,6 +13,8 @@
 #import <Parse/Parse.h>
 #import "local.h"
 #import "NIAUPublisher.h"
+#import "NIAUArticleViewController.h"
+#import "NIAUArticle.h"
 
 @implementation NIAUAppDelegate
 
@@ -62,6 +64,48 @@
     
     // Override point for customization after application launch.
     return YES;
+}
+
+#pragma mark - URL open handling
+
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
+{
+    // Launched from a link newint://issues/id/articles/id
+    
+    BOOL okayToLoad = false;
+    
+    if (!([[url absoluteString] rangeOfString:@"issues"].location == NSNotFound) &&
+        !([[url absoluteString] rangeOfString:@"articles"].location == NSNotFound) &&
+        [[url absoluteString] hasPrefix:@"newint"]) {
+        // TOFIX: Could clean this up and test with regex for a more accurate match
+        okayToLoad = true;
+    }
+    
+    if (okayToLoad) {
+        // It's probably a good link, so let's load it.
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:[[NSBundle mainBundle].infoDictionary objectForKey:@"UIMainStoryboardFile"] bundle:[NSBundle mainBundle]];
+        
+        NIAUArticleViewController *articleViewController = [storyboard instantiateViewControllerWithIdentifier:@"article"];
+        
+        NSString *articleIDFromURL = [[url pathComponents] lastObject];
+        NSNumber *articleID = [NSNumber numberWithInt:[articleIDFromURL integerValue]];
+        NSString *issueIDFromURL = [[url pathComponents] objectAtIndex:1];
+        NSNumber *issueID = [NSNumber numberWithInt:[issueIDFromURL integerValue]];
+        NSArray *arrayOfIssues = [NIAUIssue issuesFromNKLibrary];
+        NIAUIssue *issue = [arrayOfIssues objectAtIndex:[arrayOfIssues indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
+            return ([[obj railsID] isEqualToNumber:issueID]);
+        }]];
+        [issue forceDownloadArticles];
+        
+        articleViewController.article = [issue articleWithRailsID:articleID];
+        [(UINavigationController*)self.window.rootViewController pushViewController:articleViewController animated:YES];
+        
+        return YES;
+    } else {
+        // Malformed link, so ignore it and just start the app.
+        [[[UIAlertView alloc] initWithTitle:@"Sorry!" message:@"We don't recognise that link that you tried to open." delegate:self cancelButtonTitle:@"Okay." otherButtonTitles: nil] show];
+        return NO;
+    }
 }
 
 #pragma mark - Parse setup

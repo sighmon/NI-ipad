@@ -811,7 +811,7 @@
         <!--Article View Controller-->
         <scene sceneID="IB9-jM-eiV">
             <objects>
-                <viewController id="tZW-bR-n1M" customClass="NIAUArticleViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="article" id="tZW-bR-n1M" customClass="NIAUArticleViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="sDJ-ty-3T1"/>
                         <viewControllerLayoutGuide type="bottom" id="VNY-6j-Yl3"/>
@@ -1153,12 +1153,12 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="MS4-LT-1l5"/>
-        <segue reference="EBU-8G-ECI"/>
         <segue reference="7r1-dy-lxK"/>
-        <segue reference="w0v-2Q-MmG"/>
         <segue reference="WLv-dP-nWF"/>
-        <segue reference="JBV-bs-efO"/>
+        <segue reference="PvO-ql-dqR"/>
         <segue reference="mho-0V-J7B"/>
+        <segue reference="d5N-e1-WGj"/>
+        <segue reference="JBV-bs-efO"/>
+        <segue reference="w2Z-Bz-DtP"/>
     </inferredMetricsTieBreakers>
 </document>

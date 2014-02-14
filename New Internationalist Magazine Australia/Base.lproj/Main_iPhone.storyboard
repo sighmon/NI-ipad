@@ -24,7 +24,7 @@
         <!--View Controller - New Internationalist-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
-                <viewController id="vXZ-lx-hvc" customClass="NIAUViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="home" id="vXZ-lx-hvc" customClass="NIAUViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="CXJ-uP-klC"/>
                         <viewControllerLayoutGuide type="bottom" id="UGn-Ob-J5l"/>
@@ -133,6 +133,7 @@
                         <outlet property="magazineArchiveButton" destination="yAi-yu-vep" id="DFg-tM-L0y"/>
                         <outlet property="subscribeButton" destination="D13-Uv-IQI" id="9IG-Qf-3cj"/>
                         <segue destination="4fR-wf-HfG" kind="push" identifier="homeCoverToContentsView" id="fFr-gL-mDW"/>
+                        <segue destination="T5k-23-5nF" kind="push" identifier="openURLtoArticle" id="v7S-KP-l8O"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
@@ -817,7 +818,7 @@
         <!--Article View Controller-->
         <scene sceneID="lsg-eR-zZi">
             <objects>
-                <viewController id="T5k-23-5nF" customClass="NIAUArticleViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="article" id="T5k-23-5nF" customClass="NIAUArticleViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="6OY-SP-Bfa"/>
                         <viewControllerLayoutGuide type="bottom" id="iNJ-Cb-6jp"/>
@@ -911,7 +912,7 @@
                                         <constraints>
                                             <constraint firstAttribute="height" constant="323" id="Zu2-h1-NqP"/>
                                         </constraints>
-                                        <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES"/>
+                                        <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES" calendarEvent="YES"/>
                                         <connections>
                                             <outlet property="delegate" destination="T5k-23-5nF" id="EeT-Sg-yZU"/>
                                         </connections>
@@ -1135,12 +1136,12 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="jkZ-Dh-FHT"/>
-        <segue reference="qUJ-ry-144"/>
+        <segue reference="SUv-P7-9yc"/>
+        <segue reference="v7S-KP-l8O"/>
         <segue reference="fFr-gL-mDW"/>
-        <segue reference="fI5-Du-KTZ"/>
-        <segue reference="W9z-A8-KEC"/>
-        <segue reference="lhr-aW-Muh"/>
+        <segue reference="joJ-Rh-K6j"/>
+        <segue reference="mdp-6r-s59"/>
+        <segue reference="Qwc-Oh-1W1"/>
         <segue reference="2MC-OH-cwI"/>
     </inferredMetricsTieBreakers>
 </document>

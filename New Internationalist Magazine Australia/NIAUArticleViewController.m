@@ -336,8 +336,12 @@ float cellPadding = 10.;
             // Request URL includes Newsstand, so we assume it's an image clicked within an article.
             [self performSegueWithIdentifier:@"showImageZoom" sender:request.URL];
             return NO;
+        } else if (!([[request.URL absoluteString] rangeOfString:@"#"].location == NSNotFound)) {
+            // Link is an internal link so just keep loading.
+            // TODO: Work out why this isn't jumping to the #anchor
+            return YES;
         } else {
-            // A link was tapped
+            // A web link was tapped
             // Segue to NIAUWebsiteViewController so users don't leave the app.
             [self performSegueWithIdentifier:@"webLinkTapped" sender:request];
             return NO;
