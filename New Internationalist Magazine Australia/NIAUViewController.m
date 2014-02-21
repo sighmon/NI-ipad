@@ -255,8 +255,8 @@
 //        [self.loginButton setNeedsUpdateConstraints];
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.loginButton layoutIfNeeded];
-            self.loginButton.enabled = NO;
-            [self.loginButton setTitle:@"Logged in" forState:UIControlStateDisabled];
+//            self.loginButton.enabled = NO;
+            [self.loginButton setTitle:@"Logged in" forState:UIControlStateNormal];
             NSLog(@"Login button disabled.");
         });
     } else {
