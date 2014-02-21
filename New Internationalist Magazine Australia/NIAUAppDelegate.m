@@ -74,10 +74,18 @@
     
     BOOL okayToLoad = false;
     
-    if (!([[url absoluteString] rangeOfString:@"issues"].location == NSNotFound) &&
-        !([[url absoluteString] rangeOfString:@"articles"].location == NSNotFound) &&
-        [[url absoluteString] hasPrefix:@"newint"]) {
-        // TOFIX: Could clean this up and test with regex for a more accurate match
+    NSError *error = NULL;
+    NSRegularExpression *URLRegex = [NSRegularExpression regularExpressionWithPattern:@"(issues)\\/(\\d+)\\/(articles)\\/(\\d+)"
+                                                                              options:NSRegularExpressionCaseInsensitive
+                                                                                error:&error];
+    
+    NSUInteger numberOfMatches = [URLRegex numberOfMatchesInString:[url absoluteString]
+                                                           options:0
+                                                             range:NSMakeRange(0, [[url absoluteString] length])];
+    
+    if ((numberOfMatches > 0) && !error && [[url absoluteString] hasPrefix:@"newint"]) {
+        // The launch string passes regex, so should be okay
+        // TODO: handle ids not found.
         okayToLoad = true;
     }
     
