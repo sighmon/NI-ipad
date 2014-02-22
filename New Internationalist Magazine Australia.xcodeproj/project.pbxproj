@@ -60,6 +60,7 @@
 		05424C361803AD0400399194 /* NIAUStoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05424C351803AD0400399194 /* NIAUStoreViewController.m */; };
 		05424C391803BD7000399194 /* NIAULoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05424C381803BD7000399194 /* NIAULoginViewController.m */; };
 		0550B50018A437C0002E09D4 /* NIAUWebsiteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0550B4FF18A437C0002E09D4 /* NIAUWebsiteViewController.m */; };
+		05594CD618B80BC000536D4D /* NIAUInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05594CD518B80BC000536D4D /* NIAUInfoViewController.m */; };
 		055A8EC6177290CE003D9407 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 055A8EC5177290CE003D9407 /* Foundation.framework */; };
 		055A8EC8177290CE003D9407 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 055A8EC7177290CE003D9407 /* CoreGraphics.framework */; };
 		055A8ECA177290CE003D9407 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 055A8EC9177290CE003D9407 /* UIKit.framework */; };
@@ -148,6 +149,8 @@
 		05424C381803BD7000399194 /* NIAULoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NIAULoginViewController.m; sourceTree = "<group>"; };
 		0550B4FE18A437C0002E09D4 /* NIAUWebsiteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NIAUWebsiteViewController.h; sourceTree = "<group>"; };
 		0550B4FF18A437C0002E09D4 /* NIAUWebsiteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NIAUWebsiteViewController.m; sourceTree = "<group>"; };
+		05594CD418B80BC000536D4D /* NIAUInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NIAUInfoViewController.h; sourceTree = "<group>"; };
+		05594CD518B80BC000536D4D /* NIAUInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NIAUInfoViewController.m; sourceTree = "<group>"; };
 		055A8EC2177290CE003D9407 /* New Internationalist Magazine Australia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "New Internationalist Magazine Australia.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		055A8EC5177290CE003D9407 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		055A8EC7177290CE003D9407 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -393,6 +396,8 @@
 				0550B4FF18A437C0002E09D4 /* NIAUWebsiteViewController.m */,
 				058F738C178BBA3E002CA40C /* NIAUImageZoomViewController.h */,
 				058F738D178BBA3E002CA40C /* NIAUImageZoomViewController.m */,
+				05594CD418B80BC000536D4D /* NIAUInfoViewController.h */,
+				05594CD518B80BC000536D4D /* NIAUInfoViewController.m */,
 				05BD7F141779671900820EF3 /* NIAUCell.h */,
 				05BD7F151779671900820EF3 /* NIAUCell.m */,
 				05F856CD1864C67E001D1A75 /* NIAUArticleCategoryCell.h */,
@@ -707,6 +712,7 @@
 				52CD5EE617D896240038A70C /* NIAUCache.m in Sources */,
 				05287A24177983E400501F5F /* NIAUCell.m in Sources */,
 				05424C391803BD7000399194 /* NIAULoginViewController.m in Sources */,
+				05594CD618B80BC000536D4D /* NIAUInfoViewController.m in Sources */,
 				05F856CF1864C67E001D1A75 /* NIAUArticleCategoryCell.m in Sources */,
 				051AF559184ECE7D00A91A8C /* NIAUCategoriesViewController.m in Sources */,
 				0577E07917FBF2B400A52A8E /* NIAUInAppPurchaseHelper.m in Sources */,

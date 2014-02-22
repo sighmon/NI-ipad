@@ -127,6 +127,8 @@ NSString *kCellID = @"magazineCellID";              // UICollectionViewCell stor
     } else {
         [self loadIssues];
     }
+    
+    self.title = @"Archive";
 }
 
 // doublehandling from NIAUViewController...
