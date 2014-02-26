@@ -78,31 +78,14 @@
     // Style buttons
 //    [self.magazineArchiveButton setBackgroundColor:[UIColor clearColor]];
     
-    // Call this to set a nice background gradient - Not sure it works, so leaving it out for now.
-//    [self drawGradientInView:self.view];
-}
-
-- (void)drawGradientInView:(UIView *)view
-{
-    for (__strong CALayer *layer in [self.view.layer sublayers]) {
-        if ([[layer name] isEqualToString: @"backgroundGradient"] == YES) {
-            [layer removeFromSuperlayer];
-            break;
-        }
-    }
-    
-    CAGradientLayer *gradient = [CAGradientLayer layer];
-    gradient.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, self.view.frame.size.width*2, self.view.frame.size.height);
-    UIColor *startColour = [UIColor colorWithHue:0.2361 saturation:0.61 brightness:0.91 alpha:0.5];
-    UIColor *endColour = [UIColor colorWithHue:0.25 saturation:0.89 brightness:0.84 alpha:0.5];
-    gradient.colors = @[(id)[startColour CGColor], (id)[endColour CGColor]];
-    gradient.name = @"backgroundGradient";
-    [view.layer insertSublayer:gradient atIndex:0];
+    // Call this to set a nice background gradient
+    [NIAUHelper drawGradientInView:self.view];
 }
 
 - (void)loadLatestMagazineCover
 {
     [self.issue getCoverWithCompletionBlock:^(UIImage *img) {
+        [self.cover setContentMode:UIViewContentModeScaleAspectFit];
         [self.cover setAlpha:0.0];
         [self.cover setImage:img];
         [UIView animateWithDuration:0.5 animations:^{

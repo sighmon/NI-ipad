@@ -11,6 +11,7 @@
 #import "NIAUArticle.h"
 #import "NIAUPublisher.h"
 #import "NIAUInAppPurchaseHelper.h"
+#import "NIAUHelper.h"
 
 @interface NIAUViewController : UIViewController <UIGestureRecognizerDelegate>
 

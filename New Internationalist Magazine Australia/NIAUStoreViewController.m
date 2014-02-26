@@ -123,10 +123,10 @@
         } else {
             if ([self isProductASubscriptionAtRow:indexPath.row]) {
                 // It's a single issue purchase
-                productImageView.backgroundColor = [UIColor colorWithRed:0.184 green:0.431 blue:0.557 alpha:0.7];
+                productImageView.backgroundColor = [UIColor colorWithHue:0.2111 saturation:0.87 brightness:0.61 alpha:1.0];
             } else {
                 // It's a subscription
-                productImageView.backgroundColor = [UIColor colorWithRed:0.259 green:0.612 blue:0.718 alpha:0.7];
+                productImageView.backgroundColor = [UIColor colorWithHue:0.2111 saturation:0.87 brightness:0.76 alpha:1.0];;
             }
         }
         

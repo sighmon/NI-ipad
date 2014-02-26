@@ -33,6 +33,9 @@
     
     self.title = @"Log in";
     
+    // Draw the nice gradient background
+    [NIAUHelper drawGradientInView:self.view];
+    
     NSArray *accounts = [SSKeychain accountsForService:@"NIWebApp"];
     if([accounts count]>0) {
         NSDictionary *dict = accounts[0];
@@ -42,6 +45,19 @@
         self.username.text = @"username";
         self.password.text = @"password";
     }
+    
+    // Register for keyboard notifications
+    [self registerForKeyboardNotifications];
+    
+    // Dismiss keyboard on background tap
+    UITapGestureRecognizer *backgroundTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
+    [self.view addGestureRecognizer:backgroundTap];
+}
+
+- (void)dismissKeyboard
+{
+    [self.username resignFirstResponder];
+    [self.password resignFirstResponder];
 }
 
 - (void)didReceiveMemoryWarning
@@ -110,6 +126,86 @@
         } else {
             [[[UIAlertView alloc] initWithTitle:@"Error" message:[NSString stringWithFormat:@"Sorry, there was a problem with the keychain: %@", error] delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:nil] show];
         }
+    }
+}
+
+- (IBAction)signupButtonTapped:(id)sender
+{
+    // Nothing to do..
+}
+
+#pragma mark -
+#pragma mark Keyboard Delegate
+
+- (void)registerForKeyboardNotifications
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWasShown:)
+                                                 name:UIKeyboardDidShowNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillBeHidden:)
+                                                 name:UIKeyboardWillHideNotification object:nil];
+    
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    // When return button is tapped, move to next field or act as if the user pressed login
+    if (textField == self.username) {
+        [textField resignFirstResponder];
+        [self.password becomeFirstResponder];
+        return NO;
+    } else {
+        [textField resignFirstResponder];
+        [self loginButtonTapped:textField];
+        return YES;
+    }
+}
+
+- (void)keyboardWasShown: (NSNotification *)notification
+{
+    UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
+    NSDictionary* info = [notification userInfo];
+    CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+
+    if (orientation == UIDeviceOrientationLandscapeLeft || orientation == UIDeviceOrientationLandscapeRight) {
+        // move the textfield up.
+        [UIView animateWithDuration:0.3 animations:^{
+            CGRect newRect = self.view.frame;
+            if (IS_IPAD()) {
+                newRect.origin.y -= ((kbSize.width / 2) - 60.);
+            } else {
+                newRect.origin.y -= (kbSize.width - 60.);
+            }
+            self.view.frame = newRect;
+        }];
+    }
+}
+
+- (void)keyboardWillBeHidden: (NSNotification *)notification
+{
+    if (self.view.frame.origin.y < 0) {
+        [UIView animateWithDuration:0.3 animations:^{
+            CGRect newRect = self.view.frame;
+            newRect.origin.y = 0.0;
+            self.view.frame = newRect;
+        }];
+    }
+}
+
+#pragma mark -
+#pragma mark Segue
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([[segue identifier] isEqualToString:@"signupWebview"]) {
+
+        NIAUWebsiteViewController *websiteViewController = [segue destinationViewController];
+        NSURLRequest *railsSignup = [NSURLRequest requestWithURL:[NSURL URLWithString: @"https://digital.newint.com.au/users/sign_up"]
+                                                     cachePolicy:NSURLRequestUseProtocolCachePolicy
+                                                 timeoutInterval:60.0];
+        websiteViewController.linkToLoad = railsSignup;
     }
 }
 

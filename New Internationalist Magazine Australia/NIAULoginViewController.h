@@ -7,12 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "NIAUHelper.h"
+#import "NIAUWebsiteViewController.h"
 
-@interface NIAULoginViewController : UIViewController
+@interface NIAULoginViewController : UIViewController <UITextFieldDelegate>
 
 @property (nonatomic, weak) IBOutlet UITextField *username;
 @property (nonatomic, weak) IBOutlet UITextField *password;
 
 @property (nonatomic, weak) IBOutlet UIButton *loginButton;
+@property (nonatomic, weak) IBOutlet UIButton *signupButton;
 
 @end
