@@ -92,7 +92,7 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" red="0.24705882370000001" green="0.32156863810000003" blue="0.03529411927" alpha="1" colorSpace="deviceRGB"/>
+                        <color key="backgroundColor" red="0.2392156869" green="0.2588235438" blue="0.2823529541" alpha="1" colorSpace="deviceRGB"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="9Ip-lN-uYD" secondAttribute="trailing" constant="20" id="0L8-X7-VjH"/>
@@ -895,7 +895,7 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" red="0.24705882370000001" green="0.32156863810000003" blue="0.03529411927" alpha="1" colorSpace="deviceRGB"/>
+                        <color key="backgroundColor" red="0.2392156869" green="0.2588235438" blue="0.2823529541" alpha="1" colorSpace="deviceRGB"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="centerX" secondItem="BaC-Z4-nI3" secondAttribute="centerX" id="BIb-PP-zCx"/>
@@ -1134,12 +1134,14 @@
                                     <barButtonItem enabled="NO" title="website" id="ws9-UA-Atw"/>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="U6s-pM-GIl"/>
                                     <barButtonItem image="UIWebViewBack.png" id="54m-KT-UlB">
+                                        <color key="tintColor" red="0.29803921570000003" green="0.64705882349999999" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
                                             <action selector="backButtonTapped:" destination="Mze-ob-E7u" id="390-HP-iku"/>
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem width="42" style="plain" systemItem="fixedSpace" id="Ub5-DS-ncX"/>
                                     <barButtonItem image="UIWebViewNext.png" id="XIa-AT-Inh">
+                                        <color key="tintColor" red="0.29803921570000003" green="0.64705882349999999" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
                                             <action selector="forwardButtonTapped:" destination="Mze-ob-E7u" id="h2K-Bh-bjA"/>
                                         </connections>

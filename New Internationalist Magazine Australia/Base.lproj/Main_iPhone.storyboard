@@ -110,7 +110,7 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" red="0.24705882370471954" green="0.32156863808631897" blue="0.035294119268655777" alpha="1" colorSpace="deviceRGB"/>
+                        <color key="backgroundColor" red="0.23921568691730499" green="0.25882354378700256" blue="0.28235295414924622" alpha="1" colorSpace="deviceRGB"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="0Uh-Tb-k55" firstAttribute="trailing" secondItem="kh9-bI-dsS" secondAttribute="trailing" id="1cz-Ux-0Th"/>
@@ -473,7 +473,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hsy-QJ-9Bj">
-                                <rect key="frame" x="20" y="455" width="280" height="33"/>
+                                <rect key="frame" x="20" y="427" width="280" height="33"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <state key="normal" title="Sign up for an NI account">
@@ -485,11 +485,11 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" red="0.24705882370000001" green="0.32156863810000003" blue="0.03529411927" alpha="1" colorSpace="deviceRGB"/>
+                        <color key="backgroundColor" red="0.2392156869" green="0.2588235438" blue="0.2823529541" alpha="1" colorSpace="deviceRGB"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="Hsy-QJ-9Bj" secondAttribute="trailing" constant="20" id="3WA-VJ-qyn"/>
-                            <constraint firstItem="Hsy-QJ-9Bj" firstAttribute="top" secondItem="OJ7-H6-3is" secondAttribute="bottom" constant="168" id="3cT-Yu-4AD"/>
+                            <constraint firstItem="Hsy-QJ-9Bj" firstAttribute="top" secondItem="OJ7-H6-3is" secondAttribute="bottom" constant="140" id="3cT-Yu-4AD"/>
                             <constraint firstItem="MCU-jk-BBn" firstAttribute="top" secondItem="NKE-tM-OoF" secondAttribute="bottom" constant="80" id="6HF-LK-VCr"/>
                             <constraint firstAttribute="trailing" secondItem="OJ7-H6-3is" secondAttribute="trailing" constant="137" id="7Bu-fk-2VU"/>
                             <constraint firstItem="nGM-hq-7gS" firstAttribute="leading" secondItem="fBw-WN-eOn" secondAttribute="leading" constant="20" id="8oW-E4-kHe"/>
@@ -1135,12 +1135,14 @@
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="Kpm-6g-DW8"/>
                                     <barButtonItem image="UIWebViewBack.png" id="QEo-cD-nig">
+                                        <color key="tintColor" red="0.29803921570000003" green="0.64705882349999999" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
                                             <action selector="backButtonTapped:" destination="aFP-ao-u02" id="feE-SR-7gM"/>
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem width="29" style="plain" systemItem="fixedSpace" id="R01-1P-ysB"/>
                                     <barButtonItem image="UIWebViewNext.png" id="9m6-vJ-LLs">
+                                        <color key="tintColor" red="0.29803921570000003" green="0.64705882349999999" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
                                             <action selector="forwardButtonTapped:" destination="aFP-ao-u02" id="R3t-47-UXR"/>
                                         </connections>
@@ -1250,11 +1252,11 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="2MC-OH-cwI"/>
-        <segue reference="W9z-A8-KEC"/>
+        <segue reference="v7S-KP-l8O"/>
         <segue reference="fFr-gL-mDW"/>
         <segue reference="qUJ-ry-144"/>
         <segue reference="jkZ-Dh-FHT"/>
         <segue reference="fI5-Du-KTZ"/>
-        <segue reference="lhr-aW-Muh"/>
+        <segue reference="HBk-k2-11u"/>
     </inferredMetricsTieBreakers>
 </document>
