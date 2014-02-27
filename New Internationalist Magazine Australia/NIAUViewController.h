@@ -12,6 +12,7 @@
 #import "NIAUPublisher.h"
 #import "NIAUInAppPurchaseHelper.h"
 #import "NIAUHelper.h"
+#import "NSData+Cookieless.h"
 
 @interface NIAUViewController : UIViewController <UIGestureRecognizerDelegate>
 
@@ -24,7 +25,11 @@
 @property (nonatomic, weak) IBOutlet UIButton *subscribeButton;
 @property (nonatomic, weak) IBOutlet UIButton *loginButton;
 
+@property (nonatomic, weak) IBOutlet UILabel *issueBanner;
+
 @property(atomic) BOOL isUserLoggedIn;
 @property(atomic) BOOL isUserASubscriber;
+
+@property(atomic) BOOL showNewIssueBanner;
 
 @end

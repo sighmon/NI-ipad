@@ -33,6 +33,8 @@
     
     self.isUserLoggedIn = false;
     self.isUserASubscriber = false;
+    self.showNewIssueBanner = false;
+    self.issueBanner.hidden = true;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(articleBodyLoaded:) name:ArticleDidUpdateNotification object:self.article];
     
@@ -82,15 +84,33 @@
     [NIAUHelper drawGradientInView:self.view];
 }
 
+- (void)updateNewIssueBanner
+{
+    // Make it a circle
+    self.issueBanner.layer.masksToBounds = YES;
+    self.issueBanner.layer.cornerRadius = self.issueBanner.bounds.size.width / 2.;
+    
+    if (self.showNewIssueBanner) {
+        self.issueBanner.hidden = NO;
+        [self.view setNeedsLayout];
+    } else {
+        self.issueBanner.hidden = YES;
+        [self.view setNeedsLayout];
+    }
+}
+
 - (void)loadLatestMagazineCover
 {
     [self.issue getCoverWithCompletionBlock:^(UIImage *img) {
         [self.cover setContentMode:UIViewContentModeScaleAspectFit];
         [self.cover setAlpha:0.0];
         [self.cover setImage:[NIAUHelper imageWithRoundedCornersSize:10. usingImage:img]];
+        [self.issueBanner setAlpha:0.0];
+        [self updateNewIssueBanner];
         [NIAUHelper addShadowToImageView:self.cover withRadius:10. andOffset:CGSizeMake(0, 5) andOpacity:0.5];
         [UIView animateWithDuration:0.5 animations:^{
             [self.cover setAlpha:1.0];
+            [self.issueBanner setAlpha:1.0];
         }];
         // update the NewsStand icon
         [self updateNewsStandMagazineCover:img];
@@ -173,9 +193,29 @@
     //[self.navigationItem setRightBarButtonItem:refreshButton];
     //table_.alpha=1.0;
     //[table_ reloadData];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(articlesReady:) name:ArticlesDidUpdateNotification object:self.issue];
-    self.issue = [[NIAUPublisher getInstance] issueAtIndex:0];
-    [self.issue requestArticles];
+    
+    // Check to see if there are any new issues available
+    NSURL *issuesURL = [NSURL URLWithString:@"issues.json" relativeToURL:[NSURL URLWithString:SITE_URL]];
+    NSLog(@"try to download issues.json from %@", issuesURL);
+    NSData *data = [NSData dataWithContentsOfCookielessURL:issuesURL];
+    NSArray *tmpIssues = @[];
+    if(data) {
+        NSError *error;
+        tmpIssues = [NSJSONSerialization JSONObjectWithData:data
+                                                    options:kNilOptions
+                                                      error:&error];
+    }
+    if ([[NIAUPublisher getInstance] numberOfIssues] < tmpIssues.count) {
+        // A new issue is available, so force reload
+        [[NIAUPublisher getInstance] forceDownloadIssues];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshViewNotification" object:nil];
+        self.showNewIssueBanner = true;
+    } else {
+        // No issues to load, so just show
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(articlesReady:) name:ArticlesDidUpdateNotification object:self.issue];
+        self.issue = [[NIAUPublisher getInstance] issueAtIndex:0];
+        [self.issue requestArticles];
+    }
 }
 
 - (void)loginToRails
