@@ -24,89 +24,6 @@ NSString *kCellID = @"magazineCellID";              // UICollectionViewCell stor
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section;
-{
-    return [[NIAUPublisher getInstance] numberOfIssues];
-}
-
-// AHA: UICollectionViewController implements UICollectionViewDataSource where this method is defined.
-- (UICollectionViewCell *)collectionView:(UICollectionView *)cv cellForItemAtIndexPath:(NSIndexPath *)indexPath;
-{
-    // we're going to use a custom UICollectionViewCell, which will hold an image and its label
-    //
-    NIAUCell *cell = [cv dequeueReusableCellWithReuseIdentifier:kCellID forIndexPath:indexPath];
-    
-    // make the cell's title the actual NSIndexPath value
-    // cell.label.text = [NSString stringWithFormat:@"{%ld,%ld}", (long)indexPath.row, (long)indexPath.section];
-    
-    // load the image for this cell
-    
-    // TODO: calculate this size from screen width
-    
-    CGSize size = CGSizeMake(0,0);
-    
-    size = [self calculateCellSizeForScreenSize:self.view.frame.size];
-    
-    // TODO: need to do this in a background thread, as the cover image is large and causing lag!
-    cell.image.image = [[[NIAUPublisher getInstance] issueAtIndex:indexPath.row] attemptToGetCoverThumbFromMemoryForSize:size];
-    
-    if (cell.image.image == nil) {
-        [[[NIAUPublisher getInstance] issueAtIndex:indexPath.row] getCoverThumbWithSize:size andCompletionBlock:^(UIImage *img) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [cell.image setAlpha:0.0];
-                [cell.image setImage:img];
-                [UIView animateWithDuration:0.3 animations:^{
-                    [cell.image setAlpha:1.0];
-                }];
-            });
-        }];
-    }
-    
-    // Set a border for the magazine covers
-//    cell.layer.borderColor = [UIColor colorWithRed:242/255.0f green:242/255.0f blue:242/255.0f alpha:1.0f].CGColor;
-//    cell.layer.borderWidth = 1.0;
-    
-    return cell;
-}
-
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout  *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    return [self calculateCellSizeForScreenSize:self.view.frame.size];
-}
-
-- (CGSize)calculateCellSizeForScreenSize:(CGSize)size
-{
-    BOOL landscape = UIDeviceOrientationIsLandscape(self.interfaceOrientation);
-    int columns = 0;
-    
-    if (landscape) {
-        columns = 5;
-    } else {
-        if (IS_IPAD()) {
-            columns = 4;
-        } else {
-            columns = 3;
-        }
-    }
-    CGSize returnSize = CGSizeMake(size.width/columns, size.width*1415/(1000*columns));
-    NSLog(@"Calculated size: %f, %f", returnSize.width, returnSize.height);
-    return returnSize;
-}
-
-// the user tapped a collection item, load and set the image on the detail view controller
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    if ([[segue identifier] isEqualToString:@"showTableOfContents"])
-    {
-        NSIndexPath *selectedIndexPath = [[self.collectionView indexPathsForSelectedItems] objectAtIndex:0];
-        
-        NIAUTableOfContentsViewController *tableOfContentsViewController = [segue destinationViewController];
-        tableOfContentsViewController.issue = [[NIAUPublisher getInstance] issueAtIndex:selectedIndexPath.row];
-    }
-
-}
-
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -161,6 +78,90 @@ NSString *kCellID = @"magazineCellID";              // UICollectionViewCell stor
     [alert show];
     //[alert release];
     //[self.navigationItem setRightBarButtonItem:refreshButton];
+}
+
+#pragma mark -
+#pragma mark CollectionViewDelegate
+
+- (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section;
+{
+    return [[NIAUPublisher getInstance] numberOfIssues];
+}
+
+// AHA: UICollectionViewController implements UICollectionViewDataSource where this method is defined.
+- (UICollectionViewCell *)collectionView:(UICollectionView *)cv cellForItemAtIndexPath:(NSIndexPath *)indexPath;
+{
+    // we're going to use a custom UICollectionViewCell, which will hold an image and its label
+    //
+    NIAUCell *cell = [cv dequeueReusableCellWithReuseIdentifier:kCellID forIndexPath:indexPath];
+    
+    // make the cell's title the actual NSIndexPath value
+    // cell.label.text = [NSString stringWithFormat:@"{%ld,%ld}", (long)indexPath.row, (long)indexPath.section];
+    
+    // load the image for this cell
+    
+    CGSize size = CGSizeMake(0,0);
+    
+    size = [self calculateCellSizeForScreenSize:self.view.frame.size];
+    
+    // TODO: need to do this in a background thread, as the cover image is large and causing lag!
+    cell.image.image = [NIAUHelper imageWithRoundedCornersSize:3. usingImage:[[[NIAUPublisher getInstance] issueAtIndex:indexPath.row] attemptToGetCoverThumbFromMemoryForSize:size]];
+    
+    if (cell.image.image == nil) {
+        [[[NIAUPublisher getInstance] issueAtIndex:indexPath.row] getCoverThumbWithSize:size andCompletionBlock:^(UIImage *img) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [cell.image setAlpha:0.0];
+                [cell.image setImage:[NIAUHelper imageWithRoundedCornersSize:3. usingImage:img]];
+                [UIView animateWithDuration:0.3 animations:^{
+                    [cell.image setAlpha:1.0];
+                }];
+            });
+        }];
+    }
+    
+    // Set a border for the magazine covers
+    //    cell.layer.borderColor = [UIColor colorWithRed:242/255.0f green:242/255.0f blue:242/255.0f alpha:1.0f].CGColor;
+    //    cell.layer.borderWidth = 1.0;
+    
+    return cell;
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout  *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    return [self calculateCellSizeForScreenSize:self.view.frame.size];
+}
+
+- (CGSize)calculateCellSizeForScreenSize:(CGSize)size
+{
+    BOOL landscape = UIDeviceOrientationIsLandscape(self.interfaceOrientation);
+    int columns = 0;
+    
+    if (landscape) {
+        columns = 5;
+    } else {
+        if (IS_IPAD()) {
+            columns = 4;
+        } else {
+            columns = 3;
+        }
+    }
+    CGSize returnSize = CGSizeMake((size.width/columns)-2, size.width*1415/(1000*columns));
+    NSLog(@"Calculated size: %f, %f", returnSize.width, returnSize.height);
+    return returnSize;
+}
+
+// the user tapped a collection item, load and set the image on the detail view controller
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([[segue identifier] isEqualToString:@"showTableOfContents"])
+    {
+        NSIndexPath *selectedIndexPath = [[self.collectionView indexPathsForSelectedItems] objectAtIndex:0];
+        
+        NIAUTableOfContentsViewController *tableOfContentsViewController = [segue destinationViewController];
+        tableOfContentsViewController.issue = [[NIAUPublisher getInstance] issueAtIndex:selectedIndexPath.row];
+    }
+    
 }
 
 - (void)didReceiveMemoryWarning

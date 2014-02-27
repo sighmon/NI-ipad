@@ -87,7 +87,8 @@
     [self.issue getCoverWithCompletionBlock:^(UIImage *img) {
         [self.cover setContentMode:UIViewContentModeScaleAspectFit];
         [self.cover setAlpha:0.0];
-        [self.cover setImage:img];
+        [self.cover setImage:[NIAUHelper imageWithRoundedCornersSize:10. usingImage:img]];
+        [NIAUHelper addShadowToImageView:self.cover withRadius:10. andOffset:CGSizeMake(0, 5) andOpacity:0.5];
         [UIView animateWithDuration:0.5 animations:^{
             [self.cover setAlpha:1.0];
         }];

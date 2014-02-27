@@ -167,15 +167,15 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="YQH-rM-BD4">
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="1" minimumInteritemSpacing="1" id="YQH-rM-BD4">
                             <size key="itemSize" width="106" height="151"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            <inset key="sectionInset" minX="1" minY="1" maxX="1" maxY="1"/>
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="magazineCellID" id="7ZL-x0-7NN" customClass="NIAUCell">
-                                <rect key="frame" x="0.0" y="64" width="106" height="151"/>
+                                <rect key="frame" x="1" y="65" width="106" height="151"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="106" height="151"/>
@@ -751,12 +751,15 @@
                                             <rect key="frame" x="0.0" y="20" width="320" height="268"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <gestureRecognizers/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="268" id="Zgf-pn-i15"/>
+                                            </constraints>
                                             <connections>
                                                 <outletCollection property="gestureRecognizers" destination="srz-x3-vx1" appends="YES" id="8Fc-Bz-lnf"/>
                                             </connections>
                                         </imageView>
                                         <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Number - Date" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="tpj-tl-sET">
-                                            <rect key="frame" x="20" y="296" width="280" height="17"/>
+                                            <rect key="frame" x="20" y="302" width="280" height="17"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                             <nil key="highlightedColor"/>
@@ -767,10 +770,10 @@
                                         <constraint firstItem="tpj-tl-sET" firstAttribute="leading" secondItem="1hg-fr-PgB" secondAttribute="leading" constant="20" symbolic="YES" id="3RD-aa-edD"/>
                                         <constraint firstItem="XBT-LF-UKS" firstAttribute="leading" secondItem="1hg-fr-PgB" secondAttribute="leading" id="GLe-ai-Gv5"/>
                                         <constraint firstAttribute="trailing" secondItem="tpj-tl-sET" secondAttribute="trailing" constant="20" symbolic="YES" id="POE-cZ-hct"/>
-                                        <constraint firstItem="tpj-tl-sET" firstAttribute="top" secondItem="XBT-LF-UKS" secondAttribute="bottom" constant="8" symbolic="YES" id="cOg-pf-uaW"/>
+                                        <constraint firstItem="tpj-tl-sET" firstAttribute="top" secondItem="XBT-LF-UKS" secondAttribute="bottom" constant="14" id="cOg-pf-uaW"/>
                                         <constraint firstAttribute="trailing" secondItem="XBT-LF-UKS" secondAttribute="trailing" id="dqY-Ef-yAK"/>
                                         <constraint firstItem="XBT-LF-UKS" firstAttribute="top" secondItem="1hg-fr-PgB" secondAttribute="top" constant="20" id="glm-bW-Vsf"/>
-                                        <constraint firstAttribute="bottom" secondItem="tpj-tl-sET" secondAttribute="bottom" constant="20" symbolic="YES" id="vVN-On-Iau"/>
+                                        <constraint firstAttribute="bottom" secondItem="tpj-tl-sET" secondAttribute="bottom" constant="14" id="vVN-On-Iau"/>
                                     </constraints>
                                 </view>
                                 <view key="tableFooterView" contentMode="scaleToFill" id="9lb-Lk-61p">
@@ -1251,12 +1254,12 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="2MC-OH-cwI"/>
         <segue reference="v7S-KP-l8O"/>
         <segue reference="fFr-gL-mDW"/>
-        <segue reference="qUJ-ry-144"/>
-        <segue reference="jkZ-Dh-FHT"/>
-        <segue reference="fI5-Du-KTZ"/>
-        <segue reference="HBk-k2-11u"/>
+        <segue reference="2MC-OH-cwI"/>
+        <segue reference="mdp-6r-s59"/>
+        <segue reference="joJ-Rh-K6j"/>
+        <segue reference="SUv-P7-9yc"/>
+        <segue reference="Qwc-Oh-1W1"/>
     </inferredMetricsTieBreakers>
 </document>

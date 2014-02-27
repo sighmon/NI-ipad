@@ -150,15 +150,15 @@
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="xiD-Qm-3PW">
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="1" minimumInteritemSpacing="1" id="xiD-Qm-3PW">
                             <size key="itemSize" width="192" height="273"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            <inset key="sectionInset" minX="1" minY="1" maxX="1" maxY="1"/>
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="magazineCellID" id="9Wg-Yx-jLm" customClass="NIAUCell">
-                                <rect key="frame" x="0.0" y="64" width="192" height="273"/>
+                                <rect key="frame" x="1" y="65" width="192" height="273"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="192" height="273"/>
@@ -1274,11 +1274,11 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="EBU-8G-ECI"/>
-        <segue reference="7r1-dy-lxK"/>
         <segue reference="MS4-LT-1l5"/>
-        <segue reference="WLv-dP-nWF"/>
-        <segue reference="JBV-bs-efO"/>
-        <segue reference="mho-0V-J7B"/>
         <segue reference="agh-8f-6D4"/>
+        <segue reference="TYl-bi-yIk"/>
+        <segue reference="WLv-dP-nWF"/>
+        <segue reference="mho-0V-J7B"/>
+        <segue reference="JBV-bs-efO"/>
     </inferredMetricsTieBreakers>
 </document>

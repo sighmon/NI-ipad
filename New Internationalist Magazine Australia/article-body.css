@@ -83,6 +83,9 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 .all-article-images .image {
     display: inline-block;
 }
+.all-article-images img {
+    border-radius: 2px;
+}
 .article-thumb {
     -moz-box-shadow: 0px 1px 3px #333333;
     -webkit-box-shadow: 0px 1px 3px #333333;

@@ -64,6 +64,9 @@ float cellPadding = 10.;
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
     [refreshControl addTarget:self action:@selector(handleRefresh:) forControlEvents:UIControlEventValueChanged];
     [self.scrollView addSubview:refreshControl];
+    
+    // Set height constraint to 0.0 incase there isn't a featured image
+    [self.featuredImage.constraints[0] setConstant:0.0];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -129,21 +132,23 @@ float cellPadding = 10.;
     // Tried to use system font.. seems to be different for webview
     // #define kbodyWebViewFont @"-apple-system-body"
     
-    //Get the real article images.
+    // Get the featured image.
     [self.article getFeaturedImageWithCompletionBlock:^(UIImage *img) {
         if (img) {
             [self.featuredImage setAlpha:0.0];
             [self.featuredImage setImage:img];
+            [self.featuredImage.constraints[0] setConstant:135.0];
             [UIView animateWithDuration:0.3 animations:^{
                 [self.featuredImage setAlpha:1.0];
             }];
         } else {
             [UIView animateWithDuration:0.3 animations:^{
                 // Update the height constraint of self.featuredImage to make it skinny.
-                [self.featuredImage.constraints[0] setConstant:50.0];
+                [self.featuredImage.constraints[0] setConstant:0.0];
             }];
         }
     }];
+    
     NSDictionary *firstCategory = self.article.categories.firstObject;
     id categoryColour = WITH_DEFAULT([firstCategory objectForKey:@"colour"],[NSNumber numberWithInt:0xFFFFFF]);
     self.featuredImage.backgroundColor = UIColorFromRGB([categoryColour integerValue]);

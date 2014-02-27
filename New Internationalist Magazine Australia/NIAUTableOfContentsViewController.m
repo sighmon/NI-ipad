@@ -364,6 +364,8 @@ static NSString *CellIdentifier = @"articleCell";
     [self.issue getCoverWithCompletionBlock:^(UIImage *img) {
         [self.imageView setAlpha:0.0];
         [self.imageView setImage:img];
+        [self.imageView setImage:[NIAUHelper imageWithRoundedCornersSize:10. usingImage:img]];
+        [NIAUHelper addShadowToImageView:self.imageView withRadius:3. andOffset:CGSizeMake(0, 2) andOpacity:0.3];
         [UIView animateWithDuration:0.3 animations:^{
             [self.imageView setAlpha:1.0];
         }];
@@ -408,24 +410,7 @@ static NSString *CellIdentifier = @"articleCell";
             [self.editorImageView setAlpha:1.0];
         }];
     }];
-    [self applyRoundMask:self.editorImageView];
-}
-
-- (void)applyRoundMask:(UIImageView *)imageView
-{
-    // Draw a round mask for images.. i.e. the editor's photo
-    imageView.layer.masksToBounds = YES;
-    imageView.layer.cornerRadius = self.editorImageView.bounds.size.width / 2.;
-}
-
-- (void)addShadowToImageView:(UIImageView *)imageView
-{
-    // Shadow for any images, i.e. the cover
-    imageView.layer.shadowColor = [UIColor blackColor].CGColor;
-    imageView.layer.shadowOffset = CGSizeMake(0, 2);
-    imageView.layer.shadowOpacity = 0.3;
-    imageView.layer.shadowRadius = 3.0;
-    imageView.clipsToBounds = NO;
+    [NIAUHelper roundedCornersWithRadius:(self.editorImageView.bounds.size.width / 2.) inImageView:self.editorImageView];
 }
 
 #pragma mark -

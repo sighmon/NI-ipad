@@ -11,6 +11,7 @@
 #import "NIAUArticleViewController.h"
 #import "NIAUPublisher.h"
 #import "NIAUWebsiteViewController.h"
+#import "NIAUHelper.h"
 
 @interface NIAUTableOfContentsViewController : UIViewController <UIScrollViewDelegate, UITextViewDelegate>
 
