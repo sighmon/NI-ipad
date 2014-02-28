@@ -280,9 +280,25 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <inset key="separatorInset" minX="58" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        <view key="tableHeaderView" contentMode="scaleToFill" id="0iF-oh-u4b">
+                            <rect key="frame" x="0.0" y="0.0" width="768" height="50"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="9R1-cr-Spi">
+                                    <rect key="frame" x="366" y="6" width="37" height="37"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <color key="color" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                </activityIndicatorView>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="centerY" secondItem="9R1-cr-Spi" secondAttribute="centerY" id="VWe-Dd-Z3D"/>
+                                <constraint firstAttribute="centerX" secondItem="9R1-cr-Spi" secondAttribute="centerX" id="fB8-sH-YWB"/>
+                            </constraints>
+                        </view>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="articlesInCategoryCell" id="9t4-xa-JsQ">
-                                <rect key="frame" x="0.0" y="86" width="768" height="88"/>
+                                <rect key="frame" x="0.0" y="72" width="768" height="88"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="9t4-xa-JsQ" id="4Qo-NU-7Vp">
                                     <rect key="frame" x="0.0" y="0.0" width="735" height="87"/>
@@ -344,6 +360,10 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Category" id="7Bh-rz-szg"/>
+                    <connections>
+                        <outlet property="loadingIndicatorView" destination="0iF-oh-u4b" id="NIT-dd-zxs"/>
+                        <outlet property="tableViewLoadingIndicator" destination="9R1-cr-Spi" id="rkh-HC-Xup"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VBB-HO-nxn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1288,12 +1308,12 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="MS4-LT-1l5"/>
         <segue reference="EBU-8G-ECI"/>
+        <segue reference="MS4-LT-1l5"/>
         <segue reference="7r1-dy-lxK"/>
         <segue reference="agh-8f-6D4"/>
-        <segue reference="WLv-dP-nWF"/>
-        <segue reference="JBV-bs-efO"/>
+        <segue reference="Sfz-PS-vgU"/>
         <segue reference="mho-0V-J7B"/>
+        <segue reference="JBV-bs-efO"/>
     </inferredMetricsTieBreakers>
 </document>

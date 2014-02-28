@@ -18,4 +18,7 @@
 @property (nonatomic, strong) NSMutableArray *issuesArray;
 @property (nonatomic, strong) NSMutableArray *articlesArray;
 
+@property (nonatomic, weak) IBOutlet UIActivityIndicatorView *tableViewLoadingIndicator;
+@property (nonatomic, weak) IBOutlet UIView *loadingIndicatorView;
+
 @end

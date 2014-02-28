@@ -35,9 +35,9 @@
 
 @property (nonatomic, strong) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) NSMutableDictionary *cellDictionary;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *tableViewHeightConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *editorsLetterTextViewHeightConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *magazineCoverWidthConstraint;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *tableViewHeightConstraint;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *editorsLetterTextViewHeightConstraint;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *magazineCoverWidthConstraint;
 
 @property (nonatomic, weak) IBOutlet UIScrollView *scrollView;
 @property (nonatomic, weak) IBOutlet UIImageView *imageView;
@@ -45,14 +45,14 @@
 @property (nonatomic, weak) IBOutlet UIImageView *editorImageView;
 @property (nonatomic, weak) IBOutlet UIView *tableViewFooterView;
 
-@property (weak, nonatomic) IBOutlet UILabel *labelTitle;
-@property (weak, nonatomic) IBOutlet UILabel *labelNumberAndDate;
-@property (weak, nonatomic) IBOutlet UILabel *labelEditor;
+@property (nonatomic, weak) IBOutlet UILabel *labelTitle;
+@property (nonatomic, weak) IBOutlet UILabel *labelNumberAndDate;
+@property (nonatomic, weak) IBOutlet UILabel *labelEditor;
 
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *tableViewArticleTitleHeightConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *tableViewArticleTeaserHeightConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *tableViewCellHeightConstraint;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *tableViewArticleTitleHeightConstraint;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *tableViewArticleTeaserHeightConstraint;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *tableViewCellHeightConstraint;
 
-@property (weak, nonatomic) IBOutlet UINavigationItem *shareAction;
+@property (nonatomic, weak) IBOutlet UINavigationItem *shareAction;
 
 @end

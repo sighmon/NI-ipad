@@ -260,7 +260,7 @@ static NSString *CellIdentifier = @"articleCell";
     return [self calculateCellSize:cell inTableView:tableView].height;
 }
 
-- (void)setupCellForHeight: (UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+- (void)setupCellForHeight:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
 
     NIAUArticle *article = [self.sortedCategories[indexPath.section] objectForKey:@"articles"][indexPath.row];
     
@@ -308,15 +308,23 @@ static NSString *CellIdentifier = @"articleCell";
     if (self.tableView.dragging == NO && self.tableView.decelerating == NO) {
         if (articleImageView.image == nil) {
             [article getFeaturedImageThumbWithSize:thumbSize andCompletionBlock:^(UIImage *thumb) {
-                [articleImageView setImage:thumb];
+                if (thumb) {
+                    [articleImageView setImage:thumb];
+                } else {
+                    [articleImageView.constraints[0] setConstant:20.];
+                    [cell setSeparatorInset:UIEdgeInsetsMake(0, 21., 0, 0)];
+                }
             }];
         } else {
             //NSLog(@"Cell has an image.");
         }
     } else {
         UIImage *thumb = [article attemptToGetFeaturedImageThumbFromDiskWithSize:thumbSize];
-        if(thumb) {
+        if (thumb) {
             [articleImageView setImage:thumb];
+        } else {
+            [articleImageView.constraints[0] setConstant:20.];
+            [cell setSeparatorInset:UIEdgeInsetsMake(0, 21., 0, 0)];
         }
     }
 }
@@ -324,7 +332,7 @@ static NSString *CellIdentifier = @"articleCell";
 // -------------------------------------------------------------------------------
 //	loadImagesForOnscreenRows
 //  This method is used in case the user scrolled into a set of cells that don't
-//  have their app icons yet.
+//  have their featured images yet.
 // -------------------------------------------------------------------------------
 - (void)loadImagesForOnscreenRows
 {

@@ -39,7 +39,7 @@
     // Update the version number
     self.version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
     self.build = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
-    NSString *aboutText = @"Designed and built in \nAdelaide, Australia. \n\nDo you have any suggestions for future versions? Tap the share button (top right).";
+    NSString *aboutText = @"Need help? Ask us a question on Twitter: @ni_australia\n\nDesigned and built in \nAdelaide, Australia. \n\nDo you have any suggestions for future versions? Tap the share button (top right).";
     
     self.versionNumber.text = [NSString stringWithFormat:@"Version %@ (%@)\n\n%@", self.version, self.build, aboutText];
     self.versionNumber.editable = false;

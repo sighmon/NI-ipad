@@ -58,6 +58,8 @@
     } else {
         [self loadIssues];
     }
+    
+    [self.tableViewLoadingIndicator startAnimating];
 }
 
 - (void)loadIssues
@@ -122,6 +124,11 @@
             }
         }
     }
+    
+    // Stop loading indicator & remove it's UIView
+    [self.tableViewLoadingIndicator stopAnimating];
+    [self.loadingIndicatorView removeFromSuperview];
+    self.tableView.tableHeaderView = nil;
     
     [self showCategoryArticles];
 }
@@ -194,15 +201,27 @@
     CGSize thumbSize = CGSizeMake(57,90);
     if (self.tableView.dragging == NO && self.tableView.decelerating == NO) {
         [article getFeaturedImageThumbWithSize:thumbSize andCompletionBlock:^(UIImage *thumb) {
-            [articleImage setImage:thumb];
-            [cell setNeedsLayout];
+            if (thumb) {
+                [articleImage setImage:thumb];
+                [articleImage.constraints[0] setConstant:57.];
+                [cell setSeparatorInset:UIEdgeInsetsMake(0, 58., 0, 0)];
+                [cell setNeedsLayout];
+            }
         }];
     } else {
         UIImage *thumb = [article attemptToGetFeaturedImageThumbFromDiskWithSize:thumbSize];
-        if(thumb) {
+        if (thumb) {
             [articleImage setImage:thumb];
+            [articleImage.constraints[0] setConstant:57.];
+            [cell setSeparatorInset:UIEdgeInsetsMake(0, 58., 0, 0)];
             [cell setNeedsLayout];
         }
+    }
+    
+    // If articleImageView.image is still nil, no image is coming, so reduce the width of the coloured imageView.
+    if (articleImage.image == nil) {
+        [articleImage.constraints[0] setConstant:20.];
+        [cell setSeparatorInset:UIEdgeInsetsMake(0, 21., 0, 0)];
     }
     
     // Aminate the cell loading so that long category lists of articles fade in.
