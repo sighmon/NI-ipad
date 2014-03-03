@@ -142,7 +142,6 @@
         productDescription.text = [product localizedDescription];
         
         UIButton *productBuyButton = (UIButton *)[cell viewWithTag:104];
-        // TODO: change the label depending on whether the product has been purchased yet or not.
         
         if ([self hasProductBeenPurchasedAtRow:indexPath.row]) {
             // Product has already been purchased

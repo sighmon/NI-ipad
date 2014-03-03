@@ -15,7 +15,8 @@
 
 @interface NIAUViewController ()
 {
-    NSArray *_products;
+    NIAUIssue *lastIssue;
+    NIAUArticle *firstArticle;
 }
 
 @end
@@ -211,10 +212,12 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshViewNotification" object:nil];
         self.showNewIssueBanner = true;
     } else {
-        // No issues to load, so just show
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(articlesReady:) name:ArticlesDidUpdateNotification object:self.issue];
+        // No issues to load
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(articlesReady:) name:ArticlesDidUpdateNotification object:lastIssue];
         self.issue = [[NIAUPublisher getInstance] issueAtIndex:0];
         [self.issue requestArticles];
+        lastIssue = [[NIAUPublisher getInstance] lastIssue];
+        [lastIssue requestArticles];
     }
 }
 
@@ -265,9 +268,9 @@
 
 - (void)checkIfUserIsASubscriber
 {
-    self.article = [self.issue articleAtIndex:0];
+    firstArticle = [lastIssue articleAtIndex:0];
     // TODO: Write a method here that checks a specific rails route for a vaild sub or iTunes receipt
-    [self.article requestBody];
+    [firstArticle requestBody];
     [self updateSubscribeButton];
 }
 
@@ -281,7 +284,7 @@
             [self.loginButton layoutIfNeeded];
 //            self.loginButton.enabled = NO;
             [self.loginButton setTitle:@"Logged in" forState:UIControlStateNormal];
-            NSLog(@"Login button disabled.");
+            NSLog(@"Logged in.");
         });
     } else {
 //        self.loginButton.hidden = NO;
@@ -290,7 +293,7 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.loginButton layoutIfNeeded];
             self.loginButton.enabled = YES;
-            NSLog(@"Login button enabled.");
+            NSLog(@"Not logged in.");
         });
     }
 }

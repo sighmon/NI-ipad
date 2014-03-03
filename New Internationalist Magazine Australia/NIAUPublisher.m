@@ -152,4 +152,10 @@ static NIAUPublisher *instance =nil;
     }]];
 }
 
+-(NIAUIssue *)lastIssue
+{
+    // Last issue in the issues.json list, not the latest
+    return [issues lastObject];
+}
+
 @end
