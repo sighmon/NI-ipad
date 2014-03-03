@@ -194,16 +194,32 @@ NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurcha
     
     NSMutableArray *skProducts = [NSMutableArray arrayWithArray:response.products];
     
-    // TODO: Get this sorting working so that the issues are ordered from newest to oldest.
-    NSSortDescriptor *lowestIdentifierToHighest = [NSSortDescriptor sortDescriptorWithKey:@"productIdentifier" ascending:YES];
-    [skProducts sortedArrayUsingDescriptors:[NSArray arrayWithObject:lowestIdentifierToHighest]];
+    NSMutableArray *justSubscriptions = [NSMutableArray array];
+    NSMutableArray *justIssues = [NSMutableArray array];
     
     for (SKProduct *skProduct in skProducts) {
-        NSLog(@"Found product: %@ %@ %0.2f",
-              skProduct.productIdentifier,
-              skProduct.localizedTitle,
-              skProduct.price.floatValue);
+        // Separate the subscriptions & individual issues
+        if ([skProduct.productIdentifier rangeOfString:@"single"].location == NSNotFound) {
+            [justSubscriptions addObject:skProduct];
+        } else {
+            [justIssues addObject:skProduct];
+        }
     }
+    
+    // Remove all products and add them back with the issues sorted by productIdentifier
+    NSSortDescriptor *lowestIdentifierToHighest = [NSSortDescriptor sortDescriptorWithKey:@"productIdentifier" ascending:NO];
+    [skProducts removeAllObjects];
+    [skProducts addObjectsFromArray:justSubscriptions];
+    [skProducts addObjectsFromArray:[justIssues sortedArrayUsingDescriptors:[NSArray arrayWithObject:lowestIdentifierToHighest]]];
+    justIssues = nil;
+    justSubscriptions = nil;
+    
+//    for (SKProduct *skProduct in skProducts) {
+//        NSLog(@"Found product: %@ %@ %0.2f",
+//              skProduct.productIdentifier,
+//              skProduct.localizedTitle,
+//              skProduct.price.floatValue);
+//    }
     
     _completionHandler(YES, skProducts);
     _completionHandler = nil;
