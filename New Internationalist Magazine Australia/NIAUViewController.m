@@ -83,6 +83,9 @@
     
     // Call this to set a nice background gradient
     [NIAUHelper drawGradientInView:self.view];
+    
+    // Setup Google Analytics name.
+    self.screenName = @"Home screen";
 }
 
 - (void)updateNewIssueBanner

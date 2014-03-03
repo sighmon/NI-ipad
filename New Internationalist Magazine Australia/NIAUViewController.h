@@ -13,8 +13,9 @@
 #import "NIAUInAppPurchaseHelper.h"
 #import "NIAUHelper.h"
 #import "NSData+Cookieless.h"
+#import "GAITrackedViewController.h"
 
-@interface NIAUViewController : UIViewController <UIGestureRecognizerDelegate>
+@interface NIAUViewController : GAITrackedViewController <UIGestureRecognizerDelegate>
 
 @property (nonatomic, strong) NIAUIssue *issue;
 @property (nonatomic, strong) NIAUArticle *article;
