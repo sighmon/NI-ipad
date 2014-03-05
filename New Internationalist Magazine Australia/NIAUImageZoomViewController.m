@@ -52,6 +52,19 @@
     
     [self.image setCenter:CGPointMake(self.scrollView.center.x, self.scrollView.center.y - (self.navigationController.navigationBar.frame.size.height / 2))];
     self.image.translatesAutoresizingMaskIntoConstraints = NO;
+    
+    [self sendGoogleAnalyticsStats];
+}
+
+- (void)sendGoogleAnalyticsStats
+{
+    // Setup Google Analytics
+    [[GAI sharedInstance].defaultTracker set:kGAIScreenName
+                                       value:@"Image zoom"];
+    
+    // Send the screen view.
+    [[GAI sharedInstance].defaultTracker
+     send:[[GAIDictionaryBuilder createAppView] build]];
 }
 
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView

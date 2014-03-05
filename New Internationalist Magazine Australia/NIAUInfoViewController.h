@@ -7,12 +7,26 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "NIAUWebsiteViewController.h"
 
-@interface NIAUInfoViewController : UIViewController <UITextFieldDelegate>
+#import "GAI.h"
+#import "GAITracker.h"
+#import "GAITrackedViewController.h"
+#import "GAIDictionaryBuilder.h"
+#import "GAIFields.h"
+#import "GAILogger.h"
 
+@interface NIAUInfoViewController : UIViewController <UITextFieldDelegate, UIWebViewDelegate>
+
+@property (nonatomic, weak) IBOutlet UIScrollView *scrollView;
+@property (nonatomic, weak) IBOutlet UIWebView *aboutWebView;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *aboutWebViewHightConstraint;
 @property (nonatomic, weak) IBOutlet UIBarButtonItem *dismissModal;
 @property (nonatomic, weak) IBOutlet UIBarButtonItem *sendFeedback;
 @property (nonatomic, weak) IBOutlet UITextView *versionNumber;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *versionNumberHeight;
+@property (nonatomic, weak) IBOutlet UISwitch *analyticsSwitch;
+
+- (IBAction)switchChanged: (id)sender;
 
 @end

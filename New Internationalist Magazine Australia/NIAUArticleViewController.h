@@ -12,6 +12,13 @@
 #import "NIAUCategoryViewController.h"
 #import "NIAUWebsiteViewController.h"
 
+#import "GAI.h"
+#import "GAITracker.h"
+#import "GAITrackedViewController.h"
+#import "GAIDictionaryBuilder.h"
+#import "GAIFields.h"
+#import "GAILogger.h"
+
 @interface NIAUArticleViewController : UIViewController <UIScrollViewDelegate, UIGestureRecognizerDelegate, UIWebViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource>
 
 @property (nonatomic, strong) NIAUArticle *article;

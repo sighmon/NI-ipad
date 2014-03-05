@@ -52,6 +52,19 @@
     // Dismiss keyboard on background tap
     UITapGestureRecognizer *backgroundTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
     [self.view addGestureRecognizer:backgroundTap];
+    
+    [self sendGoogleAnalyticsStats];
+}
+
+- (void)sendGoogleAnalyticsStats
+{
+    // Setup Google Analytics
+    [[GAI sharedInstance].defaultTracker set:kGAIScreenName
+                                       value:@"Log in"];
+    
+    // Send the screen view.
+    [[GAI sharedInstance].defaultTracker
+     send:[[GAIDictionaryBuilder createAppView] build]];
 }
 
 - (void)dismissKeyboard

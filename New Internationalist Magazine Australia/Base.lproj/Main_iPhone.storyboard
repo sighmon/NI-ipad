@@ -720,42 +720,107 @@
                                     </barButtonItem>
                                 </items>
                             </toolbar>
-                            <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="About" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vqy-Xy-Jar">
-                                <rect key="frame" x="20" y="86" width="280" height="42"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="35"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" text="Version" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="lDG-gz-ZfT">
-                                <rect key="frame" x="20" y="128" width="280" height="37"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UlN-Dh-s6k">
+                                <rect key="frame" x="0.0" y="66" width="320" height="502"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <subviews>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" text="Version" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="lDG-gz-ZfT">
+                                        <rect key="frame" x="20" y="62" width="280" height="37"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="37" id="22b-aa-tBM"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
+                                    <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="About" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vqy-Xy-Jar">
+                                        <rect key="frame" x="20" y="20" width="280" height="42"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="35"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <webView multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HC4-zq-3kn">
+                                        <rect key="frame" x="0.0" y="146" width="320" height="356"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="356" id="358-i5-03Y"/>
+                                        </constraints>
+                                        <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="6Ug-OX-t9S" id="cE2-nf-O7L"/>
+                                        </connections>
+                                    </webView>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xkd-us-qSy">
+                                        <rect key="frame" x="0.0" y="107" width="320" height="31"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <subviews>
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Allow anonymous statistics" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="198" translatesAutoresizingMaskIntoConstraints="NO" id="PS2-EP-JKT">
+                                                <rect key="frame" x="20" y="5" width="198" height="21"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
+                                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="L6V-o8-d8U">
+                                                <rect key="frame" x="251" y="0.0" width="51" height="31"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <connections>
+                                                    <action selector="switchChanged:" destination="6Ug-OX-t9S" eventType="valueChanged" id="Ukf-jO-zoK"/>
+                                                </connections>
+                                            </switch>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="bottom" secondItem="PS2-EP-JKT" secondAttribute="bottom" constant="5" id="Chf-si-EFU"/>
+                                            <constraint firstAttribute="trailing" secondItem="L6V-o8-d8U" secondAttribute="trailing" constant="20" id="EUu-lf-cbU"/>
+                                            <constraint firstItem="PS2-EP-JKT" firstAttribute="top" secondItem="Xkd-us-qSy" secondAttribute="top" constant="5" id="Hac-A4-e4d"/>
+                                            <constraint firstItem="PS2-EP-JKT" firstAttribute="leading" secondItem="Xkd-us-qSy" secondAttribute="leading" constant="20" id="HjW-uC-JTb"/>
+                                            <constraint firstItem="L6V-o8-d8U" firstAttribute="top" secondItem="Xkd-us-qSy" secondAttribute="top" id="Mj4-az-U3x"/>
+                                            <constraint firstAttribute="width" constant="320" id="XTI-97-usE"/>
+                                            <constraint firstAttribute="bottom" secondItem="L6V-o8-d8U" secondAttribute="bottom" id="ngP-37-kZb"/>
+                                            <constraint firstItem="L6V-o8-d8U" firstAttribute="leading" secondItem="PS2-EP-JKT" secondAttribute="trailing" constant="33" id="sRA-xH-uRQ"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="37" id="22b-aa-tBM"/>
+                                    <constraint firstItem="HC4-zq-3kn" firstAttribute="leading" secondItem="UlN-Dh-s6k" secondAttribute="leading" id="06M-Bq-2jZ"/>
+                                    <constraint firstItem="Xkd-us-qSy" firstAttribute="top" secondItem="lDG-gz-ZfT" secondAttribute="bottom" constant="8" id="CXT-45-msA"/>
+                                    <constraint firstItem="HC4-zq-3kn" firstAttribute="centerX" secondItem="lDG-gz-ZfT" secondAttribute="centerX" id="Feh-t9-1kk"/>
+                                    <constraint firstAttribute="centerX" secondItem="Xkd-us-qSy" secondAttribute="centerX" id="Hpl-r2-zyz"/>
+                                    <constraint firstItem="vqy-Xy-Jar" firstAttribute="leading" secondItem="UlN-Dh-s6k" secondAttribute="leading" constant="20" id="JVN-OJ-eAl"/>
+                                    <constraint firstAttribute="trailing" secondItem="vqy-Xy-Jar" secondAttribute="trailing" constant="20" id="Jpm-CK-2pd"/>
+                                    <constraint firstItem="HC4-zq-3kn" firstAttribute="top" secondItem="Xkd-us-qSy" secondAttribute="bottom" constant="8" id="JqD-B7-8Cv"/>
+                                    <constraint firstItem="vqy-Xy-Jar" firstAttribute="top" secondItem="UlN-Dh-s6k" secondAttribute="top" constant="20" id="LZb-m1-50f"/>
+                                    <constraint firstAttribute="bottom" secondItem="HC4-zq-3kn" secondAttribute="bottom" id="WaB-yC-X7R"/>
+                                    <constraint firstAttribute="centerX" secondItem="vqy-Xy-Jar" secondAttribute="centerX" id="fFR-u4-RLF"/>
+                                    <constraint firstItem="lDG-gz-ZfT" firstAttribute="top" secondItem="vqy-Xy-Jar" secondAttribute="bottom" id="hxc-6s-L2d"/>
+                                    <constraint firstAttribute="trailing" secondItem="lDG-gz-ZfT" secondAttribute="trailing" constant="20" id="jSJ-O8-Dd0"/>
+                                    <constraint firstItem="lDG-gz-ZfT" firstAttribute="leading" secondItem="UlN-Dh-s6k" secondAttribute="leading" constant="20" id="wr9-ON-NFq"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
+                            </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="vqy-Xy-Jar" firstAttribute="top" secondItem="T7n-Ka-Uch" secondAttribute="bottom" constant="20" id="09n-1a-0Tm"/>
-                            <constraint firstItem="lDG-gz-ZfT" firstAttribute="leading" secondItem="NpE-Ng-2BT" secondAttribute="leading" constant="20" id="9gJ-mr-hGi"/>
+                            <constraint firstItem="UlN-Dh-s6k" firstAttribute="top" secondItem="T7n-Ka-Uch" secondAttribute="bottom" id="3hC-ow-b3Q"/>
                             <constraint firstItem="T7n-Ka-Uch" firstAttribute="leading" secondItem="NpE-Ng-2BT" secondAttribute="leading" id="BXR-HF-ehH"/>
-                            <constraint firstAttribute="trailing" secondItem="lDG-gz-ZfT" secondAttribute="trailing" constant="20" id="ED9-dw-Ieg"/>
                             <constraint firstAttribute="trailing" secondItem="T7n-Ka-Uch" secondAttribute="trailing" id="II3-FV-xDd"/>
-                            <constraint firstAttribute="trailing" secondItem="vqy-Xy-Jar" secondAttribute="trailing" constant="20" id="NPF-6f-TG6"/>
-                            <constraint firstItem="lDG-gz-ZfT" firstAttribute="top" secondItem="vqy-Xy-Jar" secondAttribute="bottom" id="VNN-w6-djK"/>
+                            <constraint firstItem="QSb-0Q-p1p" firstAttribute="top" secondItem="UlN-Dh-s6k" secondAttribute="bottom" id="VXu-KU-WX9"/>
                             <constraint firstItem="T7n-Ka-Uch" firstAttribute="top" secondItem="NpE-Ng-2BT" secondAttribute="top" constant="22" id="mE8-KV-uNC"/>
-                            <constraint firstItem="vqy-Xy-Jar" firstAttribute="leading" secondItem="NpE-Ng-2BT" secondAttribute="leading" constant="20" id="qMe-jy-lIj"/>
+                            <constraint firstItem="UlN-Dh-s6k" firstAttribute="leading" secondItem="NpE-Ng-2BT" secondAttribute="leading" id="sHj-On-Vxb"/>
+                            <constraint firstAttribute="trailing" secondItem="UlN-Dh-s6k" secondAttribute="trailing" id="uUC-YN-Ec6"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="aboutWebView" destination="HC4-zq-3kn" id="t6T-cO-Cea"/>
+                        <outlet property="aboutWebViewHightConstraint" destination="358-i5-03Y" id="pua-qK-IRH"/>
+                        <outlet property="analyticsSwitch" destination="L6V-o8-d8U" id="NDm-qD-Rhh"/>
                         <outlet property="dismissModal" destination="PxL-jQ-ZfO" id="HAY-VO-w4q"/>
+                        <outlet property="scrollView" destination="UlN-Dh-s6k" id="LCp-mh-Xpd"/>
                         <outlet property="sendFeedback" destination="4Wk-FY-zgr" id="0gX-jJ-5IQ"/>
                         <outlet property="versionNumber" destination="lDG-gz-ZfT" id="csW-My-95m"/>
                         <outlet property="versionNumberHeight" destination="22b-aa-tBM" id="UBx-WL-b5k"/>
+                        <segue destination="aFP-ao-u02" kind="modal" identifier="infoToWebsite" id="nQ6-DH-CWR"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YlF-2d-fa2" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1289,12 +1354,12 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="qUJ-ry-144"/>
-        <segue reference="jkZ-Dh-FHT"/>
-        <segue reference="fFr-gL-mDW"/>
-        <segue reference="MZP-I7-Qx3"/>
+        <segue reference="SUv-P7-9yc"/>
         <segue reference="Miu-Qg-BkO"/>
-        <segue reference="fI5-Du-KTZ"/>
-        <segue reference="lhr-aW-Muh"/>
+        <segue reference="IfR-jT-MPw"/>
+        <segue reference="mdp-6r-s59"/>
+        <segue reference="joJ-Rh-K6j"/>
+        <segue reference="fFr-gL-mDW"/>
+        <segue reference="nQ6-DH-CWR"/>
     </inferredMetricsTieBreakers>
 </document>

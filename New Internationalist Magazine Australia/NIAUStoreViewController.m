@@ -39,7 +39,7 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
     // Load the products from iTunesConnect
-    _products = nil;
+    _products = @[];
     [[NIAUInAppPurchaseHelper sharedInstance] requestProductsWithCompletionHandler:^(BOOL success, NSArray *products) {
         if (success) {
             _products = products;
@@ -59,6 +59,19 @@
     // Start Activity Indicator.
     self.subscriptionExpiryDateLabel.text = @"";
     [self.tableViewLoadingIndicator startAnimating];
+    
+    [self sendGoogleAnalyticsStats];
+}
+
+- (void)sendGoogleAnalyticsStats
+{
+    // Setup Google Analytics
+    [[GAI sharedInstance].defaultTracker set:kGAIScreenName
+                                       value:@"Subscribe"];
+    
+    // Send the screen view.
+    [[GAI sharedInstance].defaultTracker
+     send:[[GAIDictionaryBuilder createAppView] build]];
 }
 
 - (void)didReceiveMemoryWarning
@@ -183,7 +196,12 @@
     CGRect buttonFrameInTableView = [buyButton convertRect:buyButton.bounds toView:self.tableView];
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonFrameInTableView.origin];
     
-    [self purchaseProductAtRow:indexPath.row];
+    if ([self hasProductBeenPurchasedAtRow:indexPath.row]) {
+        // Product has been purchased, so do nothing
+        [[[UIAlertView alloc] initWithTitle:@"Already purchased!" message:@"Looks like you've already purchased this item!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+    } else {
+        [self purchaseProductAtRow:indexPath.row];
+    }
 }
 
 - (IBAction)restorePurchasesButtonTapped:(id)sender

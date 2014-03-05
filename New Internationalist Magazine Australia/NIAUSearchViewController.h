@@ -11,6 +11,13 @@
 #import "NIAUIssue.h"
 #import "NIAUArticleViewController.h"
 
+#import "GAI.h"
+#import "GAITracker.h"
+#import "GAITrackedViewController.h"
+#import "GAIDictionaryBuilder.h"
+#import "GAIFields.h"
+#import "GAILogger.h"
+
 @interface NIAUSearchViewController : UITableViewController <UISearchBarDelegate, UISearchDisplayDelegate>
 
 @property (nonatomic, strong) NIAUIssue *issue;

@@ -78,6 +78,8 @@
 		055A8EF4177290CF003D9407 /* New_Internationalist_Magazine_AustraliaTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 055A8EF3177290CF003D9407 /* New_Internationalist_Magazine_AustraliaTests.m */; };
 		0567082817B1D51400A87818 /* default_article_image_table_view.png in Resources */ = {isa = PBXBuildFile; fileRef = 0567082617B1D50A00A87818 /* default_article_image_table_view.png */; };
 		0567082917B1D51400A87818 /* default_article_image_table_view@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0567082717B1D50A00A87818 /* default_article_image_table_view@2x.png */; };
+		0571759018C63C640075A604 /* about.html in Resources */ = {isa = PBXBuildFile; fileRef = 0571758F18C63C640075A604 /* about.html */; };
+		0571759218C64A370075A604 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0571759118C64A370075A604 /* Settings.bundle */; };
 		0577E07617FBED0400A52A8E /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0577E07517FBED0400A52A8E /* StoreKit.framework */; };
 		0577E07917FBF2B400A52A8E /* NIAUInAppPurchaseHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 0577E07817FBF2B400A52A8E /* NIAUInAppPurchaseHelper.m */; };
 		058F738E178BBA3E002CA40C /* NIAUImageZoomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 058F738D178BBA3E002CA40C /* NIAUImageZoomViewController.m */; };
@@ -189,6 +191,8 @@
 		055A8F0E1772CF67003D9407 /* iPad-portrait@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPad-portrait@2x.png"; sourceTree = "<group>"; };
 		0567082617B1D50A00A87818 /* default_article_image_table_view.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = default_article_image_table_view.png; sourceTree = "<group>"; };
 		0567082717B1D50A00A87818 /* default_article_image_table_view@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "default_article_image_table_view@2x.png"; sourceTree = "<group>"; };
+		0571758F18C63C640075A604 /* about.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = about.html; sourceTree = "<group>"; };
+		0571759118C64A370075A604 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		0577E07517FBED0400A52A8E /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		0577E07717FBF2B400A52A8E /* NIAUInAppPurchaseHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NIAUInAppPurchaseHelper.h; sourceTree = "<group>"; };
 		0577E07817FBF2B400A52A8E /* NIAUInAppPurchaseHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NIAUInAppPurchaseHelper.m; sourceTree = "<group>"; };
@@ -363,6 +367,7 @@
 		055A8ECB177290CE003D9407 /* New Internationalist Magazine Australia */ = {
 			isa = PBXGroup;
 			children = (
+				0571758E18C63A420075A604 /* HTML */,
 				05C29EFC1887369A004FC28D /* Sounds */,
 				05B9109D181631DF0027E5BF /* Network */,
 				0511F13917BB1D55004B5A72 /* Stylesheet */,
@@ -416,6 +421,7 @@
 				055A8EE0177290CF003D9407 /* Images.xcassets */,
 				52090A65178D4291002D5162 /* local.h */,
 				055A8ECC177290CE003D9407 /* Supporting Files */,
+				0571759118C64A370075A604 /* Settings.bundle */,
 			);
 			path = "New Internationalist Magazine Australia";
 			sourceTree = "<group>";
@@ -475,6 +481,14 @@
 				05FA185217A8B90000E023A0 /* 152.png */,
 			);
 			name = Icons;
+			sourceTree = "<group>";
+		};
+		0571758E18C63A420075A604 /* HTML */ = {
+			isa = PBXGroup;
+			children = (
+				0571758F18C63C640075A604 /* about.html */,
+			);
+			name = HTML;
 			sourceTree = "<group>";
 		};
 		05B9109D181631DF0027E5BF /* Network */ = {
@@ -615,6 +629,7 @@
 				052A84FB17C5E13900D36E6C /* iPad-portrait@2x.png in Resources */,
 				052A850917C5E13900D36E6C /* 144.png in Resources */,
 				052A850517C5E13900D36E6C /* 80.png in Resources */,
+				0571759218C64A370075A604 /* Settings.bundle in Resources */,
 				052A84FF17C5E13900D36E6C /* 40.png in Resources */,
 				0528EC3F17853C1F000175AB /* default_featured_image@2x.png in Resources */,
 				0528EC3D17853C1F000175AB /* default_article_image@2x.png in Resources */,
@@ -622,6 +637,7 @@
 				052A850317C5E13900D36E6C /* 72.png in Resources */,
 				052A84FE17C5E13900D36E6C /* 29.png in Resources */,
 				051A72B2177950D600BDD346 /* default_cover@2x.png in Resources */,
+				0571759018C63C640075A604 /* about.html in Resources */,
 				052BBF8B17EFF6E100B12071 /* home-background.png in Resources */,
 				0511F13B17BB1E25004B5A72 /* article-body.css in Resources */,
 				052A84FD17C5E13900D36E6C /* Default@2x.png in Resources */,

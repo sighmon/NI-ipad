@@ -21,6 +21,8 @@ NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurcha
         // Store product identifiers
         _productIdentifiers = productIdentifiers;
         
+        self.allProducts = @[];
+        
         // Check for previously purchased products
         _purchasedProductIdentifiers = [NSMutableSet set];
         for (NSString *productIdentifier in _productIdentifiers) {
@@ -115,6 +117,7 @@ NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurcha
     [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
     
     [self sendReceiptToRails];
+    [self sendGoogleAnalyticsStatsForTransaction:transaction];
 }
 
 - (void)restoreTransaction:(SKPaymentTransaction *)transaction {
@@ -124,6 +127,7 @@ NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurcha
     [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
     
     [self sendReceiptToRails];
+    [self sendGoogleAnalyticsStatsForTransaction:transaction];
 }
 
 - (void)failedTransaction:(SKPaymentTransaction *)transaction {
@@ -132,6 +136,7 @@ NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurcha
     if (transaction.error.code != SKErrorPaymentCancelled)
     {
         NSLog(@"Transaction error: %@", transaction.error.localizedDescription);
+        [self sendGoogleAnalyticsStatsForTransaction:transaction];
     }
     
     [[SKPaymentQueue defaultQueue] finishTransaction: transaction];
@@ -143,13 +148,57 @@ NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurcha
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:productIdentifier];
     [[NSUserDefaults standardUserDefaults] synchronize];
     [[NSNotificationCenter defaultCenter] postNotificationName:IAPHelperProductPurchasedNotification object:productIdentifier userInfo:nil];
-    
 }
 
 - (void)restoreCompletedTransactions {
     [[SKPaymentQueue defaultQueue] restoreCompletedTransactions];
     
     // TODO: Add code to the Products UI to handle restoring purchases after an app has been deleted, or syncing across devices.
+}
+
+- (void)sendGoogleAnalyticsStatsForTransaction:(SKPaymentTransaction *)transaction
+{
+    // Send Transaction Analytics
+    
+    // Find the product being purchased
+    SKProduct *productBeingPurchased;
+    NSString *productCategory = @"";
+    NSUInteger productIndex = [self.allProducts indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
+        if ([[(SKProduct *)obj productIdentifier] isEqualToString:transaction.payment.productIdentifier]) {
+            *stop = YES;
+            return YES;
+        }
+        return NO;
+    }];
+    if (productIndex != NSNotFound) {
+        productBeingPurchased = self.allProducts[productIndex];
+    }
+    if ([productBeingPurchased.productIdentifier rangeOfString:@"single"].location == NSNotFound) {
+        productCategory = @"Subscription";
+    } else {
+        productCategory = @"Magazine";
+    }
+    
+    [[GAI sharedInstance].defaultTracker send:[[GAIDictionaryBuilder createTransactionWithId:transaction.transactionIdentifier
+                                                                                 affiliation:@"In-app Purchase"
+                                                                                     revenue:productBeingPurchased.price
+                                                                                         tax:[NSNumber numberWithDouble:(productBeingPurchased.price.floatValue/10.)]
+                                                                                    shipping:@0
+                                                                                currencyCode:@"AUD"] build]];
+    
+    
+    [[GAI sharedInstance].defaultTracker send:[[GAIDictionaryBuilder createItemWithTransactionId:transaction.transactionIdentifier
+                                                                                            name:productBeingPurchased.localizedTitle
+                                                                                             sku:productBeingPurchased.productIdentifier
+                                                                                        category:productCategory
+                                                                                           price:productBeingPurchased.price
+                                                                                        quantity:@1
+                                                                                    currencyCode:@"AUD"] build]];
+    
+    [[GAI sharedInstance].defaultTracker send:[[GAIDictionaryBuilder createEventWithCategory:productCategory
+                                                                                      action:@"Purchase"
+                                                                                       label:@"ios"
+                                                                                       value:productBeingPurchased.price] build]];
 }
 
 - (void)sendReceiptToRails
@@ -192,6 +241,7 @@ NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurcha
     NSLog(@"Loaded list of products...");
     _productsRequest = nil;
     
+    self.allProducts = response.products;
     NSMutableArray *skProducts = [NSMutableArray arrayWithArray:response.products];
     
     NSMutableArray *justSubscriptions = [NSMutableArray array];

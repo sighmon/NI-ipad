@@ -70,6 +70,14 @@
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
         [self loginToRails];
     });
+    
+    [self sendGoogleAnalyticsStats];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:ArticleDidUpdateNotification object:self.article];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:ArticleFailedUpdateNotification object:self.article];
 }
 
 - (void)setupView
@@ -83,9 +91,17 @@
     
     // Call this to set a nice background gradient
     [NIAUHelper drawGradientInView:self.view];
+}
+
+- (void)sendGoogleAnalyticsStats
+{
+    // Setup Google Analytics
+    [[GAI sharedInstance].defaultTracker set:kGAIScreenName
+                                       value:@"Home"];
     
-    // Setup Google Analytics name.
-    self.screenName = @"Home screen";
+    // Send the screen view.
+    [[GAI sharedInstance].defaultTracker
+     send:[[GAIDictionaryBuilder createAppView] build]];
 }
 
 - (void)updateNewIssueBanner

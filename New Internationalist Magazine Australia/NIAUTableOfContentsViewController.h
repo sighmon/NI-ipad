@@ -13,6 +13,13 @@
 #import "NIAUWebsiteViewController.h"
 #import "NIAUHelper.h"
 
+#import "GAI.h"
+#import "GAITracker.h"
+#import "GAITrackedViewController.h"
+#import "GAIDictionaryBuilder.h"
+#import "GAIFields.h"
+#import "GAILogger.h"
+
 @interface NIAUTableOfContentsViewController : UIViewController <UIScrollViewDelegate, UITextViewDelegate>
 
 @property (nonatomic, strong) NIAUIssue *issue;

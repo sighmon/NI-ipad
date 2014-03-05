@@ -84,6 +84,16 @@
     id<GAITracker> tracker = [[GAI sharedInstance] trackerWithTrackingId:GOOGLE_ANALYTICS_ID];
     NSLog(@"Google Analytics tracker initialized: %@", tracker);
     
+    // If user hasn't set a default, set it to TRUE
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"googleAnalytics"] == nil) {
+        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+        [userDefaults setBool:TRUE forKey:@"googleAnalytics"];
+        [userDefaults synchronize];
+    } else if ([[NSUserDefaults standardUserDefaults] boolForKey:@"googleAnalytics"] == 0) {
+        // User has asked to opt-out of Google Analytics
+        [[GAI sharedInstance] setOptOut:YES];
+    }
+    
     // Override point for customization after application launch.
     return YES;
 }

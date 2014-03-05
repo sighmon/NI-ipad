@@ -11,6 +11,13 @@
 #import <Foundation/Foundation.h>
 #import <StoreKit/StoreKit.h>
 
+#import "GAI.h"
+#import "GAITracker.h"
+#import "GAITrackedViewController.h"
+#import "GAIDictionaryBuilder.h"
+#import "GAIFields.h"
+#import "GAILogger.h"
+
 typedef void (^RequestProductsCompletionHandler)(BOOL success, NSArray * products);
 UIKIT_EXTERN NSString *const IAPHelperProductPurchasedNotification;
 
@@ -21,6 +28,8 @@ UIKIT_EXTERN NSString *const IAPHelperProductPurchasedNotification;
     NSSet *_productIdentifiers;
     NSMutableSet *_purchasedProductIdentifiers;
 }
+
+@property (nonatomic, strong) NSArray *allProducts;
 
 - (id)initWithProductIdentifiers:(NSSet *)productIdentifiers;
 - (void)requestProductsWithCompletionHandler:(RequestProductsCompletionHandler)completionHandler;

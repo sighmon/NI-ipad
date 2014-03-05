@@ -73,6 +73,19 @@ static NSString *CellIdentifier = @"articleCell";
     // User has read the contents page, so clear notifications badge (this also clears the notification from the NotificationCentre on the users phone)
     [[UIApplication sharedApplication] setApplicationIconBadgeNumber: 0];
 //    [[UIApplication sharedApplication] cancelAllLocalNotifications]; // Only if you want to cancel local notifications.
+    
+    [self sendGoogleAnalyticsStats];
+}
+
+- (void)sendGoogleAnalyticsStats
+{
+    // Setup Google Analytics
+    [[GAI sharedInstance].defaultTracker set:kGAIScreenName
+                                       value:[NSString stringWithFormat:@"%@ - %@", self.issue.name, self.issue.title]];
+    
+    // Send the screen view.
+    [[GAI sharedInstance].defaultTracker
+     send:[[GAIDictionaryBuilder createAppView] build]];
 }
 
 -(void)publisherReady:(NSNotification *)not

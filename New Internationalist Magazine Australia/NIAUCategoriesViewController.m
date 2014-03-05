@@ -54,6 +54,18 @@
     }
     
     [self.tableViewLoadingIndicator startAnimating];
+    [self sendGoogleAnalyticsStats];
+}
+
+- (void)sendGoogleAnalyticsStats
+{
+    // Setup Google Analytics
+    [[GAI sharedInstance].defaultTracker set:kGAIScreenName
+                                       value:@"Categories"];
+    
+    // Send the screen view.
+    [[GAI sharedInstance].defaultTracker
+     send:[[GAIDictionaryBuilder createAppView] build]];
 }
 
 - (void)loadIssues

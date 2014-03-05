@@ -10,6 +10,13 @@
 #import "NIAUHelper.h"
 #import "NIAUWebsiteViewController.h"
 
+#import "GAI.h"
+#import "GAITracker.h"
+#import "GAITrackedViewController.h"
+#import "GAIDictionaryBuilder.h"
+#import "GAIFields.h"
+#import "GAILogger.h"
+
 @interface NIAULoginViewController : UIViewController <UITextFieldDelegate>
 
 @property (nonatomic, weak) IBOutlet UITextField *username;

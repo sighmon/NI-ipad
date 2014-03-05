@@ -46,6 +46,18 @@ NSString *kCellID = @"magazineCellID";              // UICollectionViewCell stor
     }
     
     self.title = @"Archive";
+    [self sendGoogleAnalyticsStats];
+}
+
+- (void)sendGoogleAnalyticsStats
+{
+    // Setup Google Analytics
+    [[GAI sharedInstance].defaultTracker set:kGAIScreenName
+                                       value:self.title];
+    
+    // Send the screen view.
+    [[GAI sharedInstance].defaultTracker
+     send:[[GAIDictionaryBuilder createAppView] build]];
 }
 
 // doublehandling from NIAUViewController...

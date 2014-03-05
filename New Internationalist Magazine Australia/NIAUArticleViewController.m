@@ -67,6 +67,19 @@ float cellPadding = 10.;
     
     // Set height constraint to 0.0 incase there isn't a featured image
     [self.featuredImage.constraints[0] setConstant:0.0];
+
+    [self sendGoogleAnalyticsStats];
+}
+
+- (void)sendGoogleAnalyticsStats
+{
+    // Setup Google Analytics
+    [[GAI sharedInstance].defaultTracker set:kGAIScreenName
+                                       value:[NSString stringWithFormat:@"%@ (%@)", self.article.title, self.article.issue.name]];
+    
+    // Send the screen view.
+    [[GAI sharedInstance].defaultTracker
+     send:[[GAIDictionaryBuilder createAppView] build]];
 }
 
 - (void)viewWillAppear:(BOOL)animated

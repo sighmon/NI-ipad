@@ -10,6 +10,13 @@
 #import "NIAUArticle.h"
 #import "NIAUIssue.h"
 
+#import "GAI.h"
+#import "GAITracker.h"
+#import "GAITrackedViewController.h"
+#import "GAIDictionaryBuilder.h"
+#import "GAIFields.h"
+#import "GAILogger.h"
+
 @interface NIAUWebsiteViewController : UIViewController <UIWebViewDelegate>
 
 @property (nonatomic, weak) NIAUArticle *article;
