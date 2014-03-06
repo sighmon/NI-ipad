@@ -13,6 +13,7 @@
 
 extern NSString *ArticleDidUpdateNotification;
 extern NSString *ArticleFailedUpdateNotification;
+extern NSString *ImageDidSaveToCacheNotification;
 
 @interface NIAUArticle : NSObject {
     NSDictionary *dictionary;

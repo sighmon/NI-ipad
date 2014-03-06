@@ -42,6 +42,8 @@ float cellPadding = 10.;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(articlesLoaded:) name:ArticlesDidUpdateNotification object:[self.article issue]];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(imageFinishedDownloadingToCache:) name:ImageDidSaveToCacheNotification object:nil];
+    
     // Add observer for the user changing the text size
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(preferredContentSizeChanged:) name:UIContentSizeCategoryDidChangeNotification object:nil];
     
@@ -130,6 +132,14 @@ float cellPadding = 10.;
     [self.view setNeedsLayout];
 }
 
+- (void)imageFinishedDownloadingToCache:(NSNotification *)notification
+{
+    // Find image in webview by ID and then replace with real URL
+    NSLog(@"Received image cache notification from ID:%@", notification.object[0]);
+    NSString *javascriptString = [NSString stringWithFormat:@"var img = document.getElementById('image%@'); img.src = '%@';", notification.object[0], notification.object[1]];
+    [self.bodyWebView stringByEvaluatingJavaScriptFromString:javascriptString];
+}
+
 + (UIFont *)headlineFontWithScale: (float)scale
 {
     UIFont *currentDynamicFontSize = [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
@@ -196,14 +206,15 @@ float cellPadding = 10.;
     // Load the article into the webview
     
     NSString *bodyFromDisk = [self.article attemptToGetExpandedBodyFromDisk];
-    
+    NSString *path = [[NSBundle mainBundle] bundlePath];
+    NSURL *baseURL = [NSURL fileURLWithPath:path];
     NSString *bodyWebViewHTML = [NSString stringWithFormat:@"<html> \n"
                                    "<head> \n"
                                    "<link rel=\"stylesheet\" type=\"text/css\" href=\"%@\">"
                                    "</head> \n"
                                    "<body>%@</body> \n"
                                    "</html>", cssURL, WITH_DEFAULT(bodyFromDisk, @"")];
-    [self.bodyWebView loadHTMLString:bodyWebViewHTML baseURL:nil];
+    [self.bodyWebView loadHTMLString:bodyWebViewHTML baseURL:baseURL];
     
     // Prevent webview from scrolling
     if ([self.bodyWebView respondsToSelector:@selector(scrollView)]) {
@@ -382,7 +393,18 @@ float cellPadding = 10.;
     [self updateWebViewHeight];
 }
 
-- (void) ensureScrollsToTop: (UIView *) ensureView {
+- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
+{
+    NSLog(@"Error! - %@", error);
+}
+
+- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
+{
+    NSLog(@"Response: %@", response);
+}
+
+- (void)ensureScrollsToTop: (UIView *) ensureView
+{
     ((UIScrollView *)[[self.bodyWebView subviews] objectAtIndex:0]).scrollsToTop = NO;
 }
 

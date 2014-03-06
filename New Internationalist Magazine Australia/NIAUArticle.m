@@ -15,6 +15,7 @@
 
 NSString *ArticleDidUpdateNotification = @"ArticleDidUpdate";
 NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
+NSString *ImageDidSaveToCacheNotification = @"ImageDidSaveToCache";
 
 
 @implementation NIAUArticle
@@ -156,6 +157,13 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
                     // and fire off a background priority cache read
                     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
                         [imageCache readWithOptions:nil];
+                        
+                        // Send a notification when the image has been read successfully
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            NSArray *imageInformation = @[imageId,[[self imageCacheURLForId:imageId] absoluteString]];
+                            [[NSNotificationCenter defaultCenter] postNotificationName:ImageDidSaveToCacheNotification object:imageInformation];
+                            NSLog(@"Sent Image saved notification for ID:%@",imageId);
+                        });
                     });
                 }
                 
@@ -173,7 +181,7 @@ NSString *ArticleFailedUpdateNotification = @"ArticleFailedUpdate";
                 }
                 
                 //TODO: can we dry up the image URL (it's also defined in the buildImageCache method
-                replacement = [NSString stringWithFormat:@"<div class='%@'><a href='%@'><img width='%@' src='%@'/></a>%@%@</div>", cssClass, [[self imageCacheURLForId:imageId] absoluteString], imageWidth, [[self imageCacheURLForId:imageId] absoluteString], caption_div, credit_div];
+                replacement = [NSString stringWithFormat:@"<div class='%@'><a href='%@.png'><img id='image%@' width='%@' src='loading_image.png'/></a>%@%@</div>", cssClass, imageId, imageId, imageWidth, caption_div, credit_div];
             }
             
         }

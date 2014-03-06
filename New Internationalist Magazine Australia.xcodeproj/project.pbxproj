@@ -56,6 +56,8 @@
 		052D3A95187DEF0D00377021 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 052D3A94187DEF0D00377021 /* QuartzCore.framework */; };
 		052D3A97187DEF1A00377021 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 052D3A96187DEF1A00377021 /* Security.framework */; };
 		052D3A99187DEF2600377021 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 052D3A98187DEF2600377021 /* SystemConfiguration.framework */; };
+		052D797C18C7FD14000C03C2 /* loading_image.png in Resources */ = {isa = PBXBuildFile; fileRef = 052D797A18C7FD14000C03C2 /* loading_image.png */; };
+		052D797D18C7FD14000C03C2 /* loading_image@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 052D797B18C7FD14000C03C2 /* loading_image@2x.png */; };
 		053878261777D767001E60F6 /* NIAUIssue.m in Sources */ = {isa = PBXBuildFile; fileRef = 053878251777D767001E60F6 /* NIAUIssue.m */; };
 		05424C361803AD0400399194 /* NIAUStoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05424C351803AD0400399194 /* NIAUStoreViewController.m */; };
 		05424C391803BD7000399194 /* NIAULoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05424C381803BD7000399194 /* NIAULoginViewController.m */; };
@@ -146,6 +148,8 @@
 		052D3A94187DEF0D00377021 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		052D3A96187DEF1A00377021 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		052D3A98187DEF2600377021 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		052D797A18C7FD14000C03C2 /* loading_image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = loading_image.png; sourceTree = "<group>"; };
+		052D797B18C7FD14000C03C2 /* loading_image@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "loading_image@2x.png"; sourceTree = "<group>"; };
 		053878241777D767001E60F6 /* NIAUIssue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NIAUIssue.h; sourceTree = "<group>"; };
 		053878251777D767001E60F6 /* NIAUIssue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NIAUIssue.m; sourceTree = "<group>"; };
 		05424C341803AD0400399194 /* NIAUStoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NIAUStoreViewController.h; sourceTree = "<group>"; };
@@ -292,6 +296,8 @@
 		053878281777E034001E60F6 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				052D797A18C7FD14000C03C2 /* loading_image.png */,
+				052D797B18C7FD14000C03C2 /* loading_image@2x.png */,
 				05BC3CE918BE6EFC00769F81 /* new-internationalist-logo.png */,
 				05BC3CEA18BE6EFC00769F81 /* new-internationalist-logo@2x.png */,
 				051FB64118AC15BF00FA734C /* UIWebViewBack.png */,
@@ -636,6 +642,8 @@
 				055A8ED9177290CF003D9407 /* Main_iPhone.storyboard in Resources */,
 				052A850317C5E13900D36E6C /* 72.png in Resources */,
 				052A84FE17C5E13900D36E6C /* 29.png in Resources */,
+				052D797D18C7FD14000C03C2 /* loading_image@2x.png in Resources */,
+				052D797C18C7FD14000C03C2 /* loading_image.png in Resources */,
 				051A72B2177950D600BDD346 /* default_cover@2x.png in Resources */,
 				0571759018C63C640075A604 /* about.html in Resources */,
 				052BBF8B17EFF6E100B12071 /* home-background.png in Resources */,
