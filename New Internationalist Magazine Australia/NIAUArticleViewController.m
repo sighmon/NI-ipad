@@ -138,6 +138,10 @@ float cellPadding = 10.;
     NSLog(@"Received image cache notification from ID:%@", notification.object[0]);
     NSString *javascriptString = [NSString stringWithFormat:@"var img = document.getElementById('image%@'); img.src = '%@';", notification.object[0], notification.object[1]];
     [self.bodyWebView stringByEvaluatingJavaScriptFromString:javascriptString];
+    [self updateWebViewHeight];
+    [self.bodyWebView setNeedsUpdateConstraints];
+    [self.bodyWebView setNeedsLayout];
+    [self updateScrollViewContentHeight];
 }
 
 + (UIFont *)headlineFontWithScale: (float)scale

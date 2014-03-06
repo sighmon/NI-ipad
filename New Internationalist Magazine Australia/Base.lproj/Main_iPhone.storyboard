@@ -938,21 +938,21 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" tag="100" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="yTC-Ai-12J">
-                                                    <rect key="frame" x="0.0" y="0.0" width="57" height="72"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="20" height="72"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="57" id="qmc-4C-dDt"/>
+                                                        <constraint firstAttribute="width" constant="20" id="qmc-4C-dDt"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="101" contentMode="left" verticalHuggingPriority="251" text="Title" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="202" translatesAutoresizingMaskIntoConstraints="NO" id="zJ7-fz-whU">
-                                                    <rect key="frame" x="65" y="8" width="202" height="20"/>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="101" contentMode="left" verticalHuggingPriority="251" text="Title" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="239" translatesAutoresizingMaskIntoConstraints="NO" id="zJ7-fz-whU">
+                                                    <rect key="frame" x="28" y="8" width="239" height="20"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="102" contentMode="left" verticalCompressionResistancePriority="751" text="Subtitle" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="202" translatesAutoresizingMaskIntoConstraints="NO" id="Wrz-D5-5j8">
-                                                    <rect key="frame" x="65" y="36" width="202" height="28"/>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="102" contentMode="left" verticalCompressionResistancePriority="751" text="Subtitle" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="239" translatesAutoresizingMaskIntoConstraints="NO" id="Wrz-D5-5j8">
+                                                    <rect key="frame" x="28" y="36" width="239" height="28"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -972,7 +972,7 @@
                                                 <constraint firstItem="yTC-Ai-12J" firstAttribute="top" secondItem="DHD-CO-mrV" secondAttribute="top" id="pHv-wp-leT"/>
                                             </constraints>
                                         </tableViewCellContentView>
-                                        <inset key="separatorInset" minX="57" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                        <inset key="separatorInset" minX="21" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <connections>
                                             <segue destination="T5k-23-5nF" kind="push" identifier="tappedArticle" id="W9z-A8-KEC"/>
                                         </connections>
@@ -1354,12 +1354,12 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="SUv-P7-9yc"/>
-        <segue reference="Miu-Qg-BkO"/>
-        <segue reference="IfR-jT-MPw"/>
-        <segue reference="mdp-6r-s59"/>
-        <segue reference="joJ-Rh-K6j"/>
         <segue reference="fFr-gL-mDW"/>
-        <segue reference="nQ6-DH-CWR"/>
+        <segue reference="fI5-Du-KTZ"/>
+        <segue reference="W9z-A8-KEC"/>
+        <segue reference="lhr-aW-Muh"/>
+        <segue reference="joJ-Rh-K6j"/>
+        <segue reference="SUv-P7-9yc"/>
+        <segue reference="IfR-jT-MPw"/>
     </inferredMetricsTieBreakers>
 </document>

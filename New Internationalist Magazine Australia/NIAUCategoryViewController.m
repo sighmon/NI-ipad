@@ -234,6 +234,8 @@
     if (articleImage.image == nil) {
         [articleImage.constraints[0] setConstant:20.];
         [cell setSeparatorInset:UIEdgeInsetsMake(0, 21., 0, 0)];
+        [articleImage setNeedsUpdateConstraints];
+        [cell setNeedsLayout];
     }
     
     // Aminate the cell loading so that long category lists of articles fade in.

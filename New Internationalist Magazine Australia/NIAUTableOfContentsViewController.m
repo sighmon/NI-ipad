@@ -317,15 +317,15 @@ static NSString *CellIdentifier = @"articleCell";
 
     UIImageView *articleImageView = (UIImageView *)[cell viewWithTag:100];
     NIAUArticle *article = [self.sortedCategories[indexPath.section] objectForKey:@"articles"][indexPath.row];
-    CGSize thumbSize = CGSizeMake(57,72);
+    CGSize thumbSize = CGSizeMake(20,72);
     if (self.tableView.dragging == NO && self.tableView.decelerating == NO) {
         if (articleImageView.image == nil) {
             [article getFeaturedImageThumbWithSize:thumbSize andCompletionBlock:^(UIImage *thumb) {
                 if (thumb) {
                     [articleImageView setImage:thumb];
                 } else {
-                    [articleImageView.constraints[0] setConstant:20.];
-                    [cell setSeparatorInset:UIEdgeInsetsMake(0, 21., 0, 0)];
+//                    [articleImageView.constraints[0] setConstant:20.];
+//                    [cell setSeparatorInset:UIEdgeInsetsMake(0, 21., 0, 0)];
                 }
             }];
         } else {
@@ -336,8 +336,8 @@ static NSString *CellIdentifier = @"articleCell";
         if (thumb) {
             [articleImageView setImage:thumb];
         } else {
-            [articleImageView.constraints[0] setConstant:20.];
-            [cell setSeparatorInset:UIEdgeInsetsMake(0, 21., 0, 0)];
+//            [articleImageView.constraints[0] setConstant:20.];
+//            [cell setSeparatorInset:UIEdgeInsetsMake(0, 21., 0, 0)];
         }
     }
 }
