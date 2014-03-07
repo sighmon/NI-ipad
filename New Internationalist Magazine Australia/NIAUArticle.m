@@ -180,8 +180,16 @@ NSString *ImageDidSaveToCacheNotification = @"ImageDidSaveToCache";
                     caption_div = [NSString stringWithFormat:@"<div class='new-image-caption'>%@</div>",imageCaption];
                 }
                 
+                // Check if we already have the image on disk, and show it if we do.
+                NSString *imageSource = @"";
+                if ([UIImage imageWithData: [NSData dataWithContentsOfURL:[self imageCacheURLForId:imageId]]]) {
+                    imageSource = [[self imageCacheURLForId:imageId] absoluteString];
+                } else {
+                    imageSource = @"loading_image.png";
+                }
+                
                 //TODO: can we dry up the image URL (it's also defined in the buildImageCache method
-                replacement = [NSString stringWithFormat:@"<div class='%@'><a href='%@.png'><img id='image%@' width='%@' src='loading_image.png'/></a>%@%@</div>", cssClass, imageId, imageId, imageWidth, caption_div, credit_div];
+                replacement = [NSString stringWithFormat:@"<div class='%@'><a href='%@'><img id='image%@' width='%@' src='%@'/></a>%@%@</div>", cssClass, [[self imageCacheURLForId:imageId] absoluteString], imageId, imageWidth, imageSource, caption_div, credit_div];
             }
             
         }

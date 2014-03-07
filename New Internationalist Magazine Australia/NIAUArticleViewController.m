@@ -467,8 +467,7 @@ float cellPadding = 10.;
             imageZoomViewController.imageToLoad = imageTapped.image;
         } else if (!([[sender absoluteString] rangeOfString:@".png"].location == NSNotFound)) {
             // User tapped an image in an article (embedded in a UIWebView), so zoom it.
-            // TODO: Work out why this isn't working.
-            imageZoomViewController.imageToLoad = [UIImage imageWithContentsOfFile:[sender absoluteString]];
+            imageZoomViewController.imageToLoad = [UIImage imageWithData: [NSData dataWithContentsOfURL:sender]];
         } else {
             // Not sure what the image is, zoom a default
             imageZoomViewController.imageToLoad = [UIImage imageNamed:@"default_article_image.png"];
