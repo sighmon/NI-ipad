@@ -131,10 +131,10 @@
         UIImageView *productImageView = (UIImageView *)[cell viewWithTag:100];
         productImageView.image = nil;
         
-        if ([self hasProductBeenPurchasedAtRow:indexPath.row]) {
+        if ([self hasProductBeenPurchasedAtRow:(int)indexPath.row]) {
             // Leave background colour purchase green.
         } else {
-            if ([self isProductASubscriptionAtRow:indexPath.row]) {
+            if ([self isProductASubscriptionAtRow:(int)indexPath.row]) {
                 // It's a single issue purchase
                 productImageView.backgroundColor = [UIColor colorWithHue:0.2111 saturation:0.87 brightness:0.61 alpha:1.0];
             } else {
@@ -156,7 +156,7 @@
         
         UIButton *productBuyButton = (UIButton *)[cell viewWithTag:104];
         
-        if ([self hasProductBeenPurchasedAtRow:indexPath.row]) {
+        if ([self hasProductBeenPurchasedAtRow:(int)indexPath.row]) {
             // Product has already been purchased
             [productBuyButton removeFromSuperview];
             cell.accessoryType = UITableViewCellAccessoryCheckmark;
@@ -196,11 +196,11 @@
     CGRect buttonFrameInTableView = [buyButton convertRect:buyButton.bounds toView:self.tableView];
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonFrameInTableView.origin];
     
-    if ([self hasProductBeenPurchasedAtRow:indexPath.row]) {
+    if ([self hasProductBeenPurchasedAtRow:(int)indexPath.row]) {
         // Product has been purchased, so do nothing
         [[[UIAlertView alloc] initWithTitle:@"Already purchased!" message:@"Looks like you've already purchased this item!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
     } else {
-        [self purchaseProductAtRow:indexPath.row];
+        [self purchaseProductAtRow:(int)indexPath.row];
     }
 }
 
@@ -211,11 +211,11 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if ([self hasProductBeenPurchasedAtRow:indexPath.row]) {
+    if ([self hasProductBeenPurchasedAtRow:(int)indexPath.row]) {
         // Product has been purchased, so do nothing
         [[[UIAlertView alloc] initWithTitle:@"Already purchased!" message:@"Looks like you've already purchased this item!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
     } else {
-        [self purchaseProductAtRow:indexPath.row];
+        [self purchaseProductAtRow:(int)indexPath.row];
     }
 }
 

@@ -139,10 +139,10 @@ static NSString *CellIdentifier = @"articleCell";
     int numberOfArticlesCategorised = 0;
     for (int i = 0; i < self.sortedCategories.count; i++) {
         numberOfArticlesCategorised += [[self.sortedCategories[i] objectForKey:@"articles"] count];
-        NSLog(@"Category #%d has #%d articles", i, [[self.sortedCategories[i] objectForKey:@"articles"] count]);
+        NSLog(@"Category #%d has #%d articles", i, (int)[[self.sortedCategories[i] objectForKey:@"articles"] count]);
     }
     NSLog(@"Number of articles categorised: %d", numberOfArticlesCategorised);
-    NSLog(@"Number of articles in this issue: %d", [self.issue numberOfArticles]);
+    NSLog(@"Number of articles in this issue: %d", (int)[self.issue numberOfArticles]);
     
     // TODO: FINISH this controller, check whether the above code works, and then use it to determine the sections.
     
@@ -184,22 +184,24 @@ static NSString *CellIdentifier = @"articleCell";
     // HACK: This magically makes it set the editorsLetterTextView to the correct height
     self.editorsLetterTextViewHeightConstraint.constant = 0;
     
+    CGSize size = [self.editorsLetterTextView sizeThatFits: CGSizeMake(self.editorsLetterTextView.frame.size.width, 1.)];
+    CGRect frame = self.editorsLetterTextView.frame;
+    frame.size.height = size.height;
+    self.editorsLetterTextViewHeightConstraint.constant = size.height;
+    [self.editorsLetterTextView setNeedsUpdateConstraints];
+    [self.editorsLetterTextView setNeedsLayout];
+    
     [self.scrollView setNeedsLayout];
     [self.scrollView layoutIfNeeded];
     
-    self.editorsLetterTextViewHeightConstraint.constant = self.editorsLetterTextView.contentSize.height;
-    
-    // TODO: Get this right for the iPhone view.
-    
     [self updateFooterViewHight];
     
-//    self.tableViewFooterView.frame = CGRectMake(self.tableViewFooterView.frame.origin.x, self.tableViewFooterView.frame.origin.y, self.editorsLetterTextView.attributedText.size.width, self.editorsLetterTextView.attributedText.size.height *5);
 }
 
 - (void)updateFooterViewHight
 {
     // Set the footer size
-    CGSize size = [self.editorsLetterTextView sizeThatFits: CGSizeMake(320., 1.)];
+    CGSize size = [self.editorsLetterTextView sizeThatFits: CGSizeMake(self.editorsLetterTextView.frame.size.width, 1.)];
     CGRect frame = self.editorsLetterTextView.frame;
     frame.size.height = size.height + self.editorImageView.frame.size.height + self.labelEditor.frame.size.height + 40;
     self.tableViewFooterView.frame = frame;
@@ -223,21 +225,21 @@ static NSString *CellIdentifier = @"articleCell";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     NSMutableDictionary *cellSectionDictionary = [NSMutableDictionary dictionary];
-    id cell = [[self.cellDictionary objectForKey:[NSNumber numberWithInt:indexPath.section]] objectForKey:[NSNumber numberWithInt:indexPath.row]];
+    id cell = [[self.cellDictionary objectForKey:[NSNumber numberWithInt:(int)indexPath.section]] objectForKey:[NSNumber numberWithInt:(int)indexPath.row]];
     if (cell != nil) {
 //        NSLog(@"Cell cache hit");
     } else {
-//        NSLog(@"\nSection: %@, Index path: %@",[NSNumber numberWithInt:indexPath.section], [NSNumber numberWithInt:indexPath.row]);
+//        NSLog(@"\nSection: %@, Index path: %@",[NSNumber numberWithInt:(int)indexPath.section], [NSNumber numberWithInt:(int)indexPath.row]);
         cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (cell == nil) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
         }
         [self setupCellForHeight:cell atIndexPath:indexPath];
-        [cellSectionDictionary setObject:cell forKey:[NSNumber numberWithInt:indexPath.row]];
-        if ([self.cellDictionary objectForKey:[NSNumber numberWithInt:indexPath.section]]) {
-            [[self.cellDictionary objectForKey:[NSNumber numberWithInt:indexPath.section]] setObject:cell forKey:[NSNumber numberWithInt:indexPath.row]];
+        [cellSectionDictionary setObject:cell forKey:[NSNumber numberWithInt:(int)indexPath.row]];
+        if ([self.cellDictionary objectForKey:[NSNumber numberWithInt:(int)indexPath.section]]) {
+            [[self.cellDictionary objectForKey:[NSNumber numberWithInt:(int)indexPath.section]] setObject:cell forKey:[NSNumber numberWithInt:(int)indexPath.row]];
         } else {
-            [self.cellDictionary setObject:cellSectionDictionary forKey:[NSNumber numberWithInt:indexPath.section]];
+            [self.cellDictionary setObject:cellSectionDictionary forKey:[NSNumber numberWithInt:(int)indexPath.section]];
         }
     }
     

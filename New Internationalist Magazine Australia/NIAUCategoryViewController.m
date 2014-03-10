@@ -85,7 +85,7 @@
 - (void)loadArticles
 {
     // Do this for all issues.
-    int numberOfIssuesDownloaded = [[NIAUPublisher getInstance] numberOfIssues];
+    int numberOfIssuesDownloaded = (int)[[NIAUPublisher getInstance] numberOfIssues];
     for (int i = 0; i < numberOfIssuesDownloaded; i++) {
         self.issue = [[NIAUPublisher getInstance] issueAtIndex:i];
         [self.issuesArray addObject:self.issue];

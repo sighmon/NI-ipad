@@ -340,7 +340,7 @@ NSString *ImageDidSaveToCacheNotification = @"ImageDidSaveToCache";
     
     NSString *base64receipt = [receiptData base64EncodedStringWithOptions:0];
     NSData *postData = [base64receipt dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
-    NSString *postLength = [NSString stringWithFormat:@"%d", [postData length]];
+    NSString *postLength = [NSString stringWithFormat:@"%d", (int)[postData length]];
 
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
     [request setURL:articleURL];
@@ -355,7 +355,7 @@ NSString *ImageDidSaveToCacheNotification = @"ImageDidSaveToCache";
 //    NSArray *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:[NSURL URLWithString:SITE_URL]];
     
     NSData *responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
-    int statusCode = [response statusCode];
+    int statusCode = (int)[response statusCode];
     NSString *data = [[NSString alloc]initWithData:responseData encoding:NSUTF8StringEncoding];
     if (!error && statusCode >= 200 && statusCode < 300) {
 //        NSLog(@"Response from Rails: %@", data);
@@ -600,7 +600,7 @@ NSString *ImageDidSaveToCacheNotification = @"ImageDidSaveToCache";
     
     NSString *base64receipt = [receiptData base64EncodedStringWithOptions:0];
     NSData *postData = [base64receipt dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
-    NSString *postLength = [NSString stringWithFormat:@"%d", [postData length]];
+    NSString *postLength = [NSString stringWithFormat:@"%d", (int)[postData length]];
     
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
     [request setURL:articleURL];

@@ -128,9 +128,9 @@
         NIAUArticleViewController *articleViewController = [storyboard instantiateViewControllerWithIdentifier:@"article"];
         
         NSString *articleIDFromURL = [[url pathComponents] lastObject];
-        NSNumber *articleID = [NSNumber numberWithInt:[articleIDFromURL integerValue]];
+        NSNumber *articleID = [NSNumber numberWithInt:(int)[articleIDFromURL integerValue]];
         NSString *issueIDFromURL = [[url pathComponents] objectAtIndex:1];
-        NSNumber *issueID = [NSNumber numberWithInt:[issueIDFromURL integerValue]];
+        NSNumber *issueID = [NSNumber numberWithInt:(int)[issueIDFromURL integerValue]];
         NSArray *arrayOfIssues = [NIAUIssue issuesFromNKLibrary];
         NIAUIssue *issue = [arrayOfIssues objectAtIndex:[arrayOfIssues indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
             return ([[obj railsID] isEqualToNumber:issueID]);

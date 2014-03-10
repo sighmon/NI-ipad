@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="13C64" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="oKe-c9-yQ2">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5053" systemVersion="13C64" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="oKe-c9-yQ2">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <scenes>
         <!--View Controller - New Internationalist-->
@@ -281,7 +281,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <inset key="separatorInset" minX="58" minY="0.0" maxX="0.0" maxY="0.0"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="0iF-oh-u4b">
-                            <rect key="frame" x="0.0" y="0.0" width="768" height="50"/>
+                            <rect key="frame" x="0.0" y="64" width="768" height="50"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="9R1-cr-Spi">
@@ -298,7 +298,7 @@
                         </view>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="articlesInCategoryCell" id="9t4-xa-JsQ">
-                                <rect key="frame" x="0.0" y="72" width="768" height="88"/>
+                                <rect key="frame" x="0.0" y="136" width="768" height="88"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="9t4-xa-JsQ" id="4Qo-NU-7Vp">
                                     <rect key="frame" x="0.0" y="0.0" width="735" height="87"/>
@@ -1377,9 +1377,9 @@
         <segue reference="EBU-8G-ECI"/>
         <segue reference="MS4-LT-1l5"/>
         <segue reference="7r1-dy-lxK"/>
-        <segue reference="w0v-2Q-MmG"/>
         <segue reference="fFO-5s-0tA"/>
-        <segue reference="Sfz-PS-vgU"/>
+        <segue reference="WLv-dP-nWF"/>
+        <segue reference="w0v-2Q-MmG"/>
         <segue reference="mho-0V-J7B"/>
     </inferredMetricsTieBreakers>
 </document>

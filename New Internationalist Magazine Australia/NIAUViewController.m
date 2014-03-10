@@ -257,7 +257,7 @@
         [request setHTTPMethod:@"POST"];
         [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
         NSData *postData = [[NSString stringWithFormat:@"user[login]=%@&user[password]=%@",username,password] dataUsingEncoding:NSUTF8StringEncoding];
-        NSString *postLength = [NSString stringWithFormat:@"%d", [postData length]];
+        NSString *postLength = [NSString stringWithFormat:@"%d", (int)[postData length]];
         [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
         [request setHTTPBody:postData];
         
@@ -266,7 +266,7 @@
         //        NSData *responseData =
         [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
 //        NSArray *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:[NSURL URLWithString:SITE_URL]];
-        int statusCode = [response statusCode];
+        int statusCode = (int)[response statusCode];
         if(statusCode >= 200 && statusCode < 300) {
             // Logged in!
             NSLog(@"Logged in user: %@", username);
