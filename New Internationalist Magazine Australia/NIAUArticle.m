@@ -56,20 +56,48 @@ NSString *ImageDidSaveToCacheNotification = @"ImageDidSaveToCache";
     return value != nil;
 }
 
-// TODO: will need to also generate a list of used images for downloading
-// to get images captions we will need access to the issue.json info, so a class method won't work here.
--(NSString*)attemptToGetExpandedBodyFromDisk {
+-(NSString *)attemptToGetExpandedBodyFromDisk {
     NSString *body = [self attemptToGetBodyFromDisk];
     if(!body) {
         return nil;
     }
     
+    // Expand the [File:xxx|option] tags
+    NSString *newBody = [self expandImageTagsInBody:body];
+    
+    if ([body isEqualToString:newBody] && [[dictionary objectForKey:@"images"] count] > 0) {
+        // No images were found, but there are some attached to this article
+        // So adding [File:xxx|full] for now and re-running generateNewBodyFromBody:
+        
+        NSString *modifiedBody = body;
+        NSMutableArray *imagesToAdd = [dictionary objectForKey:@"images"];
+        
+        // Sort the images by their position
+        NSSortDescriptor *lowestPositionToHighest = [NSSortDescriptor sortDescriptorWithKey:@"position" ascending:NO];
+        imagesToAdd = [NSMutableArray arrayWithArray:[imagesToAdd sortedArrayUsingDescriptors:[NSArray arrayWithObject:lowestPositionToHighest]]];
+        
+        for (int i = 0; i < [imagesToAdd count]; i++) {
+            NSError *error = nil;
+            NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"<div class=\"article-body\">" options:NSRegularExpressionCaseInsensitive error:&error];
+            modifiedBody = [regex stringByReplacingMatchesInString:modifiedBody options:0 range:NSMakeRange(0, [body length]) withTemplate:[NSString stringWithFormat:@"<div class=\"article-body\">[File:%@|full|ns]", [imagesToAdd[i] objectForKey:@"id"]]];
+//            NSLog(@"%@", modifiedBody);
+        }
+        
+        // Now we have all the lost images in the modifiedBody, lets expand again.
+        newBody = [self expandImageTagsInBody:modifiedBody];
+    }
+    
+    return newBody;
+}
+
+- (NSString *)expandImageTagsInBody:(NSString *)body {
     NSError *error;
     NSRegularExpression *regex = [NSRegularExpression
                                   regularExpressionWithPattern:@"\\[File:(\\d+)(?:\\|([^\\]]*))?]"
                                   options:NSRegularExpressionCaseInsensitive
                                   error:&error];
     // TODO: we will at least want a list of which ID's we need to cache from the site.
+    // Pix: Still need this?
     
     // make a copy of the input string. we are going to edit this one as we iterate
     NSMutableString *newBody = [NSMutableString stringWithString:body];
@@ -92,8 +120,6 @@ NSString *ImageDidSaveToCacheNotification = @"ImageDidSaveToCache";
             NSString *optionString = [body substringWithRange:[match rangeAtIndex:2]];
             options = [optionString componentsSeparatedByString:@"|"];
         }
-        
-        // Q: what if imageId is still empty here?
         
         // ported from NI:/app/helpers/article-helper.rb:expand-image-tags
         NSString *cssClass = @"article-image";
@@ -145,8 +171,8 @@ NSString *ImageDidSaveToCacheNotification = @"ImageDidSaveToCache";
             }];
             
             NSDictionary *imageDictionary = nil;
-            // TODO: track down referenced images that aren't attached to this article. For now we ignore them.
-            if(imageIndex!=NSNotFound) {
+            
+            if (imageIndex != NSNotFound) {
                 imageDictionary = [images objectAtIndex:imageIndex];
                 
                 // make entry in imageCaches dictionary if necessary
@@ -614,7 +640,7 @@ NSString *ImageDidSaveToCacheNotification = @"ImageDidSaveToCache";
     NSMutableDictionary *tmpGuestPassJsonData = [[NSMutableDictionary alloc] init];
     
     NSData *responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
-    int statusCode = [response statusCode];
+    int statusCode = (int)[response statusCode];
     NSString *data = [[NSString alloc]initWithData:responseData encoding:NSUTF8StringEncoding];
     
     if (!error && statusCode >= 200 && statusCode < 300) {
