@@ -31,7 +31,7 @@ NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurcha
                 [_purchasedProductIdentifiers addObject:productIdentifier];
                 NSLog(@"Previously purchased: %@", productIdentifier);
             } else {
-                NSLog(@"Not purchased: %@", productIdentifier);
+//                NSLog(@"Not purchased: %@", productIdentifier);
             }
         }
         [[SKPaymentQueue defaultQueue] addTransactionObserver:self];

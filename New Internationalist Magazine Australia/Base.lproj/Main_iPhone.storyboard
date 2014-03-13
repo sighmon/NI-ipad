@@ -724,6 +724,13 @@
                                 <rect key="frame" x="0.0" y="66" width="320" height="502"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <subviews>
+                                    <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="About" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vqy-Xy-Jar">
+                                        <rect key="frame" x="20" y="20" width="280" height="42"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="35"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" text="Version" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="lDG-gz-ZfT">
                                         <rect key="frame" x="20" y="62" width="280" height="37"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -733,25 +740,6 @@
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
-                                    <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="About" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vqy-Xy-Jar">
-                                        <rect key="frame" x="20" y="20" width="280" height="42"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="35"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <webView multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HC4-zq-3kn">
-                                        <rect key="frame" x="0.0" y="146" width="320" height="356"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="356" id="358-i5-03Y"/>
-                                        </constraints>
-                                        <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES"/>
-                                        <connections>
-                                            <outlet property="delegate" destination="6Ug-OX-t9S" id="cE2-nf-O7L"/>
-                                        </connections>
-                                    </webView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xkd-us-qSy">
                                         <rect key="frame" x="0.0" y="107" width="320" height="31"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -779,9 +767,20 @@
                                             <constraint firstItem="L6V-o8-d8U" firstAttribute="top" secondItem="Xkd-us-qSy" secondAttribute="top" id="Mj4-az-U3x"/>
                                             <constraint firstAttribute="width" constant="320" id="XTI-97-usE"/>
                                             <constraint firstAttribute="bottom" secondItem="L6V-o8-d8U" secondAttribute="bottom" id="ngP-37-kZb"/>
-                                            <constraint firstItem="L6V-o8-d8U" firstAttribute="leading" secondItem="PS2-EP-JKT" secondAttribute="trailing" constant="33" id="sRA-xH-uRQ"/>
                                         </constraints>
                                     </view>
+                                    <webView multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HC4-zq-3kn">
+                                        <rect key="frame" x="0.0" y="146" width="320" height="356"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="356" id="358-i5-03Y"/>
+                                        </constraints>
+                                        <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="6Ug-OX-t9S" id="cE2-nf-O7L"/>
+                                        </connections>
+                                    </webView>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="HC4-zq-3kn" firstAttribute="leading" secondItem="UlN-Dh-s6k" secondAttribute="leading" id="06M-Bq-2jZ"/>
@@ -1354,12 +1353,12 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
+        <segue reference="nQ6-DH-CWR"/>
         <segue reference="fFr-gL-mDW"/>
         <segue reference="fI5-Du-KTZ"/>
         <segue reference="W9z-A8-KEC"/>
-        <segue reference="lhr-aW-Muh"/>
-        <segue reference="joJ-Rh-K6j"/>
         <segue reference="SUv-P7-9yc"/>
         <segue reference="IfR-jT-MPw"/>
+        <segue reference="joJ-Rh-K6j"/>
     </inferredMetricsTieBreakers>
 </document>

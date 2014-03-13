@@ -17,6 +17,7 @@ extern NSString *ArticlesFailedUpdateNotification;
     NSDictionary *dictionary;
     NSArray *articles;
     BOOL requestingArticles;
+    BOOL requestingCover;
     NIAUCache *coverThumbCache;
     NIAUCache *coverCache;
 }

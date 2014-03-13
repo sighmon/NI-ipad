@@ -36,10 +36,10 @@
     self.isUserASubscriber = false;
     self.showNewIssueBanner = false;
     self.issueBanner.hidden = true;
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(articleBodyLoaded:) name:ArticleDidUpdateNotification object:self.article];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(articleBodyDidntLoad:) name:ArticleFailedUpdateNotification object:self.article];
+    lastIssue = [[NIAUIssue alloc] init];
+    firstArticle = [[NIAUArticle alloc] init];
+    self.issue = [[NIAUIssue alloc] init];
+    self.article = [[NIAUArticle alloc] init];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshView:) name:@"refreshViewNotification" object:nil];
     
@@ -62,6 +62,7 @@
     } else {
         [self loadIssues];
     }
+
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -71,13 +72,20 @@
         [self loginToRails];
     });
     
+    if([[NIAUPublisher getInstance] isReady]) {
+        [self showIssues];
+    } else {
+        [self loadIssues];
+    }
+    
+//    [self checkIfUserIsASubscriber];
     [self sendGoogleAnalyticsStats];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:ArticleDidUpdateNotification object:self.article];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:ArticleFailedUpdateNotification object:self.article];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:ArticleDidUpdateNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:ArticleFailedUpdateNotification object:nil];
 }
 
 - (void)setupView
@@ -232,9 +240,9 @@
         self.showNewIssueBanner = true;
     } else {
         // No issues to load
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(articlesReady:) name:ArticlesDidUpdateNotification object:lastIssue];
         self.issue = [[NIAUPublisher getInstance] issueAtIndex:0];
-        [self.issue requestArticles];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(articlesReady:) name:ArticlesDidUpdateNotification object:lastIssue];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(articlesReady:) name:ArticlesFailedUpdateNotification object:lastIssue];
         lastIssue = [[NIAUPublisher getInstance] lastIssue];
         [lastIssue requestArticles];
     }
@@ -287,9 +295,12 @@
 
 - (void)checkIfUserIsASubscriber
 {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(articleBodyLoaded:) name:ArticleDidUpdateNotification object:firstArticle];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(articleBodyDidntLoad:) name:ArticleFailedUpdateNotification object:firstArticle];
     firstArticle = [lastIssue articleAtIndex:0];
+    [firstArticle clearCache];
     // TODO: Write a method here that checks a specific rails route for a vaild sub or iTunes receipt
-    [firstArticle requestBody];
+//    [firstArticle requestBody];
     [self updateSubscribeButton];
 }
 

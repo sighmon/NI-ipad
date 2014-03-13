@@ -15,6 +15,8 @@
 #import "NIAUPublisher.h"
 #import "NIAUArticleViewController.h"
 #import "NIAUArticle.h"
+#import <objc/runtime.h>
+const char NotificationKey;
 
 #import "GAI.h"
 #import "GAITracker.h"
@@ -194,7 +196,7 @@
     }
     
     // Start background download.
-    [self startBackgroundDownload];
+    [self startBackgroundDownloadWithUserInfo:userInfo];
 }
 
 - (void)handleNotification: (NSDictionary *)userInfo
@@ -202,7 +204,9 @@
     NSLog(@"UserInfo: %@", userInfo);
     // Ask the user whether they want to download the new issue now
     NSString *message = [NSString stringWithFormat:@"%@ Would you like to download it now in the background?", [[userInfo objectForKey:@"aps"] objectForKey:@"alert"]];
-    [[[UIAlertView alloc] initWithTitle:@"New issue available" message:message delegate:self cancelButtonTitle:@"Not now." otherButtonTitles:@"Download", nil] show];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"New issue available" message:message delegate:self cancelButtonTitle:@"Not now." otherButtonTitles:@"Download", nil];
+    [alert show];
+    objc_setAssociatedObject(alert, &NotificationKey, userInfo, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (void)turnBadgeIconOn
@@ -210,9 +214,16 @@
     [[UIApplication sharedApplication] setApplicationIconBadgeNumber: 1];
 }
 
-- (void)startBackgroundDownload
+- (void)startBackgroundDownloadWithUserInfo: (NSDictionary *)userInfo
 {
     // TODO: get zip file from Rails, unpack it and save it to the library.
+    // TODO: authenticate and then download @issue.zip
+    
+    NSNumber *issueID = [userInfo objectForKey:@"railsID"];
+    
+    // TODO: Ask rails nicely for the zip location (make a route for it in rails first)
+    
+    NSLog(@"Notification info: %@", userInfo);
     
     // For now lets just force update the issues
     [[NIAUPublisher getInstance] forceDownloadIssues];
@@ -227,13 +238,15 @@
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
+    NSDictionary *userInfo = objc_getAssociatedObject(alertView, &NotificationKey);
+    
     switch (buttonIndex) {
         case 0:
             // Cancel pressed
             break;
         case 1:
             // Download pressed
-            [self startBackgroundDownload];
+            [self startBackgroundDownloadWithUserInfo:userInfo];
             break;
         default:
             break;

@@ -20,6 +20,7 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
 -(id)init {
     if (self = [super init]) {
         requestingArticles = false;
+        requestingCover = false;
         
         coverCache = [self buildCoverCache];
         coverThumbCache = [self buildCoverThumbCache];
@@ -285,17 +286,21 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
 
 // TODO: how would we do getCover w/o completion block?
 -(void)getCoverWithCompletionBlock:(void(^)(UIImage *img))block {
-    
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0),
-                   ^{
-                       UIImage *image = [self getCoverImage];
-                       NSLog(@"got cover image %@",image);
-                       // run the block on the main queue so it can 	do ui stuff
-                       dispatch_async(dispatch_get_main_queue(), ^{
-                           block(image);
+    if (requestingCover) {
+        NSLog(@"Already requesting cover");
+    } else {
+        requestingCover = true;
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0),
+                       ^{
+                           UIImage *image = [self getCoverImage];
+                           NSLog(@"got cover image %@",image);
+                           // run the block on the main queue so it can 	do ui stuff
+                           dispatch_async(dispatch_get_main_queue(), ^{
+                               block(image);
+                           });
+                           requestingCover = false;
                        });
-                       
-                   });
+    }
 }
 
 -(void)getEditorsImageWithCompletionBlock:(void(^)(UIImage *img))block {

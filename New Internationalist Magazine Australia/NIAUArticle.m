@@ -24,11 +24,21 @@ NSString *ImageDidSaveToCacheNotification = @"ImageDidSaveToCache";
 @synthesize issue;
 
 -(void)clearCache {
-    [bodyCache readWithOptions:nil startingAt:@"net" stoppingAt:nil];
+    id body = [bodyCache readWithOptions:nil startingAt:@"net" stoppingAt:nil];
     [featuredImageCache readWithOptions:nil startingAt:@"net" stoppingAt:nil];
     // would need to do a read for every set options we have received since starting.
     // a good argument for an explicit clear block
     //[featuredImageThumbCache clear];
+    if(body) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [[NSNotificationCenter defaultCenter] postNotificationName:ArticleDidUpdateNotification object:self];
+        });
+    } else {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [[NSNotificationCenter defaultCenter] postNotificationName:ArticleFailedUpdateNotification object:self];
+        });
+    }
+
 }
 
 -(NSString *)author {

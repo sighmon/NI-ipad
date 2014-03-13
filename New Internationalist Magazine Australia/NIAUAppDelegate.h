@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+extern const char NotificationKey;
 
 @interface NIAUAppDelegate : UIResponder <UIApplicationDelegate>
 

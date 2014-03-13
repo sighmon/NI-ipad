@@ -43,8 +43,8 @@
     [[NIAUInAppPurchaseHelper sharedInstance] requestProductsWithCompletionHandler:^(BOOL success, NSArray *products) {
         if (success) {
             _products = products;
-            [self.tableView reloadData];
             [self.tableViewLoadingIndicator stopAnimating];
+            [self.tableView reloadData];
             
             // TODO: Get expiry date if you have a subscription.
             self.subscriptionExpiryDateLabel.text = @"TODO: date here.";
