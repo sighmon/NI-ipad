@@ -131,8 +131,11 @@
         UIImageView *productImageView = (UIImageView *)[cell viewWithTag:100];
         productImageView.image = nil;
         
-        if ([self hasProductBeenPurchasedAtRow:(int)indexPath.row]) {
+        BOOL purchased = [self hasProductBeenPurchasedAtRow:(int)indexPath.row];
+        
+        if (purchased) {
             // Leave background colour purchase green.
+            productImageView.backgroundColor = [[self.navigationController.navigationBar tintColor] colorWithAlphaComponent:0.1];
         } else {
             if ([self isProductASubscriptionAtRow:(int)indexPath.row]) {
                 // It's a single issue purchase
@@ -154,17 +157,15 @@
         UILabel *productDescription = (UILabel *)[cell viewWithTag:103];
         productDescription.text = [product localizedDescription];
         
-        UIButton *productBuyButton = (UIButton *)[cell viewWithTag:104];
-        
-        if ([self hasProductBeenPurchasedAtRow:(int)indexPath.row]) {
+        if (purchased) {
             // Product has already been purchased
-            [productBuyButton removeFromSuperview];
             cell.accessoryType = UITableViewCellAccessoryCheckmark;
             cell.accessoryView = nil;
             cell.backgroundColor = [[self.navigationController.navigationBar tintColor] colorWithAlphaComponent:0.1]; // [UIColor colorWithRed:0.282 green:0.729 blue:0.714 alpha:0.5];
         } else {
-            productBuyButton.titleLabel.text = @"Buy";
-            productBuyButton.tag = indexPath.row;
+//            productBuyButton.tag = indexPath.row;
+            cell.backgroundColor = nil;
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
     }
     

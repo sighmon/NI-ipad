@@ -614,63 +614,50 @@
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="87"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="101" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Product title" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="192" translatesAutoresizingMaskIntoConstraints="NO" id="FHh-m0-RuD">
-                                            <rect key="frame" x="65" y="8" width="192" height="21"/>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="101" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Product title" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="272" translatesAutoresizingMaskIntoConstraints="NO" id="FHh-m0-RuD">
+                                            <rect key="frame" x="28" y="8" width="272" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <imageView userInteractionEnabled="NO" tag="100" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ycI-wB-Pvq">
-                                            <rect key="frame" x="0.0" y="0.0" width="57" height="87"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="20" height="87"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <constraints>
-                                                <constraint firstAttribute="width" constant="57" id="LO5-Ei-K6p"/>
+                                                <constraint firstAttribute="width" constant="20" id="LO5-Ei-K6p"/>
                                             </constraints>
                                         </imageView>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="102" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$00.00" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="192" translatesAutoresizingMaskIntoConstraints="NO" id="VYM-SA-uJa">
-                                            <rect key="frame" x="65" y="37" width="192" height="16"/>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="102" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$00.00" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="272" translatesAutoresizingMaskIntoConstraints="NO" id="VYM-SA-uJa">
+                                            <rect key="frame" x="28" y="37" width="272" height="16"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="103" contentMode="left" horizontalHuggingPriority="251" text="Description" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="192" translatesAutoresizingMaskIntoConstraints="NO" id="Rz4-Ra-pjz">
-                                            <rect key="frame" x="65" y="61" width="192" height="18"/>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="103" contentMode="left" horizontalHuggingPriority="251" text="Description" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="272" translatesAutoresizingMaskIntoConstraints="NO" id="Rz4-Ra-pjz">
+                                            <rect key="frame" x="28" y="61" width="272" height="18"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <button opaque="NO" tag="104" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dVH-us-fd4">
-                                            <rect key="frame" x="265" y="28" width="47" height="30"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="47" id="yvv-zn-Lug"/>
-                                            </constraints>
-                                            <state key="normal" title="Buy"/>
-                                            <connections>
-                                                <action selector="buyButtonTapped:" destination="qrh-8f-IqL" eventType="touchUpInside" id="UaT-KR-F6A"/>
-                                            </connections>
-                                        </button>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="Rz4-Ra-pjz" firstAttribute="leading" secondItem="ycI-wB-Pvq" secondAttribute="trailing" constant="8" id="0RO-H0-C3W"/>
-                                        <constraint firstItem="dVH-us-fd4" firstAttribute="leading" secondItem="FHh-m0-RuD" secondAttribute="trailing" constant="8" id="7da-zW-hlc"/>
                                         <constraint firstAttribute="bottom" secondItem="Rz4-Ra-pjz" secondAttribute="bottom" constant="8" id="Fgu-oZ-cz9"/>
+                                        <constraint firstAttribute="trailing" secondItem="FHh-m0-RuD" secondAttribute="trailing" constant="20" id="GfM-PB-dYh"/>
                                         <constraint firstItem="FHh-m0-RuD" firstAttribute="top" secondItem="Cj9-fL-VNB" secondAttribute="top" constant="8" id="LcP-n9-mHg"/>
                                         <constraint firstItem="ycI-wB-Pvq" firstAttribute="top" secondItem="Cj9-fL-VNB" secondAttribute="top" id="ORh-NZ-Nik"/>
                                         <constraint firstItem="ycI-wB-Pvq" firstAttribute="leading" secondItem="Cj9-fL-VNB" secondAttribute="leading" id="QlU-1G-To8"/>
                                         <constraint firstItem="VYM-SA-uJa" firstAttribute="leading" secondItem="ycI-wB-Pvq" secondAttribute="trailing" constant="8" id="S37-od-WAP"/>
                                         <constraint firstAttribute="bottom" secondItem="ycI-wB-Pvq" secondAttribute="bottom" id="WFy-Gd-wNe"/>
-                                        <constraint firstItem="dVH-us-fd4" firstAttribute="leading" secondItem="VYM-SA-uJa" secondAttribute="trailing" constant="8" id="XSc-GW-iPf"/>
-                                        <constraint firstAttribute="centerY" secondItem="dVH-us-fd4" secondAttribute="centerY" id="Yr0-Q1-w8I"/>
+                                        <constraint firstAttribute="trailing" secondItem="VYM-SA-uJa" secondAttribute="trailing" constant="20" id="YzK-B2-yjJ"/>
                                         <constraint firstItem="VYM-SA-uJa" firstAttribute="top" secondItem="FHh-m0-RuD" secondAttribute="bottom" constant="8" id="ZHM-pT-e47"/>
                                         <constraint firstItem="Rz4-Ra-pjz" firstAttribute="top" secondItem="VYM-SA-uJa" secondAttribute="bottom" constant="8" id="d4n-9s-HNA"/>
-                                        <constraint firstItem="dVH-us-fd4" firstAttribute="leading" secondItem="Rz4-Ra-pjz" secondAttribute="trailing" constant="8" id="iHQ-3w-ytt"/>
+                                        <constraint firstAttribute="trailing" secondItem="Rz4-Ra-pjz" secondAttribute="trailing" constant="20" id="fuF-VE-OwU"/>
                                         <constraint firstItem="FHh-m0-RuD" firstAttribute="leading" secondItem="ycI-wB-Pvq" secondAttribute="trailing" constant="8" id="jyQ-tf-UEs"/>
-                                        <constraint firstAttribute="trailing" secondItem="dVH-us-fd4" secondAttribute="trailing" constant="8" id="kCZ-TS-iOG"/>
                                     </constraints>
                                 </tableViewCellContentView>
-                                <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                <inset key="separatorInset" minX="21" minY="0.0" maxX="0.0" maxY="0.0"/>
                             </tableViewCell>
                         </prototypes>
                         <connections>

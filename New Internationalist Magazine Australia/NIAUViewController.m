@@ -336,7 +336,7 @@
 //        [self.subscribeButton setNeedsUpdateConstraints];
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.subscribeButton layoutIfNeeded];
-            self.subscribeButton.enabled = NO;
+            self.subscribeButton.enabled = YES;
             [self.subscribeButton setTitle:@"Thanks for subscribing" forState:UIControlStateDisabled];
             NSLog(@"Subscription button disabled.");
         });
