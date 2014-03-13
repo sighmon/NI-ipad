@@ -14,10 +14,6 @@
 #import "local.h"
 
 @interface NIAUViewController ()
-{
-    NIAUIssue *lastIssue;
-    NIAUArticle *firstArticle;
-}
 
 @end
 
@@ -36,12 +32,13 @@
     self.isUserASubscriber = false;
     self.showNewIssueBanner = false;
     self.issueBanner.hidden = true;
-    lastIssue = [[NIAUIssue alloc] init];
-    firstArticle = [[NIAUArticle alloc] init];
-    self.issue = [[NIAUIssue alloc] init];
-    self.article = [[NIAUArticle alloc] init];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshView:) name:@"refreshViewNotification" object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loginSuccess:) name:LoginSuccessfulNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loginFailure:) name:LoginUnsuccessfulNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(transactionMade:) name:IAPHelperProductPurchasedNotification object:nil];
     
     [self setupView];
     
@@ -57,16 +54,6 @@
     }
 #endif
     
-    if([[NIAUPublisher getInstance] isReady]) {
-        [self showIssues];
-    } else {
-        [self loadIssues];
-    }
-
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
     // Check for a saved username/password in the keychain and then try and login
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
         [self loginToRails];
@@ -77,8 +64,11 @@
     } else {
         [self loadIssues];
     }
-    
-//    [self checkIfUserIsASubscriber];
+
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
     [self sendGoogleAnalyticsStats];
 }
 
@@ -86,6 +76,11 @@
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:ArticleDidUpdateNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:ArticleFailedUpdateNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:ArticlesDidUpdateNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:ArticlesFailedUpdateNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:PublisherDidUpdateNotification object:[NIAUPublisher getInstance]];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:PublisherFailedUpdateNotification object:[NIAUPublisher getInstance]];
+    
 }
 
 - (void)setupView
@@ -167,9 +162,7 @@
 }
 
 -(void)publisherReady:(NSNotification *)not {
-    // might recieve this more than once
-    //[[NSNotificationCenter defaultCenter] removeObserver:self name:PublisherDidUpdateNotification object:[NIAUPublisher getInstance]];
-    //[[NSNotificationCenter defaultCenter] removeObserver:self name:PublisherFailedUpdateNotification object:[NIAUPublisher getInstance]];
+
     [self showIssues];
     [self loadLatestMagazineCover];
 }
@@ -241,10 +234,38 @@
     } else {
         // No issues to load
         self.issue = [[NIAUPublisher getInstance] issueAtIndex:0];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(articlesReady:) name:ArticlesDidUpdateNotification object:lastIssue];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(articlesReady:) name:ArticlesFailedUpdateNotification object:lastIssue];
-        lastIssue = [[NIAUPublisher getInstance] lastIssue];
-        [lastIssue requestArticles];
+        
+        // HACK: check if user can read last issue's article to see if they're a rails subscriber
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(articlesReady:) name:ArticlesDidUpdateNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(articlesReady:) name:ArticlesFailedUpdateNotification object:nil];
+        self.lastIssue = [[NIAUPublisher getInstance] lastIssue];
+        [self.lastIssue requestArticles];
+    }
+}
+
+- (void)loginSuccess: (NSNotification *)notification
+{
+    self.isUserLoggedIn = true;
+    [self updateLoginButton];
+    [self checkIfUserIsASubscriber];
+}
+
+- (void)loginFailure: (NSNotification *)notification
+{
+    self.isUserLoggedIn = false;
+    self.isUserASubscriber = false;
+    [self updateLoginButton];
+    [self updateSubscribeButton];
+}
+
+- (void)transactionMade: (NSNotification *)notification
+{
+    if ([notification.object rangeOfString:@"month"].location == NSNotFound) {
+        // Not a subscription
+    } else {
+        // A subscription!
+        self.isUserASubscriber = true;
+        [self updateSubscribeButton];
     }
 }
 
@@ -295,34 +316,29 @@
 
 - (void)checkIfUserIsASubscriber
 {
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(articleBodyLoaded:) name:ArticleDidUpdateNotification object:firstArticle];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(articleBodyDidntLoad:) name:ArticleFailedUpdateNotification object:firstArticle];
-    firstArticle = [lastIssue articleAtIndex:0];
-    [firstArticle clearCache];
-    // TODO: Write a method here that checks a specific rails route for a vaild sub or iTunes receipt
-//    [firstArticle requestBody];
-    [self updateSubscribeButton];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(articleBodyLoaded:) name:ArticleDidUpdateNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(articleBodyDidntLoad:) name:ArticleFailedUpdateNotification object:nil];
+    self.firstArticle = [self.lastIssue articleAtIndex:0];
+    [self.firstArticle deleteArticleFromCache];
+    [self.firstArticle requestBody];
 }
 
 - (void)updateLoginButton
 {
     if (self.isUserLoggedIn) {
-//        self.loginButton.hidden = YES;
-//        [self.loginButton.constraints[0] setConstant:0.01f];
-//        [self.loginButton setNeedsUpdateConstraints];
         dispatch_async(dispatch_get_main_queue(), ^{
-            [self.loginButton layoutIfNeeded];
-//            self.loginButton.enabled = NO;
             [self.loginButton setTitle:@"Logged in" forState:UIControlStateNormal];
+            [self.loginButton setNeedsLayout];
+            [self.loginButton layoutIfNeeded];
             NSLog(@"Logged in.");
         });
     } else {
-//        self.loginButton.hidden = NO;
-//        [self.loginButton.constraints[0] setConstant:38];
-//        [self.loginButton setNeedsUpdateConstraints];
         dispatch_async(dispatch_get_main_queue(), ^{
-            [self.loginButton layoutIfNeeded];
+            self.loginButton.enabled = NO;
             self.loginButton.enabled = YES;
+            [self.loginButton setTitle:@"Login" forState:UIControlStateNormal];
+            [self.loginButton setNeedsLayout];
+            [self.loginButton layoutIfNeeded];
             NSLog(@"Not logged in.");
         });
     }
@@ -331,22 +347,19 @@
 - (void)updateSubscribeButton
 {
     if (self.isUserASubscriber) {
-//        self.subscribeButton.hidden = YES;
-//        [self.subscribeButton.constraints[0] setConstant:0.01f];
-//        [self.subscribeButton setNeedsUpdateConstraints];
         dispatch_async(dispatch_get_main_queue(), ^{
+            [self.subscribeButton setTitle:@"Thanks for subscribing" forState:UIControlStateNormal];
+            [self.subscribeButton setNeedsLayout];
             [self.subscribeButton layoutIfNeeded];
-            self.subscribeButton.enabled = YES;
-            [self.subscribeButton setTitle:@"Thanks for subscribing" forState:UIControlStateDisabled];
             NSLog(@"Subscription button disabled.");
         });
     } else {
-//        self.subscribeButton.hidden = NO;
-//        [self.subscribeButton.constraints[0] setConstant:38];
-//        [self.subscribeButton setNeedsUpdateConstraints];
         dispatch_async(dispatch_get_main_queue(), ^{
-            [self.subscribeButton layoutIfNeeded];
+            self.subscribeButton.enabled = NO;
             self.subscribeButton.enabled = YES;
+            [self.subscribeButton setTitle:@"Subscribe" forState:UIControlStateNormal];
+            [self.subscribeButton setNeedsLayout];
+            [self.subscribeButton layoutIfNeeded];
             NSLog(@"Subscription button enabled.");
         });
     }

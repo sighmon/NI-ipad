@@ -15,6 +15,9 @@
 
 @end
 
+NSString *LoginSuccessfulNotification = @"LoginSuccessful";
+NSString *LoginUnsuccessfulNotification = @"LoginUnsuccessful";
+
 @implementation NIAULoginViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -131,8 +134,11 @@
     //        NSArray *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:[NSURL URLWithString:SITE_URL]];
             int statusCode = (int)[response statusCode];
             if(statusCode >= 200 && statusCode < 300) {
+                // Send successful login notification
+                [[NSNotificationCenter defaultCenter] postNotificationName:LoginSuccessfulNotification object:nil];
                 [[[UIAlertView alloc] initWithTitle:@"Success" message:@"Excellent, you've successfully logged in!" delegate:self cancelButtonTitle:@"Thanks!" otherButtonTitles:nil] show];
             } else {
+                [[NSNotificationCenter defaultCenter] postNotificationName:LoginUnsuccessfulNotification object:nil];
                 [[[UIAlertView alloc] initWithTitle:@"Error" message:@"Uh oh, did you get your username or password wrong?" delegate:self cancelButtonTitle:@"Try again." otherButtonTitles:nil] show];
             }
         

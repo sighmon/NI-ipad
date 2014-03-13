@@ -17,6 +17,9 @@
 #import "GAIFields.h"
 #import "GAILogger.h"
 
+extern NSString *LoginSuccessfulNotification;
+extern NSString *LoginUnsuccessfulNotification;
+
 @interface NIAULoginViewController : UIViewController <UITextFieldDelegate>
 
 @property (nonatomic, weak) IBOutlet UITextField *username;

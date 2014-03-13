@@ -348,7 +348,7 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
             articles = [NIAUArticle articlesFromIssue:self];		
             
             if ([articles count]>0) {
-                NSLog(@"read #%d articles from cache",(int)[articles count]);
+                NSLog(@"read #%d articles from issue #%@ cache",(int)[articles count], self.name);
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [[NSNotificationCenter defaultCenter] postNotificationName:ArticlesDidUpdateNotification object:self];
                 });

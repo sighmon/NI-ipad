@@ -49,6 +49,8 @@ extern NSString *ImageDidSaveToCacheNotification;
 
 -(void)clearCache;
 
+-(void)deleteArticleFromCache;
+
 - (NSURL *)getWebURL;
 
 - (NSURL *)getGuestPassURL;

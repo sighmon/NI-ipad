@@ -23,22 +23,18 @@ NSString *ImageDidSaveToCacheNotification = @"ImageDidSaveToCache";
 // AHA: this makes getters/setters for these readonly properties without exposing them publically
 @synthesize issue;
 
+-(void)deleteArticleFromCache
+{
+    [[NSFileManager defaultManager] removeItemAtURL:[self bodyCacheURL] error:nil];
+}
+
 -(void)clearCache {
-    id body = [bodyCache readWithOptions:nil startingAt:@"net" stoppingAt:nil];
+    [bodyCache readWithOptions:nil startingAt:@"net" stoppingAt:nil];
     [featuredImageCache readWithOptions:nil startingAt:@"net" stoppingAt:nil];
     // would need to do a read for every set options we have received since starting.
     // a good argument for an explicit clear block
     //[featuredImageThumbCache clear];
-    if(body) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [[NSNotificationCenter defaultCenter] postNotificationName:ArticleDidUpdateNotification object:self];
-        });
-    } else {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [[NSNotificationCenter defaultCenter] postNotificationName:ArticleFailedUpdateNotification object:self];
-        });
-    }
-
+    NSLog(@"Article cache cleared for #%@",self.railsID);
 }
 
 -(NSString *)author {
