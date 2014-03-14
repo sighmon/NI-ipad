@@ -47,7 +47,7 @@
             [self.tableView reloadData];
             
             // TODO: Get expiry date if you have a subscription.
-            self.subscriptionExpiryDateLabel.text = @"TODO: date here.";
+            self.subscriptionExpiryDateLabel.text = @"(Or purchase an individual issue)";
         }
     }];
     

@@ -219,7 +219,7 @@ const char NotificationKey;
     // TODO: get zip file from Rails, unpack it and save it to the library.
     // TODO: authenticate and then download @issue.zip
     
-    NSNumber *issueID = [userInfo objectForKey:@"railsID"];
+//    NSNumber *issueID = [userInfo objectForKey:@"railsID"];
     
     // TODO: Ask rails nicely for the zip location (make a route for it in rails first)
     
