@@ -20,9 +20,9 @@
 
 @property (nonatomic, weak) IBOutlet UIScrollView *scrollView;
 
-@property (nonatomic, weak) UIImage *imageToLoad;
-@property (nonatomic, weak) NIAUArticle *articleOfOrigin;
-@property (nonatomic, weak) NIAUIssue *issueOfOrigin;
+@property (nonatomic, strong) UIImage *imageToLoad;
+@property (nonatomic, strong) NIAUArticle *articleOfOrigin;
+@property (nonatomic, strong) NIAUIssue *issueOfOrigin;
 
 @property (nonatomic, weak) IBOutlet UIImageView *image;
 

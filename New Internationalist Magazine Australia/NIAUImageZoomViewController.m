@@ -32,8 +32,6 @@
 	// Do any additional setup after loading the view.
     
     self.image.image = self.imageToLoad;
-    if (self.image.image.size.height > self.image.image.size.width) {
-    }
     
     // add gesture recognizers to the image view
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap:)];
