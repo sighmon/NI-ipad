@@ -1300,12 +1300,22 @@
                                 <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
-                                    <imageView multipleTouchEnabled="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gQN-3f-mic">
+                                    <imageView multipleTouchEnabled="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gQN-3f-mic">
                                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="1024" placeholder="YES" id="QYP-U4-4mL"/>
+                                            <constraint firstAttribute="width" constant="768" placeholder="YES" id="fr1-G6-akd"/>
+                                        </constraints>
                                     </imageView>
                                 </subviews>
                                 <gestureRecognizers/>
+                                <constraints>
+                                    <constraint firstItem="gQN-3f-mic" firstAttribute="leading" secondItem="Vsj-bd-CrP" secondAttribute="leading" id="JPH-c7-Gls"/>
+                                    <constraint firstAttribute="bottom" secondItem="gQN-3f-mic" secondAttribute="bottom" id="ObJ-u0-Sxg"/>
+                                    <constraint firstItem="gQN-3f-mic" firstAttribute="top" secondItem="Vsj-bd-CrP" secondAttribute="top" id="ZhJ-dY-MxO"/>
+                                    <constraint firstAttribute="trailing" secondItem="gQN-3f-mic" secondAttribute="trailing" id="tUJ-Ia-Xed"/>
+                                </constraints>
                                 <connections>
                                     <outlet property="delegate" destination="p7L-KM-t4i" id="FLr-ZO-JPn"/>
                                 </connections>
@@ -1319,11 +1329,18 @@
                             <constraint firstItem="Vsj-bd-CrP" firstAttribute="top" secondItem="9vS-Ny-f7F" secondAttribute="top" id="nl3-YR-baQ"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="BUU-gG-EMI"/>
+                    <navigationItem key="navigationItem" id="BUU-gG-EMI">
+                        <barButtonItem key="rightBarButtonItem" systemItem="action" id="y4a-xU-pca">
+                            <connections>
+                                <action selector="shareActionTapped:" destination="p7L-KM-t4i" id="c8U-16-i4b"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="image" destination="gQN-3f-mic" id="vrd-3K-kz5"/>
                         <outlet property="scrollView" destination="Vsj-bd-CrP" id="BkQ-RQ-EbN"/>
+                        <outlet property="shareAction" destination="BUU-gG-EMI" id="ooj-vN-dz9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0gm-Ym-ecm" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -1295,13 +1295,23 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
-                                    <imageView multipleTouchEnabled="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XOZ-NO-5Yp">
+                                    <imageView multipleTouchEnabled="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="XOZ-NO-5Yp">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <gestureRecognizers/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="320" placeholder="YES" id="A9Y-Wh-9Ag"/>
+                                            <constraint firstAttribute="height" constant="568" placeholder="YES" id="ENF-VD-A1n"/>
+                                        </constraints>
                                     </imageView>
                                 </subviews>
                                 <gestureRecognizers/>
+                                <constraints>
+                                    <constraint firstItem="XOZ-NO-5Yp" firstAttribute="leading" secondItem="4p2-6R-IMq" secondAttribute="leading" id="DRR-jo-8VH"/>
+                                    <constraint firstItem="XOZ-NO-5Yp" firstAttribute="top" secondItem="4p2-6R-IMq" secondAttribute="top" id="Q9Z-4a-RFS"/>
+                                    <constraint firstAttribute="bottom" secondItem="XOZ-NO-5Yp" secondAttribute="bottom" id="iL6-2u-zuR"/>
+                                    <constraint firstAttribute="trailing" secondItem="XOZ-NO-5Yp" secondAttribute="trailing" id="uQK-bA-eFd"/>
+                                </constraints>
                                 <connections>
                                     <outlet property="delegate" destination="GGn-sZ-3sw" id="Y7X-5g-ifg"/>
                                 </connections>
@@ -1316,11 +1326,18 @@
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" top="YES"/>
-                    <navigationItem key="navigationItem" id="4E7-2e-h6h"/>
+                    <navigationItem key="navigationItem" id="4E7-2e-h6h">
+                        <barButtonItem key="rightBarButtonItem" systemItem="action" id="NmC-7s-a7i">
+                            <connections>
+                                <action selector="shareActionTapped:" destination="GGn-sZ-3sw" id="gNu-HH-Fyq"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="image" destination="XOZ-NO-5Yp" id="atO-Zy-pcv"/>
                         <outlet property="scrollView" destination="4p2-6R-IMq" id="a26-tm-lJz"/>
+                        <outlet property="shareAction" destination="4E7-2e-h6h" id="mmT-AI-5K9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yW5-7P-xCk" userLabel="First Responder" sceneMemberID="firstResponder"/>

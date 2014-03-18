@@ -460,6 +460,7 @@ float cellPadding = 10.;
     if ([[segue identifier] isEqualToString:@"showImageZoom"]) {
         // TODO: Load the large version of the image to be zoomed.
         NIAUImageZoomViewController *imageZoomViewController = [segue destinationViewController];
+        imageZoomViewController.articleOfOrigin = self.article;
         
         if ([sender isKindOfClass:[UIImageView class]]) {
             // User tapped a native UIImage, so zoom it.

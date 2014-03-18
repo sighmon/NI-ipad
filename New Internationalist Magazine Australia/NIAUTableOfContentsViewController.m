@@ -470,6 +470,7 @@ static NSString *CellIdentifier = @"articleCell";
     {
         // TODO: Load the large version of the image to be zoomed.
         NIAUImageZoomViewController *imageZoomViewController = [segue destinationViewController];
+        imageZoomViewController.issueOfOrigin = self.issue;
         
         if ([sender isKindOfClass:[UIImageView class]]) {
             UIImageView *imageTapped = (UIImageView *)sender;

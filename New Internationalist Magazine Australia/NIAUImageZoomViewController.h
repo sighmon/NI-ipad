@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "NIAUIssue.h"
 
 #import "GAI.h"
 #import "GAITracker.h"
@@ -19,8 +20,12 @@
 
 @property (nonatomic, weak) IBOutlet UIScrollView *scrollView;
 
-@property (nonatomic, strong) UIImage *imageToLoad;
+@property (nonatomic, weak) UIImage *imageToLoad;
+@property (nonatomic, weak) NIAUArticle *articleOfOrigin;
+@property (nonatomic, weak) NIAUIssue *issueOfOrigin;
 
-@property (nonatomic, strong) IBOutlet UIImageView *image;
+@property (nonatomic, weak) IBOutlet UIImageView *image;
+
+@property (weak, nonatomic) IBOutlet UINavigationItem *shareAction;
 
 @end

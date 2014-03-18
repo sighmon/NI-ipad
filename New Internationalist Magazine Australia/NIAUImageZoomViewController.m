@@ -32,6 +32,8 @@
 	// Do any additional setup after loading the view.
     
     self.image.image = self.imageToLoad;
+    if (self.image.image.size.height > self.image.image.size.width) {
+    }
     
     // add gesture recognizers to the image view
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap:)];
@@ -44,16 +46,20 @@
     
     [singleTap requireGestureRecognizerToFail:doubleTap];
     
-    float minimumScale = [self.scrollView frame].size.width  / [self.image frame].size.width;
+    float minimumScale = [self.scrollView frame].size.width  / self.image.image.size.width; //[self.image frame].size.width;
+    [self.scrollView setBackgroundColor:[UIColor whiteColor]];
+    self.scrollView.contentSize = self.image.image.size;
+    self.scrollView.delegate = self;
     [self.scrollView setMinimumZoomScale:minimumScale];
+    [self.scrollView setMaximumZoomScale:6.0];
     [self.scrollView setZoomScale:minimumScale];
     
-    [self.scrollView setBackgroundColor:[UIColor blackColor]];
-    
-    [self.image setCenter:CGPointMake(self.scrollView.center.x, self.scrollView.center.y - (self.navigationController.navigationBar.frame.size.height / 2))];
-    self.image.translatesAutoresizingMaskIntoConstraints = NO;
-    
     [self sendGoogleAnalyticsStats];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [self animateMinimumZoomScaleWithScale:[self calculateScale]];
 }
 
 - (void)sendGoogleAnalyticsStats
@@ -85,8 +91,8 @@
         [[self navigationController] setNavigationBarHidden:YES animated:YES];
         [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
         [UIView animateWithDuration:animationSpeed animations:^{
-//            [self.scrollView setBackgroundColor:[UIColor blackColor]];
-            float minimumScale = [self.scrollView frame].size.width  / [self.image frame].size.width;
+            [self.scrollView setBackgroundColor:[UIColor blackColor]];
+            float minimumScale = [self.scrollView frame].size.width  / self.image.image.size.width;
             [self.scrollView setZoomScale:minimumScale];
         } completion:NULL];
     } else {
@@ -94,11 +100,35 @@
         [[self navigationController] setNavigationBarHidden:NO animated:YES];
         [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
         [UIView animateWithDuration:animationSpeed animations:^{
-//            [self.scrollView setBackgroundColor:[UIColor whiteColor]];
-            float minimumScale = [self.scrollView frame].size.width  / [self.image frame].size.width;
-            [self.scrollView setZoomScale:minimumScale];
+            [self.scrollView setBackgroundColor:[UIColor whiteColor]];
+            [self.scrollView setZoomScale:[self calculateScale]];
         } completion:NULL];
     }
+}
+
+#pragma mark -
+#pragma mark Social sharing
+
+- (IBAction)shareActionTapped:(id)sender
+{
+    NSString *origin;
+    NSMutableArray *itemsToShare = [[NSMutableArray alloc] initWithArray:@[self.image.image]];
+    
+    if (self.issueOfOrigin) {
+        origin = [NSString stringWithFormat:@"I found this image in New Internationalist Magazine '%@'.", self.issueOfOrigin.title];
+        [itemsToShare addObject:origin];
+        [itemsToShare addObject:self.issueOfOrigin.getWebURL];
+    } else if (self.articleOfOrigin) {
+        origin = [NSString stringWithFormat:@"I found this image in a New Internationalist article '%@'.", self.articleOfOrigin.title];
+        [itemsToShare addObject:origin];
+        [itemsToShare addObject:self.articleOfOrigin.getGuestPassURL];
+    } else {
+        origin = @"I found this image in New Internationalist Magazine.";
+    }
+    
+    UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:itemsToShare applicationActivities:nil];
+    [activityController setValue:[NSString stringWithFormat:@"Image from New Internationalist magazine."] forKey:@"subject"];
+    [self presentViewController:activityController animated:YES completion:nil];
 }
 
 - (void)handleDoubleTap:(UITapGestureRecognizer *)gestureRecognizer
@@ -130,10 +160,87 @@
     return zoomRect;
 }
 
+- (float)calculateScale
+{
+    float topOffset = 0.;
+    
+    if (self.navigationController.navigationBarHidden) {
+        topOffset = 0.;
+    } else {
+        if (UIInterfaceOrientationIsPortrait([[UIDevice currentDevice] orientation])) {
+            topOffset = 64.;
+        } else {
+            topOffset = 52.;
+        }
+    }
+    
+    if ([self isViewRatioGreaterThanImageRatio]) {
+        return ([self.scrollView frame].size.height - topOffset) / self.image.image.size.height;
+    } else {
+        return [self.scrollView frame].size.width  / self.image.image.size.width;
+    }
+}
+
+- (float)calculateFullScreenScale
+{
+    if ([self isViewRatioGreaterThanImageRatio]) {
+        return [self.scrollView frame].size.width / self.image.image.size.width;
+    } else {
+        return [self.scrollView frame].size.height / self.image.image.size.height;
+    }
+}
+
+- (BOOL)isViewRatioGreaterThanImageRatio
+{
+    float viewRatio = self.view.frame.size.width / self.view.frame.size.height;
+    float imageRatio = self.image.image.size.width / self.image.image.size.height;
+    if (viewRatio > imageRatio) {
+        return YES;
+    } else {
+        return NO;
+    }
+}
+
+- (CGPoint)calculateOffset
+{
+    // Check if ratio of image is greater than ratio of screen
+    // THIS DIDN'T WORK... :-(
+    
+    float viewRatio = self.view.frame.size.width / self.view.frame.size.height;
+    float imageRatio = self.image.image.size.width / self.image.image.size.height;
+    float topOffset = 0.;
+    if (self.navigationController.navigationBarHidden) {
+        topOffset = 0.;
+    } else {
+        topOffset = 64.;
+    }
+    
+    if (viewRatio < imageRatio) {
+        // Offset is in the y direction
+        return CGPointMake(0, -(((self.scrollView.frame.size.height + topOffset) - self.image.frame.size.height) / 2));
+    } else {
+        // Offset is in the x direction
+        return CGPointMake(-((self.scrollView.frame.size.width - self.image.frame.size.width) / 2), 0);
+    }
+}
+
+- (void)animateMinimumZoomScaleWithScale:(float)scale
+{
+    [self.scrollView setMinimumZoomScale:scale];
+    [self.scrollView setZoomScale:scale animated:YES];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - Rotation
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    [self animateMinimumZoomScaleWithScale:[self calculateScale]];
 }
 
 @end
