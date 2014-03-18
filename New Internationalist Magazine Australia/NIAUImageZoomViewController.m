@@ -90,8 +90,9 @@
         [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
         [UIView animateWithDuration:animationSpeed animations:^{
             [self.scrollView setBackgroundColor:[UIColor blackColor]];
-            float minimumScale = [self.scrollView frame].size.width  / self.image.image.size.width;
-            [self.scrollView setZoomScale:minimumScale];
+            // Note: use [self calculateFullScreenScale] if we want images edge to edge
+            [self.scrollView setZoomScale:[self calculateScale]];
+            [self centerContent];
         } completion:NULL];
     } else {
 //        NSLog(@"Tapped to show");
@@ -100,6 +101,7 @@
         [UIView animateWithDuration:animationSpeed animations:^{
             [self.scrollView setBackgroundColor:[UIColor whiteColor]];
             [self.scrollView setZoomScale:[self calculateScale]];
+            [self centerContent];
         } completion:NULL];
     }
 }
@@ -110,7 +112,11 @@
 - (IBAction)shareActionTapped:(id)sender
 {
     NSString *origin;
-    NSMutableArray *itemsToShare = [[NSMutableArray alloc] initWithArray:@[self.image.image]];
+    NSMutableArray *itemsToShare = [[NSMutableArray alloc] init];
+   
+    if (self.image.image) {
+        [itemsToShare addObject:self.image.image];
+    }
     
     if (self.issueOfOrigin) {
         origin = [NSString stringWithFormat:@"I found this image in New Internationalist Magazine '%@'.", self.issueOfOrigin.title];
@@ -160,20 +166,8 @@
 
 - (float)calculateScale
 {
-    float topOffset = 0.;
-    
-    if (self.navigationController.navigationBarHidden) {
-        topOffset = 0.;
-    } else {
-        if (UIInterfaceOrientationIsPortrait([[UIDevice currentDevice] orientation])) {
-            topOffset = 64.;
-        } else {
-            topOffset = 52.;
-        }
-    }
-    
     if ([self isViewRatioGreaterThanImageRatio]) {
-        return ([self.scrollView frame].size.height - topOffset) / self.image.image.size.height;
+        return [self.scrollView frame].size.height / self.image.image.size.height;
     } else {
         return [self.scrollView frame].size.width  / self.image.image.size.width;
     }
@@ -199,33 +193,38 @@
     }
 }
 
-- (CGPoint)calculateOffset
+- (void)centerContent
 {
-    // Check if ratio of image is greater than ratio of screen
-    // THIS DIDN'T WORK... :-(
+    CGFloat top = 0, left = 0, topOffset = 0;
     
-    float viewRatio = self.view.frame.size.width / self.view.frame.size.height;
-    float imageRatio = self.image.image.size.width / self.image.image.size.height;
-    float topOffset = 0.;
     if (self.navigationController.navigationBarHidden) {
         topOffset = 0.;
     } else {
-        topOffset = 64.;
+        if (UIInterfaceOrientationIsPortrait([[UIDevice currentDevice] orientation])) {
+            topOffset = 64.;
+        } else {
+            topOffset = 52.;
+        }
     }
     
-    if (viewRatio < imageRatio) {
-        // Offset is in the y direction
-        return CGPointMake(0, -(((self.scrollView.frame.size.height + topOffset) - self.image.frame.size.height) / 2));
-    } else {
-        // Offset is in the x direction
-        return CGPointMake(-((self.scrollView.frame.size.width - self.image.frame.size.width) / 2), 0);
+    // TODO: topOffset not used yet.. trying to center taking into account Navigation bar height
+    
+    if (self.image.frame.size.width < self.scrollView.bounds.size.width) {
+        left = (self.scrollView.bounds.size.width - self.image.frame.size.width) * 0.5f;
     }
+    if (self.image.frame.size.height < self.scrollView.bounds.size.height) {
+        top = ((self.scrollView.bounds.size.height - self.image.frame.size.height) * 0.5f);
+    }
+    self.scrollView.contentInset = UIEdgeInsetsMake(top, left, top, left);
 }
 
 - (void)animateMinimumZoomScaleWithScale:(float)scale
 {
     [self.scrollView setMinimumZoomScale:scale];
     [self.scrollView setZoomScale:scale animated:YES];
+    [UIView animateWithDuration:animationSpeed animations:^{
+        [self centerContent];
+    } completion:NULL];
 }
 
 - (void)didReceiveMemoryWarning
