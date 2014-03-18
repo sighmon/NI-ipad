@@ -39,6 +39,8 @@ UIKIT_EXTERN NSString *const IAPHelperProductPurchasedNotification;
 
 - (void)restoreCompletedTransactions;
 
++ (NSData *)getUserExpiryDateFromRailsAndAppStoreReceipt;
+
 + (NIAUInAppPurchaseHelper *)sharedInstance;
 
 @end

@@ -48,6 +48,7 @@
             
             // TODO: Get expiry date if you have a subscription.
             self.subscriptionExpiryDateLabel.text = @"(Or purchase an individual issue)";
+            [self updateExpiryDate];
         }
     }];
     
@@ -57,10 +58,39 @@
     [_priceFormatter setNumberStyle:NSNumberFormatterCurrencyStyle];
     
     // Start Activity Indicator.
-    self.subscriptionExpiryDateLabel.text = @"";
+    self.subscriptionTitle.text = @"Yearly or quarterly subscriptions";
+    self.subscriptionExpiryDateLabel.text = @"(Or purchase an individual issue)";
     [self.tableViewLoadingIndicator startAnimating];
     
     [self sendGoogleAnalyticsStats];
+}
+
+- (void)updateExpiryDate
+{
+    NSData *subscriptionExpiryDate = [NIAUInAppPurchaseHelper getUserExpiryDateFromRailsAndAppStoreReceipt];
+    
+    if (subscriptionExpiryDate) {
+        NSError *error = nil;
+        NSDictionary *jsonDictionary = [NSJSONSerialization JSONObjectWithData:subscriptionExpiryDate options:kNilOptions error:&error];
+        
+        if (error != nil) {
+            NSLog(@"Error parsing JSON.");
+//            NSString *decodedString = [[NSString alloc] initWithData:subscriptionExpiryDate encoding:NSUTF8StringEncoding];
+//            NSLog(@"Response: %@", decodedString);
+        }
+        else {
+            NSLog(@"Array: %@", jsonDictionary);
+            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+            [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZZZ"];
+            NSDate *date = [dateFormatter dateFromString:[jsonDictionary objectForKey:@"expiry_date"]];
+            [dateFormatter setDateFormat:@"MMMM yyyy"];
+            self.subscriptionTitle.text = @"Your subscription expires:";
+            self.subscriptionExpiryDateLabel.text = [dateFormatter stringFromDate:date];
+        }
+    } else {
+        NSLog(@"No subscription data, sorry.");
+    }
+
 }
 
 - (void)sendGoogleAnalyticsStats

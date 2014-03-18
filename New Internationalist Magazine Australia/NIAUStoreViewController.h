@@ -20,6 +20,7 @@
 
 @property (nonatomic, weak) IBOutlet UIActivityIndicatorView *tableViewLoadingIndicator;
 
+@property (nonatomic, weak) IBOutlet UILabel *subscriptionTitle;
 @property (nonatomic, weak) IBOutlet UILabel *subscriptionExpiryDateLabel;
 
 @end

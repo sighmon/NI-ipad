@@ -669,6 +669,7 @@
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="subscriptionExpiryDateLabel" destination="NdR-ge-LiW" id="jfn-jw-A72"/>
+                        <outlet property="subscriptionTitle" destination="Xan-Bn-g4F" id="cPe-l5-4BG"/>
                         <outlet property="tableViewLoadingIndicator" destination="rHX-0a-N4R" id="vEW-OS-t8N"/>
                     </connections>
                 </tableViewController>

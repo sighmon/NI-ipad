@@ -195,6 +195,8 @@
 
 - (void)centerContent
 {
+    // From https://github.com/steipete/PSTCenteredScrollView
+    
     CGFloat top = 0, left = 0, topOffset = 0;
     
     if (self.navigationController.navigationBarHidden) {

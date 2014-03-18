@@ -286,4 +286,43 @@ NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurcha
     
 }
 
++ (NSData *)getUserExpiryDateFromRailsAndAppStoreReceipt
+{
+    // POSTs the receipt to Rails, and then onto iTunes to check for a valid subscription
+    // Returns either the rails expiry date or app store expiry date.
+    
+    // NOTE: user id will be ignored and current_user information will be returned by rails.
+    NSURL *articleURL = [NSURL URLWithString:[NSString stringWithFormat:@"users/1.json"] relativeToURL:[NSURL URLWithString:SITE_URL]];
+    
+    NSData *receiptData = [NSData dataWithContentsOfURL:[[NSBundle mainBundle] appStoreReceiptURL]];
+    
+    NSString *base64receipt = [receiptData base64EncodedStringWithOptions:0];
+    NSData *postData = [base64receipt dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+    NSString *postLength = [NSString stringWithFormat:@"%d", (int)[postData length]];
+    
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+    [request setURL:articleURL];
+    [request setHTTPMethod:@"POST"];
+    [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
+    [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+    [request setHTTPBody:postData];
+    
+    NSError *error;
+    NSHTTPURLResponse *response;
+    
+    //    NSArray *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:[NSURL URLWithString:SITE_URL]];
+    
+    NSData *responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
+    int statusCode = (int)[response statusCode];
+    NSString *data = [[NSString alloc]initWithData:responseData encoding:NSUTF8StringEncoding];
+    if (!error && statusCode >= 200 && statusCode < 300) {
+        //        NSLog(@"Response from Rails: %@", data);
+    } else {
+        NSLog(@"Rails returned statusCode: %d\n an error: %@\nAnd data: %@", statusCode, error, data);
+        responseData = nil;
+    }
+    
+    return responseData;
+}
+
 @end
