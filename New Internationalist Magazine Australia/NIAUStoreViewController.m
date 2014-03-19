@@ -170,7 +170,7 @@
                 if (!isLatestAnAuto) {
                     // We need to add the subscription duration to the date.
                     NSDateComponents *dateComponents = [[NSDateComponents alloc] init];
-                    int monthsOfSubscription = [[[latestNonRenewing objectForKey:@"product_id"] substringToIndex:2] integerValue];
+                    NSInteger monthsOfSubscription = [[[latestNonRenewing objectForKey:@"product_id"] substringToIndex:2] integerValue];
                     [dateComponents setMonth:monthsOfSubscription];
                     NSCalendar *calendar = [NSCalendar currentCalendar];
                     date = [calendar dateByAddingComponents:dateComponents toDate:date options:0];
