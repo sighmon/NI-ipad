@@ -46,8 +46,8 @@
             [self.tableViewLoadingIndicator stopAnimating];
             [self.tableView reloadData];
             
-            // TODO: Get expiry date if you have a subscription.
             self.subscriptionExpiryDateLabel.text = @"(Or purchase an individual issue)";
+            // Get expiry date if you have a subscription.
             [self updateExpiryDate];
         }
     }];
@@ -59,7 +59,7 @@
     
     // Start Activity Indicator.
     self.subscriptionTitle.text = @"Yearly or quarterly subscriptions";
-    self.subscriptionExpiryDateLabel.text = @"(Or purchase an individual issue)";
+    self.subscriptionExpiryDateLabel.text = @"";
     [self.tableViewLoadingIndicator startAnimating];
     
     [self sendGoogleAnalyticsStats];
@@ -67,6 +67,7 @@
 
 - (void)updateExpiryDate
 {
+    // Try getting subscription expiry date from Rails
     NSData *subscriptionExpiryDate = [NIAUInAppPurchaseHelper getUserExpiryDateFromRailsAndAppStoreReceipt];
     
     if (subscriptionExpiryDate) {
@@ -79,6 +80,7 @@
 //            NSLog(@"Response: %@", decodedString);
         }
         else {
+            // Got a response from Rails, display it.
             NSLog(@"JSON: %@", jsonDictionary);
             NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
             [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZZZ"];
@@ -86,13 +88,108 @@
             NSLocale *userLocale = [[NSLocale alloc] initWithLocaleIdentifier:[[NSLocale preferredLanguages] objectAtIndex:0]];
             [dateFormatter setLocale:userLocale];
             [dateFormatter setDateStyle:NSDateFormatterLongStyle];
-            self.subscriptionTitle.text = @"Your subscription expiry:";
-            self.subscriptionExpiryDateLabel.text = [dateFormatter stringFromDate:date];
+            [UIView animateWithDuration:0.5 animations:^{
+                [self.subscriptionTitle setAlpha:0.0];
+                [self.subscriptionExpiryDateLabel setAlpha:0.0];
+                self.subscriptionTitle.text = @"Your subscription expiry:";
+                self.subscriptionExpiryDateLabel.text = [dateFormatter stringFromDate:date];
+                [self.subscriptionTitle setAlpha:1.0];
+                [self.subscriptionExpiryDateLabel setAlpha:1.0];
+            }];
         }
     } else {
-        NSLog(@"No subscription data, sorry.");
+        // No data available, so lets try iTunes
+        NSLog(@"No subscription data from Rails, sorry.");
+        [self checkItunesForSubscriptionExpiry];
     }
 
+}
+
+- (void)checkItunesForSubscriptionExpiry
+{
+    NSData *receiptData = [NSData dataWithContentsOfURL:[[NSBundle mainBundle] appStoreReceiptURL]];
+    [NIAUInAppPurchaseHelper validateReceiptWithData:receiptData completionHandler:^(BOOL success, NSString *response) {
+        NSData *jsonData = [response dataUsingEncoding:NSUTF8StringEncoding];
+        NSError *e;
+        NSDictionary *receiptDictionary = [NSJSONSerialization JSONObjectWithData:jsonData options:kNilOptions error:&e];
+//        NSLog(@"Receipt response: \n%d, %@", success, receiptDictionary);
+        if (success && [[receiptDictionary objectForKey:@"status"] integerValue] == 0) {
+            // Receipt is valid, lets check for the last expiry date we have.
+            NSArray *purchases = [[receiptDictionary objectForKey:@"receipt"] objectForKey:@"in_app"];
+            NSMutableDictionary *latestAutoDebit = [[NSMutableDictionary alloc] init];
+            NSMutableDictionary *latestNonRenewing = [[NSMutableDictionary alloc] init];
+            [purchases enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                // Loop through and separate autos from single subs.
+                BOOL isAuto = !([[obj objectForKey:@"product_id"] rangeOfString:@"auto"].location == NSNotFound);
+                BOOL isSubscription = !([[obj objectForKey:@"product_id"] rangeOfString:@"month"].location == NSNotFound);
+                if (isSubscription) {
+                    if (isAuto) {
+                        if ([latestAutoDebit count] == 0 || [[obj objectForKey:@"expires_date_ms"] doubleValue] > [[latestAutoDebit objectForKey:@"expires_date_ms"] doubleValue]) {
+                            // This is the latest expiry, so add it
+                            [latestAutoDebit addEntriesFromDictionary:obj];
+                        }
+                    } else {
+                        if ([latestNonRenewing count] == 0 || [[obj objectForKey:@"original_purchase_date_ms"] doubleValue] > [[latestNonRenewing objectForKey:@"original_purchase_date_ms"] doubleValue]) {
+                            // This is the latest expiry, so add it
+                            [latestNonRenewing addEntriesFromDictionary:obj];
+                        }
+                    }
+                }
+            }];
+            NSString *titleString = @"";
+            NSTimeInterval dateInterval = 0;
+            BOOL isLatestAnAuto = false;
+            if ([latestAutoDebit count] > 0) {
+                if ([latestNonRenewing count] > 0) {
+                    if ([[latestAutoDebit objectForKey:@"expires_date_ms"] doubleValue] > [[latestNonRenewing objectForKey:@"original_purchase_date_ms"] doubleValue]) {
+                        // Set autodebit information
+                        titleString = @"Your next autodebit:";
+                        dateInterval = [[latestAutoDebit objectForKey:@"expires_date_ms"] doubleValue];
+                        isLatestAnAuto = true;
+                    } else {
+                        // Set non-auto information
+                        titleString = @"Your subscription expiry:";
+                        dateInterval = [[latestNonRenewing objectForKey:@"original_purchase_date_ms"] doubleValue];
+                    }
+                } else {
+                    // Set autodebit information
+                    titleString = @"Your next autodebit:";
+                    dateInterval = [[latestAutoDebit objectForKey:@"expires_date_ms"] doubleValue];
+                    isLatestAnAuto = true;
+                }
+                
+            } else if ([latestNonRenewing count] > 0) {
+                // Set non-auto information
+                titleString = @"Your subscription expiry:";
+                dateInterval = [[latestNonRenewing objectForKey:@"original_purchase_date_ms"] doubleValue];
+            }
+            if (dateInterval > 0) {
+                NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+                NSDate *date = [NSDate dateWithTimeIntervalSince1970:(dateInterval/1000)];
+                
+                if (!isLatestAnAuto) {
+                    // We need to add the subscription duration to the date.
+                    NSDateComponents *dateComponents = [[NSDateComponents alloc] init];
+                    int monthsOfSubscription = [[[latestNonRenewing objectForKey:@"product_id"] substringToIndex:2] integerValue];
+                    [dateComponents setMonth:monthsOfSubscription];
+                    NSCalendar *calendar = [NSCalendar currentCalendar];
+                    date = [calendar dateByAddingComponents:dateComponents toDate:date options:0];
+                }
+                
+                NSLocale *userLocale = [[NSLocale alloc] initWithLocaleIdentifier:[[NSLocale preferredLanguages] objectAtIndex:0]];
+                [dateFormatter setLocale:userLocale];
+                [dateFormatter setDateStyle:NSDateFormatterLongStyle];
+                [UIView animateWithDuration:0.5 animations:^{
+                    [self.subscriptionTitle setAlpha:0.0];
+                    [self.subscriptionExpiryDateLabel setAlpha:0.0];
+                    self.subscriptionTitle.text = titleString;
+                    self.subscriptionExpiryDateLabel.text = [dateFormatter stringFromDate:date];
+                    [self.subscriptionTitle setAlpha:1.0];
+                    [self.subscriptionExpiryDateLabel setAlpha:1.0];
+                }];
+            }
+        }
+    }];
 }
 
 - (void)sendGoogleAnalyticsStats

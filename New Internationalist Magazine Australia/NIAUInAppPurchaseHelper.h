@@ -21,12 +21,13 @@
 typedef void (^RequestProductsCompletionHandler)(BOOL success, NSArray * products);
 UIKIT_EXTERN NSString *const IAPHelperProductPurchasedNotification;
 
-@interface NIAUInAppPurchaseHelper : NSObject <SKProductsRequestDelegate, SKPaymentTransactionObserver>
+@interface NIAUInAppPurchaseHelper : NSObject <SKProductsRequestDelegate, SKPaymentTransactionObserver, NSURLConnectionDelegate>
 {
     SKProductsRequest *_productsRequest;
     RequestProductsCompletionHandler _completionHandler;
     NSSet *_productIdentifiers;
     NSMutableSet *_purchasedProductIdentifiers;
+    NSMutableData *receivedData;
 }
 
 @property (nonatomic, strong) NSArray *allProducts;
@@ -42,5 +43,12 @@ UIKIT_EXTERN NSString *const IAPHelperProductPurchasedNotification;
 + (NSData *)getUserExpiryDateFromRailsAndAppStoreReceipt;
 
 + (NIAUInAppPurchaseHelper *)sharedInstance;
+
++(NIAUInAppPurchaseHelper *)validateReceiptWithData:(NSData *)receiptData completionHandler:(void(^)(BOOL,NSString *))handler;
+
+@property (nonatomic,strong) void(^completionBlock)(BOOL,NSString *);
+@property (nonatomic,strong) NSData *receiptData;
+
+-(void)checkReceipt;
 
 @end

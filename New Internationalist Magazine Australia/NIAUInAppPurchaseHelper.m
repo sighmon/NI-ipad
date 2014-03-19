@@ -330,4 +330,62 @@ NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurcha
     return responseData;
 }
 
++ (NIAUInAppPurchaseHelper *)validateReceiptWithData:(NSData *)_receiptData completionHandler:(void(^)(BOOL,NSString *))handler {
+    NIAUInAppPurchaseHelper *checker = [[NIAUInAppPurchaseHelper alloc] init];
+    checker.receiptData = _receiptData;
+    checker.completionBlock = handler;
+    [checker checkReceipt];
+    return checker;
+    
+}
+
+- (void)checkReceipt {
+    // verifies receipt with Apple
+    NSError *jsonError = nil;
+    NSString *receiptBase64 = [self.receiptData base64EncodedStringWithOptions:0];
+//    NSLog(@"Receipt Base64: %@",receiptBase64);
+    //NSString *jsonRequest=[NSString stringWithFormat:@"{\"receipt-data\":\"%@\"}",receiptBase64];
+    //NSLog(@"Sending this JSON: %@",jsonRequest);
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                                receiptBase64,@"receipt-data",
+                                                                ITUNES_SECRET,@"password",
+                                                                nil]
+                                                       options:NSJSONWritingPrettyPrinted
+                                                         error:&jsonError
+                        ];
+//    NSLog(@"JSON: %@",[[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]);
+    // URL for sandbox receipt validation; replace "sandbox" with "buy" in production or you will receive
+    // error codes 21006 or 21007
+    NSURL *requestURL = [NSURL URLWithString:@"https://sandbox.itunes.apple.com/verifyReceipt"];
+    
+    NSMutableURLRequest *req = [[NSMutableURLRequest alloc] initWithURL:requestURL];
+    [req setHTTPMethod:@"POST"];
+    [req setHTTPBody:jsonData];
+    NSURLConnection *conn = [[NSURLConnection alloc] initWithRequest:req delegate:self];
+    if(conn) {
+        receivedData = [[NSMutableData alloc] init];
+    } else {
+        self.completionBlock(NO,@"Cannot create connection");
+    }
+}
+
+- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
+    NSLog(@"Cannot transmit receipt data. %@",[error localizedDescription]);
+    self.completionBlock(NO,[error localizedDescription]);
+}
+
+- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
+    [receivedData setLength:0];
+}
+
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
+    [receivedData appendData:data];
+}
+
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection {
+    NSString *response = [[NSString alloc] initWithData:receivedData encoding:NSUTF8StringEncoding];
+//    NSLog(@"iTunes response: %@",response);
+    self.completionBlock(YES,response);
+}
+
 @end
