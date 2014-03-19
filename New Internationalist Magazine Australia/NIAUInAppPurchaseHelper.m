@@ -317,6 +317,11 @@ NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurcha
     NSString *data = [[NSString alloc]initWithData:responseData encoding:NSUTF8StringEncoding];
     if (!error && statusCode >= 200 && statusCode < 300) {
         //        NSLog(@"Response from Rails: %@", data);
+        if ([[[response URL] lastPathComponent] isEqualToString:@"sign_in"]) {
+            // User isn't logged in, or login was wrong
+            NSLog(@"Rails response: Redirected to sign_in");
+            responseData = nil;
+        }
     } else {
         NSLog(@"Rails returned statusCode: %d\n an error: %@\nAnd data: %@", statusCode, error, data);
         responseData = nil;

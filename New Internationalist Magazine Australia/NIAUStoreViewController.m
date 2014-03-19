@@ -79,12 +79,14 @@
 //            NSLog(@"Response: %@", decodedString);
         }
         else {
-            NSLog(@"Array: %@", jsonDictionary);
+            NSLog(@"JSON: %@", jsonDictionary);
             NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
             [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZZZ"];
             NSDate *date = [dateFormatter dateFromString:[jsonDictionary objectForKey:@"expiry_date"]];
-            [dateFormatter setDateFormat:@"MMMM yyyy"];
-            self.subscriptionTitle.text = @"Your subscription expires:";
+            NSLocale *userLocale = [[NSLocale alloc] initWithLocaleIdentifier:[[NSLocale preferredLanguages] objectAtIndex:0]];
+            [dateFormatter setLocale:userLocale];
+            [dateFormatter setDateStyle:NSDateFormatterLongStyle];
+            self.subscriptionTitle.text = @"Your subscription expiry:";
             self.subscriptionExpiryDateLabel.text = [dateFormatter stringFromDate:date];
         }
     } else {
