@@ -82,10 +82,10 @@
         else {
             // Got a response from Rails, display it.
             NSLog(@"JSON: %@", jsonDictionary);
-            if ([jsonDictionary objectForKey:@"expiry_date"] != [NSNull null]) {
+            if ([jsonDictionary objectForKey:@"expiry"] != [NSNull null]) {
                 NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
                 [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZZZ"];
-                NSDate *date = [dateFormatter dateFromString:[jsonDictionary objectForKey:@"expiry_date"]];
+                NSDate *date = [dateFormatter dateFromString:[jsonDictionary objectForKey:@"expiry"]];
                 NSLocale *userLocale = [[NSLocale alloc] initWithLocaleIdentifier:[[NSLocale preferredLanguages] objectAtIndex:0]];
                 [dateFormatter setLocale:userLocale];
                 [dateFormatter setDateStyle:NSDateFormatterLongStyle];
