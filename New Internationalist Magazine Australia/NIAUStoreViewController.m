@@ -82,20 +82,22 @@
         else {
             // Got a response from Rails, display it.
             NSLog(@"JSON: %@", jsonDictionary);
-            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-            [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZZZ"];
-            NSDate *date = [dateFormatter dateFromString:[jsonDictionary objectForKey:@"expiry_date"]];
-            NSLocale *userLocale = [[NSLocale alloc] initWithLocaleIdentifier:[[NSLocale preferredLanguages] objectAtIndex:0]];
-            [dateFormatter setLocale:userLocale];
-            [dateFormatter setDateStyle:NSDateFormatterLongStyle];
-            [UIView animateWithDuration:0.5 animations:^{
-                [self.subscriptionTitle setAlpha:0.0];
-                [self.subscriptionExpiryDateLabel setAlpha:0.0];
-                self.subscriptionTitle.text = @"Your subscription expiry:";
-                self.subscriptionExpiryDateLabel.text = [dateFormatter stringFromDate:date];
-                [self.subscriptionTitle setAlpha:1.0];
-                [self.subscriptionExpiryDateLabel setAlpha:1.0];
-            }];
+            if ([jsonDictionary objectForKey:@"expiry_date"] != [NSNull null]) {
+                NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+                [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZZZ"];
+                NSDate *date = [dateFormatter dateFromString:[jsonDictionary objectForKey:@"expiry_date"]];
+                NSLocale *userLocale = [[NSLocale alloc] initWithLocaleIdentifier:[[NSLocale preferredLanguages] objectAtIndex:0]];
+                [dateFormatter setLocale:userLocale];
+                [dateFormatter setDateStyle:NSDateFormatterLongStyle];
+                [UIView animateWithDuration:0.5 animations:^{
+                    [self.subscriptionTitle setAlpha:0.0];
+                    [self.subscriptionExpiryDateLabel setAlpha:0.0];
+                    self.subscriptionTitle.text = @"Your subscription expiry:";
+                    self.subscriptionExpiryDateLabel.text = [dateFormatter stringFromDate:date];
+                    [self.subscriptionTitle setAlpha:1.0];
+                    [self.subscriptionExpiryDateLabel setAlpha:1.0];
+                }];
+            }
         }
     } else {
         // No data available, so lets try iTunes
