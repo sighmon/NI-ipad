@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 extern const char NotificationKey;
 
-@interface NIAUAppDelegate : UIResponder <UIApplicationDelegate>
+@interface NIAUAppDelegate : UIResponder <UIApplicationDelegate, NSURLConnectionDownloadDelegate, NSURLConnectionDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 

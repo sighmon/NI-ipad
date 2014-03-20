@@ -166,8 +166,30 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
     return self;
 }
 
+-(NIAUIssue *)initWithUserInfo:(NSDictionary *)dict {
+    if (self = [self init]) {
+        dictionary = dict;
+        
+        [self addToNewsstand];
+    }
+    return self;
+}
+
 +(NIAUIssue *)issueWithDictionary:(NSDictionary *)dict {
     return [[NIAUIssue alloc] initWithDictionary:dict];
+}
+
++(NIAUIssue *)issueWithUserInfo:(NSDictionary *)dict {
+    // Make the Issue dictionary from the userInfo
+    NSMutableDictionary *tmpDict = [[NSMutableDictionary alloc] init];
+    [tmpDict setObject:[dict objectForKey:@"name"] forKey:@"name"];
+    [tmpDict setObject:[dict objectForKey:@"publication"] forKey:@"release"];
+    
+    return [[NIAUIssue alloc] initWithUserInfo:tmpDict];
+}
+
++(void)unzipNKIssue:(NKIssue *)nkIssue {
+    // TODO: Unzip it!
 }
 
 //build from NKIssue object (read from cache)

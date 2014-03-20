@@ -158,4 +158,8 @@ static NIAUPublisher *instance =nil;
     return [issues lastObject];
 }
 
+-(NSString *)downloadPathForIssue:(NKIssue *)nkIssue {
+    return [nkIssue.contentURL path];
+}
+
 @end

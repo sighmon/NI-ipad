@@ -292,7 +292,7 @@ NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurcha
     // Returns either the rails expiry date or app store expiry date.
     
     // NOTE: user id will be ignored and current_user information will be returned by rails.
-    NSURL *articleURL = [NSURL URLWithString:[NSString stringWithFormat:@"users/1.json"] relativeToURL:[NSURL URLWithString:SITE_URL]];
+    NSURL *userURL = [NSURL URLWithString:[NSString stringWithFormat:@"users/1.json"] relativeToURL:[NSURL URLWithString:SITE_URL]];
     
     NSData *receiptData = [NSData dataWithContentsOfURL:[[NSBundle mainBundle] appStoreReceiptURL]];
     
@@ -301,7 +301,7 @@ NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurcha
     NSString *postLength = [NSString stringWithFormat:@"%d", (int)[postData length]];
     
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-    [request setURL:articleURL];
+    [request setURL:userURL];
     [request setHTTPMethod:@"POST"];
     [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
     [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];

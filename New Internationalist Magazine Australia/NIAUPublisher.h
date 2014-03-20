@@ -20,7 +20,7 @@ extern  NSString *PublisherFailedUpdateNotification;
 }
 
 -(BOOL)isReady;
-+(NIAUPublisher*)getInstance;
++(NIAUPublisher *)getInstance;
 
 -(void)requestIssues;
 -(void)forceDownloadIssues;
@@ -29,5 +29,7 @@ extern  NSString *PublisherFailedUpdateNotification;
 -(NIAUIssue *)issueWithName:(NSString *)name;
 -(NIAUIssue *)issueWithRailsID:(NSNumber *)railsID;
 -(NIAUIssue *)lastIssue;
+
+-(NSString *)downloadPathForIssue:(NKIssue *)nkIssue;
 
 @end

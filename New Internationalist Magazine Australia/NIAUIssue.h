@@ -32,6 +32,8 @@ extern NSString *ArticlesFailedUpdateNotification;
 
 +(NSArray *)issuesFromNKLibrary;
 +(NIAUIssue *)issueWithDictionary:(NSDictionary *)dict;
++(NIAUIssue *)issueWithUserInfo:(NSDictionary *)dict;
++(void)unzipNKIssue:(NKIssue *)nkIssue;
 
 -(void)getCoverWithCompletionBlock:(void(^)(UIImage *img))block;
 
@@ -48,7 +50,6 @@ extern NSString *ArticlesFailedUpdateNotification;
 -(NSInteger)numberOfArticles;
 -(NIAUArticle *)articleAtIndex:(NSInteger)index;
 -(NIAUArticle *)articleWithRailsID:(NSNumber *)railsID;
-
 
 - (NSURL *)getWebURL;
 

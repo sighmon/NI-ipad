@@ -14,7 +14,7 @@
 #import "local.h"
 #import "NIAUPublisher.h"
 #import "NIAUArticleViewController.h"
-#import "NIAUArticle.h"
+#import "NIAUIssue.h"
 #import <objc/runtime.h>
 const char NotificationKey;
 
@@ -162,28 +162,33 @@ const char NotificationKey;
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
-{
-    // This notification fires when the user has the app open and a notification comes in.
-    [self handleNotification:userInfo];
-    [PFPush handlePush:userInfo];
-    if (application.applicationState == UIApplicationStateInactive) {
+{    
+    if ((application.applicationState == UIApplicationStateInactive) || (application.applicationState == UIApplicationStateBackground)) {
         [PFAnalytics trackAppOpenedWithRemoteNotificationPayload:userInfo];
         [self turnBadgeIconOn];
+        [self handleRemoteNotification:application andUserInfo:userInfo];
+    } else {
+        [self handleNotification:userInfo];
+        [PFPush handlePush:userInfo];
     }
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
-    // This notification fires when the user has the app open and a notification comes in.
-    [self handleNotification:userInfo];
-    if (application.applicationState == UIApplicationStateInactive) {
+    if ((application.applicationState == UIApplicationStateInactive) || (application.applicationState == UIApplicationStateBackground)) {
         [PFAnalytics trackAppOpenedWithRemoteNotificationPayload:userInfo];
         [self turnBadgeIconOn];
+        [self handleRemoteNotification:application andUserInfo:userInfo];
+    } else {
+        [self handleNotification:userInfo];
     }
 }
 
 - (void)handleRemoteNotification: (UIApplication *)application andUserInfo: (NSDictionary *)userInfo
 {
+    // Start background download.
+    [self startBackgroundDownloadWithUserInfo:userInfo];
+    
     UILocalNotification *localNotif = [[UILocalNotification alloc] init];
     if (localNotif) {
         localNotif.alertBody = [NSString stringWithFormat:
@@ -194,9 +199,6 @@ const char NotificationKey;
         localNotif.applicationIconBadgeNumber = [[[userInfo objectForKey:@"aps"] objectForKey:@"badge"] intValue];
         [application presentLocalNotificationNow:localNotif];
     }
-    
-    // Start background download.
-    [self startBackgroundDownloadWithUserInfo:userInfo];
 }
 
 - (void)handleNotification: (NSDictionary *)userInfo
@@ -216,22 +218,29 @@ const char NotificationKey;
 
 - (void)startBackgroundDownloadWithUserInfo: (NSDictionary *)userInfo
 {
-    // TODO: get zip file from Rails, unpack it and save it to the library.
-    // TODO: authenticate and then download @issue.zip
+    // TODO: get zip file from Rails, unpack it and save it to the library as a new nkIssue.
     
-//    NSNumber *issueID = [userInfo objectForKey:@"railsID"];
-    
-    // TODO: Ask rails nicely for the zip location (make a route for it in rails first)
-    
-    NSLog(@"Notification info: %@", userInfo);
-    
-    // For now lets just force update the issues
-    [[NIAUPublisher getInstance] forceDownloadIssues];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshViewNotification" object:nil];
-    
-    // So we know this has run...
-    NSString *message = [NSString stringWithFormat:@"Totally doing it."];
-    [[[UIAlertView alloc] initWithTitle:@"Sure thing." message:message delegate:self cancelButtonTitle:@"Cool." otherButtonTitles:nil] show];
+    if(userInfo) {
+        // TODO: Get the zipURL from Rails.
+        NSString *railsID = [userInfo objectForKey:@"railsID"];
+        NSString *zipURL = [self requestZipURLforRailsID: railsID];
+        
+        if (zipURL) {
+            // Create NIAUIssue from userInfo
+            NIAUIssue *newIssue = [NIAUIssue issueWithUserInfo:userInfo];
+            
+            // schedule for issue downloading in background
+            NKIssue *newNKIssue = [[NKLibrary sharedLibrary] issueWithName:newIssue.name];
+            if(newNKIssue) {
+                NSURL *downloadURL = [NSURL URLWithString:zipURL];
+                NSURLRequest *req = [NSURLRequest requestWithURL:downloadURL];
+                NKAssetDownload *assetDownload = [newNKIssue addAssetWithRequest:req];
+                [assetDownload downloadWithDelegate:self];
+            }
+        } else {
+            NSLog(@"No zipURL, so aborting.");
+        }
+    }
 }
 
 #pragma mark AlertView delegate
@@ -251,6 +260,95 @@ const char NotificationKey;
         default:
             break;
     }
+}
+
+#pragma mark - Download delegate
+
+- (void)connectionDidFinishDownloading:(NSURLConnection *)connection destinationURL:(NSURL *)destinationURL
+{
+    // copy file to destination URL
+    NKAssetDownload *download = connection.newsstandAssetDownload;
+    NKIssue *nkIssue = download.issue;
+    NSString *contentPath = [[NIAUPublisher getInstance] downloadPathForIssue:nkIssue];
+    NSError *moveError = nil;
+    if([[NSFileManager defaultManager] moveItemAtPath:[destinationURL path] toPath:contentPath error:&moveError]==NO) {
+        NSLog(@"Error copying file from %@ to %@", destinationURL, contentPath);
+    } else {
+        NSLog(@"Zip file moved from %@ to %@", destinationURL, contentPath);
+    }
+    // Now tell the NIAUIssue to unzip it and it's ready to go.
+    [NIAUIssue unzipNKIssue:nkIssue];
+    
+    // Force a refresh
+    [[NIAUPublisher getInstance] forceDownloadIssues];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshViewNotification" object:nil];
+}
+
+- (void)connectionDidResumeDownloading:(NSURLConnection *)connection totalBytesWritten:(long long)totalBytesWritten expectedTotalBytes:(long long)expectedTotalBytes
+{
+    
+}
+
+- (void)connection:(NSURLConnection *)connection didWriteData:(long long)bytesWritten totalBytesWritten:(long long)totalBytesWritten expectedTotalBytes:(long long)expectedTotalBytes
+{
+    
+}
+
+- (NSString *)requestZipURLforRailsID: (NSString *)railsID
+{
+    // TODO: get zipURL from Rails
+    NSURL *issueURL = [NSURL URLWithString:[NSString stringWithFormat:@"issues/%@.json", railsID] relativeToURL:[NSURL URLWithString:SITE_URL]];
+    
+    NSData *secretData = [RAILS_ISSUE_SECRET dataUsingEncoding:NSUTF8StringEncoding];
+    
+    NSString *base64receipt = [secretData base64EncodedStringWithOptions:0];
+    NSData *postData = [base64receipt dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+    NSString *postLength = [NSString stringWithFormat:@"%d", (int)[postData length]];
+    
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+    [request setURL:issueURL];
+    [request setHTTPMethod:@"POST"];
+    [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
+    [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+    [request setHTTPBody:postData];
+    
+    NSError *error;
+    NSHTTPURLResponse *response;
+    
+    //    NSArray *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:[NSURL URLWithString:SITE_URL]];
+    
+    NSData *responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
+    int statusCode = (int)[response statusCode];
+    NSString *data = [[NSString alloc]initWithData:responseData encoding:NSUTF8StringEncoding];
+    if (!error && statusCode >= 200 && statusCode < 300) {
+        //        NSLog(@"Response from Rails: %@", data);
+        if ([[[response URL] lastPathComponent] isEqualToString:@"issues"]) {
+            // User isn't logged in, or login was wrong
+            NSLog(@"Rails response: Redirected to /issues");
+            responseData = nil;
+        }
+    } else {
+        NSLog(@"Rails returned statusCode: %d\n an error: %@\nAnd data: %@", statusCode, error, data);
+        responseData = nil;
+    }
+    
+    if (responseData) {
+        NSError *error = nil;
+        NSDictionary *jsonDictionary = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
+        
+        if (error != nil) {
+            NSLog(@"Error parsing JSON.");
+        }
+        else {
+            // Got a response from Rails, display it.
+            NSLog(@"JSON: %@", jsonDictionary);
+            if ([jsonDictionary objectForKey:@"zipURL"] != [NSNull null]) {
+                // return URL
+                return [jsonDictionary objectForKey:@"zipURL"];
+            }
+        }
+    }
+    return nil;
 }
 
 #pragma mark -
