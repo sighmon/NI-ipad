@@ -9,11 +9,16 @@
 #import <Foundation/Foundation.h>
 #import <NewsstandKit/NewsstandKit.h>
 #import "NIAUArticle.h"
+#import "NSData+Cookieless.h"
+#import "local.h"
+#import <ZipArchive.h>
+#import "NIAUPublisher.h"
 
 extern NSString *ArticlesDidUpdateNotification;
 extern NSString *ArticlesFailedUpdateNotification;
 
-@interface NIAUIssue : NSObject {
+@interface NIAUIssue : NSObject <ZipArchiveDelegate>
+{
     NSDictionary *dictionary;
     NSArray *articles;
     BOOL requestingArticles;
@@ -33,7 +38,7 @@ extern NSString *ArticlesFailedUpdateNotification;
 +(NSArray *)issuesFromNKLibrary;
 +(NIAUIssue *)issueWithDictionary:(NSDictionary *)dict;
 +(NIAUIssue *)issueWithUserInfo:(NSDictionary *)dict;
-+(void)unzipNKIssue:(NKIssue *)nkIssue;
++(BOOL)unzipNKIssue:(NKIssue *)nkIssue;
 
 -(void)getCoverWithCompletionBlock:(void(^)(UIImage *img))block;
 

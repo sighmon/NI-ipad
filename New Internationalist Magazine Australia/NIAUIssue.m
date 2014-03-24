@@ -7,12 +7,9 @@
 //
 
 #import "NIAUIssue.h"
-#import "NSData+Cookieless.h"
-#import "local.h"
 
 NSString *ArticlesDidUpdateNotification = @"ArticlesDidUpdate";
 NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
-
 
 @implementation NIAUIssue
 
@@ -185,12 +182,52 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
     [tmpDict setObject:[dict objectForKey:@"name"] forKey:@"name"];
     [tmpDict setObject:[dict objectForKey:@"publication"] forKey:@"release"];
     
-    return [[NIAUIssue alloc] initWithUserInfo:tmpDict];
+    // If the nkIssue already exists for this dict @"name", return that issue, else init
+    
+    NIAUIssue *issue = [[NIAUPublisher getInstance] issueWithName:[dict objectForKey:@"name"]];
+    
+    if (issue) {
+        return issue;
+    } else {
+        return [[NIAUIssue alloc] initWithUserInfo:tmpDict];
+    }
 }
 
-+(void)unzipNKIssue:(NKIssue *)nkIssue {
-    // TODO: Unzip it using POD ZipArchive
++(BOOL)unzipNKIssue:(NKIssue *)nkIssue {
+    // Unzip it using COCOAPOD ZipArchive
+    BOOL success = NO;
+    ZipArchive *zipArchive = [[ZipArchive alloc] init];
+    NSString *zipPath = [[NIAUPublisher getInstance] downloadPathForIssue:nkIssue];
+    NSString *contentPath = [[nkIssue contentURL] absoluteString];
     
+    if ([zipArchive UnzipOpenFile: zipPath]) {
+        // Unzip the file to its issue path
+        // TODO: Work out why this isn't unzipping
+        BOOL ret = [zipArchive UnzipFileTo:contentPath overWrite: YES];
+        if (ret == NO){
+            // Handle this
+        }
+        [zipArchive UnzipCloseFile];
+        success = YES;
+    } else {
+        success = NO;
+    }
+    
+    // Delete zip file
+    NSError *error;
+    [[NSFileManager defaultManager] removeItemAtPath:zipPath error: &error];
+    if (error) {
+        NSLog(@"ERROR: Zip file couldn't be deleted from: %@", zipPath);
+    } else {
+        NSLog(@"Zip file deleted from: %@", zipPath);
+    }
+    
+    return success;
+}
+
+- (void)ErrorMessage:(NSString *)msg
+{
+    NSLog(@"ZipArchive Error: %@", msg);
 }
 
 //build from NKIssue object (read from cache)

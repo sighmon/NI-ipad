@@ -275,13 +275,17 @@ const char NotificationKey;
         NSLog(@"Error copying file from %@ to %@", destinationURL, contentPath);
     } else {
         NSLog(@"Zip file moved from %@ to %@", destinationURL, contentPath);
+        // Now tell the NIAUIssue to unzip it and it's ready to go.
+        BOOL success = [NIAUIssue unzipNKIssue:nkIssue];
+        
+        if (success) {
+            // Force a refresh
+            [[NIAUPublisher getInstance] forceDownloadIssues];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshViewNotification" object:nil];
+        } else {
+            NSLog(@"ERROR: couldn't unzip background download, sorry.");
+        }
     }
-    // Now tell the NIAUIssue to unzip it and it's ready to go.
-    [NIAUIssue unzipNKIssue:nkIssue];
-    
-    // Force a refresh
-    [[NIAUPublisher getInstance] forceDownloadIssues];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshViewNotification" object:nil];
 }
 
 - (void)connectionDidResumeDownloading:(NSURLConnection *)connection totalBytesWritten:(long long)totalBytesWritten expectedTotalBytes:(long long)expectedTotalBytes
@@ -296,7 +300,7 @@ const char NotificationKey;
 
 - (NSString *)requestZipURLforRailsID: (NSString *)railsID
 {
-    // TODO: get zipURL from Rails
+    // get zipURL from Rails
     NSURL *issueURL = [NSURL URLWithString:[NSString stringWithFormat:@"issues/%@.json", railsID] relativeToURL:[NSURL URLWithString:SITE_URL]];
     
     NSData *secretData = [RAILS_ISSUE_SECRET dataUsingEncoding:NSUTF8StringEncoding];
