@@ -171,6 +171,10 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 .article-image-small {
     max-width: 150px;
 }
+.article-image-float-none {
+	float: left;
+	margin: 1em 2em 2em 0;
+}
 .new-image-caption {
     text-align: left;
     max-width: 340px;
@@ -368,7 +372,7 @@ ul.ui-autocomplete li a:active {
     .article-image, .article-image-full, .article-image-cartoon {
         width: 100%;
         position: relative;
-        margin: 1em 0px 1.5em 1em;
+        margin: 1em 0px 1.5em 0em;
     }
     .article-image img, .article-image-full img, .article-image-cartoon img {
         width: 100%;

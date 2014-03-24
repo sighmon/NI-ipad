@@ -143,12 +143,14 @@ NSString *ImageDidSaveToCacheNotification = @"ImageDidSaveToCache";
         } else if([options containsObject:@"small"]) {
             cssClass = @"article-image article-image-small";
             imageWidth = @"150";
-        } else if([options containsObject:@"left"]) {
-            cssClass = @"article-image article-image-float-none";
         }
         
         if ([options containsObject:@"ns"]) {
             cssClass = [cssClass stringByAppendingString:@" no-shadow"];
+        }
+        
+        if ([options containsObject:@"left"]) {
+            cssClass = [cssClass stringByAppendingString:@" article-image-float-none"];
         }
         
         // ruby code from articles_helper

@@ -189,7 +189,8 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
 }
 
 +(void)unzipNKIssue:(NKIssue *)nkIssue {
-    // TODO: Unzip it!
+    // TODO: Unzip it using POD ZipArchive
+    
 }
 
 //build from NKIssue object (read from cache)
