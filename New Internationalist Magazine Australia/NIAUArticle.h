@@ -34,6 +34,7 @@ extern NSString *ImageDidSaveToCacheNotification;
 -(NSString *)author;
 -(NSArray *)categories;
 -(NSNumber *)railsID;
+-(NSDate *)publication;
 -(BOOL)isKeynote;
 
 +(NSArray *)articlesFromIssue:(NIAUIssue *)issue;

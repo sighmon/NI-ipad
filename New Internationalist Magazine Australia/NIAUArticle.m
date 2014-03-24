@@ -57,6 +57,13 @@ NSString *ImageDidSaveToCacheNotification = @"ImageDidSaveToCache";
     return [dictionary objectForKey:@"categories"];
 }
 
+-(NSDate *)publication {
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZZZ"];
+    NSDate *date = [dateFormatter dateFromString:[dictionary objectForKey:@"publication"]];
+    return date;
+}
+
 -(BOOL)isKeynote {
     id value = [dictionary objectForKey:@"keynote"];
     return value != nil;

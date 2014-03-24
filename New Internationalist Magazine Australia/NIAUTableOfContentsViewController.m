@@ -110,12 +110,13 @@ static NSString *CellIdentifier = @"articleCell";
             [self.featureArticles addObject:articleToAdd];
         } else if ([articleToAdd containsCategoryWithSubstring:@"agenda"]) {
             [self.agendaArticles addObject:articleToAdd];
-        } else if ([articleToAdd containsCategoryWithSubstring:@"media"]) {
-            [self.mixedMediaArticles addObject:articleToAdd];
         } else if ([articleToAdd containsCategoryWithSubstring:@"argument"] ||
                    [articleToAdd containsCategoryWithSubstring:@"viewfrom"] ||
+                   [articleToAdd containsCategoryWithSubstring:@"steve-parry"] ||
                    [articleToAdd containsCategoryWithSubstring:@"mark-engler"]) {
             [self.opinionArticles addObject:articleToAdd];
+        } else if ([articleToAdd containsCategoryWithSubstring:@"media"]) {
+            [self.mixedMediaArticles addObject:articleToAdd];
         } else if ([articleToAdd containsCategoryWithSubstring:@"alternatives"]) {
             [self.alternativesArticles addObject:articleToAdd];
         } else if ([articleToAdd containsCategoryWithSubstring:@"columns"] &&
@@ -128,6 +129,7 @@ static NSString *CellIdentifier = @"articleCell";
             [self.uncategorisedArticles addObject:articleToAdd];
         }
     }
+    
     [self addSectionToSortedCategories:self.featureArticles withName:@"Features"];
     [self addSectionToSortedCategories:self.agendaArticles withName:@"Agenda"];
     [self addSectionToSortedCategories:self.mixedMediaArticles withName:@"Film, Book & Music reviews"];
@@ -144,16 +146,22 @@ static NSString *CellIdentifier = @"articleCell";
     NSLog(@"Number of articles categorised: %d", numberOfArticlesCategorised);
     NSLog(@"Number of articles in this issue: %d", (int)[self.issue numberOfArticles]);
     
-    // TODO: FINISH this controller, check whether the above code works, and then use it to determine the sections.
-    
     [self showArticles];
 }
 
 - (void)addSectionToSortedCategories:(NSArray *)section withName:(NSString *)name
 {
     if (section.count > 0) {
+        // Sort sections by publish date
+        NSArray *sortedArray;
+        sortedArray = [section sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
+            NSDate *first = [(NIAUArticle *)a publication];
+            NSDate *second = [(NIAUArticle *)b publication];
+            return [first compare:second];
+        }];
+        
         NSMutableDictionary *sectionDictionary = [NSMutableDictionary dictionary];
-        [sectionDictionary setObject:section forKey:@"articles"];
+        [sectionDictionary setObject:sortedArray forKey:@"articles"];
         [sectionDictionary setObject:name forKey:@"name"];
         [self.sortedCategories addObject:sectionDictionary];
     }
