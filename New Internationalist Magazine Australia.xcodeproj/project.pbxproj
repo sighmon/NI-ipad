@@ -221,6 +221,7 @@
 		05C29EFD188736B1004FC28D /* new-issue.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "new-issue.caf"; sourceTree = "<group>"; };
 		05C95838187DF8EF00FD262F /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		05C9583A187DF9DE00FD262F /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
+		05EF22F218E1E7B70017244C /* libz.1.2.5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.5.dylib; path = usr/lib/libz.1.2.5.dylib; sourceTree = SDKROOT; };
 		05F856CD1864C67E001D1A75 /* NIAUArticleCategoryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NIAUArticleCategoryCell.h; sourceTree = "<group>"; };
 		05F856CE1864C67E001D1A75 /* NIAUArticleCategoryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NIAUArticleCategoryCell.m; sourceTree = "<group>"; };
 		05FA184C17A8B83200E023A0 /* 40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 40.png; sourceTree = "<group>"; };
@@ -346,6 +347,7 @@
 		055A8EC4177290CE003D9407 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				05EF22F218E1E7B70017244C /* libz.1.2.5.dylib */,
 				059EF8F8187E13220079FA88 /* FacebookSDK.framework */,
 				059EF8F6187E12FF0079FA88 /* Parse.framework */,
 				05C9583A187DF9DE00FD262F /* Accounts.framework */,

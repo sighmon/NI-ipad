@@ -273,6 +273,16 @@ const char NotificationKey;
     NSError *moveError = nil;
     if([[NSFileManager defaultManager] moveItemAtPath:[destinationURL path] toPath:contentPath error:&moveError]==NO) {
         NSLog(@"Error copying file from %@ to %@", destinationURL, contentPath);
+        // Delete the downloaded file.
+        if ([[NSFileManager defaultManager] fileExistsAtPath:[destinationURL absoluteString]]) {
+            NSError *error;
+            [[NSFileManager defaultManager] removeItemAtPath:[destinationURL absoluteString] error: &error];
+            if (error) {
+                NSLog(@"ERROR: Zip file couldn't be deleted from: %@", [destinationURL absoluteString]);
+            } else {
+                NSLog(@"Zip file deleted from: %@", [destinationURL absoluteString]);
+            }
+        }
     } else {
         NSLog(@"Zip file moved from %@ to %@", destinationURL, contentPath);
         // Now tell the NIAUIssue to unzip it and it's ready to go.

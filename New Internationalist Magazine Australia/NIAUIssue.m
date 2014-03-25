@@ -200,12 +200,27 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
     NSString *zipPath = [[NIAUPublisher getInstance] downloadPathForIssue:nkIssue];
     NSString *contentPath = [[nkIssue contentURL] absoluteString];
     
+    // Sanity check for zip file at path
+    if ([[NSFileManager defaultManager] fileExistsAtPath:zipPath]) {
+        NSLog(@"Yes, the zip file is there, calm down.");
+    } else {
+        NSLog(@"Error: See, sanity checks are good!");
+    }
+    
     if ([zipArchive UnzipOpenFile: zipPath]) {
         // Unzip the file to its issue path
         // TODO: Work out why this isn't unzipping
-        BOOL ret = [zipArchive UnzipFileTo:contentPath overWrite: YES];
-        if (ret == NO){
+        
+        // Check the zip file contents
+        NSArray *zipFileContents = [zipArchive getZipFileContents];
+        NSLog(@"Zip file contents: %@", zipFileContents);
+        
+        BOOL didZip = false;
+        didZip = [zipArchive UnzipFileTo:contentPath overWrite: YES];
+        if (didZip == false){
             // Handle this
+        } else {
+            NSLog(@"Unzip succedded (in theory)!");
         }
         [zipArchive UnzipCloseFile];
         success = YES;
@@ -225,10 +240,20 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
     return success;
 }
 
+#pragma mark - ZipArchive delegate
+
 - (void)ErrorMessage:(NSString *)msg
 {
     NSLog(@"ZipArchive Error: %@", msg);
 }
+
+- (BOOL)OverWriteOperation:(NSString *)file
+{
+    NSLog(@"File being over-written: %@", file);
+    return YES;
+}
+
+#pragma mark -
 
 //build from NKIssue object (read from cache)
 // called when building from cache
