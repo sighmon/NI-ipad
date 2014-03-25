@@ -307,14 +307,16 @@ static NSString *CellIdentifier = @"articleCell";
     
     // Load CSS from the filesystem
     NSURL *cssURL = [[NSBundle mainBundle] URLForResource:@"article-body" withExtension:@"css"];
+    NSURL *bootstrapCssURL = [[NSBundle mainBundle] URLForResource:@"bootstrap" withExtension:@"css"];
     
     // Load the article teaser into the attributedText
     NSString *teaserHTML = [NSString stringWithFormat:@"<html> \n"
                                  "<head> \n"
-                                 "<link rel=\"stylesheet\" type=\"text/css\" href=\"%@\">"
+                                 "  <link rel=\"stylesheet\" type=\"text/css\" href=\"%@\"> \n"
+                                 "  <link rel=\"stylesheet\" type=\"text/css\" href=\"%@\"> \n"
                                  "</head> \n"
                                  "<body><div class='table-of-contents-article-teaser'>%@</div></body> \n"
-                                 "</html>", cssURL, teaser];
+                                 "</html>",bootstrapCssURL, cssURL, teaser];
     
     articleTeaser.attributedText = [[NSAttributedString alloc] initWithData:[teaserHTML dataUsingEncoding:NSUTF8StringEncoding]
                                                                     options:@{NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType,

@@ -187,14 +187,16 @@ float cellPadding = 10.;
     
     // Load CSS from the filesystem
     NSURL *cssURL = [[NSBundle mainBundle] URLForResource:@"article-body" withExtension:@"css"];
+    NSURL *bootstrapCssURL = [[NSBundle mainBundle] URLForResource:@"bootstrap" withExtension:@"css"];
     
     // Load the article teaser into the attributedText
     NSString *teaserHTML = [NSString stringWithFormat:@"<html> \n"
                             "<head> \n"
-                            "<link rel=\"stylesheet\" type=\"text/css\" href=\"%@\">"
+                            "<link rel=\"stylesheet\" type=\"text/css\" href=\"%@\"> \n"
+                            "<link rel=\"stylesheet\" type=\"text/css\" href=\"%@\"> \n"
                             "</head> \n"
                             "<body><div class='article-teaser'>%@</div></body> \n"
-                            "</html>", cssURL, WITH_DEFAULT(self.article.teaser,IF_DEBUG(@"!!!NOTEASER!!!",@""))];
+                            "</html>", bootstrapCssURL, cssURL, WITH_DEFAULT(self.article.teaser,IF_DEBUG(@"!!!NOTEASER!!!",@""))];
     
     if ([self.article.teaser isEqualToString:@""]) {
         NSLog(@"Article doesn't have a teaser");
@@ -215,9 +217,10 @@ float cellPadding = 10.;
     NSString *bodyWebViewHTML = [NSString stringWithFormat:@"<html> \n"
                                    "<head> \n"
                                    "<link rel=\"stylesheet\" type=\"text/css\" href=\"%@\">"
+                                   "<link rel=\"stylesheet\" type=\"text/css\" href=\"%@\"> \n"
                                    "</head> \n"
                                    "<body>%@</body> \n"
-                                   "</html>", cssURL, WITH_DEFAULT(bodyFromDisk, @"")];
+                                   "</html>", bootstrapCssURL, cssURL, WITH_DEFAULT(bodyFromDisk, @"")];
     [self.bodyWebView loadHTMLString:bodyWebViewHTML baseURL:baseURL];
     
     // Prevent webview from scrolling

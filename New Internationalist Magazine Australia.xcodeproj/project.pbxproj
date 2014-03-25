@@ -58,6 +58,8 @@
 		052D3A99187DEF2600377021 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 052D3A98187DEF2600377021 /* SystemConfiguration.framework */; };
 		052D797C18C7FD14000C03C2 /* loading_image.png in Resources */ = {isa = PBXBuildFile; fileRef = 052D797A18C7FD14000C03C2 /* loading_image.png */; };
 		052D797D18C7FD14000C03C2 /* loading_image@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 052D797B18C7FD14000C03C2 /* loading_image@2x.png */; };
+		052E32B318E1F74300A1906E /* bootstrap.css in Resources */ = {isa = PBXBuildFile; fileRef = 052E32B218E1F74300A1906E /* bootstrap.css */; };
+		052E32B518E1FBAC00A1906E /* fontawesome-webfont.woff in Resources */ = {isa = PBXBuildFile; fileRef = 052E32B418E1FBAC00A1906E /* fontawesome-webfont.woff */; };
 		053878261777D767001E60F6 /* NIAUIssue.m in Sources */ = {isa = PBXBuildFile; fileRef = 053878251777D767001E60F6 /* NIAUIssue.m */; };
 		05424C361803AD0400399194 /* NIAUStoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05424C351803AD0400399194 /* NIAUStoreViewController.m */; };
 		05424C391803BD7000399194 /* NIAULoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05424C381803BD7000399194 /* NIAULoginViewController.m */; };
@@ -150,6 +152,8 @@
 		052D3A98187DEF2600377021 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		052D797A18C7FD14000C03C2 /* loading_image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = loading_image.png; sourceTree = "<group>"; };
 		052D797B18C7FD14000C03C2 /* loading_image@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "loading_image@2x.png"; sourceTree = "<group>"; };
+		052E32B218E1F74300A1906E /* bootstrap.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = bootstrap.css; sourceTree = "<group>"; };
+		052E32B418E1FBAC00A1906E /* fontawesome-webfont.woff */ = {isa = PBXFileReference; lastKnownFileType = file; path = "fontawesome-webfont.woff"; sourceTree = "<group>"; };
 		053878241777D767001E60F6 /* NIAUIssue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NIAUIssue.h; sourceTree = "<group>"; };
 		053878251777D767001E60F6 /* NIAUIssue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NIAUIssue.m; sourceTree = "<group>"; };
 		05424C341803AD0400399194 /* NIAUStoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NIAUStoreViewController.h; sourceTree = "<group>"; };
@@ -289,6 +293,8 @@
 		0511F13917BB1D55004B5A72 /* Stylesheet */ = {
 			isa = PBXGroup;
 			children = (
+				052E32B218E1F74300A1906E /* bootstrap.css */,
+				052E32B418E1FBAC00A1906E /* fontawesome-webfont.woff */,
 				0511F13A17BB1E24004B5A72 /* article-body.css */,
 			);
 			name = Stylesheet;
@@ -611,6 +617,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				052E32B518E1FBAC00A1906E /* fontawesome-webfont.woff in Resources */,
 				052A84F917C5E12900D36E6C /* iPad-landscape@2x.png in Resources */,
 				052A850A17C5E13900D36E6C /* 152.png in Resources */,
 				0528EC3C17853C1F000175AB /* default_article_image.png in Resources */,
@@ -631,6 +638,7 @@
 				052A850617C5E13900D36E6C /* 100.png in Resources */,
 				0567082817B1D51400A87818 /* default_article_image_table_view.png in Resources */,
 				052A84FC17C5E13900D36E6C /* Default-568h@2x.png in Resources */,
+				052E32B318E1F74300A1906E /* bootstrap.css in Resources */,
 				051FB64818AC15BF00FA734C /* UIWebViewNext@2x.png in Resources */,
 				051A72B1177950D600BDD346 /* default_cover.png in Resources */,
 				055A8EE1177290CF003D9407 /* Images.xcassets in Resources */,
