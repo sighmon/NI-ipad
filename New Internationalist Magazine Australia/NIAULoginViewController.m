@@ -89,7 +89,7 @@ NSString *LoginUnsuccessfulNotification = @"LoginUnsuccessful";
     
     if (netStatus == NotReachable) {
         // Ask them to turn on wifi or get internet access.
-        [[[UIAlertView alloc] initWithTitle:@"Internet access?" message:@"It doesn't seem like you have internet access, turn it on to subscribe or download this article." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+        [[[UIAlertView alloc] initWithTitle:@"Internet access?" message:@"It doesn't seem like you have internet access, turn it on to login." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
     } else {
         // Get the details from keychain
         NSString *username = self.username.text;

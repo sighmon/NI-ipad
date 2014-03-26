@@ -223,7 +223,7 @@ NSString *ImageDidSaveToCacheNotification = @"ImageDidSaveToCache";
                 
                 // Check if we already have the image on disk, and show it if we do.
                 NSString *imageSource = @"";
-                if ([UIImage imageWithData: [NSData dataWithContentsOfURL:[self imageCacheURLForId:imageId]]]) {
+                if ([[NSFileManager defaultManager] fileExistsAtPath:[[self imageCacheURLForId:imageId] absoluteString]]) {
                     imageSource = [[self imageCacheURLForId:imageId] absoluteString];
                 } else {
                     imageSource = @"loading_image.png";
@@ -277,9 +277,20 @@ NSString *ImageDidSaveToCacheNotification = @"ImageDidSaveToCache";
     NIAUCache *cache = [[NIAUCache alloc] init];
     NSString *imageId = [[imageDictionary objectForKey:@"id"] stringValue];
     NSURL *imageCacheURL = [self imageCacheURLForId:imageId];
+    NSURL *zipImageCacheURL = [[imageCacheURL URLByDeletingLastPathComponent] URLByAppendingPathComponent:[[[imageDictionary objectForKey:@"data"] objectForKey:@"url"] lastPathComponent]];
     
     // search our dictionary for the image data
-    NSURL *imageNetURL = [NSURL URLWithString:[[imageDictionary objectForKey:@"data"] objectForKey:@"url"]];
+    NSURL *imageNetURL;
+    
+    // If the image has been saved to our filesystem via a zip download from the net, change the imageNetURL to local.
+    // TODO: Probably should write another cache method ZIP? What do you think Pix?
+    if ([[NSFileManager defaultManager] fileExistsAtPath:[zipImageCacheURL path]]) {
+        // Image needs to be made into a PNG and stored to disk cache so send local URL
+        imageNetURL = zipImageCacheURL;
+    } else {
+        // Normal NetURL
+        imageNetURL = [NSURL URLWithString:[[imageDictionary objectForKey:@"data"] objectForKey:@"url"]];
+    }
     
     [cache addMethod:[[NIAUCacheMethod alloc] initMethod:@"memory" withReadBlock:^id(id options, id state) {
         return state[@"image"];
@@ -300,8 +311,6 @@ NSString *ImageDidSaveToCacheNotification = @"ImageDidSaveToCache";
     }]];
     return cache;
 }
-
-
 
 -(NIAUCache *)buildFeaturedImageThumbCache {
     __weak NIAUArticle *weakSelf = self;

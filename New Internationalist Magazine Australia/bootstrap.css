@@ -57,11 +57,11 @@ video {
 audio:not([controls]) {
     display: none;
 }
-html {
+/*html {
     font-size: 100%;
     -webkit-text-size-adjust: 100%;
     -ms-text-size-adjust: 100%;
-}
+}*/
 a:focus {
     outline: thin dotted #333;
     outline: 5px auto -webkit-focus-ring-color;
@@ -204,14 +204,14 @@ textarea {
         page-break-after: avoid;
     }
 }
-body {
+/*body {
     margin: 0;
     font-family: "Open Sans", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", sans-serif;
     font-size: 13px;
     line-height: 20px;
     color: #111111;
     background-color: #ffffff;
-}
+}*/
 a {
     color: #0088cc;
     text-decoration: none;

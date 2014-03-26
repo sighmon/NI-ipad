@@ -319,13 +319,13 @@ const char NotificationKey;
             // file is a directory
             NSArray *subDirectoryfiles = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:[unZippedPath stringByAppendingString:file] error:&filesError];
             for (NSString *subDirFile in subDirectoryfiles) {
-                // Move this file
-                filePath = [filePath stringByAppendingString:subDirFile];
-                destinationPath = [destinationPath stringByAppendingString:subDirFile];
-                [self moveFile:filePath toDestination:destinationPath];
+                // Move this sub-directory file
+                NSString *tempFilePath = [filePath stringByAppendingString:[NSString stringWithFormat:@"/%@",subDirFile]];
+                NSString *tempDestinationPath = [destinationPath stringByAppendingString:[NSString stringWithFormat:@"/%@",subDirFile]];
+                [self moveFile:tempFilePath toDestination:tempDestinationPath];
             }
         } else {
-            // Move this file
+            // Move this base-directory file
             [self moveFile:filePath toDestination:destinationPath];
         }
     }
