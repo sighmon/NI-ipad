@@ -11,13 +11,12 @@
 #import "NIAUArticle.h"
 #import "NSData+Cookieless.h"
 #import "local.h"
-#import <ZipArchive.h>
 #import "NIAUPublisher.h"
 
 extern NSString *ArticlesDidUpdateNotification;
 extern NSString *ArticlesFailedUpdateNotification;
 
-@interface NIAUIssue : NSObject <ZipArchiveDelegate>
+@interface NIAUIssue : NSObject
 {
     NSDictionary *dictionary;
     NSArray *articles;
@@ -38,7 +37,6 @@ extern NSString *ArticlesFailedUpdateNotification;
 +(NSArray *)issuesFromNKLibrary;
 +(NIAUIssue *)issueWithDictionary:(NSDictionary *)dict;
 +(NIAUIssue *)issueWithUserInfo:(NSDictionary *)dict;
-+(BOOL)unzipNKIssue:(NKIssue *)nkIssue;
 
 -(void)getCoverWithCompletionBlock:(void(^)(UIImage *img))block;
 

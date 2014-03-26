@@ -159,10 +159,7 @@ static NIAUPublisher *instance =nil;
 }
 
 -(NSString *)downloadPathForIssue:(NKIssue *)nkIssue {
-    NIAUIssue *issue = [self issueWithName:[nkIssue name]];
-    NSString *zipName = [issue.railsID.stringValue stringByAppendingString:@".zip"];
-//    NSString *zipName = @"87.zip";
-    return [[nkIssue.contentURL path] stringByAppendingPathComponent:zipName];
+    return [nkIssue.contentURL path];
 }
 
 @end

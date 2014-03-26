@@ -193,68 +193,6 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
     }
 }
 
-+(BOOL)unzipNKIssue:(NKIssue *)nkIssue {
-    // Unzip it using COCOAPOD ZipArchive
-    BOOL success = NO;
-    ZipArchive *zipArchive = [[ZipArchive alloc] init];
-    NSString *zipPath = [[NIAUPublisher getInstance] downloadPathForIssue:nkIssue];
-    NSString *contentPath = [[nkIssue contentURL] absoluteString];
-    
-    // Sanity check for zip file at path
-    if ([[NSFileManager defaultManager] fileExistsAtPath:zipPath]) {
-        NSLog(@"Yes, the zip file is there, calm down.");
-    } else {
-        NSLog(@"Error: See, sanity checks are good!");
-    }
-    
-    if ([zipArchive UnzipOpenFile: zipPath]) {
-        // Unzip the file to its issue path
-        // TODO: Work out why this isn't unzipping
-        
-        // Check the zip file contents
-        NSArray *zipFileContents = [zipArchive getZipFileContents];
-        NSLog(@"Zip file contents: %@", zipFileContents);
-        
-        BOOL didZip = false;
-        didZip = [zipArchive UnzipFileTo:contentPath overWrite: YES];
-        if (didZip == false){
-            // Handle this
-        } else {
-            NSLog(@"Unzip succedded (in theory)!");
-        }
-        [zipArchive UnzipCloseFile];
-        success = YES;
-    } else {
-        success = NO;
-    }
-    
-    // Delete zip file
-    NSError *error;
-    [[NSFileManager defaultManager] removeItemAtPath:zipPath error: &error];
-    if (error) {
-        NSLog(@"ERROR: Zip file couldn't be deleted from: %@", zipPath);
-    } else {
-        NSLog(@"Zip file deleted from: %@", zipPath);
-    }
-    
-    return success;
-}
-
-#pragma mark - ZipArchive delegate
-
-- (void)ErrorMessage:(NSString *)msg
-{
-    NSLog(@"ZipArchive Error: %@", msg);
-}
-
-- (BOOL)OverWriteOperation:(NSString *)file
-{
-    NSLog(@"File being over-written: %@", file);
-    return YES;
-}
-
-#pragma mark -
-
 //build from NKIssue object (read from cache)
 // called when building from cache
 

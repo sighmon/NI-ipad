@@ -55,6 +55,7 @@
 
 - (IBAction)dismissButtonTapped:(id)sender
 {
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
