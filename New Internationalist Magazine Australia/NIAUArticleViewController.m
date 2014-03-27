@@ -209,6 +209,12 @@ float cellPadding = 10.;
                                                                              error:nil];
     }
     
+    // Format the date
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"MMMM yyyy"];
+    
+    self.dateLabel.text = [NSString stringWithFormat: @"%@", [dateFormatter stringFromDate:self.article.publication]];
+    
     // Load the article into the webview
     
     NSString *bodyFromDisk = [self.article attemptToGetExpandedBodyFromDisk];

@@ -1059,7 +1059,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="6Sc-4I-h9J">
-                                        <rect key="frame" x="0.0" y="217" width="320" height="20"/>
+                                        <rect key="frame" x="0.0" y="241" width="320" height="20"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <constraints>
@@ -1108,11 +1108,11 @@
                                         </connections>
                                     </collectionView>
                                     <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PoX-gg-8cE">
-                                        <rect key="frame" x="0.0" y="245" width="320" height="323"/>
+                                        <rect key="frame" x="0.0" y="269" width="320" height="303"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="323" id="Zu2-h1-NqP"/>
+                                            <constraint firstAttribute="height" constant="303" id="Zu2-h1-NqP"/>
                                         </constraints>
                                         <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES" calendarEvent="YES"/>
                                         <connections>
@@ -1120,10 +1120,17 @@
                                         </connections>
                                     </webView>
                                     <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="aWi-L9-HiD">
-                                        <rect key="frame" x="142" y="260" width="37" height="37"/>
+                                        <rect key="frame" x="142" y="284" width="37" height="37"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="color" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                     </activityIndicatorView>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Article date" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b2q-s8-oDm">
+                                        <rect key="frame" x="20" y="214" width="280" height="15"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
+                                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="ulX-QY-4Wv" firstAttribute="top" secondItem="fuM-gI-7Bu" secondAttribute="bottom" constant="12" id="3Ck-sT-KiC"/>
@@ -1136,15 +1143,18 @@
                                     <constraint firstItem="ulX-QY-4Wv" firstAttribute="leading" secondItem="ftA-uH-mfj" secondAttribute="leading" constant="20" symbolic="YES" id="PZ4-LY-w6Z"/>
                                     <constraint firstItem="6Sc-4I-h9J" firstAttribute="leading" secondItem="ftA-uH-mfj" secondAttribute="leading" id="Vn9-NW-HUv"/>
                                     <constraint firstItem="PoX-gg-8cE" firstAttribute="leading" secondItem="ftA-uH-mfj" secondAttribute="leading" id="YyS-cI-Zqm"/>
+                                    <constraint firstAttribute="trailing" secondItem="b2q-s8-oDm" secondAttribute="trailing" constant="20" id="d3J-bP-MQ0"/>
                                     <constraint firstAttribute="centerX" secondItem="aWi-L9-HiD" secondAttribute="centerX" id="g60-BW-mWw"/>
                                     <constraint firstItem="fuM-gI-7Bu" firstAttribute="leading" secondItem="ftA-uH-mfj" secondAttribute="leading" constant="20" symbolic="YES" id="h7W-aA-u6j"/>
                                     <constraint firstItem="PAM-Qv-IM5" firstAttribute="trailing" secondItem="ftA-uH-mfj" secondAttribute="trailing" id="k68-sx-VHl"/>
                                     <constraint firstItem="PoX-gg-8cE" firstAttribute="trailing" secondItem="ftA-uH-mfj" secondAttribute="trailing" id="mCw-oi-6nn"/>
                                     <constraint firstItem="fuM-gI-7Bu" firstAttribute="top" secondItem="PAM-Qv-IM5" secondAttribute="bottom" constant="22" id="nce-JX-yH3"/>
+                                    <constraint firstItem="6Sc-4I-h9J" firstAttribute="top" secondItem="b2q-s8-oDm" secondAttribute="bottom" constant="12" id="pMT-aI-El2"/>
                                     <constraint firstAttribute="trailing" secondItem="ulX-QY-4Wv" secondAttribute="trailing" constant="20" symbolic="YES" id="qwM-Wm-Pd8"/>
                                     <constraint firstItem="aWi-L9-HiD" firstAttribute="top" secondItem="PoX-gg-8cE" secondAttribute="top" constant="15" id="r4w-Mp-YCd"/>
                                     <constraint firstItem="PAM-Qv-IM5" firstAttribute="width" secondItem="ftA-uH-mfj" secondAttribute="width" id="t4a-6H-DJF"/>
-                                    <constraint firstItem="6Sc-4I-h9J" firstAttribute="top" secondItem="ulX-QY-4Wv" secondAttribute="bottom" constant="11" id="uY4-ib-bXO"/>
+                                    <constraint firstItem="b2q-s8-oDm" firstAttribute="top" secondItem="ulX-QY-4Wv" secondAttribute="bottom" constant="8" id="tOW-DZ-eFg"/>
+                                    <constraint firstItem="b2q-s8-oDm" firstAttribute="leading" secondItem="ftA-uH-mfj" secondAttribute="leading" constant="20" id="yjN-kO-gDB"/>
                                 </constraints>
                             </scrollView>
                         </subviews>
@@ -1170,6 +1180,7 @@
                         <outlet property="bodyWebViewHeightConstraint" destination="Zu2-h1-NqP" id="tbM-21-nIy"/>
                         <outlet property="categoryCollectionView" destination="6Sc-4I-h9J" id="87z-iK-Q2s"/>
                         <outlet property="categoryCollectionViewHeightConstraint" destination="SJE-PO-sHh" id="o24-Se-6cf"/>
+                        <outlet property="dateLabel" destination="b2q-s8-oDm" id="4eH-ay-gIE"/>
                         <outlet property="featuredImage" destination="PAM-Qv-IM5" id="Lui-Dn-Ag7"/>
                         <outlet property="scrollView" destination="ftA-uH-mfj" id="uaw-RL-w11"/>
                         <outlet property="shareAction" destination="TQH-mr-pQg" id="cHu-AQ-lui"/>
@@ -1358,12 +1369,12 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="nQ6-DH-CWR"/>
         <segue reference="fFr-gL-mDW"/>
-        <segue reference="fI5-Du-KTZ"/>
         <segue reference="W9z-A8-KEC"/>
+        <segue reference="joJ-Rh-K6j"/>
+        <segue reference="mdp-6r-s59"/>
+        <segue reference="Qwc-Oh-1W1"/>
         <segue reference="SUv-P7-9yc"/>
         <segue reference="IfR-jT-MPw"/>
-        <segue reference="joJ-Rh-K6j"/>
     </inferredMetricsTieBreakers>
 </document>

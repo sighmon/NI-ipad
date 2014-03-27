@@ -31,6 +31,7 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *teaserLabel;
+@property (weak, nonatomic) IBOutlet UILabel *dateLabel;
 @property (weak, nonatomic) IBOutlet UILabel *authorLabel;
 @property (weak, nonatomic) IBOutlet UIWebView *bodyWebView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bodyWebViewHeightConstraint;
