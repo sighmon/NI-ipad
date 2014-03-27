@@ -422,9 +422,14 @@ float cellPadding = 10.;
 {
     NSMutableArray *itemsToShare = [[NSMutableArray alloc] initWithArray:@[[NSString stringWithFormat:@"I'm reading '%@' from New Internationalist magazine.",self.article.title], self.article.getGuestPassURL]];
     
-    // Only add the featured image if it exists
+    // Check if the featured image exists
     if (self.featuredImage.image != nil) {
         [itemsToShare addObject:self.featuredImage.image];
+    } else if (self.article.images.count > 0) {
+        // Set image to share
+        NSString *imageIDOfFirstImage = [[self.article.firstImage objectForKey:@"id"] stringValue];
+        NSURL *imageURL = [self.article imageCacheURLForId:imageIDOfFirstImage];
+        [itemsToShare addObject:[UIImage imageWithData:[NSData dataWithContentsOfURL:imageURL]]];
     }
     
     UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:itemsToShare applicationActivities:nil];

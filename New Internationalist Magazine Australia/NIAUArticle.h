@@ -37,6 +37,10 @@ extern NSString *ImageDidSaveToCacheNotification;
 -(NSDate *)publication;
 -(BOOL)isKeynote;
 
+-(NSArray *)images;
+-(NSURL *)imageCacheURLForId:(NSString *)imageId;
+-(NSDictionary *)firstImage;
+
 +(NSArray *)articlesFromIssue:(NIAUIssue *)issue;
 +(NIAUArticle *)articleWithIssue:(NIAUIssue *)issue andDictionary:(NSDictionary *)dict;
 +(NIAUArticle *)articleFromCacheWithIssue:(NIAUIssue *)issue andId:(NSNumber *)index;

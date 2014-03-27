@@ -273,6 +273,18 @@ NSString *ImageDidSaveToCacheNotification = @"ImageDidSaveToCache";
     return [NSURL URLWithString:[imageId stringByAppendingPathExtension:@"png"] relativeToURL:[self cacheURL]];
 }
 
+-(NSDictionary *)firstImage
+{
+    // Select the image by first position
+    NSArray *sortedImagesByPosition;
+    sortedImagesByPosition = [self.images sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
+        NSString *first = [(NSDictionary *)a objectForKey:@"position"];
+        NSString *second = [(NSDictionary *)b objectForKey:@"position"];
+        return [first compare:second];
+    }];
+    return [sortedImagesByPosition objectAtIndex:0];
+}
+
 -(NIAUCache *)buildImageCacheFromDictionary:(NSDictionary*)imageDictionary {
     NIAUCache *cache = [[NIAUCache alloc] init];
     NSString *imageId = [[imageDictionary objectForKey:@"id"] stringValue];
@@ -495,6 +507,11 @@ NSString *ImageDidSaveToCacheNotification = @"ImageDidSaveToCache";
         }
     }
     return articles;
+}
+
+-(NSArray *)images
+{
+    return [dictionary objectForKey:@"images"];
 }
 
 -(void)writeToCache {
