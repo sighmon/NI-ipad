@@ -78,12 +78,20 @@ NSString *ImageDidSaveToCacheNotification = @"ImageDidSaveToCache";
     // Expand the [File:xxx|option] tags
     NSString *newBody = [self expandImageTagsInBody:body];
     
-    if ([body isEqualToString:newBody] && [[dictionary objectForKey:@"images"] count] > 0) {
+    // Only add the un-embedded images if they aren't hidden.
+    NSMutableArray *imagesToAdd = [[NSMutableArray alloc] init];
+    [self.images enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL *stop) {
+        BOOL isHidden = [WITH_DEFAULT([obj objectForKey:@"hidden"], false) boolValue];
+        if (isHidden == NO) {
+            [imagesToAdd addObject:obj];
+        }
+    }];
+    
+    if ([body isEqualToString:newBody] && [imagesToAdd count] > 0) {
         // No images were found, but there are some attached to this article
         // So adding [File:xxx|full] for now and re-running generateNewBodyFromBody:
         
         NSString *modifiedBody = body;
-        NSMutableArray *imagesToAdd = [dictionary objectForKey:@"images"];
         
         // Sort the images by their position
         NSSortDescriptor *lowestPositionToHighest = [NSSortDescriptor sortDescriptorWithKey:@"position" ascending:NO];
