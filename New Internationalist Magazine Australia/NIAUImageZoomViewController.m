@@ -106,6 +106,15 @@
     }
 }
 
+- (void)handleDoubleTap:(UITapGestureRecognizer *)gestureRecognizer
+{
+    // double tap zooms in
+    NSLog(@"Double-tap detected.");
+    float newScale = [self.scrollView zoomScale] * ZOOM_STEP;
+    CGRect zoomRect = [self zoomRectForScale:newScale withCenter:[gestureRecognizer locationInView:gestureRecognizer.view]];
+    [self.scrollView zoomToRect:zoomRect animated:YES];
+}
+
 #pragma mark -
 #pragma mark Social sharing
 
@@ -133,15 +142,6 @@
     UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:itemsToShare applicationActivities:nil];
     [activityController setValue:[NSString stringWithFormat:@"Image from New Internationalist magazine."] forKey:@"subject"];
     [self presentViewController:activityController animated:YES completion:nil];
-}
-
-- (void)handleDoubleTap:(UITapGestureRecognizer *)gestureRecognizer
-{
-    // double tap zooms in
-    NSLog(@"Double-tap detected.");
-    float newScale = [self.scrollView zoomScale] * ZOOM_STEP;
-    CGRect zoomRect = [self zoomRectForScale:newScale withCenter:[gestureRecognizer locationInView:gestureRecognizer.view]];
-    [self.scrollView zoomToRect:zoomRect animated:YES];
 }
 
 #pragma mark -

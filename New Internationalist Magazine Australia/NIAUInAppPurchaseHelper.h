@@ -10,6 +10,8 @@
 
 #import <Foundation/Foundation.h>
 #import <StoreKit/StoreKit.h>
+#import <SSZipArchive.h>
+#import "NIAUPublisher.h"
 
 #import "GAI.h"
 #import "GAITracker.h"
@@ -21,7 +23,7 @@
 typedef void (^RequestProductsCompletionHandler)(BOOL success, NSArray * products);
 UIKIT_EXTERN NSString *const IAPHelperProductPurchasedNotification;
 
-@interface NIAUInAppPurchaseHelper : NSObject <SKProductsRequestDelegate, SKPaymentTransactionObserver, NSURLConnectionDelegate>
+@interface NIAUInAppPurchaseHelper : NSObject <SKProductsRequestDelegate, SKPaymentTransactionObserver, NSURLConnectionDelegate, SSZipArchiveDelegate>
 {
     SKProductsRequest *_productsRequest;
     RequestProductsCompletionHandler _completionHandler;
@@ -44,11 +46,14 @@ UIKIT_EXTERN NSString *const IAPHelperProductPurchasedNotification;
 
 + (NIAUInAppPurchaseHelper *)sharedInstance;
 
-+(NIAUInAppPurchaseHelper *)validateReceiptWithData:(NSData *)receiptData completionHandler:(void(^)(BOOL,NSString *))handler;
++ (NIAUInAppPurchaseHelper *)validateReceiptWithData:(NSData *)receiptData completionHandler:(void(^)(BOOL,NSString *))handler;
 
 @property (nonatomic,strong) void(^completionBlock)(BOOL,NSString *);
 @property (nonatomic,strong) NSData *receiptData;
 
 -(void)checkReceipt;
+
+- (void)unzipAndMoveFilesForConnection:(NSURLConnection *)connection toDestinationURL:(NSURL *)destinationURL;
+- (NSString *)requestZipURLforRailsID: (NSString *)railsID;
 
 @end

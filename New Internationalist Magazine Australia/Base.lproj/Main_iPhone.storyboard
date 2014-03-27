@@ -841,9 +841,6 @@
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="268" id="Zgf-pn-i15"/>
                                             </constraints>
-                                            <connections>
-                                                <outletCollection property="gestureRecognizers" destination="srz-x3-vx1" appends="YES" id="8Fc-Bz-lnf"/>
-                                            </connections>
                                         </imageView>
                                         <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Number - Date" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="tpj-tl-sET">
                                             <rect key="frame" x="20" y="302" width="280" height="17"/>
@@ -1004,11 +1001,6 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5Ob-iX-ukg" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="srz-x3-vx1">
-                    <connections>
-                        <action selector="handleCoverSingleTap:" destination="4fR-wf-HfG" id="P8J-qT-WQW"/>
-                    </connections>
-                </tapGestureRecognizer>
                 <tapGestureRecognizer id="aoi-04-NVy">
                     <connections>
                         <action selector="handleEditorSingleTap:" destination="4fR-wf-HfG" id="zcJ-Q0-guj"/>
@@ -1371,10 +1363,10 @@
     <inferredMetricsTieBreakers>
         <segue reference="fFr-gL-mDW"/>
         <segue reference="W9z-A8-KEC"/>
-        <segue reference="joJ-Rh-K6j"/>
-        <segue reference="mdp-6r-s59"/>
-        <segue reference="Qwc-Oh-1W1"/>
-        <segue reference="SUv-P7-9yc"/>
+        <segue reference="lhr-aW-Muh"/>
+        <segue reference="fI5-Du-KTZ"/>
         <segue reference="IfR-jT-MPw"/>
+        <segue reference="joJ-Rh-K6j"/>
+        <segue reference="SUv-P7-9yc"/>
     </inferredMetricsTieBreakers>
 </document>

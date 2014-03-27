@@ -74,6 +74,17 @@ static NSString *CellIdentifier = @"articleCell";
     [[UIApplication sharedApplication] setApplicationIconBadgeNumber: 0];
 //    [[UIApplication sharedApplication] cancelAllLocalNotifications]; // Only if you want to cancel local notifications.
     
+    // Tap
+    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap:)];
+    singleTap.numberOfTapsRequired = 1;
+    [self.imageView addGestureRecognizer:singleTap];
+    
+    UITapGestureRecognizer *doubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleDoubleTap:)];
+    doubleTap.numberOfTapsRequired = 2;
+    [self.imageView addGestureRecognizer:doubleTap];
+    
+    [singleTap requireGestureRecognizerToFail:doubleTap];
+    
     [self sendGoogleAnalyticsStats];
 }
 
@@ -522,10 +533,16 @@ static NSString *CellIdentifier = @"articleCell";
 #pragma mark -
 #pragma mark Responding to gestures
 
-- (IBAction)handleCoverSingleTap:(UITapGestureRecognizer *)recognizer
+- (void)handleSingleTap:(UITapGestureRecognizer *)gestureRecognizer
 {
     // Handle image being tapped
-    [self performSegueWithIdentifier:@"showImageZoom" sender:recognizer.view];
+    [self performSegueWithIdentifier:@"showImageZoom" sender:gestureRecognizer.view];
+}
+
+- (void)handleDoubleTap:(UITapGestureRecognizer *)gestureRecognizer
+{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Download" message:@"Would you like to download this issue for offline reading?" delegate:self cancelButtonTitle:@"No thanks" otherButtonTitles:@"Download", nil];
+    [alert show];
 }
 
 - (IBAction)handleEditorSingleTap:(UITapGestureRecognizer *)recognizer
@@ -538,6 +555,67 @@ static NSString *CellIdentifier = @"articleCell";
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - Alert view delegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    switch (buttonIndex) {
+        case 0:
+            // Cancel pressed
+            break;
+        case 1:
+            // Download pressed
+            [self startDownload];
+            break;
+        default:
+            break;
+    }
+}
+
+-(void)startDownload
+{
+    NSString *zipURL = [[NIAUInAppPurchaseHelper sharedInstance] requestZipURLforRailsID: [self.issue.railsID stringValue]];
+    
+    if (zipURL) {
+        // schedule for issue downloading in background
+        NKIssue *newNKIssue = [[NKLibrary sharedLibrary] issueWithName:self.issue.name];
+        if(newNKIssue) {
+            NSURL *downloadURL = [NSURL URLWithString:zipURL];
+            NSURLRequest *req = [NSURLRequest requestWithURL:downloadURL];
+            NKAssetDownload *assetDownload = [newNKIssue addAssetWithRequest:req];
+            [assetDownload downloadWithDelegate:self];
+        }
+    } else {
+        NSLog(@"No zipURL, so aborting.");
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Sorry" message:@"It doesn't look like you have a valid subscription or have purchased this issue." delegate:self cancelButtonTitle:@"Oh, okay" otherButtonTitles:nil];
+        [alert show];
+    }
+}
+
+#pragma mark - Download delegate
+
+- (void)connectionDidFinishDownloading:(NSURLConnection *)connection destinationURL:(NSURL *)destinationURL
+{
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+    
+    [[NIAUInAppPurchaseHelper sharedInstance] unzipAndMoveFilesForConnection:connection toDestinationURL:destinationURL];
+}
+
+- (void)connectionDidResumeDownloading:(NSURLConnection *)connection totalBytesWritten:(long long)totalBytesWritten expectedTotalBytes:(long long)expectedTotalBytes
+{
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+}
+
+- (void)connection:(NSURLConnection *)connection didWriteData:(long long)bytesWritten totalBytesWritten:(long long)totalBytesWritten expectedTotalBytes:(long long)expectedTotalBytes
+{
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+}
+
+- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
+{
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
 }
 
 #pragma mark -

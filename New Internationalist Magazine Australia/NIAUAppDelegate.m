@@ -226,7 +226,7 @@ const char NotificationKey;
     if(userInfo) {
         // Get the zipURL from Rails.
         NSString *railsID = [userInfo objectForKey:@"railsID"];
-        NSString *zipURL = [self requestZipURLforRailsID: railsID];
+        NSString *zipURL = [[NIAUInAppPurchaseHelper sharedInstance] requestZipURLforRailsID: railsID];
         
         if (zipURL) {
             // Create NIAUIssue from userInfo
@@ -271,98 +271,7 @@ const char NotificationKey;
 {
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     
-    NKAssetDownload *download = connection.newsstandAssetDownload;
-    NKIssue *nkIssue = download.issue;
-    
-    // Unzip the downloaded file
-    BOOL zipSuccess = NO;
-//    NSString *zipPath = [[NIAUPublisher getInstance] downloadPathForIssue:nkIssue];
-    NSString *contentPath = [[[nkIssue contentURL] path] stringByAppendingString:@"/"];
-    NSString *zipPath = [destinationURL path];
-    NSString *unZippedPath = [[[destinationURL path] stringByDeletingLastPathComponent] stringByAppendingString:@"/temp/"];
-    NSError *zipError;
-    
-    zipSuccess = [SSZipArchive unzipFileAtPath:zipPath toDestination:unZippedPath overwrite:NO password:nil error:&zipError];
-    if (!zipSuccess || zipError){
-        // Handle this
-        NSLog(@"Zip error: %@", zipError);
-    } else {
-        NSLog(@"Unzip succedded.");
-        // Delete zip file
-        NSError *error;
-        [[NSFileManager defaultManager] removeItemAtPath:zipPath error: &error];
-        if (error) {
-            NSLog(@"ERROR: Zip file couldn't be deleted from: %@", zipPath);
-        } else {
-            NSLog(@"Zip file deleted from: %@", zipPath);
-        }
-    }
-    
-    // Loop through the temp directory and copy files to destination URL
-    NSError *filesError = nil;
-    moveSuccess = false;
-    
-    NSArray *files = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:unZippedPath error:&filesError];
-    if (files == nil || filesError) {
-        // Error
-        NSLog(@"Error making the array from temp files in zip: %@", filesError);
-    }
-    
-    for (NSString *file in files) {
-        
-        NSString *filePath = [unZippedPath stringByAppendingString:file];
-        NSString *destinationPath = [contentPath stringByAppendingString:file];
-        
-        // Checking to see if any of the files is a directory
-        
-        if (([file rangeOfString:@"."].location == NSNotFound)) {
-            // file is a directory
-            NSArray *subDirectoryfiles = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:[unZippedPath stringByAppendingString:file] error:&filesError];
-            for (NSString *subDirFile in subDirectoryfiles) {
-                // Move this sub-directory file
-                NSString *tempFilePath = [filePath stringByAppendingString:[NSString stringWithFormat:@"/%@",subDirFile]];
-                NSString *tempDestinationPath = [destinationPath stringByAppendingString:[NSString stringWithFormat:@"/%@",subDirFile]];
-                [self moveFile:tempFilePath toDestination:tempDestinationPath];
-            }
-        } else {
-            // Move this base-directory file
-            [self moveFile:filePath toDestination:destinationPath];
-        }
-    }
-    
-    // Delete the temp directory.
-    if ([[NSFileManager defaultManager] fileExistsAtPath:unZippedPath]) {
-        NSError *error;
-        [[NSFileManager defaultManager] removeItemAtPath:unZippedPath error: &error];
-        if (error) {
-            NSLog(@"ERROR: unzipped path couldn't be deleted from: %@", unZippedPath);
-        } else {
-            NSLog(@"Unzipped path deleted from: %@", unZippedPath);
-        }
-    }
-    
-    if (moveSuccess) {
-        // Force a refresh
-        [[NIAUPublisher getInstance] forceDownloadIssues];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshViewNotification" object:nil];
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Download complete" message:@"The latest issue of New Internationalist has been downloaded and is ready to read." delegate:self cancelButtonTitle:@"Thanks!" otherButtonTitles:nil];
-        [alert show];
-    } else {
-        NSLog(@"ERROR: Nothing was moved, so either the user already had the entire issue in cache, or something went wrong.");
-    }
-}
-
-- (BOOL)moveFile:(NSString *)filePath toDestination:(NSString *)destinationPath
-{
-    NSError *moveError = nil;
-    if([[NSFileManager defaultManager] moveItemAtPath:filePath toPath:destinationPath error:&moveError]==NO) {
-        NSLog(@"Error moving file from %@ to %@", filePath, destinationPath);
-        return NO;
-    } else {
-        NSLog(@"File moved from %@ to %@", filePath, destinationPath);
-        moveSuccess = true;
-        return YES;
-    }
+    [[NIAUInAppPurchaseHelper sharedInstance] unzipAndMoveFilesForConnection:connection toDestinationURL:destinationURL];
 }
 
 - (void)connectionDidResumeDownloading:(NSURLConnection *)connection totalBytesWritten:(long long)totalBytesWritten expectedTotalBytes:(long long)expectedTotalBytes
@@ -378,63 +287,6 @@ const char NotificationKey;
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
 {
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-}
-
-- (NSString *)requestZipURLforRailsID: (NSString *)railsID
-{
-    // get zipURL from Rails
-    NSURL *issueURL = [NSURL URLWithString:[NSString stringWithFormat:@"issues/%@.json", railsID] relativeToURL:[NSURL URLWithString:SITE_URL]];
-    
-    NSData *receiptData = [NSData dataWithContentsOfURL:[[NSBundle mainBundle] appStoreReceiptURL]];
-    
-    NSString *base64receipt = [receiptData base64EncodedStringWithOptions:0];
-    NSData *postData = [base64receipt dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
-    NSString *postLength = [NSString stringWithFormat:@"%d", (int)[postData length]];
-    
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-    [request setURL:issueURL];
-    [request setHTTPMethod:@"POST"];
-    [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
-    [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
-    [request setHTTPBody:postData];
-    
-    NSError *error;
-    NSHTTPURLResponse *response;
-    
-    //    NSArray *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:[NSURL URLWithString:SITE_URL]];
-    
-    NSData *responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
-    int statusCode = (int)[response statusCode];
-    NSString *data = [[NSString alloc]initWithData:responseData encoding:NSUTF8StringEncoding];
-    if (!error && statusCode >= 200 && statusCode < 300) {
-        //        NSLog(@"Response from Rails: %@", data);
-        if ([[[response URL] lastPathComponent] isEqualToString:@"issues"]) {
-            // Issue isn't published yet.
-            NSLog(@"Rails response: Redirected to /issues");
-            responseData = nil;
-        }
-    } else {
-        NSLog(@"Rails returned statusCode: %d\n an error: %@\nAnd data: %@", statusCode, error, data);
-        responseData = nil;
-    }
-    
-    if (responseData) {
-        NSError *error = nil;
-        NSDictionary *jsonDictionary = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
-        
-        if (error != nil) {
-            NSLog(@"Error parsing JSON.");
-        }
-        else {
-            // Got a response from Rails, display it.
-            NSLog(@"JSON: %@", jsonDictionary);
-            if ([jsonDictionary objectForKey:@"zipURL"] != [NSNull null]) {
-                // return URL
-                return [jsonDictionary objectForKey:@"zipURL"];
-            }
-        }
-    }
-    return nil;
 }
 
 #pragma mark -

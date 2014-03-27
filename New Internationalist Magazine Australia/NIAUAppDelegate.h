@@ -7,11 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <SSZipArchive.h>
 
 extern const char NotificationKey;
 
-@interface NIAUAppDelegate : UIResponder <UIApplicationDelegate, NSURLConnectionDownloadDelegate, NSURLConnectionDelegate, SSZipArchiveDelegate>
+@interface NIAUAppDelegate : UIResponder <UIApplicationDelegate, NSURLConnectionDownloadDelegate, NSURLConnectionDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 

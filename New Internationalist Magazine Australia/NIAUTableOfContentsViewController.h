@@ -12,6 +12,7 @@
 #import "NIAUPublisher.h"
 #import "NIAUWebsiteViewController.h"
 #import "NIAUHelper.h"
+#import "NIAUInAppPurchaseHelper.h"
 
 #import "GAI.h"
 #import "GAITracker.h"
@@ -20,7 +21,7 @@
 #import "GAIFields.h"
 #import "GAILogger.h"
 
-@interface NIAUTableOfContentsViewController : UIViewController <UIScrollViewDelegate, UITextViewDelegate>
+@interface NIAUTableOfContentsViewController : UIViewController <UIScrollViewDelegate, UITextViewDelegate, NSURLConnectionDownloadDelegate, UIGestureRecognizerDelegate>
 
 @property (nonatomic, strong) NIAUIssue *issue;
 
