@@ -221,10 +221,10 @@ const char NotificationKey;
 
 - (void)startBackgroundDownloadWithUserInfo: (NSDictionary *)userInfo
 {
-    // TODO: get zip file from Rails, unpack it and save it to the library as a new nkIssue.
+    // Get zip file from Rails, unpack it and save it to the library as a new nkIssue.
     
     if(userInfo) {
-        // TODO: Get the zipURL from Rails.
+        // Get the zipURL from Rails.
         NSString *railsID = [userInfo objectForKey:@"railsID"];
         NSString *zipURL = [self requestZipURLforRailsID: railsID];
         
@@ -385,9 +385,9 @@ const char NotificationKey;
     // get zipURL from Rails
     NSURL *issueURL = [NSURL URLWithString:[NSString stringWithFormat:@"issues/%@.json", railsID] relativeToURL:[NSURL URLWithString:SITE_URL]];
     
-    NSData *secretData = [RAILS_ISSUE_SECRET dataUsingEncoding:NSUTF8StringEncoding];
+    NSData *receiptData = [NSData dataWithContentsOfURL:[[NSBundle mainBundle] appStoreReceiptURL]];
     
-    NSString *base64receipt = [secretData base64EncodedStringWithOptions:0];
+    NSString *base64receipt = [receiptData base64EncodedStringWithOptions:0];
     NSData *postData = [base64receipt dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
     NSString *postLength = [NSString stringWithFormat:@"%d", (int)[postData length]];
     
@@ -409,7 +409,7 @@ const char NotificationKey;
     if (!error && statusCode >= 200 && statusCode < 300) {
         //        NSLog(@"Response from Rails: %@", data);
         if ([[[response URL] lastPathComponent] isEqualToString:@"issues"]) {
-            // User isn't logged in, or login was wrong
+            // Issue isn't published yet.
             NSLog(@"Rails response: Redirected to /issues");
             responseData = nil;
         }
