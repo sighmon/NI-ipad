@@ -213,7 +213,7 @@ float cellPadding = 10.;
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"MMMM yyyy"];
     
-    self.dateLabel.text = [NSString stringWithFormat: @"%@", [dateFormatter stringFromDate:self.article.publication]];
+    self.dateLabel.text = [NSString stringWithFormat: @"%@", [dateFormatter stringFromDate:WITH_DEFAULT(self.article.publication,self.article.issue.publication)]];
     
     // Load the article into the webview
     
