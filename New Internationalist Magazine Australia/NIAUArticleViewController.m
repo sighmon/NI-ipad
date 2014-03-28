@@ -139,8 +139,6 @@ float cellPadding = 10.;
     NSString *javascriptString = [NSString stringWithFormat:@"var img = document.getElementById('image%@'); img.src = '%@';", notification.object[0], notification.object[1]];
     [self.bodyWebView stringByEvaluatingJavaScriptFromString:javascriptString];
     [self updateWebViewHeight];
-    [self.bodyWebView setNeedsUpdateConstraints];
-    [self.bodyWebView setNeedsLayout];
     [self updateScrollViewContentHeight];
 }
 
@@ -242,12 +240,15 @@ float cellPadding = 10.;
         contentRect = CGRectUnion(contentRect, view.frame);
     }
     self.scrollView.contentSize = contentRect.size;
+    [self.scrollView setNeedsUpdateConstraints];
+    [self.scrollView setNeedsLayout];
+    NSLog(@"Updated scrollview height to: %f", self.scrollView.contentSize.height);
 }
 
 - (void)updateWebViewHeight
 {
     // Set the webview size
-    CGSize size = [self.bodyWebView sizeThatFits: CGSizeMake(320., 1.)];
+    CGSize size = [self.bodyWebView sizeThatFits: CGSizeMake(self.view.frame.size.width, 1.)];
     CGRect frame = self.bodyWebView.frame;
     frame.size.height = size.height;
     self.bodyWebView.frame = frame;
@@ -256,8 +257,10 @@ float cellPadding = 10.;
     CGFloat contentHeight = self.bodyWebView.frame.size.height + 20;
     
     self.bodyWebViewHeightConstraint.constant = contentHeight;
-    [self.view needsUpdateConstraints];
-    NSLog(@"Updated webview height");
+    [self.bodyWebView setNeedsUpdateConstraints];
+    [self.bodyWebView setNeedsLayout];
+//    NSLog(@"Current width of self.view: %f", self.view.frame.size.width);
+    NSLog(@"Updated webview height to: %f", self.bodyWebView.frame.size.height);
 }
 
 - (void)updateCategoryCollectionViewHeight

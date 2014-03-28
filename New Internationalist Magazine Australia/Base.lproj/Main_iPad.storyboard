@@ -1123,7 +1123,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="e76-g1-MEQ">
-                                        <rect key="frame" x="0.0" y="453" width="768" height="571"/>
+                                        <rect key="frame" x="0.0" y="457" width="768" height="571"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
@@ -1140,7 +1140,7 @@
                                     </activityIndicatorView>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="e76-g1-MEQ" firstAttribute="top" secondItem="mdc-xz-zaZ" secondAttribute="bottom" constant="8" id="35l-ov-kca"/>
+                                    <constraint firstItem="e76-g1-MEQ" firstAttribute="top" secondItem="mdc-xz-zaZ" secondAttribute="bottom" constant="12" id="35l-ov-kca"/>
                                     <constraint firstItem="T4g-rx-Wfv" firstAttribute="top" secondItem="H3o-ox-YMu" secondAttribute="bottom" constant="8" id="5Hh-cL-uvD"/>
                                     <constraint firstItem="H3o-ox-YMu" firstAttribute="trailing" secondItem="GVh-7U-naF" secondAttribute="trailing" id="6ZR-6B-ebl"/>
                                     <constraint firstItem="XxT-mo-NcD" firstAttribute="trailing" secondItem="6wQ-vV-iqH" secondAttribute="trailing" id="GyC-jQ-YqU"/>
@@ -1277,14 +1277,21 @@
                                     <outlet property="delegate" destination="Mze-ob-E7u" id="s2G-S9-BP7"/>
                                 </connections>
                             </webView>
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.050000000000000003" translatesAutoresizingMaskIntoConstraints="NO" id="RO2-2o-CF5">
+                                <rect key="frame" x="0.0" y="66" width="768" height="2"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </progressView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="cj5-tj-WO3" firstAttribute="top" secondItem="Z3Y-72-Lhz" secondAttribute="top" constant="22" id="Ing-EK-yE0"/>
+                            <constraint firstItem="RO2-2o-CF5" firstAttribute="top" secondItem="cj5-tj-WO3" secondAttribute="bottom" id="Pmf-JZ-aAU"/>
                             <constraint firstItem="R0X-fd-Q3G" firstAttribute="leading" secondItem="Z3Y-72-Lhz" secondAttribute="leading" id="RGu-hn-W6u"/>
                             <constraint firstAttribute="trailing" secondItem="R0X-fd-Q3G" secondAttribute="trailing" id="WJu-rl-6IY"/>
                             <constraint firstItem="R0X-fd-Q3G" firstAttribute="top" secondItem="cj5-tj-WO3" secondAttribute="bottom" id="XPc-1F-TNs"/>
                             <constraint firstItem="jlP-B5-NKo" firstAttribute="top" secondItem="R0X-fd-Q3G" secondAttribute="bottom" id="fQf-iI-RRo"/>
+                            <constraint firstItem="RO2-2o-CF5" firstAttribute="leading" secondItem="Z3Y-72-Lhz" secondAttribute="leading" id="iYK-mD-dzQ"/>
+                            <constraint firstAttribute="trailing" secondItem="RO2-2o-CF5" secondAttribute="trailing" id="tuE-Fd-iSv"/>
                             <constraint firstAttribute="trailing" secondItem="cj5-tj-WO3" secondAttribute="trailing" id="u9q-zY-L02"/>
                             <constraint firstItem="cj5-tj-WO3" firstAttribute="leading" secondItem="Z3Y-72-Lhz" secondAttribute="leading" id="wyy-Kf-H7A"/>
                         </constraints>
@@ -1297,6 +1304,7 @@
                         <outlet property="browserShare" destination="usd-Of-4oa" id="iwn-Ql-93T"/>
                         <outlet property="browserURL" destination="ws9-UA-Atw" id="7YH-2B-bdN"/>
                         <outlet property="dismissModal" destination="oJW-ZT-un2" id="I2v-l3-H5D"/>
+                        <outlet property="progressView" destination="RO2-2o-CF5" id="2I1-iu-6Cs"/>
                         <outlet property="webView" destination="R0X-fd-Q3G" id="wnQ-Jd-hOL"/>
                     </connections>
                 </viewController>
@@ -1397,11 +1405,11 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="7r1-dy-lxK"/>
-        <segue reference="w0v-2Q-MmG"/>
         <segue reference="WLv-dP-nWF"/>
-        <segue reference="fFO-5s-0tA"/>
+        <segue reference="JBV-bs-efO"/>
+        <segue reference="d5N-e1-WGj"/>
+        <segue reference="PvO-ql-dqR"/>
         <segue reference="w2Z-Bz-DtP"/>
         <segue reference="mho-0V-J7B"/>
-        <segue reference="PYT-qA-gCe"/>
     </inferredMetricsTieBreakers>
 </document>

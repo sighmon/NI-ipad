@@ -834,6 +834,10 @@
                                     <rect key="frame" x="0.0" y="64" width="320" height="333"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
+                                        <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="xMh-ec-uY2">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="2"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        </progressView>
                                         <imageView multipleTouchEnabled="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="XBT-LF-UKS">
                                             <rect key="frame" x="0.0" y="20" width="320" height="268"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -848,10 +852,6 @@
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="xMh-ec-uY2">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="2"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        </progressView>
                                     </subviews>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                     <constraints>
@@ -1264,16 +1264,23 @@
                                     </barButtonItem>
                                 </items>
                             </toolbar>
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.050000000000000003" translatesAutoresizingMaskIntoConstraints="NO" id="RQb-eE-mvD">
+                                <rect key="frame" x="0.0" y="66" width="320" height="2"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </progressView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="lLt-cQ-fC9" firstAttribute="leading" secondItem="bR3-Iz-HnC" secondAttribute="leading" id="0Hd-uy-Dew"/>
+                            <constraint firstItem="RQb-eE-mvD" firstAttribute="top" secondItem="lLt-cQ-fC9" secondAttribute="bottom" id="L5y-YK-PXs"/>
                             <constraint firstAttribute="trailing" secondItem="lLt-cQ-fC9" secondAttribute="trailing" id="ah5-HO-BHy"/>
+                            <constraint firstItem="RQb-eE-mvD" firstAttribute="leading" secondItem="bR3-Iz-HnC" secondAttribute="leading" id="av1-ZB-VK7"/>
                             <constraint firstAttribute="trailing" secondItem="6Ix-NF-gZW" secondAttribute="trailing" id="f6s-M5-FM0"/>
                             <constraint firstItem="Nse-3K-yRK" firstAttribute="top" secondItem="6Ix-NF-gZW" secondAttribute="bottom" id="ftT-Ip-bOG"/>
                             <constraint firstItem="6Ix-NF-gZW" firstAttribute="leading" secondItem="bR3-Iz-HnC" secondAttribute="leading" id="hgj-01-Cs6"/>
                             <constraint firstItem="lLt-cQ-fC9" firstAttribute="top" secondItem="bR3-Iz-HnC" secondAttribute="top" constant="22" id="lZl-Hc-8kE"/>
                             <constraint firstItem="6Ix-NF-gZW" firstAttribute="top" secondItem="lLt-cQ-fC9" secondAttribute="bottom" id="uU8-3l-TRd"/>
+                            <constraint firstAttribute="trailing" secondItem="RQb-eE-mvD" secondAttribute="trailing" id="whh-Mv-Gja"/>
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
@@ -1284,6 +1291,7 @@
                         <outlet property="browserRefresh" destination="h5d-rm-L0f" id="Z1f-ZV-tev"/>
                         <outlet property="browserShare" destination="Cvb-eZ-tz1" id="48h-pQ-FVD"/>
                         <outlet property="dismissModal" destination="2Aa-rS-0Rh" id="nhb-xV-lPL"/>
+                        <outlet property="progressView" destination="RQb-eE-mvD" id="KK8-d6-ynJ"/>
                         <outlet property="webView" destination="6Ix-NF-gZW" id="Vdw-TP-bst"/>
                     </connections>
                 </viewController>

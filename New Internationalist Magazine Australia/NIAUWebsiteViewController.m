@@ -9,6 +9,10 @@
 #import "NIAUWebsiteViewController.h"
 
 @interface NIAUWebsiteViewController ()
+{
+    BOOL isPageLoaded;
+    NSTimer *myTimer;
+}
 
 @end
 
@@ -108,18 +112,45 @@
 - (void)webViewDidStartLoad:(UIWebView *)webView
 {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    isPageLoaded = false;
+    myTimer = [NSTimer scheduledTimerWithTimeInterval:0.4 target:self selector:@selector(timerCallback) userInfo:nil repeats:YES];
+    [self.progressView setHidden:NO];
     self.browserURL.title = [[self.webView.request.URL URLByDeletingLastPathComponent] absoluteString];
     [self updateButtons];
 }
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+    isPageLoaded = true;
+    [self.progressView setHidden:YES];
     [self updateButtons];
 }
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+    [self.progressView setHidden:YES];
     [self updateButtons];
+}
+
+-(void)timerCallback {
+    if (isPageLoaded) {
+        if (self.progressView.progress >= 1) {
+            [self.progressView setHidden:YES];
+        }
+        else {
+            float progress = self.progressView.progress;
+            progress += 0.1;
+            [self.progressView setProgress:progress animated:YES];
+        }
+    }
+    else {
+        float progress = self.progressView.progress;
+        progress += 0.05;
+        [self.progressView setProgress:progress animated:YES];
+        if (self.progressView.progress >= 0.95) {
+            self.progressView.progress = 0.95;
+        }
+    }
 }
 
 @end
