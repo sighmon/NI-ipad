@@ -511,12 +511,12 @@
                                 <rect key="frame" x="20" y="427" width="280" height="33"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <state key="normal" title="Sign up for an NI account">
+                                <state key="normal" title="Buy a subscription">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
                                     <action selector="signupButtonTapped:" destination="fEr-qG-YdO" eventType="touchUpInside" id="Zqh-Cp-QKZ"/>
-                                    <segue destination="aFP-ao-u02" kind="modal" identifier="signupWebview" id="HBk-k2-11u"/>
+                                    <segue destination="qrh-8f-IqL" kind="push" identifier="loginToSubscription" id="fiu-rJ-sXO"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -774,7 +774,7 @@
                                     <constraint firstItem="HC4-zq-3kn" firstAttribute="leading" secondItem="UlN-Dh-s6k" secondAttribute="leading" id="06M-Bq-2jZ"/>
                                     <constraint firstItem="Xkd-us-qSy" firstAttribute="top" secondItem="lDG-gz-ZfT" secondAttribute="bottom" constant="8" id="CXT-45-msA"/>
                                     <constraint firstItem="HC4-zq-3kn" firstAttribute="centerX" secondItem="lDG-gz-ZfT" secondAttribute="centerX" id="Feh-t9-1kk"/>
-                                    <constraint firstAttribute="centerX" secondItem="Xkd-us-qSy" secondAttribute="centerX" id="Hpl-r2-zyz"/>
+                                    <constraint firstItem="Xkd-us-qSy" firstAttribute="centerX" secondItem="HC4-zq-3kn" secondAttribute="centerX" id="FhF-o2-oZN"/>
                                     <constraint firstItem="vqy-Xy-Jar" firstAttribute="leading" secondItem="UlN-Dh-s6k" secondAttribute="leading" constant="20" id="JVN-OJ-eAl"/>
                                     <constraint firstAttribute="trailing" secondItem="vqy-Xy-Jar" secondAttribute="trailing" constant="20" id="Jpm-CK-2pd"/>
                                     <constraint firstItem="HC4-zq-3kn" firstAttribute="top" secondItem="Xkd-us-qSy" secondAttribute="bottom" constant="8" id="JqD-B7-8Cv"/>
@@ -1362,11 +1362,11 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="fFr-gL-mDW"/>
-        <segue reference="W9z-A8-KEC"/>
-        <segue reference="lhr-aW-Muh"/>
         <segue reference="fI5-Du-KTZ"/>
+        <segue reference="W9z-A8-KEC"/>
         <segue reference="IfR-jT-MPw"/>
         <segue reference="joJ-Rh-K6j"/>
-        <segue reference="SUv-P7-9yc"/>
+        <segue reference="fiu-rJ-sXO"/>
+        <segue reference="nQ6-DH-CWR"/>
     </inferredMetricsTieBreakers>
 </document>

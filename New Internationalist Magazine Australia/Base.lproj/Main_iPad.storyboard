@@ -866,9 +866,9 @@
                                     </view>
                                 </subviews>
                                 <constraints>
+                                    <constraint firstItem="Ys3-XL-Q5v" firstAttribute="centerX" secondItem="8KR-8d-QvV" secondAttribute="centerX" id="7JN-AM-iYt"/>
                                     <constraint firstItem="Cnn-pX-Pxx" firstAttribute="leading" secondItem="nAy-59-iXi" secondAttribute="leading" constant="20" id="F2F-Oy-eNB"/>
                                     <constraint firstAttribute="trailing" secondItem="tSs-c7-X5f" secondAttribute="trailing" constant="20" id="Ita-us-wKt"/>
-                                    <constraint firstAttribute="centerX" secondItem="Ys3-XL-Q5v" secondAttribute="centerX" id="Pkb-nL-oI6"/>
                                     <constraint firstAttribute="centerX" secondItem="Cnn-pX-Pxx" secondAttribute="centerX" id="PrO-rn-ETs"/>
                                     <constraint firstItem="8KR-8d-QvV" firstAttribute="leading" secondItem="nAy-59-iXi" secondAttribute="leading" id="UWW-m7-AwW"/>
                                     <constraint firstAttribute="centerX" secondItem="tSs-c7-X5f" secondAttribute="centerX" id="Ypn-mJ-Kgi"/>
@@ -896,6 +896,7 @@
                     </view>
                     <connections>
                         <outlet property="aboutWebView" destination="8KR-8d-QvV" id="uxv-A7-iHO"/>
+                        <outlet property="aboutWebViewHightConstraint" destination="lDp-M9-jEk" id="qFc-X0-NUU"/>
                         <outlet property="analyticsSwitch" destination="o1T-ws-MVv" id="Lgt-Vv-l15"/>
                         <outlet property="dismissModal" destination="AnR-15-ccv" id="j7M-qN-KyN"/>
                         <outlet property="scrollView" destination="nAy-59-iXi" id="uLB-nB-9c1"/>
@@ -972,12 +973,12 @@
                                     <constraint firstAttribute="width" constant="196" id="TG9-IO-fV2"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <state key="normal" title="Sign up for an NI account">
+                                <state key="normal" title="Buy a subscription">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
                                     <action selector="signupButtonTapped:" destination="rZc-6Q-DEj" eventType="touchUpInside" id="bbu-yK-Dn0"/>
-                                    <segue destination="Mze-ob-E7u" kind="modal" identifier="signupWebview" id="agh-8f-6D4"/>
+                                    <segue destination="d0z-vn-J25" kind="push" identifier="loginToSubscription" id="PYT-qA-gCe"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -1389,10 +1390,10 @@
     <inferredMetricsTieBreakers>
         <segue reference="7r1-dy-lxK"/>
         <segue reference="WLv-dP-nWF"/>
-        <segue reference="PvO-ql-dqR"/>
-        <segue reference="d5N-e1-WGj"/>
-        <segue reference="mho-0V-J7B"/>
         <segue reference="JBV-bs-efO"/>
         <segue reference="w2Z-Bz-DtP"/>
+        <segue reference="mho-0V-J7B"/>
+        <segue reference="PYT-qA-gCe"/>
+        <segue reference="ZRl-y5-oyE"/>
     </inferredMetricsTieBreakers>
 </document>

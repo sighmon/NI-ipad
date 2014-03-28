@@ -60,9 +60,7 @@
     if ([self.aboutWebView respondsToSelector:@selector(scrollView)]) {
         self.aboutWebView.scrollView.scrollEnabled = NO;
     }
-    self.scrollView.scrollsToTop = NO;
-    
-    // TODO: Add subscription expiry date information here.
+    self.scrollView.scrollsToTop = YES;
 }
 
 - (void)updateWebViewHeight
@@ -77,8 +75,9 @@
     CGFloat contentHeight = self.aboutWebView.frame.size.height;
     
     self.aboutWebViewHightConstraint.constant = contentHeight;
-    [self.view needsUpdateConstraints];
-    NSLog(@"Updated webview height");
+    [self.aboutWebView setNeedsUpdateConstraints];
+    [self.aboutWebView setNeedsLayout];
+    NSLog(@"Updated webview height: %f", self.aboutWebView.frame.size.height);
 }
 
 - (void)updateScrollViewContentHeight
@@ -88,6 +87,8 @@
         contentRect = CGRectUnion(contentRect, view.frame);
     }
     self.scrollView.contentSize = contentRect.size;
+    [self.scrollView setNeedsLayout];
+    NSLog(@"Scrollview height: %f",self.scrollView.contentSize.height);
 }
 
 - (void)sendGoogleAnalyticsStats
