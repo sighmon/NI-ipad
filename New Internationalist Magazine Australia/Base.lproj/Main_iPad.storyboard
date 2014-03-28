@@ -568,13 +568,20 @@
                                             <outletCollection property="gestureRecognizers" destination="LNS-6r-CEZ" appends="YES" id="jGY-0J-vLK"/>
                                         </connections>
                                     </imageView>
+                                    <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="Rje-Zk-cVx">
+                                        <rect key="frame" x="0.0" y="64" width="384" height="2"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </progressView>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="fpA-Cj-zEf" firstAttribute="top" secondItem="2Jy-dG-VkX" secondAttribute="bottom" constant="8" id="07a-Cx-UqK"/>
+                                    <constraint firstItem="Rje-Zk-cVx" firstAttribute="top" secondItem="Zqd-QL-8wn" secondAttribute="top" constant="64" id="6oo-y4-3Ed"/>
                                     <constraint firstAttribute="trailing" secondItem="ebt-QH-0s8" secondAttribute="trailing" id="7Xs-id-hg1"/>
                                     <constraint firstItem="ewB-NK-0ve" firstAttribute="top" secondItem="fpA-Cj-zEf" secondAttribute="bottom" constant="8" symbolic="YES" id="EvR-JX-jfA"/>
                                     <constraint firstAttribute="trailing" secondItem="i6V-Mh-aMJ" secondAttribute="trailing" constant="20" symbolic="YES" id="KXC-Hi-KTO"/>
+                                    <constraint firstItem="Rje-Zk-cVx" firstAttribute="leading" secondItem="Zqd-QL-8wn" secondAttribute="leading" id="Lgu-Ul-DdW"/>
                                     <constraint firstItem="ewB-NK-0ve" firstAttribute="leading" secondItem="Zqd-QL-8wn" secondAttribute="leading" constant="20" symbolic="YES" id="Oek-5u-ywG"/>
+                                    <constraint firstAttribute="trailing" secondItem="Rje-Zk-cVx" secondAttribute="trailing" id="PbD-vy-R2M"/>
                                     <constraint firstItem="2Jy-dG-VkX" firstAttribute="top" secondItem="ebt-QH-0s8" secondAttribute="bottom" constant="8" id="Q8s-3o-Zvo"/>
                                     <constraint firstItem="ebt-QH-0s8" firstAttribute="leading" secondItem="Zqd-QL-8wn" secondAttribute="leading" id="Rv4-4q-Z2G"/>
                                     <constraint firstAttribute="trailing" secondItem="2Jy-dG-VkX" secondAttribute="trailing" constant="20" symbolic="YES" id="ZIN-x6-bbI"/>
@@ -621,6 +628,7 @@
                         <outlet property="imageView" destination="ebt-QH-0s8" id="2h3-p7-vHd"/>
                         <outlet property="labelEditor" destination="i6V-Mh-aMJ" id="zOw-Kt-cLd"/>
                         <outlet property="labelNumberAndDate" destination="2Jy-dG-VkX" id="iR0-H3-mhh"/>
+                        <outlet property="progressView" destination="Rje-Zk-cVx" id="btq-6e-bgU"/>
                         <outlet property="scrollView" destination="Zqd-QL-8wn" id="d7F-Z6-J6R"/>
                         <outlet property="shareAction" destination="JEv-4t-ZCj" id="h6Z-qa-EvR"/>
                         <outlet property="tableView" destination="SJ4-ca-Goj" id="o7k-zH-Cpf"/>
@@ -1389,11 +1397,11 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="7r1-dy-lxK"/>
+        <segue reference="w0v-2Q-MmG"/>
         <segue reference="WLv-dP-nWF"/>
-        <segue reference="JBV-bs-efO"/>
+        <segue reference="fFO-5s-0tA"/>
         <segue reference="w2Z-Bz-DtP"/>
         <segue reference="mho-0V-J7B"/>
         <segue reference="PYT-qA-gCe"/>
-        <segue reference="ZRl-y5-oyE"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -63,4 +63,6 @@
 
 @property (nonatomic, weak) IBOutlet UINavigationItem *shareAction;
 
+@property (nonatomic, weak) IBOutlet UIProgressView *progressView;
+
 @end

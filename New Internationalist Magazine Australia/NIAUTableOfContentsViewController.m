@@ -9,6 +9,9 @@
 #import "NIAUTableOfContentsViewController.h"
 #import "NIAUImageZoomViewController.h"
 
+// Because S3 doesn't give us expectedTotalBytes we use about 21mb
+#define kExpectedTotalBytesFromS3 22020096.
+
 @interface NIAUTableOfContentsViewController ()
 
 @end
@@ -74,7 +77,7 @@ static NSString *CellIdentifier = @"articleCell";
     [[UIApplication sharedApplication] setApplicationIconBadgeNumber: 0];
 //    [[UIApplication sharedApplication] cancelAllLocalNotifications]; // Only if you want to cancel local notifications.
     
-    // Tap
+    // Tap gestures to download the full zip issue
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap:)];
     singleTap.numberOfTapsRequired = 1;
     [self.imageView addGestureRecognizer:singleTap];
@@ -84,6 +87,9 @@ static NSString *CellIdentifier = @"articleCell";
     [self.imageView addGestureRecognizer:doubleTap];
     
     [singleTap requireGestureRecognizerToFail:doubleTap];
+    
+    // Progress view for zip download
+    [self.progressView setHidden:YES];
     
     [self sendGoogleAnalyticsStats];
 }
@@ -599,6 +605,7 @@ static NSString *CellIdentifier = @"articleCell";
 - (void)connectionDidFinishDownloading:(NSURLConnection *)connection destinationURL:(NSURL *)destinationURL
 {
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+    [self.progressView setHidden:YES];
     
     [[NIAUInAppPurchaseHelper sharedInstance] unzipAndMoveFilesForConnection:connection toDestinationURL:destinationURL];
 }
@@ -606,16 +613,22 @@ static NSString *CellIdentifier = @"articleCell";
 - (void)connectionDidResumeDownloading:(NSURLConnection *)connection totalBytesWritten:(long long)totalBytesWritten expectedTotalBytes:(long long)expectedTotalBytes
 {
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    [self.progressView setHidden:NO];
+    [self.progressView setProgress:totalBytesWritten/kExpectedTotalBytesFromS3 animated:YES];
 }
 
 - (void)connection:(NSURLConnection *)connection didWriteData:(long long)bytesWritten totalBytesWritten:(long long)totalBytesWritten expectedTotalBytes:(long long)expectedTotalBytes
 {
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    [self.progressView setHidden:NO];
+    float bytesProgress = totalBytesWritten/kExpectedTotalBytesFromS3;
+    [self.progressView setProgress:bytesProgress animated:YES];
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
 {
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+    [self.progressView setHidden:YES];
 }
 
 #pragma mark -

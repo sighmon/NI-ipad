@@ -848,14 +848,21 @@
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="xMh-ec-uY2">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="2"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        </progressView>
                                     </subviews>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                     <constraints>
+                                        <constraint firstItem="xMh-ec-uY2" firstAttribute="leading" secondItem="1hg-fr-PgB" secondAttribute="leading" id="0lC-w4-XWC"/>
                                         <constraint firstItem="tpj-tl-sET" firstAttribute="leading" secondItem="1hg-fr-PgB" secondAttribute="leading" constant="20" symbolic="YES" id="3RD-aa-edD"/>
                                         <constraint firstItem="XBT-LF-UKS" firstAttribute="leading" secondItem="1hg-fr-PgB" secondAttribute="leading" id="GLe-ai-Gv5"/>
                                         <constraint firstAttribute="trailing" secondItem="tpj-tl-sET" secondAttribute="trailing" constant="20" symbolic="YES" id="POE-cZ-hct"/>
+                                        <constraint firstAttribute="trailing" secondItem="xMh-ec-uY2" secondAttribute="trailing" id="aBm-eJ-sYx"/>
                                         <constraint firstItem="tpj-tl-sET" firstAttribute="top" secondItem="XBT-LF-UKS" secondAttribute="bottom" constant="14" id="cOg-pf-uaW"/>
                                         <constraint firstAttribute="trailing" secondItem="XBT-LF-UKS" secondAttribute="trailing" id="dqY-Ef-yAK"/>
+                                        <constraint firstItem="xMh-ec-uY2" firstAttribute="top" secondItem="1hg-fr-PgB" secondAttribute="top" id="eoj-Of-rGK"/>
                                         <constraint firstItem="XBT-LF-UKS" firstAttribute="top" secondItem="1hg-fr-PgB" secondAttribute="top" constant="20" id="glm-bW-Vsf"/>
                                         <constraint firstAttribute="bottom" secondItem="tpj-tl-sET" secondAttribute="bottom" constant="14" id="vVN-On-Iau"/>
                                     </constraints>
@@ -993,6 +1000,7 @@
                         <outlet property="imageView" destination="XBT-LF-UKS" id="mOA-z4-05p"/>
                         <outlet property="labelEditor" destination="vj2-0b-v5W" id="yiv-aD-Xzw"/>
                         <outlet property="labelNumberAndDate" destination="tpj-tl-sET" id="1sU-Ac-YiU"/>
+                        <outlet property="progressView" destination="xMh-ec-uY2" id="mx3-eV-f9Q"/>
                         <outlet property="shareAction" destination="mI9-oR-uci" id="rMW-qw-47Q"/>
                         <outlet property="tableView" destination="tJH-G9-L0y" id="4hc-uk-IUa"/>
                         <outlet property="tableViewFooterView" destination="9lb-Lk-61p" id="inh-wt-sUE"/>
@@ -1361,12 +1369,12 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
+        <segue reference="joJ-Rh-K6j"/>
+        <segue reference="W9z-A8-KEC"/>
         <segue reference="fFr-gL-mDW"/>
         <segue reference="fI5-Du-KTZ"/>
-        <segue reference="W9z-A8-KEC"/>
+        <segue reference="lhr-aW-Muh"/>
         <segue reference="IfR-jT-MPw"/>
-        <segue reference="joJ-Rh-K6j"/>
         <segue reference="fiu-rJ-sXO"/>
-        <segue reference="nQ6-DH-CWR"/>
     </inferredMetricsTieBreakers>
 </document>
