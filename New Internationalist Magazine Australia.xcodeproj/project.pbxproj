@@ -96,6 +96,8 @@
 		05BC3CEC18BE6EFC00769F81 /* new-internationalist-logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 05BC3CEA18BE6EFC00769F81 /* new-internationalist-logo@2x.png */; };
 		05BC3CF018BE7B3C00769F81 /* NIAUHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 05BC3CEF18BE7B3C00769F81 /* NIAUHelper.m */; };
 		05C29EFE188736B1004FC28D /* new-issue.caf in Resources */ = {isa = PBXBuildFile; fileRef = 05C29EFD188736B1004FC28D /* new-issue.caf */; };
+		05CAF9E118E9FBC0000BE0BF /* loading_image.gif in Resources */ = {isa = PBXBuildFile; fileRef = 05CAF9DF18E9FBC0000BE0BF /* loading_image.gif */; };
+		05CAF9E218E9FBC0000BE0BF /* loading_image@2x.gif in Resources */ = {isa = PBXBuildFile; fileRef = 05CAF9E018E9FBC0000BE0BF /* loading_image@2x.gif */; };
 		05F856CF1864C67E001D1A75 /* NIAUArticleCategoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 05F856CE1864C67E001D1A75 /* NIAUArticleCategoryCell.m */; };
 		3CA1C435E64C4F6F866B2E9B /* libPods-New Internationalist Magazine Australia.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BC803423D2F743538C4A77A9 /* libPods-New Internationalist Magazine Australia.a */; };
 		52090A62178CF7D1002D5162 /* NIAUPublisher.m in Sources */ = {isa = PBXBuildFile; fileRef = 52090A61178CF7D1002D5162 /* NIAUPublisher.m */; };
@@ -225,6 +227,8 @@
 		05C29EFD188736B1004FC28D /* new-issue.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "new-issue.caf"; sourceTree = "<group>"; };
 		05C95838187DF8EF00FD262F /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		05C9583A187DF9DE00FD262F /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
+		05CAF9DF18E9FBC0000BE0BF /* loading_image.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = loading_image.gif; sourceTree = "<group>"; };
+		05CAF9E018E9FBC0000BE0BF /* loading_image@2x.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "loading_image@2x.gif"; sourceTree = "<group>"; };
 		05EF22F218E1E7B70017244C /* libz.1.2.5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.5.dylib; path = usr/lib/libz.1.2.5.dylib; sourceTree = SDKROOT; };
 		05F856CD1864C67E001D1A75 /* NIAUArticleCategoryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NIAUArticleCategoryCell.h; sourceTree = "<group>"; };
 		05F856CE1864C67E001D1A75 /* NIAUArticleCategoryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NIAUArticleCategoryCell.m; sourceTree = "<group>"; };
@@ -303,6 +307,8 @@
 		053878281777E034001E60F6 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				05CAF9DF18E9FBC0000BE0BF /* loading_image.gif */,
+				05CAF9E018E9FBC0000BE0BF /* loading_image@2x.gif */,
 				052D797A18C7FD14000C03C2 /* loading_image.png */,
 				052D797B18C7FD14000C03C2 /* loading_image@2x.png */,
 				05BC3CE918BE6EFC00769F81 /* new-internationalist-logo.png */,
@@ -637,6 +643,7 @@
 				0528EC3717850989000175AB /* default_editors_photo.png in Resources */,
 				052A850617C5E13900D36E6C /* 100.png in Resources */,
 				0567082817B1D51400A87818 /* default_article_image_table_view.png in Resources */,
+				05CAF9E118E9FBC0000BE0BF /* loading_image.gif in Resources */,
 				052A84FC17C5E13900D36E6C /* Default-568h@2x.png in Resources */,
 				052E32B318E1F74300A1906E /* bootstrap.css in Resources */,
 				051FB64818AC15BF00FA734C /* UIWebViewNext@2x.png in Resources */,
@@ -658,6 +665,7 @@
 				0571759018C63C640075A604 /* about.html in Resources */,
 				052BBF8B17EFF6E100B12071 /* home-background.png in Resources */,
 				0511F13B17BB1E25004B5A72 /* article-body.css in Resources */,
+				05CAF9E218E9FBC0000BE0BF /* loading_image@2x.gif in Resources */,
 				052A84FD17C5E13900D36E6C /* Default@2x.png in Resources */,
 				052BBF8717EFF31D00B12071 /* cover-icon.png in Resources */,
 				0528EC3E17853C1F000175AB /* default_featured_image.png in Resources */,

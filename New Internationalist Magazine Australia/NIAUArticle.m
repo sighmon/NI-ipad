@@ -234,7 +234,7 @@ NSString *ImageDidSaveToCacheNotification = @"ImageDidSaveToCache";
                 if ([[NSFileManager defaultManager] fileExistsAtPath:[[self imageCacheURLForId:imageId] absoluteString]]) {
                     imageSource = [[self imageCacheURLForId:imageId] absoluteString];
                 } else {
-                    imageSource = @"loading_image.png";
+                    imageSource = @"loading_image.gif";
                 }
                 
                 //TODO: can we dry up the image URL (it's also defined in the buildImageCache method

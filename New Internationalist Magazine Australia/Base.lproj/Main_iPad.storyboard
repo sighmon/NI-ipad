@@ -568,7 +568,7 @@
                                             <outletCollection property="gestureRecognizers" destination="LNS-6r-CEZ" appends="YES" id="jGY-0J-vLK"/>
                                         </connections>
                                     </imageView>
-                                    <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="Rje-Zk-cVx">
+                                    <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.050000000000000003" translatesAutoresizingMaskIntoConstraints="NO" id="Rje-Zk-cVx">
                                         <rect key="frame" x="0.0" y="64" width="384" height="2"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </progressView>
@@ -1405,11 +1405,11 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="7r1-dy-lxK"/>
+        <segue reference="fFO-5s-0tA"/>
         <segue reference="WLv-dP-nWF"/>
-        <segue reference="JBV-bs-efO"/>
-        <segue reference="d5N-e1-WGj"/>
-        <segue reference="PvO-ql-dqR"/>
+        <segue reference="w0v-2Q-MmG"/>
         <segue reference="w2Z-Bz-DtP"/>
+        <segue reference="d5N-e1-WGj"/>
         <segue reference="mho-0V-J7B"/>
     </inferredMetricsTieBreakers>
 </document>
