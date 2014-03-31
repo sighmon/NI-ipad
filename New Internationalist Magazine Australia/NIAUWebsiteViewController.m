@@ -60,6 +60,9 @@
 - (IBAction)dismissButtonTapped:(id)sender
 {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+    isPageLoaded = true;
+    [self.progressView setHidden:YES];
+    [self stopMyTimer];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -113,7 +116,7 @@
 {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     isPageLoaded = false;
-    myTimer = [NSTimer scheduledTimerWithTimeInterval:0.4 target:self selector:@selector(timerCallback) userInfo:nil repeats:YES];
+    myTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerCallback) userInfo:nil repeats:YES];
     [self.progressView setHidden:NO];
     self.browserURL.title = [[self.webView.request.URL URLByDeletingLastPathComponent] absoluteString];
     [self updateButtons];
@@ -122,6 +125,7 @@
 {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     isPageLoaded = true;
+    [self stopMyTimer];
     [self.progressView setHidden:YES];
     [self updateButtons];
 }
@@ -129,6 +133,7 @@
 {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     [self.progressView setHidden:YES];
+    [self stopMyTimer];
     [self updateButtons];
 }
 
@@ -139,18 +144,41 @@
         }
         else {
             float progress = self.progressView.progress;
-            progress += 0.1;
+            float randomProgress = [self randomFloatWithMinimum:0.0 andMaximum:0.1];
+            progress += randomProgress;
             [self.progressView setProgress:progress animated:YES];
         }
     }
     else {
         float progress = self.progressView.progress;
-        progress += 0.05;
+        float randomProgress = [self randomFloatWithMinimum:0.0 andMaximum:0.05];
+        progress += randomProgress;
         [self.progressView setProgress:progress animated:YES];
         if (self.progressView.progress >= 0.95) {
             self.progressView.progress = 0.95;
         }
     }
+}
+
+-(void)stopMyTimer
+{
+    if(myTimer)
+    {
+        [myTimer invalidate];
+        myTimer = nil;
+    }
+    [self resetProgressOfProgressView];
+}
+
+-(void)resetProgressOfProgressView
+{
+    [self.progressView setProgress:0.0 animated:NO];
+}
+
+-(float)randomFloatWithMinimum: (float)min andMaximum: (float)max
+{
+    // Randomise the progressView progress so it looks a bit more real.
+    return ((arc4random()%RAND_MAX)/(RAND_MAX*1.0))*(max-min)+min;
 }
 
 @end
