@@ -277,16 +277,22 @@
             }
         }
         
-        UILabel *productTitle = (UILabel *)[cell viewWithTag:101];
-        productTitle.text = [product localizedTitle];
-        
         UILabel *productPrice = (UILabel *)[cell viewWithTag:102];
         [_priceFormatter setLocale:product.priceLocale];
 //        productPrice.text = [NSString stringWithFormat:@"$%0.2f",[product price].floatValue];
         productPrice.text = [_priceFormatter stringFromNumber:product.price];
         
+        NSString *autoRenewingMonths = [self calculateAutoRenewingSubscriptionMonthsFromProduct:product];
+        UILabel *productTitle = (UILabel *)[cell viewWithTag:101];
         UILabel *productDescription = (UILabel *)[cell viewWithTag:103];
-        productDescription.text = [product localizedDescription];
+        
+        if (autoRenewingMonths) {
+            productTitle.text = [NSString stringWithFormat:@"%@ month auto-renewing subscription", autoRenewingMonths];
+            productDescription.text = [NSString stringWithFormat:@"A subscription to New Internationalist magazine that auto-renews every %@ months until you cancel it.", autoRenewingMonths];
+        } else {
+            productTitle.text = [product localizedTitle];
+            productDescription.text = [product localizedDescription];
+        }
         
         if (purchased) {
             // Product has already been purchased
@@ -301,6 +307,31 @@
     }
     
     return cell;
+}
+
+- (NSString *)calculateAutoRenewingSubscriptionMonthsFromProduct:(SKProduct *)product
+{
+    if ([[product productIdentifier] rangeOfString:@"auto"].location == NSNotFound) {
+        return nil;
+    } else {
+        // REGEX the first digit(s)
+        NSError *regError;
+        NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"\\b\\d+" options:NSRegularExpressionCaseInsensitive error:&regError];
+        if (regError) {
+            NSLog(@"Regex error: %@",regError.localizedDescription);
+        }
+        
+        NSString *productID = [product productIdentifier];
+        NSString *numberOfMonths = nil;
+        NSRange range = [regex rangeOfFirstMatchInString:productID options:kNilOptions range:NSMakeRange(0, [productID length])];
+        if(range.location != NSNotFound)
+        {
+            numberOfMonths = [productID substringWithRange:range];
+        }
+        
+//        NSLog(@"Number of months: %@", numberOfMonths);
+        return numberOfMonths;
+    }
 }
 
 - (CGSize)calculateCellSize:(UITableViewCell *)cell inTableView:(UITableView *)tableView {
