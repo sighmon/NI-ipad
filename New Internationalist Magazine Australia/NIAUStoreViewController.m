@@ -288,7 +288,7 @@
         
         if (autoRenewingMonths) {
             productTitle.text = [NSString stringWithFormat:@"%@ month auto-renewing subscription", autoRenewingMonths];
-            productDescription.text = [NSString stringWithFormat:@"A subscription to New Internationalist magazine that auto-renews every %@ months until you cancel it.", autoRenewingMonths];
+            productDescription.text = [NSString stringWithFormat:@"A subscription to New Internationalist magazine that auto-renews every %@ months until you cancel it. This option includes a 1 month trial period so you can try before being billed, and if you continue you get an extra month free.", autoRenewingMonths];
         } else {
             productTitle.text = [product localizedTitle];
             productDescription.text = [product localizedDescription];
