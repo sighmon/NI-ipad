@@ -757,12 +757,44 @@
                                             <constraint firstAttribute="bottom" secondItem="L6V-o8-d8U" secondAttribute="bottom" id="ngP-37-kZb"/>
                                         </constraints>
                                     </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fti-S5-Vod">
+                                        <rect key="frame" x="0.0" y="146" width="320" height="31"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <subviews>
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Show help alerts" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="198" translatesAutoresizingMaskIntoConstraints="NO" id="upu-in-Kar">
+                                                <rect key="frame" x="20" y="5" width="198" height="21"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="198" id="VPA-Ji-JzT"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
+                                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="geY-KD-i7S">
+                                                <rect key="frame" x="251" y="0.0" width="51" height="31"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <connections>
+                                                    <action selector="switchChanged:" destination="6Ug-OX-t9S" eventType="valueChanged" id="sdM-2z-fYU"/>
+                                                </connections>
+                                            </switch>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="upu-in-Kar" firstAttribute="top" secondItem="fti-S5-Vod" secondAttribute="top" constant="5" id="6Zh-wg-pEQ"/>
+                                            <constraint firstItem="upu-in-Kar" firstAttribute="leading" secondItem="fti-S5-Vod" secondAttribute="leading" constant="20" id="MuF-5m-TNE"/>
+                                            <constraint firstAttribute="bottom" secondItem="geY-KD-i7S" secondAttribute="bottom" id="cqe-es-t1s"/>
+                                            <constraint firstAttribute="width" constant="320" id="dj1-6a-247"/>
+                                            <constraint firstItem="geY-KD-i7S" firstAttribute="top" secondItem="fti-S5-Vod" secondAttribute="top" id="iBa-ur-Y5j"/>
+                                            <constraint firstAttribute="trailing" secondItem="geY-KD-i7S" secondAttribute="trailing" constant="20" id="uk4-Pl-eE0"/>
+                                            <constraint firstAttribute="bottom" secondItem="upu-in-Kar" secondAttribute="bottom" constant="5" id="yX1-F9-ALU"/>
+                                        </constraints>
+                                    </view>
                                     <webView multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HC4-zq-3kn">
-                                        <rect key="frame" x="0.0" y="146" width="320" height="356"/>
+                                        <rect key="frame" x="0.0" y="185" width="320" height="317"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="356" id="358-i5-03Y"/>
+                                            <constraint firstAttribute="height" constant="317" id="358-i5-03Y"/>
                                         </constraints>
                                         <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES"/>
                                         <connections>
@@ -772,17 +804,19 @@
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="HC4-zq-3kn" firstAttribute="leading" secondItem="UlN-Dh-s6k" secondAttribute="leading" id="06M-Bq-2jZ"/>
+                                    <constraint firstItem="fti-S5-Vod" firstAttribute="top" secondItem="Xkd-us-qSy" secondAttribute="bottom" constant="8" id="10h-nM-1ZU"/>
                                     <constraint firstItem="Xkd-us-qSy" firstAttribute="top" secondItem="lDG-gz-ZfT" secondAttribute="bottom" constant="8" id="CXT-45-msA"/>
                                     <constraint firstItem="HC4-zq-3kn" firstAttribute="centerX" secondItem="lDG-gz-ZfT" secondAttribute="centerX" id="Feh-t9-1kk"/>
                                     <constraint firstItem="Xkd-us-qSy" firstAttribute="centerX" secondItem="HC4-zq-3kn" secondAttribute="centerX" id="FhF-o2-oZN"/>
                                     <constraint firstItem="vqy-Xy-Jar" firstAttribute="leading" secondItem="UlN-Dh-s6k" secondAttribute="leading" constant="20" id="JVN-OJ-eAl"/>
                                     <constraint firstAttribute="trailing" secondItem="vqy-Xy-Jar" secondAttribute="trailing" constant="20" id="Jpm-CK-2pd"/>
-                                    <constraint firstItem="HC4-zq-3kn" firstAttribute="top" secondItem="Xkd-us-qSy" secondAttribute="bottom" constant="8" id="JqD-B7-8Cv"/>
                                     <constraint firstItem="vqy-Xy-Jar" firstAttribute="top" secondItem="UlN-Dh-s6k" secondAttribute="top" constant="20" id="LZb-m1-50f"/>
+                                    <constraint firstItem="fti-S5-Vod" firstAttribute="leading" secondItem="Xkd-us-qSy" secondAttribute="leading" id="QjA-qD-pRd"/>
                                     <constraint firstAttribute="bottom" secondItem="HC4-zq-3kn" secondAttribute="bottom" id="WaB-yC-X7R"/>
                                     <constraint firstAttribute="centerX" secondItem="vqy-Xy-Jar" secondAttribute="centerX" id="fFR-u4-RLF"/>
                                     <constraint firstItem="lDG-gz-ZfT" firstAttribute="top" secondItem="vqy-Xy-Jar" secondAttribute="bottom" id="hxc-6s-L2d"/>
                                     <constraint firstAttribute="trailing" secondItem="lDG-gz-ZfT" secondAttribute="trailing" constant="20" id="jSJ-O8-Dd0"/>
+                                    <constraint firstItem="HC4-zq-3kn" firstAttribute="top" secondItem="fti-S5-Vod" secondAttribute="bottom" constant="8" id="nAD-EZ-nLT"/>
                                     <constraint firstItem="lDG-gz-ZfT" firstAttribute="leading" secondItem="UlN-Dh-s6k" secondAttribute="leading" constant="20" id="wr9-ON-NFq"/>
                                 </constraints>
                             </scrollView>
@@ -803,6 +837,7 @@
                         <outlet property="aboutWebViewHightConstraint" destination="358-i5-03Y" id="pua-qK-IRH"/>
                         <outlet property="analyticsSwitch" destination="L6V-o8-d8U" id="NDm-qD-Rhh"/>
                         <outlet property="dismissModal" destination="PxL-jQ-ZfO" id="HAY-VO-w4q"/>
+                        <outlet property="helpSwitch" destination="geY-KD-i7S" id="Ha3-Yg-2Ov"/>
                         <outlet property="scrollView" destination="UlN-Dh-s6k" id="LCp-mh-Xpd"/>
                         <outlet property="sendFeedback" destination="4Wk-FY-zgr" id="0gX-jJ-5IQ"/>
                         <outlet property="versionNumber" destination="lDG-gz-ZfT" id="csW-My-95m"/>
@@ -1377,12 +1412,12 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="joJ-Rh-K6j"/>
-        <segue reference="W9z-A8-KEC"/>
         <segue reference="fFr-gL-mDW"/>
+        <segue reference="nQ6-DH-CWR"/>
+        <segue reference="W9z-A8-KEC"/>
         <segue reference="fI5-Du-KTZ"/>
-        <segue reference="lhr-aW-Muh"/>
         <segue reference="IfR-jT-MPw"/>
+        <segue reference="joJ-Rh-K6j"/>
         <segue reference="fiu-rJ-sXO"/>
     </inferredMetricsTieBreakers>
 </document>

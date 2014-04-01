@@ -56,6 +56,13 @@
         [self.analyticsSwitch setOn:FALSE animated:TRUE];
     }
     
+    // Set the help setting from user preferences
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"showHelp"]) {
+        [self.helpSwitch setOn:TRUE animated:TRUE];
+    } else {
+        [self.helpSwitch setOn:FALSE animated:TRUE];
+    }
+    
     // Prevent webview from scrolling
     if ([self.aboutWebView respondsToSelector:@selector(scrollView)]) {
         self.aboutWebView.scrollView.scrollEnabled = NO;
@@ -106,12 +113,20 @@
 {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     
-    if ([self.analyticsSwitch isOn]) {
-        [userDefaults setBool:TRUE forKey:@"googleAnalytics"];
-        [[GAI sharedInstance] setOptOut:NO];
-    } else {
-        [userDefaults setBool:FALSE forKey:@"googleAnalytics"];
-        [[GAI sharedInstance] setOptOut:YES];
+    if (sender == self.analyticsSwitch) {
+        if ([self.analyticsSwitch isOn]) {
+            [userDefaults setBool:TRUE forKey:@"googleAnalytics"];
+            [[GAI sharedInstance] setOptOut:NO];
+        } else {
+            [userDefaults setBool:FALSE forKey:@"googleAnalytics"];
+            [[GAI sharedInstance] setOptOut:YES];
+        }
+    } else if (sender == self.helpSwitch) {
+        if ([self.helpSwitch isOn]) {
+            [userDefaults setBool:TRUE forKey:@"showHelp"];
+        } else {
+            [userDefaults setBool:FALSE forKey:@"showHelp"];
+        }
     }
     [userDefaults synchronize];
 }

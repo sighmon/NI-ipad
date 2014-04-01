@@ -14,5 +14,7 @@
 + (void)roundedCornersWithRadius:(float)radius inImageView:(UIImageView *)imageView;
 + (void)addShadowToImageView:(UIImageView *)imageView withRadius:(float)radius andOffset:(CGSize)size andOpacity:(float)opacity;
 + (UIImage *)imageWithRoundedCornersSize:(float)cornerRadius usingImage:(UIImage *)original;
++ (void)showHelpAlertWithMessage:(NSString *)message andDelegate:(NSObject *)delegate;
++ (NSString *)helpAlertTitle;
 
 @end

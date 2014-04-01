@@ -11,6 +11,7 @@
 #import "NIAUIssue.h"
 #import "NIAUCategoryViewController.h"
 #import "NIAUWebsiteViewController.h"
+#import "NIAUHelper.h"
 
 #import "GAI.h"
 #import "GAITracker.h"

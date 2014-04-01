@@ -236,6 +236,12 @@ float cellPadding = 10.;
     if ([self.bodyWebView respondsToSelector:@selector(scrollView)]) {
         self.bodyWebView.scrollView.scrollEnabled = NO;
     }
+    
+    // If help is enabled, show help alert
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"showHelp"] == 1) {
+        [NIAUHelper showHelpAlertWithMessage:@"You can share this article with friends, even if they don't have the app? To do that press the 'share' button on the top right of this screen." andDelegate:self];
+    }
+    
 }
 
 - (void)updateScrollViewContentHeight
@@ -346,21 +352,37 @@ float cellPadding = 10.;
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    switch (buttonIndex) {
-        case 0:
-            // Cancel pressed
-            [self.navigationController popViewControllerAnimated:YES];
-            break;
-        case 1:
-            // Segue to subscription
-            [self performSegueWithIdentifier:@"alertToSubscribe" sender:nil];
-            break;
-        case 2:
-            // Segue to log-in
-            [self performSegueWithIdentifier:@"alertToLogin" sender:nil];
-            break;
-        default:
-            break;
+    if ([alertView.title isEqualToString:@"Subscribe?"]) {
+        switch (buttonIndex) {
+            case 0:
+                // Cancel pressed
+                [self.navigationController popViewControllerAnimated:YES];
+                break;
+            case 1:
+                // Segue to subscription
+                [self performSegueWithIdentifier:@"alertToSubscribe" sender:nil];
+                break;
+            case 2:
+                // Segue to log-in
+                [self performSegueWithIdentifier:@"alertToLogin" sender:nil];
+                break;
+            default:
+                break;
+        }
+    } else if ([alertView.title isEqualToString:[NIAUHelper helpAlertTitle]]) {
+        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+        switch (buttonIndex) {
+            case 0:
+                // Cancel pressed, don't show help again
+                [userDefaults setBool:FALSE forKey:@"showHelp"];
+                [userDefaults synchronize];
+                break;
+            case 1:
+                // Thanks pressed, do nothing
+                break;
+            default:
+                break;
+        }
     }
 }
 

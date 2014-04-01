@@ -99,6 +99,16 @@ const char NotificationKey;
         [[GAI sharedInstance] setOptOut:YES];
     }
     
+    // For first run, set show help to TRUE
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"showHelp"] == nil) {
+        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+        [userDefaults setBool:TRUE forKey:@"showHelp"];
+        [userDefaults synchronize];
+    } else if ([[NSUserDefaults standardUserDefaults] boolForKey:@"showHelp"] == 0) {
+        // User has asked not to display help anymore.
+        NSLog(@"Help disabled (at app delegate).");
+    }
+    
     // Override point for customization after application launch.
     return YES;
 }

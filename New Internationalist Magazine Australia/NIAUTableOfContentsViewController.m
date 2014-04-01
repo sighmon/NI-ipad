@@ -461,6 +461,11 @@ static NSString *CellIdentifier = @"articleCell";
         }];
     }];
     [NIAUHelper roundedCornersWithRadius:(self.editorImageView.bounds.size.width / 2.) inImageView:self.editorImageView];
+    
+    // If help is enabled, show help alert
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"showHelp"] == 1) {
+        [NIAUHelper showHelpAlertWithMessage:@"If you want to download the entire issue, double tap the cover." andDelegate:self];
+    }
 }
 
 #pragma mark -
@@ -567,16 +572,32 @@ static NSString *CellIdentifier = @"articleCell";
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    switch (buttonIndex) {
-        case 0:
-            // Cancel pressed
-            break;
-        case 1:
-            // Download pressed
-            [self startDownload];
-            break;
-        default:
-            break;
+    if ([alertView.title isEqualToString:@"Download"]) {
+        switch (buttonIndex) {
+            case 0:
+                // Cancel pressed
+                break;
+            case 1:
+                // Download pressed
+                [self startDownload];
+                break;
+            default:
+                break;
+        }
+    } else if ([alertView.title isEqualToString:[NIAUHelper helpAlertTitle]]) {
+        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+        switch (buttonIndex) {
+            case 0:
+                // Cancel pressed, don't show help again
+                [userDefaults setBool:FALSE forKey:@"showHelp"];
+                [userDefaults synchronize];
+                break;
+            case 1:
+                // Thanks pressed, do nothing
+                break;
+            default:
+                break;
+        }
     }
 }
 

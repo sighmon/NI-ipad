@@ -26,6 +26,7 @@
 @property (nonatomic, weak) IBOutlet UITextView *versionNumber;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *versionNumberHeight;
 @property (nonatomic, weak) IBOutlet UISwitch *analyticsSwitch;
+@property (nonatomic, weak) IBOutlet UISwitch *helpSwitch;
 
 - (IBAction)switchChanged: (id)sender;
 

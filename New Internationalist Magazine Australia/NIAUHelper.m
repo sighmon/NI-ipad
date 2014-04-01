@@ -10,6 +10,8 @@
 
 @implementation NIAUHelper
 
+NSString *kAlertTitle = @"Did you know?";
+
 + (void)drawGradientInView:(UIView *)view
 {
     for (__strong CALayer *layer in [view.layer sublayers]) {
@@ -77,6 +79,17 @@
     } else {
         return nil;
     }
+}
+
++ (void)showHelpAlertWithMessage:(NSString *)message andDelegate:(NSObject *)delegate
+{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:kAlertTitle message:message delegate:delegate cancelButtonTitle:@"Don't show again" otherButtonTitles:@"Thanks!", nil];
+    [alert show];
+}
+
++ (NSString *)helpAlertTitle
+{
+    return kAlertTitle;
 }
 
 @end
