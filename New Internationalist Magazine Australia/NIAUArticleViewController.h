@@ -23,6 +23,8 @@
 
 @property (nonatomic, strong) NIAUArticle *article;
 
+@property (atomic) BOOL isArticleBodyLoaded;
+
 @property (nonatomic, weak) IBOutlet UIActivityIndicatorView *webViewLoadingIndicator;
 
 @property (nonatomic, weak) IBOutlet UIScrollView *scrollView;

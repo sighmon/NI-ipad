@@ -403,6 +403,11 @@ ul.ui-autocomplete li a:active {
     .article-image {
         margin-left: 1em;
     }
+    
+    .article-image-float-none {
+        float: left;
+        margin: 1em 1em 1em 0px;
+    }
 }
 
 @media (min-width: 768px) and (max-width: 1024px) {
@@ -421,5 +426,10 @@ ul.ui-autocomplete li a:active {
     
     .article-image {
         margin-left: 1em;
+    }
+    
+    .article-image-float-none {
+        float: left;
+        margin: 1em 1em 1em 0px;
     }
 }

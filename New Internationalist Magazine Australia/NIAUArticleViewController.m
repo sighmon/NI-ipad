@@ -56,6 +56,7 @@ float cellPadding = 10.;
     // In the meantime, blank the placeholder text.
     self.titleLabel.text = @"";
     self.teaserLabel.text = @"";
+    self.dateLabel.text = @"";
     
     [self updateScrollViewContentHeight];
     
@@ -86,12 +87,16 @@ float cellPadding = 10.;
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    [self.article requestBody];
-//    NSLog(@"View will appear!!!");
+    if (self.isArticleBodyLoaded) {
+        // Don't need to load again
+    } else {
+        [self.article requestBody];
+    }
 }
 
 - (void)articleBodyLoaded:(NSNotification *)notification
 {
+    self.isArticleBodyLoaded = TRUE;
     [self setupData];
 }
 
