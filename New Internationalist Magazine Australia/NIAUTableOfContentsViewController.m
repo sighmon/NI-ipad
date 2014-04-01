@@ -434,15 +434,15 @@ static NSString *CellIdentifier = @"articleCell";
     // Load CSS from the filesystem
     NSURL *cssURL = [[NSBundle mainBundle] URLForResource:@"article-body" withExtension:@"css"];
     
-    // Load the article teaser into the attributedText
-    NSString *teaserHTML = [NSString stringWithFormat:@"<html> \n"
+    // Load the editor's letter into the attributedText
+    NSString *editorHTML = [NSString stringWithFormat:@"<html> \n"
                             "<head> \n"
                             "<link rel=\"stylesheet\" type=\"text/css\" href=\"%@\">"
                             "</head> \n"
                             "<body><div class='table-of-contents-editors-letter'>%@</div></body> \n"
                             "</html>", cssURL, self.issue.editorsLetter];
     
-    self.editorsLetterTextView.attributedText = [[NSAttributedString alloc] initWithData:[teaserHTML dataUsingEncoding:NSUTF8StringEncoding]
+    self.editorsLetterTextView.attributedText = [[NSAttributedString alloc] initWithData:[editorHTML dataUsingEncoding:NSUTF8StringEncoding]
                                                                     options:@{NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType,
                                                                               NSCharacterEncodingDocumentAttribute: [NSNumber numberWithInt:NSUTF8StringEncoding]}
                                                          documentAttributes:nil
