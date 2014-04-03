@@ -33,15 +33,8 @@ static NSString *CellIdentifier = @"articleCell";
 {
     self = [super initWithCoder:aDecoder];
     if (self) {
-        // Initialize the arrays
-        self.featureArticles = [[NSMutableArray alloc] init];
-        self.agendaArticles = [[NSMutableArray alloc] init];
-        self.mixedMediaArticles = [[NSMutableArray alloc] init];
-        self.opinionArticles = [[NSMutableArray alloc] init];
-        self.alternativesArticles = [[NSMutableArray alloc] init];
-        self.regularArticles = [[NSMutableArray alloc] init];
-        self.uncategorisedArticles = [[NSMutableArray alloc] init];
-        self.sortedCategories = [[NSMutableArray alloc] init];
+        // Initialize the array
+        self.sortedCategories = [[NSArray alloc] init];
     }
     return self;
 }
@@ -108,80 +101,10 @@ static NSString *CellIdentifier = @"articleCell";
 -(void)publisherReady:(NSNotification *)not
 {
     // Clear the array
-    
-    self.featureArticles = [NSMutableArray array];
-    self.agendaArticles = [NSMutableArray array];
-    self.mixedMediaArticles = [NSMutableArray array];
-    self.opinionArticles = [NSMutableArray array];
-    self.alternativesArticles = [NSMutableArray array];
-    self.regularArticles = [NSMutableArray array];
-    self.uncategorisedArticles = [NSMutableArray array];
-    self.sortedCategories = [NSMutableArray array];
-    
-    // Sort articles into the section arrays
-    
-    for (int a = 0; a < [self.issue numberOfArticles]; a++) {
-        // Test if there's a category that's features
-        NIAUArticle *articleToAdd = [self.issue articleAtIndex:a];
-        if ([articleToAdd containsCategoryWithSubstring:@"features"]) {
-            [self.featureArticles addObject:articleToAdd];
-        } else if ([articleToAdd containsCategoryWithSubstring:@"agenda"]) {
-            [self.agendaArticles addObject:articleToAdd];
-        } else if ([articleToAdd containsCategoryWithSubstring:@"argument"] ||
-                   [articleToAdd containsCategoryWithSubstring:@"viewfrom"] ||
-                   [articleToAdd containsCategoryWithSubstring:@"steve-parry"] ||
-                   [articleToAdd containsCategoryWithSubstring:@"mark-engler"]) {
-            [self.opinionArticles addObject:articleToAdd];
-        } else if ([articleToAdd containsCategoryWithSubstring:@"media"]) {
-            [self.mixedMediaArticles addObject:articleToAdd];
-        } else if ([articleToAdd containsCategoryWithSubstring:@"alternatives"]) {
-            [self.alternativesArticles addObject:articleToAdd];
-        } else if ([articleToAdd containsCategoryWithSubstring:@"columns"] &&
-                   ![articleToAdd containsCategoryWithSubstring:@"columns/currents"] &&
-                   ![articleToAdd containsCategoryWithSubstring:@"columns/media"] &&
-                   ![articleToAdd containsCategoryWithSubstring:@"columns/viewfrom"] &&
-                   ![articleToAdd containsCategoryWithSubstring:@"columns/mark-engler"]) {
-            [self.regularArticles addObject:articleToAdd];
-        } else {
-            [self.uncategorisedArticles addObject:articleToAdd];
-        }
-    }
-    
-    [self addSectionToSortedCategories:self.featureArticles withName:@"Features"];
-    [self addSectionToSortedCategories:self.agendaArticles withName:@"Agenda"];
-    [self addSectionToSortedCategories:self.mixedMediaArticles withName:@"Film, Book & Music reviews"];
-    [self addSectionToSortedCategories:self.opinionArticles withName:@"Opinion"];
-    [self addSectionToSortedCategories:self.alternativesArticles withName:@"Alternatives"];
-    [self addSectionToSortedCategories:self.regularArticles withName:@"Regulars"];
-    [self addSectionToSortedCategories:self.uncategorisedArticles withName:@"Others"];
-    
-    int numberOfArticlesCategorised = 0;
-    for (int i = 0; i < self.sortedCategories.count; i++) {
-        numberOfArticlesCategorised += [[self.sortedCategories[i] objectForKey:@"articles"] count];
-        NSLog(@"Category #%d has #%d articles", i, (int)[[self.sortedCategories[i] objectForKey:@"articles"] count]);
-    }
-    NSLog(@"Number of articles categorised: %d", numberOfArticlesCategorised);
-    NSLog(@"Number of articles in this issue: %d", (int)[self.issue numberOfArticles]);
+    self.sortedCategories = @[];
+    self.sortedCategories = self.issue.sortedCategories;
     
     [self showArticles];
-}
-
-- (void)addSectionToSortedCategories:(NSArray *)section withName:(NSString *)name
-{
-    if (section.count > 0) {
-        // Sort sections by publish date
-        NSArray *sortedArray;
-        sortedArray = [section sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
-            NSDate *first = [(NIAUArticle *)a publication];
-            NSDate *second = [(NIAUArticle *)b publication];
-            return [first compare:second];
-        }];
-        
-        NSMutableDictionary *sectionDictionary = [NSMutableDictionary dictionary];
-        [sectionDictionary setObject:sortedArray forKey:@"articles"];
-        [sectionDictionary setObject:name forKey:@"name"];
-        [self.sortedCategories addObject:sectionDictionary];
-    }
 }
 
 - (void)preferredContentSizeChanged:(NSNotification *)aNotification
@@ -424,6 +347,7 @@ static NSString *CellIdentifier = @"articleCell";
     
 //    self.labelTitle.text = self.issue.title;
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"GMT"]];
     [dateFormatter setDateFormat:@"MMMM yyyy"];
     
     self.labelNumberAndDate.text = [NSString stringWithFormat: @"%@ - %@", self.issue.name, [dateFormatter stringFromDate:self.issue.publication]];

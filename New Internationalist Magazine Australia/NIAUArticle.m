@@ -69,6 +69,32 @@ NSString *ImageDidSaveToCacheNotification = @"ImageDidSaveToCache";
     return value != nil;
 }
 
+-(NIAUArticle *)previousArticle
+{
+    // TODO: TEST THIS TO MAKE SURE IT WORKS!
+    NSUInteger articleIndex = [self indexInSortedArticles];
+    return [self.issue.sortedArticles objectAtIndex:(articleIndex - 1)];
+}
+
+-(NIAUArticle *)nextArticle
+{
+    // TODO: TEST THIS TO MAKE SURE IT WORKS!
+    NSUInteger articleIndex = [self indexInSortedArticles];
+    return [self.issue.sortedArticles objectAtIndex:(articleIndex + 1)];
+}
+
+-(NSUInteger)indexInSortedArticles
+{
+    // Calculate article index
+    __block NSUInteger articleIndex;
+    [self.issue.sortedArticles enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        if (obj == self) {
+            articleIndex = idx;
+        }
+    }];
+    return articleIndex;
+}
+
 -(NSString *)attemptToGetExpandedBodyFromDisk {
     NSString *body = [self attemptToGetBodyFromDisk];
     if(!body) {
@@ -78,11 +104,12 @@ NSString *ImageDidSaveToCacheNotification = @"ImageDidSaveToCache";
     // Expand the [File:xxx|option] tags
     NSString *newBody = [self expandImageTagsInBody:body];
     
-    // Only add the un-embedded images if they aren't hidden.
+    // Only add the un-embedded images if they aren't hidden and don't have a Media ID from bricolage.
     NSMutableArray *imagesToAdd = [[NSMutableArray alloc] init];
     [self.images enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL *stop) {
         BOOL isHidden = [WITH_DEFAULT([obj objectForKey:@"hidden"], false) boolValue];
-        if (isHidden == NO) {
+        BOOL hasMediaID = [WITH_DEFAULT([obj objectForKey:@"media_id"], false) boolValue];
+        if ((isHidden == NO) && (hasMediaID == NO)) {
             [imagesToAdd addObject:obj];
         }
     }];

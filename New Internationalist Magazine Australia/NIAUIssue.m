@@ -280,9 +280,140 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
     return [dictionary objectForKey:@"editors_name"];
 }
 
-// Q: will a property called "id" cause us woe? yes
 -(NSNumber *)railsID {
     return [dictionary objectForKey:@"id"];
+}
+
+-(NSArray *)featureArticles
+{
+    return [self articlesInCategory:@"features"];
+}
+
+-(NSArray *)agendaArticles
+{
+    return [self articlesInCategory:@"agenda"];
+}
+
+-(NSArray *)currentsArticles
+{
+    return [self articlesInCategory:@"currents"];
+}
+
+-(NSArray *)mixedMediaArticles
+{
+    NSMutableArray *mixedMedia = [NSMutableArray array];
+    [mixedMedia addObjectsFromArray:[self articlesInCategory:@"media"]];
+    [mixedMedia removeObjectsInArray:[self articlesInCategory:@"agenda"]];
+    [mixedMedia removeObjectsInArray:[self articlesInCategory:@"currents"]];
+    [mixedMedia removeObjectsInArray:[self articlesInCategory:@"viewfrom"]];
+    [mixedMedia removeObjectsInArray:[self articlesInCategory:@"mark-engler"]];
+    [mixedMedia removeObjectsInArray:[self articlesInCategory:@"steve-parry"]];
+    [mixedMedia removeObjectsInArray:[self articlesInCategory:@"finally"]];
+    [mixedMedia removeObjectsInArray:[self articlesInCategory:@"features"]];
+    return [[NSArray alloc] initWithArray:mixedMedia];
+}
+
+-(NSArray *)opinionArticles
+{
+    NSMutableArray *opinionArticles = [NSMutableArray array];
+    [opinionArticles addObjectsFromArray:[self articlesInCategory:@"argument"]];
+    [opinionArticles addObjectsFromArray:[self articlesInCategory:@"viewfrom"]];
+    [opinionArticles addObjectsFromArray:[self articlesInCategory:@"steve-parry"]];
+    [opinionArticles addObjectsFromArray:[self articlesInCategory:@"mark-engler"]];
+    return [[NSArray alloc] initWithArray:opinionArticles];
+}
+
+-(NSArray *)alternativesArticles
+{
+    return [self articlesInCategory:@"alternatives"];
+}
+
+-(NSArray *)regularArticles
+{
+    NSMutableArray *regularArticles = [NSMutableArray array];
+    [regularArticles addObjectsFromArray:[self articlesInCategory:@"columns"]];
+    [regularArticles removeObjectsInArray:[self articlesInCategory:@"columns/currents"]];
+    [regularArticles removeObjectsInArray:[self articlesInCategory:@"columns/media"]];
+    [regularArticles removeObjectsInArray:[self articlesInCategory:@"columns/viewfrom"]];
+    [regularArticles removeObjectsInArray:[self articlesInCategory:@"columns/mark-engler"]];
+    [regularArticles removeObjectsInArray:[self articlesInCategory:@"columns/steve-parry"]];
+    return [[NSArray alloc] initWithArray:regularArticles];
+}
+
+-(NSArray *)uncategorisedArticles
+{
+    // TODO: calculate these (mostly blog entries)
+    return nil;
+}
+
+-(NSArray *)sortedCategories
+{
+    NSMutableArray *sorted = [NSMutableArray array];
+    [self addSortedSection:[self sortedCategoryWithSection:self.featureArticles withName:@"Features"] toArray:sorted];
+    [self addSortedSection:[self sortedCategoryWithSection:self.agendaArticles withName:@"Agenda"] toArray:sorted];
+    [self addSortedSection:[self sortedCategoryWithSection:self.currentsArticles withName:@"Currents"] toArray:sorted];
+    [self addSortedSection:[self sortedCategoryWithSection:self.mixedMediaArticles withName:@"Film, Book & Music reviews"] toArray:sorted];
+    [self addSortedSection:[self sortedCategoryWithSection:self.opinionArticles withName:@"Opinion"] toArray:sorted];
+    [self addSortedSection:[self sortedCategoryWithSection:self.alternativesArticles withName:@"Alternatives"] toArray:sorted];
+    [self addSortedSection:[self sortedCategoryWithSection:self.regularArticles withName:@"Regulars"] toArray:sorted];
+    [self addSortedSection:[self sortedCategoryWithSection:self.uncategorisedArticles withName:@"Others"] toArray:sorted];
+    
+    int numberOfArticlesCategorised = 0;
+    for (int i = 0; i < sorted.count; i++) {
+        numberOfArticlesCategorised += [[sorted[i] objectForKey:@"articles"] count];
+        NSLog(@"Category #%d has #%d articles", i, (int)[[sorted[i] objectForKey:@"articles"] count]);
+    }
+    NSLog(@"Number of articles categorised: %d", numberOfArticlesCategorised);
+    NSLog(@"Number of articles in this issue: %d", (int)[self numberOfArticles]);
+    return [[NSArray alloc] initWithArray:sorted];
+}
+
+-(NSArray *)sortedArticles
+{
+    NSMutableArray *sorted = [NSMutableArray array];
+    for (int i = 0; i < self.sortedCategories.count; i++) {
+        [sorted addObjectsFromArray:[self.sortedCategories[i] objectForKey:@"articles"]];
+    }
+    return [[NSArray alloc] initWithArray:sorted];
+}
+
+-(NSArray *)articlesInCategory:(NSString *)category
+{
+    NSMutableArray *articlesInThisCategory = [NSMutableArray array];
+    for (int a = 0; a < [self numberOfArticles]; a++) {
+        NIAUArticle *articleToAdd = [self articleAtIndex:a];
+        if ([articleToAdd containsCategoryWithSubstring:category]) {
+            [articlesInThisCategory addObject:articleToAdd];
+        }
+    }
+    return [[NSArray alloc] initWithArray:articlesInThisCategory];
+}
+
+-(NSDictionary *)sortedCategoryWithSection:(NSArray *)section withName:(NSString *)name
+{
+    if (section.count > 0) {
+        // Sort sections by publish date
+        NSArray *sortedArray;
+        sortedArray = [section sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
+            NSDate *first = [(NIAUArticle *)a publication];
+            NSDate *second = [(NIAUArticle *)b publication];
+            return [first compare:second];
+        }];
+        
+        NSMutableDictionary *sectionDictionary = [NSMutableDictionary dictionary];
+        [sectionDictionary setObject:sortedArray forKey:@"articles"];
+        [sectionDictionary setObject:name forKey:@"name"];
+        return [[NSDictionary alloc] initWithDictionary:sectionDictionary];
+    } else {
+        return nil;
+    }
+}
+
+-(void)addSortedSection:(NSDictionary *)section toArray:(NSMutableArray *)sorted
+{
+    if (section) {
+        [sorted addObject:section];
+    }
 }
 
 -(NSInteger)numberOfArticles {

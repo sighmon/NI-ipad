@@ -37,6 +37,9 @@ extern NSString *ImageDidSaveToCacheNotification;
 -(NSDate *)publication;
 -(BOOL)isKeynote;
 
+-(NIAUArticle *)nextArticle;
+-(NIAUArticle *)previousArticle;
+
 -(NSArray *)images;
 -(NSURL *)imageCacheURLForId:(NSString *)imageId;
 -(NSDictionary *)firstImage;
@@ -56,11 +59,11 @@ extern NSString *ImageDidSaveToCacheNotification;
 
 -(void)deleteArticleFromCache;
 
-- (NSURL *)getWebURL;
+-(NSURL *)getWebURL;
 
-- (NSURL *)getGuestPassURL;
+-(NSURL *)getGuestPassURL;
 
-- (BOOL)containsCategoryWithSubstring:(NSString *)substring;
+-(BOOL)containsCategoryWithSubstring:(NSString *)substring;
 
 @end
 

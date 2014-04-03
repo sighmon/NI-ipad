@@ -214,6 +214,7 @@ float cellPadding = 10.;
     
     // Format the date
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"GMT"]];
     [dateFormatter setDateFormat:@"MMMM yyyy"];
     
     self.dateLabel.text = [NSString stringWithFormat: @"%@", [dateFormatter stringFromDate:WITH_DEFAULT(self.article.publication,self.article.issue.publication)]];
@@ -242,6 +243,9 @@ float cellPadding = 10.;
         [NIAUHelper showHelpAlertWithMessage:@"You can share this article with friends, even if they don't have the app? To do that press the 'share' button on the top right of this screen." andDelegate:self];
     }
     
+    // TODO: Build related articles
+    
+    // TODO: insert next and previous article buttons.
 }
 
 - (void)updateScrollViewContentHeight

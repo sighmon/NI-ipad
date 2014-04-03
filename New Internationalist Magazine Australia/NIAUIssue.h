@@ -34,6 +34,17 @@ extern NSString *ArticlesFailedUpdateNotification;
 -(NSString *)editorsLetter;
 -(NSString *)editorsName;
 
+-(NSArray *)featureArticles;
+-(NSArray *)agendaArticles;
+-(NSArray *)currentsArticles;
+-(NSArray *)mixedMediaArticles;
+-(NSArray *)opinionArticles;
+-(NSArray *)alternativesArticles;
+-(NSArray *)regularArticles;
+-(NSArray *)uncategorisedArticles;
+-(NSArray *)sortedCategories;
+-(NSArray *)sortedArticles;
+
 +(NSArray *)issuesFromNKLibrary;
 +(NIAUIssue *)issueWithDictionary:(NSDictionary *)dict;
 +(NIAUIssue *)issueWithUserInfo:(NSDictionary *)dict;
