@@ -262,8 +262,8 @@
         [searchArray enumerateObjectsUsingBlock:^(NSString *subString, NSUInteger idx, BOOL *stop) {
             if ([subString length] > 0) {
                 NSMutableArray *searchArticleTitleAndTeaser = [NSMutableArray array];
-                [searchArticleTitleAndTeaser addObject:[NSPredicate predicateWithFormat:@"SELF.title contains[c] %@",subString]];
-                [searchArticleTitleAndTeaser addObject:[NSPredicate predicateWithFormat:@"SELF.teaser contains[c] %@",subString]];
+                [searchArticleTitleAndTeaser addObject:[NSPredicate predicateWithFormat:@"SELF.title contains[cd] %@",subString]];
+                [searchArticleTitleAndTeaser addObject:[NSPredicate predicateWithFormat:@"SELF.teaser contains[cd] %@",subString]];
                 NSPredicate *orPredicate = [NSCompoundPredicate orPredicateWithSubpredicates:searchArticleTitleAndTeaser];
                 [andPredicateArray addObject:orPredicate];
             }
