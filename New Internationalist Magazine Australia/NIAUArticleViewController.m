@@ -494,6 +494,18 @@ float cellPadding = 10.;
     
 }
 
+- (IBAction)handleSwipeLeft:(UISwipeGestureRecognizer *)swipe
+{
+    // Note: Perform segue called before swipe gesture.
+    NSLog(@"Swiped left!");
+}
+
+- (IBAction)handleSwipeRight:(UISwipeGestureRecognizer *)swipe
+{
+    // Note: Perform segue called before swipe gesture.
+    NSLog(@"Swiped right!");
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -502,6 +514,27 @@ float cellPadding = 10.;
 
 #pragma mark -
 #pragma mark Segue
+
+-(BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender
+{
+    if ([identifier isEqualToString:@"articleToNextArticle"]) {
+        if ([self.article nextArticle]) {
+            return YES;
+        } else {
+            NSLog(@"Last article!");
+            return NO;
+        }
+    } else if ([identifier isEqualToString:@"articleToPreviousArticle"]) {
+        if ([self.article previousArticle]) {
+            return YES;
+        } else {
+            NSLog(@"First article!");
+            return NO;
+        }
+    } else {
+        return YES;
+    }
+}
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
@@ -537,6 +570,14 @@ float cellPadding = 10.;
         NIAUWebsiteViewController *websiteViewController = [segue destinationViewController];
         websiteViewController.linkToLoad = sender;
         websiteViewController.article = self.article;
+    } else if ([[segue identifier] isEqualToString:@"articleToNextArticle"]) {
+        // Segue to next article
+        NIAUArticleViewController *articleViewController = [segue destinationViewController];
+        articleViewController.article = [self.article nextArticle];
+    } else if ([[segue identifier] isEqualToString:@"articleToPreviousArticle"]) {
+        // Segue to previous article
+        NIAUArticleViewController *articleViewController = [segue destinationViewController];
+        articleViewController.article = [self.article previousArticle];
     }
 }
 

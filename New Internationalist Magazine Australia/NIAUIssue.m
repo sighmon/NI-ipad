@@ -13,6 +13,18 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
 
 @implementation NIAUIssue
 
+#pragma mark NSCoding
+
+#define kRatingKey      @"Dictionary"
+
+- (void) encodeWithCoder:(NSCoder *)encoder {
+    [encoder encodeObject:dictionary forKey:kRatingKey];
+}
+
+- (id)initWithCoder:(NSCoder *)decoder {
+    NSDictionary *_dictionary = [decoder decodeObjectForKey:kRatingKey];
+    return [self initWithDictionary:_dictionary];
+}
 
 -(id)init {
     if (self = [super init]) {
@@ -21,6 +33,8 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
         
         coverCache = [self buildCoverCache];
         coverThumbCache = [self buildCoverThumbCache];
+        categoriesSortedCache = [self buildCategoriesSortedCache];
+        articlesSortedCache = [self buildArticlesSortedCache];
     }
     return self;
 }
@@ -37,6 +51,16 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
     NSString *coverFileName = [[self coverURL] lastPathComponent];
     // local URL to where the cover is/would be stored
     return [NSURL URLWithString:coverFileName relativeToURL:[self.nkIssue contentURL]];
+}
+
+- (NSURL *)categoriesSortedURL
+{
+    return [NSURL URLWithString:@"categoriesSorted.plist" relativeToURL:[self.nkIssue contentURL]];
+}
+
+- (NSURL *)articlesSortedURL
+{
+    return [NSURL URLWithString:@"articlesSorted.plist" relativeToURL:[self.nkIssue contentURL]];
 }
 
 - (NSURL *)coverCacheURLForSize:(CGSize)size
@@ -63,7 +87,7 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
     }]];
     [cache addMethod:[[NIAUCacheMethod alloc] initMethod:@"disk" withReadBlock:^id(id options, id state) {
         // TODO: Pull the CGSize out of the options string.
-        NSLog(@"trying to read cached image from %@",[weakSelf coverCacheURL]);
+        NSLog(@"Trying to read cached image from %@",[weakSelf coverCacheURL]);
         NSData *data = [NSData dataWithContentsOfURL:[weakSelf coverCacheURL]];
         return [UIImage imageWithData:data];
     } andWriteBlock:^(id object, id options, id state) {
@@ -91,7 +115,7 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
     }]];
     [cache addMethod:[[NIAUCacheMethod alloc] initMethod:@"disk" withReadBlock:^id(id options, id state) {
         CGSize size = [(NSValue *)options[@"size"] CGSizeValue];
-        NSLog(@"trying to read cached thumb image from %@",[weakSelf coverCacheURLForSize:size]);
+        NSLog(@"Trying to read cached thumb image from %@",[weakSelf coverCacheURLForSize:size]);
         return [UIImage imageWithData:[NSData dataWithContentsOfURL:[weakSelf coverCacheURLForSize:size]]];
     } andWriteBlock:^(id object, id options, id state) {
         CGSize size = [(NSValue *)options[@"size"] CGSizeValue];
@@ -100,6 +124,72 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
     [cache addMethod:[[NIAUCacheMethod alloc] initMethod:@"generate" withReadBlock:^id(id options, id state) {
         CGSize size = [(NSValue *)options[@"size"] CGSizeValue];
         return [weakSelf generateCoverCacheThumbWithSize:size];
+    } andWriteBlock:^(id object, id options, id state) {
+        // Nothing to do, can't write to the net.
+    }]];
+    return cache;
+}
+
+- (NIAUCache *)buildCategoriesSortedCache
+{
+    __weak NIAUIssue *weakSelf = self;
+    
+    NIAUCache *cache = [[NIAUCache alloc] init];
+    [cache addMethod:[[NIAUCacheMethod alloc] initMethod:@"memory" withReadBlock:^id(id options, id state) {
+        return state[@"categoriesSorted"];
+    } andWriteBlock:^(id object, id options, id state) {
+        state[@"categoriesSorted"] = object;
+    }]];
+    [cache addMethod:[[NIAUCacheMethod alloc] initMethod:@"disk" withReadBlock:^id(id options, id state) {
+        NSLog(@"Trying to read cached sorted categories from %@",[weakSelf categoriesSortedURL]);
+        NSData *data = [NSData dataWithContentsOfURL:[weakSelf categoriesSortedURL]];
+        return [NSKeyedUnarchiver unarchiveObjectWithData:data];
+    } andWriteBlock:^(id object, id options, id state) {
+        NSData *data = [NSKeyedArchiver archivedDataWithRootObject:object];
+        // TODO: FIX THIS SEE WHY MULTIPLE WRITES
+        BOOL writeSuccessful = [data writeToFile:[[weakSelf categoriesSortedURL] path] atomically:YES];
+        if (writeSuccessful) {
+            NSLog(@"Categories write successful!");
+        } else {
+            NSLog(@"Categories write FAILED.");
+        }
+    }]];
+    [cache addMethod:[[NIAUCacheMethod alloc] initMethod:@"net" withReadBlock:^id(id options, id state) {
+        NSLog(@"NET(ish) building sorted categories.");
+        return self.sortedCategories;
+    } andWriteBlock:^(id object, id options, id state) {
+        // Nothing to do, can't write to the net.
+    }]];
+    return cache;
+}
+
+- (NIAUCache *)buildArticlesSortedCache
+{
+    __weak NIAUIssue *weakSelf = self;
+    
+    NIAUCache *cache = [[NIAUCache alloc] init];
+    [cache addMethod:[[NIAUCacheMethod alloc] initMethod:@"memory" withReadBlock:^id(id options, id state) {
+        return state[@"articlesSorted"];
+    } andWriteBlock:^(id object, id options, id state) {
+        state[@"articlesSorted"] = object;
+    }]];
+    [cache addMethod:[[NIAUCacheMethod alloc] initMethod:@"disk" withReadBlock:^id(id options, id state) {
+        NSLog(@"Trying to read cached sorted articles from %@",[weakSelf articlesSortedURL]);
+        NSData *data = [NSData dataWithContentsOfURL:[weakSelf articlesSortedURL]];
+        return [NSKeyedUnarchiver unarchiveObjectWithData:data];
+    } andWriteBlock:^(id object, id options, id state) {
+        // TODO: FIX THIS SEE WHY MULTIPLE WRITES
+        NSData *data = [NSKeyedArchiver archivedDataWithRootObject:object];
+        BOOL writeSuccessful = [data writeToFile:[[weakSelf articlesSortedURL] path] atomically:YES];
+        if (writeSuccessful) {
+            NSLog(@"Articles write successful!");
+        } else {
+            NSLog(@"Articles write FAILED.");
+        }
+    }]];
+    [cache addMethod:[[NIAUCacheMethod alloc] initMethod:@"net" withReadBlock:^id(id options, id state) {
+        NSLog(@"NET(ish) building sorted articles.");
+        return self.sortedArticles;
     } andWriteBlock:^(id object, id options, id state) {
         // Nothing to do, can't write to the net.
     }]];
@@ -148,6 +238,16 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
 
 -(UIImage *)getCoverThumbWithSize:(CGSize)size {
     return [coverThumbCache readWithOptions:@{@"size":[NSValue valueWithCGSize:size]}];
+}
+
+- (NSArray *)getCategoriesSorted
+{
+    return [categoriesSortedCache readWithOptions:nil];
+}
+
+- (NSArray *)getArticlesSorted
+{
+    return [articlesSortedCache readWithOptions:nil];
 }
 
 //build from dictionary (and write to cache)

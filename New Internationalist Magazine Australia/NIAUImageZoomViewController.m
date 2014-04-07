@@ -137,6 +137,7 @@
         [itemsToShare addObject:self.articleOfOrigin.getGuestPassURL];
     } else {
         origin = @"I found this image in New Internationalist Magazine.";
+        [itemsToShare addObject:origin];
     }
     
     UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:itemsToShare applicationActivities:nil];
@@ -197,17 +198,17 @@
 {
     // From https://github.com/steipete/PSTCenteredScrollView
     
-    CGFloat top = 0, left = 0, topOffset = 0;
+    CGFloat top = 0, left = 0; //topOffset = 0;
     
-    if (self.navigationController.navigationBarHidden) {
-        topOffset = 0.;
-    } else {
-        if (UIInterfaceOrientationIsPortrait([[UIDevice currentDevice] orientation])) {
-            topOffset = 64.;
-        } else {
-            topOffset = 52.;
-        }
-    }
+//    if (self.navigationController.navigationBarHidden) {
+//        topOffset = 0.;
+//    } else {
+//        if (UIInterfaceOrientationIsPortrait([[UIDevice currentDevice] orientation])) {
+//            topOffset = 64.;
+//        } else {
+//            topOffset = 52.;
+//        }
+//    }
     
     // TODO: topOffset not used yet.. trying to center taking into account Navigation bar height
     

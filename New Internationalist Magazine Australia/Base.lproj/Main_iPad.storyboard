@@ -1175,6 +1175,7 @@
                                         <color key="color" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                     </activityIndicatorView>
                                 </subviews>
+                                <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstItem="e76-g1-MEQ" firstAttribute="top" secondItem="mdc-xz-zaZ" secondAttribute="bottom" constant="12" id="35l-ov-kca"/>
                                     <constraint firstItem="T4g-rx-Wfv" firstAttribute="top" secondItem="H3o-ox-YMu" secondAttribute="bottom" constant="8" id="5Hh-cL-uvD"/>
@@ -1199,6 +1200,10 @@
                                     <constraint firstItem="XxT-mo-NcD" firstAttribute="top" secondItem="6wQ-vV-iqH" secondAttribute="top" id="sM0-2d-rr8"/>
                                     <constraint firstAttribute="bottom" secondItem="e76-g1-MEQ" secondAttribute="bottom" id="wDS-Eg-Rjg"/>
                                 </constraints>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="mVd-VW-Jo5" appends="YES" id="S4A-3m-CFD"/>
+                                    <outletCollection property="gestureRecognizers" destination="IBl-7D-ZKw" appends="YES" id="zb3-yg-EBa"/>
+                                </connections>
                             </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -1226,6 +1231,8 @@
                         <outlet property="featuredImage" destination="XxT-mo-NcD" id="ei8-eP-36V"/>
                         <outlet property="scrollView" destination="6wQ-vV-iqH" id="P1y-pP-paF"/>
                         <outlet property="shareAction" destination="2iK-uL-gFc" id="uuO-2E-YWT"/>
+                        <outlet property="swipeLeft" destination="IBl-7D-ZKw" id="Y5b-Yg-s06"/>
+                        <outlet property="swipeRight" destination="mVd-VW-Jo5" id="521-Tp-T3y"/>
                         <outlet property="teaserLabel" destination="H3o-ox-YMu" id="RpD-PF-n6l"/>
                         <outlet property="titleLabel" destination="GVh-7U-naF" id="CTc-l2-e0m"/>
                         <outlet property="webViewLoadingIndicator" destination="s5g-EG-rOf" id="FOQ-1G-247"/>
@@ -1247,6 +1254,18 @@
                         <action selector="handleSecondTestImageSingleTap:" destination="tZW-bR-n1M" id="5ah-5u-nYb"/>
                     </connections>
                 </tapGestureRecognizer>
+                <swipeGestureRecognizer direction="right" id="mVd-VW-Jo5">
+                    <connections>
+                        <action selector="handleSwipeRight:" destination="tZW-bR-n1M" id="VKe-F0-ueq"/>
+                        <segue destination="tZW-bR-n1M" kind="push" identifier="articleToPreviousArticle" id="Jld-cJ-R4C"/>
+                    </connections>
+                </swipeGestureRecognizer>
+                <swipeGestureRecognizer direction="left" id="IBl-7D-ZKw">
+                    <connections>
+                        <action selector="handleSwipeLeft:" destination="tZW-bR-n1M" id="Ft0-Fs-lMK"/>
+                        <segue destination="tZW-bR-n1M" kind="push" identifier="articleToNextArticle" id="GUh-Lf-PUf"/>
+                    </connections>
+                </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="3146" y="-409"/>
         </scene>
@@ -1441,11 +1460,11 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="7r1-dy-lxK"/>
-        <segue reference="ZRl-y5-oyE"/>
         <segue reference="WLv-dP-nWF"/>
-        <segue reference="fFO-5s-0tA"/>
-        <segue reference="d5N-e1-WGj"/>
-        <segue reference="mho-0V-J7B"/>
+        <segue reference="PvO-ql-dqR"/>
         <segue reference="w2Z-Bz-DtP"/>
+        <segue reference="mho-0V-J7B"/>
+        <segue reference="JBV-bs-efO"/>
+        <segue reference="d5N-e1-WGj"/>
     </inferredMetricsTieBreakers>
 </document>

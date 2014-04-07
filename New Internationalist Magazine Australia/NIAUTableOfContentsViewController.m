@@ -102,7 +102,7 @@ static NSString *CellIdentifier = @"articleCell";
 {
     // Clear the array
     self.sortedCategories = @[];
-    self.sortedCategories = self.issue.sortedCategories;
+    self.sortedCategories = [self.issue getCategoriesSorted];
     
     [self showArticles];
 }

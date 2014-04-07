@@ -23,6 +23,22 @@ NSString *ImageDidSaveToCacheNotification = @"ImageDidSaveToCache";
 // AHA: this makes getters/setters for these readonly properties without exposing them publically
 @synthesize issue;
 
+#pragma mark NSCoding
+
+#define kTitleKey       @"Issue"
+#define kRatingKey      @"Dictionary"
+
+- (void) encodeWithCoder:(NSCoder *)encoder {
+    [encoder encodeObject:issue forKey:kTitleKey];
+    [encoder encodeObject:dictionary forKey:kRatingKey];
+}
+
+- (id)initWithCoder:(NSCoder *)decoder {
+    NIAUIssue *_issue = [decoder decodeObjectForKey:kTitleKey];
+    NSDictionary *_dictionary = [decoder decodeObjectForKey:kRatingKey];
+    return [self initWithIssue:_issue andDictionary:_dictionary];
+}
+
 -(void)deleteArticleFromCache
 {
     [[NSFileManager defaultManager] removeItemAtURL:[self bodyCacheURL] error:nil];
@@ -71,24 +87,36 @@ NSString *ImageDidSaveToCacheNotification = @"ImageDidSaveToCache";
 
 -(NIAUArticle *)previousArticle
 {
-    // TODO: TEST THIS TO MAKE SURE IT WORKS!
-    NSUInteger articleIndex = [self indexInSortedArticles];
-    return [self.issue.sortedArticles objectAtIndex:(articleIndex - 1)];
+    // TODO: retrieve from cache
+    NSArray *sorted = [self.issue getArticlesSorted];
+    NSUInteger articleIndex = [self indexInSortedArticles:sorted];
+    if (articleIndex > 0) {
+        return [sorted objectAtIndex:(articleIndex - 1)];
+    } else {
+        return nil;
+    }
+    
 }
 
 -(NIAUArticle *)nextArticle
 {
-    // TODO: TEST THIS TO MAKE SURE IT WORKS!
-    NSUInteger articleIndex = [self indexInSortedArticles];
-    return [self.issue.sortedArticles objectAtIndex:(articleIndex + 1)];
+    // TODO: retrieve from cache
+    NSArray *sorted = [self.issue getArticlesSorted];
+    NSUInteger articleIndex = [self indexInSortedArticles:sorted];
+    if (articleIndex < ([sorted count] -1)) {
+        return [sorted objectAtIndex:(articleIndex + 1)];
+    } else {
+        return nil;
+    }
 }
 
--(NSUInteger)indexInSortedArticles
+-(NSUInteger)indexInSortedArticles:(NSArray *)sortedArticles
 {
     // Calculate article index
     __block NSUInteger articleIndex;
-    [self.issue.sortedArticles enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        if (obj == self) {
+    __block NIAUArticle *_article = self;
+    [sortedArticles enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        if ([[obj railsID] isEqual:[_article railsID]]) {
             articleIndex = idx;
         }
     }];
@@ -261,13 +289,12 @@ NSString *ImageDidSaveToCacheNotification = @"ImageDidSaveToCache";
                 if ([[NSFileManager defaultManager] fileExistsAtPath:[[self imageCacheURLForId:imageId] absoluteString]]) {
                     imageSource = [[self imageCacheURLForId:imageId] absoluteString];
                 } else {
-                    imageSource = @"loading_image.gif";
+                    imageSource = @"loading_image.png";
                 }
                 
                 //TODO: can we dry up the image URL (it's also defined in the buildImageCache method
                 replacement = [NSString stringWithFormat:@"<div class='%@'><a href='%@'><img id='image%@' width='%@' src='%@'/></a>%@%@</div>", cssClass, [[self imageCacheURLForId:imageId] absoluteString], imageId, imageWidth, imageSource, caption_div, credit_div];
             }
-            
         }
         
         // every iteration, the output string is getting longer

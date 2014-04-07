@@ -44,4 +44,7 @@
 
 @property (weak, nonatomic) IBOutlet UINavigationItem *shareAction;
 
+@property (weak, nonatomic) IBOutlet UISwipeGestureRecognizer *swipeLeft;
+@property (weak, nonatomic) IBOutlet UISwipeGestureRecognizer *swipeRight;
+
 @end

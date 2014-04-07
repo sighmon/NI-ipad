@@ -1167,6 +1167,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
+                                <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstItem="ulX-QY-4Wv" firstAttribute="top" secondItem="fuM-gI-7Bu" secondAttribute="bottom" constant="12" id="3Ck-sT-KiC"/>
                                     <constraint firstAttribute="trailing" secondItem="fuM-gI-7Bu" secondAttribute="trailing" constant="20" symbolic="YES" id="3rS-tL-ofa"/>
@@ -1191,6 +1192,10 @@
                                     <constraint firstItem="b2q-s8-oDm" firstAttribute="top" secondItem="ulX-QY-4Wv" secondAttribute="bottom" constant="8" id="tOW-DZ-eFg"/>
                                     <constraint firstItem="b2q-s8-oDm" firstAttribute="leading" secondItem="ftA-uH-mfj" secondAttribute="leading" constant="20" id="yjN-kO-gDB"/>
                                 </constraints>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="EnK-u7-6GB" appends="YES" id="5mf-TB-zWX"/>
+                                    <outletCollection property="gestureRecognizers" destination="ssm-Hy-FUI" appends="YES" id="cIb-n1-UuI"/>
+                                </connections>
                             </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -1219,6 +1224,8 @@
                         <outlet property="featuredImage" destination="PAM-Qv-IM5" id="Lui-Dn-Ag7"/>
                         <outlet property="scrollView" destination="ftA-uH-mfj" id="uaw-RL-w11"/>
                         <outlet property="shareAction" destination="TQH-mr-pQg" id="cHu-AQ-lui"/>
+                        <outlet property="swipeLeft" destination="EnK-u7-6GB" id="fvJ-29-pu4"/>
+                        <outlet property="swipeRight" destination="ssm-Hy-FUI" id="gD7-4z-xKu"/>
                         <outlet property="teaserLabel" destination="ulX-QY-4Wv" id="P0C-Ef-Bvb"/>
                         <outlet property="titleLabel" destination="fuM-gI-7Bu" id="Hyr-De-3YJ"/>
                         <outlet property="webViewLoadingIndicator" destination="aWi-L9-HiD" id="gdT-wy-9FC"/>
@@ -1235,6 +1242,18 @@
                         <action selector="handleFeaturedImageSingleTap:" destination="T5k-23-5nF" id="DWN-cH-QYh"/>
                     </connections>
                 </tapGestureRecognizer>
+                <swipeGestureRecognizer direction="left" id="EnK-u7-6GB">
+                    <connections>
+                        <action selector="handleSwipeLeft:" destination="T5k-23-5nF" id="sL4-sx-nWS"/>
+                        <segue destination="T5k-23-5nF" kind="push" identifier="articleToNextArticle" id="tk4-6z-EMt"/>
+                    </connections>
+                </swipeGestureRecognizer>
+                <swipeGestureRecognizer direction="right" id="ssm-Hy-FUI">
+                    <connections>
+                        <action selector="handleSwipeRight:" destination="T5k-23-5nF" id="28C-Au-XgH"/>
+                        <segue destination="T5k-23-5nF" kind="push" identifier="articleToPreviousArticle" id="LM6-Xk-xXt"/>
+                    </connections>
+                </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1298" y="-290"/>
         </scene>
@@ -1413,11 +1432,11 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="fFr-gL-mDW"/>
-        <segue reference="nQ6-DH-CWR"/>
         <segue reference="W9z-A8-KEC"/>
-        <segue reference="fI5-Du-KTZ"/>
         <segue reference="IfR-jT-MPw"/>
+        <segue reference="SUv-P7-9yc"/>
+        <segue reference="Qwc-Oh-1W1"/>
+        <segue reference="mdp-6r-s59"/>
         <segue reference="joJ-Rh-K6j"/>
-        <segue reference="fiu-rJ-sXO"/>
     </inferredMetricsTieBreakers>
 </document>

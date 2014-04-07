@@ -16,7 +16,7 @@
 extern NSString *ArticlesDidUpdateNotification;
 extern NSString *ArticlesFailedUpdateNotification;
 
-@interface NIAUIssue : NSObject
+@interface NIAUIssue : NSObject <NSCoding>
 {
     NSDictionary *dictionary;
     NSArray *articles;
@@ -24,6 +24,8 @@ extern NSString *ArticlesFailedUpdateNotification;
     BOOL requestingCover;
     NIAUCache *coverThumbCache;
     NIAUCache *coverCache;
+    NIAUCache *categoriesSortedCache;
+    NIAUCache *articlesSortedCache;
 }
 
 -(NSString *)name;
@@ -44,6 +46,9 @@ extern NSString *ArticlesFailedUpdateNotification;
 -(NSArray *)uncategorisedArticles;
 -(NSArray *)sortedCategories;
 -(NSArray *)sortedArticles;
+
+-(NSArray *)getCategoriesSorted;
+-(NSArray *)getArticlesSorted;
 
 +(NSArray *)issuesFromNKLibrary;
 +(NIAUIssue *)issueWithDictionary:(NSDictionary *)dict;

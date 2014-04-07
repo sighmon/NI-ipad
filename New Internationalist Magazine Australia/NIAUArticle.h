@@ -15,7 +15,8 @@ extern NSString *ArticleDidUpdateNotification;
 extern NSString *ArticleFailedUpdateNotification;
 extern NSString *ImageDidSaveToCacheNotification;
 
-@interface NIAUArticle : NSObject {
+@interface NIAUArticle : NSObject <NSCoding>
+{
     NSDictionary *dictionary;
     NIAUCache *bodyCache;
     NIAUCache *featuredImageThumbCache;
