@@ -120,8 +120,12 @@ NSString *kCellID = @"magazineCellID";              // UICollectionViewCell stor
     cell.image.image = [NIAUHelper imageWithRoundedCornersSize:3. usingImage:[[[NIAUPublisher getInstance] issueAtIndex:indexPath.row] attemptToGetCoverThumbFromMemoryForSize:size]];
     
     if (cell.image.image == nil) {
+        // Start the loading indicator
+        [cell.coverLoadingIndicator startAnimating];
+        
         [[[NIAUPublisher getInstance] issueAtIndex:indexPath.row] getCoverThumbWithSize:size andCompletionBlock:^(UIImage *img) {
             dispatch_async(dispatch_get_main_queue(), ^{
+                [cell.coverLoadingIndicator stopAnimating];
                 [cell.image setAlpha:0.0];
                 [cell.image setImage:[NIAUHelper imageWithRoundedCornersSize:3. usingImage:img]];
                 [UIView animateWithDuration:0.3 animations:^{

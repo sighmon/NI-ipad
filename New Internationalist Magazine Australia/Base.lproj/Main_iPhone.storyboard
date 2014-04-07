@@ -200,16 +200,24 @@
                                             <rect key="frame" x="0.0" y="0.0" width="106" height="151"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         </imageView>
+                                        <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="i50-5v-zwU">
+                                            <rect key="frame" x="35" y="57" width="37" height="37"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <color key="color" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="deviceRGB"/>
+                                        </activityIndicatorView>
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
                                 <constraints>
                                     <constraint firstItem="8yQ-69-2Yi" firstAttribute="leading" secondItem="7ZL-x0-7NN" secondAttribute="leading" id="7wb-ro-74I"/>
+                                    <constraint firstAttribute="centerY" secondItem="i50-5v-zwU" secondAttribute="centerY" id="9QQ-zq-r5z"/>
                                     <constraint firstItem="8yQ-69-2Yi" firstAttribute="top" secondItem="7ZL-x0-7NN" secondAttribute="top" id="LTd-fS-F3c"/>
                                     <constraint firstItem="8yQ-69-2Yi" firstAttribute="trailing" secondItem="7ZL-x0-7NN" secondAttribute="trailing" id="Wki-9q-dr2"/>
+                                    <constraint firstAttribute="centerX" secondItem="i50-5v-zwU" secondAttribute="centerX" id="hQx-p4-COo"/>
                                     <constraint firstItem="8yQ-69-2Yi" firstAttribute="bottom" secondItem="7ZL-x0-7NN" secondAttribute="bottom" id="vLE-BN-FZl"/>
                                 </constraints>
                                 <connections>
+                                    <outlet property="coverLoadingIndicator" destination="i50-5v-zwU" id="5Py-c3-qDO"/>
                                     <outlet property="image" destination="8yQ-69-2Yi" id="5e4-ir-Tmh"/>
                                     <segue destination="4fR-wf-HfG" kind="push" identifier="showTableOfContents" id="Q4o-ys-N5E"/>
                                 </connections>
@@ -1431,12 +1439,12 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="fFr-gL-mDW"/>
+        <segue reference="Q4o-ys-N5E"/>
         <segue reference="W9z-A8-KEC"/>
-        <segue reference="IfR-jT-MPw"/>
         <segue reference="SUv-P7-9yc"/>
-        <segue reference="Qwc-Oh-1W1"/>
         <segue reference="mdp-6r-s59"/>
+        <segue reference="Qwc-Oh-1W1"/>
         <segue reference="joJ-Rh-K6j"/>
+        <segue reference="IfR-jT-MPw"/>
     </inferredMetricsTieBreakers>
 </document>
