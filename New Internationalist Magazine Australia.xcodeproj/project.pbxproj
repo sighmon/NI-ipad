@@ -87,7 +87,6 @@
 		0577E07617FBED0400A52A8E /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0577E07517FBED0400A52A8E /* StoreKit.framework */; };
 		0577E07917FBF2B400A52A8E /* NIAUInAppPurchaseHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 0577E07817FBF2B400A52A8E /* NIAUInAppPurchaseHelper.m */; };
 		058F738E178BBA3E002CA40C /* NIAUImageZoomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 058F738D178BBA3E002CA40C /* NIAUImageZoomViewController.m */; };
-		059EF8F7187E12FF0079FA88 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 059EF8F6187E12FF0079FA88 /* Parse.framework */; };
 		059EF8F9187E13220079FA88 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 059EF8F8187E13220079FA88 /* FacebookSDK.framework */; };
 		059FFCA0185026F100422824 /* NIAUCategoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 059FFC9F185026F100422824 /* NIAUCategoryViewController.m */; };
 		05B910A0181632050027E5BF /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B9109F181632050027E5BF /* Reachability.m */; };
@@ -101,6 +100,7 @@
 		05F856CF1864C67E001D1A75 /* NIAUArticleCategoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 05F856CE1864C67E001D1A75 /* NIAUArticleCategoryCell.m */; };
 		3CA1C435E64C4F6F866B2E9B /* libPods-New Internationalist Magazine Australia.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BC803423D2F743538C4A77A9 /* libPods-New Internationalist Magazine Australia.a */; };
 		52090A62178CF7D1002D5162 /* NIAUPublisher.m in Sources */ = {isa = PBXBuildFile; fileRef = 52090A61178CF7D1002D5162 /* NIAUPublisher.m */; };
+		5239A43718F6034E00281AE2 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5239A43618F6034E00281AE2 /* Parse.framework */; };
 		528FC17818344C86006BCB44 /* NSData+Cookieless.m in Sources */ = {isa = PBXBuildFile; fileRef = 528FC17718344C86006BCB44 /* NSData+Cookieless.m */; };
 		52CD5EE617D896240038A70C /* NIAUCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 52CD5EE517D896240038A70C /* NIAUCache.m */; };
 		52CD5EE717D896240038A70C /* NIAUCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 52CD5EE517D896240038A70C /* NIAUCache.m */; };
@@ -208,7 +208,6 @@
 		0577E07817FBF2B400A52A8E /* NIAUInAppPurchaseHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NIAUInAppPurchaseHelper.m; sourceTree = "<group>"; };
 		058F738C178BBA3E002CA40C /* NIAUImageZoomViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NIAUImageZoomViewController.h; sourceTree = "<group>"; };
 		058F738D178BBA3E002CA40C /* NIAUImageZoomViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NIAUImageZoomViewController.m; sourceTree = "<group>"; };
-		059EF8F6187E12FF0079FA88 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		059EF8F8187E13220079FA88 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
 		059FFC9E185026F100422824 /* NIAUCategoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NIAUCategoryViewController.h; sourceTree = "<group>"; };
 		059FFC9F185026F100422824 /* NIAUCategoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NIAUCategoryViewController.m; sourceTree = "<group>"; };
@@ -243,6 +242,7 @@
 		52090A60178CF7D1002D5162 /* NIAUPublisher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NIAUPublisher.h; sourceTree = "<group>"; };
 		52090A61178CF7D1002D5162 /* NIAUPublisher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NIAUPublisher.m; sourceTree = "<group>"; };
 		52090A65178D4291002D5162 /* local.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = local.h; sourceTree = "<group>"; };
+		5239A43618F6034E00281AE2 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		528FC17618344C86006BCB44 /* NSData+Cookieless.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Cookieless.h"; sourceTree = "<group>"; };
 		528FC17718344C86006BCB44 /* NSData+Cookieless.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Cookieless.m"; sourceTree = "<group>"; };
 		52CD5EE417D896240038A70C /* NIAUCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NIAUCache.h; sourceTree = "<group>"; };
@@ -268,11 +268,11 @@
 				052D3A93187DEF0400377021 /* MobileCoreServices.framework in Frameworks */,
 				052D3A91187DEEFA00377021 /* libz.1.1.3.dylib in Frameworks */,
 				052D3A8F187DEEE900377021 /* CoreLocation.framework in Frameworks */,
+				5239A43718F6034E00281AE2 /* Parse.framework in Frameworks */,
 				052D3A8D187DEEDC00377021 /* CFNetwork.framework in Frameworks */,
 				052D3A8B187DEED200377021 /* AudioToolbox.framework in Frameworks */,
 				0577E07617FBED0400A52A8E /* StoreKit.framework in Frameworks */,
 				055A8EC8177290CE003D9407 /* CoreGraphics.framework in Frameworks */,
-				059EF8F7187E12FF0079FA88 /* Parse.framework in Frameworks */,
 				059EF8F9187E13220079FA88 /* FacebookSDK.framework in Frameworks */,
 				055A8ECA177290CE003D9407 /* UIKit.framework in Frameworks */,
 				055A8EC6177290CE003D9407 /* Foundation.framework in Frameworks */,
@@ -359,9 +359,9 @@
 		055A8EC4177290CE003D9407 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5239A43618F6034E00281AE2 /* Parse.framework */,
 				05EF22F218E1E7B70017244C /* libz.1.2.5.dylib */,
 				059EF8F8187E13220079FA88 /* FacebookSDK.framework */,
-				059EF8F6187E12FF0079FA88 /* Parse.framework */,
 				05C9583A187DF9DE00FD262F /* Accounts.framework */,
 				05C95838187DF8EF00FD262F /* Social.framework */,
 				052D3A98187DEF2600377021 /* SystemConfiguration.framework */,
@@ -592,7 +592,7 @@
 				ORGANIZATIONNAME = "New Internationalist Australia";
 				TargetAttributes = {
 					055A8EC1177290CE003D9407 = {
-						DevelopmentTeam = CUMP7ABFVY;
+						DevelopmentTeam = W97XHGE2U9;
 					};
 					055A8EE5177290CF003D9407 = {
 						TestTargetID = 055A8EC1177290CE003D9407;
@@ -916,11 +916,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Steven Pickles (872GV4NNAB)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Steven Pickles (872GV4NNAB)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"/Users/simos/Coding/NI/New\\ Internationalist\\ Magazine\\ Australia",
+					/Users/simos/Coding/NI/New,
+					Internationalist,
+					Magazine,
+					Australia,
+					"$(PROJECT_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "New Internationalist Magazine Australia/New Internationalist Magazine Australia-Prefix.pch";
@@ -937,11 +941,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Steven Pickles (872GV4NNAB)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Steven Pickles (872GV4NNAB)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"/Users/simos/Coding/NI/New\\ Internationalist\\ Magazine\\ Australia",
+					/Users/simos/Coding/NI/New,
+					Internationalist,
+					Magazine,
+					Australia,
+					"$(PROJECT_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "New Internationalist Magazine Australia/New Internationalist Magazine Australia-Prefix.pch";
