@@ -119,7 +119,7 @@ NSString *kCellID = @"magazineCellID";              // UICollectionViewCell stor
     // TODO: need to do this in a background thread, as the cover image is large and causing lag!
     cell.image.image = [NIAUHelper imageWithRoundedCornersSize:3. usingImage:[[[NIAUPublisher getInstance] issueAtIndex:indexPath.row] attemptToGetCoverThumbFromMemoryForSize:size]];
     
-    if (cell.image.image == nil) {
+    if (cell.image.image == nil || cell.image.image == [UIImage imageNamed:@"ni-logo-grey.png"]) {
         // Start the loading indicator
         [cell.coverLoadingIndicator startAnimating];
         

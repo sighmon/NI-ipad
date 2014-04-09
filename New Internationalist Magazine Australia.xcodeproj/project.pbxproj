@@ -12,6 +12,8 @@
 		051A72B1177950D600BDD346 /* default_cover.png in Resources */ = {isa = PBXBuildFile; fileRef = 051A72AF177950D600BDD346 /* default_cover.png */; };
 		051A72B2177950D600BDD346 /* default_cover@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 051A72B0177950D600BDD346 /* default_cover@2x.png */; };
 		051AF559184ECE7D00A91A8C /* NIAUCategoriesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 051AF558184ECE7D00A91A8C /* NIAUCategoriesViewController.m */; };
+		051DD29F18F5F2A8000A1CEA /* ni-logo-grey@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 051DD29D18F5F2A8000A1CEA /* ni-logo-grey@2x.png */; };
+		051DD2A018F5F2A8000A1CEA /* ni-logo-grey.png in Resources */ = {isa = PBXBuildFile; fileRef = 051DD29E18F5F2A8000A1CEA /* ni-logo-grey.png */; };
 		051FB64518AC15BF00FA734C /* UIWebViewBack.png in Resources */ = {isa = PBXBuildFile; fileRef = 051FB64118AC15BF00FA734C /* UIWebViewBack.png */; };
 		051FB64618AC15BF00FA734C /* UIWebViewBack@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 051FB64218AC15BF00FA734C /* UIWebViewBack@2x.png */; };
 		051FB64718AC15BF00FA734C /* UIWebViewNext.png in Resources */ = {isa = PBXBuildFile; fileRef = 051FB64318AC15BF00FA734C /* UIWebViewNext.png */; };
@@ -127,6 +129,8 @@
 		051A72B0177950D600BDD346 /* default_cover@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "default_cover@2x.png"; sourceTree = "<group>"; };
 		051AF557184ECE7D00A91A8C /* NIAUCategoriesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NIAUCategoriesViewController.h; sourceTree = "<group>"; };
 		051AF558184ECE7D00A91A8C /* NIAUCategoriesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NIAUCategoriesViewController.m; sourceTree = "<group>"; };
+		051DD29D18F5F2A8000A1CEA /* ni-logo-grey@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ni-logo-grey@2x.png"; sourceTree = "<group>"; };
+		051DD29E18F5F2A8000A1CEA /* ni-logo-grey.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ni-logo-grey.png"; sourceTree = "<group>"; };
 		051FB64118AC15BF00FA734C /* UIWebViewBack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = UIWebViewBack.png; sourceTree = "<group>"; };
 		051FB64218AC15BF00FA734C /* UIWebViewBack@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "UIWebViewBack@2x.png"; sourceTree = "<group>"; };
 		051FB64318AC15BF00FA734C /* UIWebViewNext.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = UIWebViewNext.png; sourceTree = "<group>"; };
@@ -307,6 +311,8 @@
 		053878281777E034001E60F6 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				051DD29D18F5F2A8000A1CEA /* ni-logo-grey@2x.png */,
+				051DD29E18F5F2A8000A1CEA /* ni-logo-grey.png */,
 				05CAF9DF18E9FBC0000BE0BF /* loading_image.gif */,
 				05CAF9E018E9FBC0000BE0BF /* loading_image@2x.gif */,
 				052D797A18C7FD14000C03C2 /* loading_image.png */,
@@ -629,6 +635,7 @@
 				0528EC3C17853C1F000175AB /* default_article_image.png in Resources */,
 				05C29EFE188736B1004FC28D /* new-issue.caf in Resources */,
 				05BC3CEC18BE6EFC00769F81 /* new-internationalist-logo@2x.png in Resources */,
+				051DD29F18F5F2A8000A1CEA /* ni-logo-grey@2x.png in Resources */,
 				052A850417C5E13900D36E6C /* 76.png in Resources */,
 				052A850117C5E13900D36E6C /* 57.png in Resources */,
 				052BBF8817EFF31D00B12071 /* cover-icon@2x.png in Resources */,
@@ -666,6 +673,7 @@
 				052BBF8B17EFF6E100B12071 /* home-background.png in Resources */,
 				0511F13B17BB1E25004B5A72 /* article-body.css in Resources */,
 				05CAF9E218E9FBC0000BE0BF /* loading_image@2x.gif in Resources */,
+				051DD2A018F5F2A8000A1CEA /* ni-logo-grey.png in Resources */,
 				052A84FD17C5E13900D36E6C /* Default@2x.png in Resources */,
 				052BBF8717EFF31D00B12071 /* cover-icon.png in Resources */,
 				0528EC3E17853C1F000175AB /* default_featured_image.png in Resources */,
