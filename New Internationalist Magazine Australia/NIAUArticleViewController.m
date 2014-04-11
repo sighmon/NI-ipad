@@ -14,6 +14,8 @@
 NSString *kCategoryCellID = @"categoryCellID";
 float cellPadding = 10.;
 
+NSString *ArticleDidRefreshNotification = @"ArticleDidRefresh";
+
 @interface NIAUArticleViewController ()
 
 @end
@@ -395,7 +397,13 @@ float cellPadding = 10.;
 
 -(void)handleRefresh:(UIRefreshControl *)refresh {
     [self.article clearCache];
-    [[self.article issue] forceDownloadArticles];
+    NIAUIssue *issue = [self.article issue];
+    [issue forceDownloadArticles];
+    [issue getCategoriesSortedStartingAt:@"net"];
+    [issue getArticlesSortedStartingAt:@"net"];
+    // TODO: Send notification for TableViewController to refresh
+    NSDictionary *info = [NSDictionary dictionaryWithObject:refresh forKey:@"refresh"];
+    [[NSNotificationCenter defaultCenter] postNotificationName:ArticleDidRefreshNotification object:nil userInfo:info];
     [refresh endRefreshing];
 }
 

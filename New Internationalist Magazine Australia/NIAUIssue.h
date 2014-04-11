@@ -48,7 +48,9 @@ extern NSString *ArticlesFailedUpdateNotification;
 -(NSArray *)sortedArticles;
 
 -(NSArray *)getCategoriesSorted;
+-(NSArray *)getCategoriesSortedStartingAt:(NSString *)startingAt;
 -(NSArray *)getArticlesSorted;
+-(NSArray *)getArticlesSortedStartingAt:(NSString *)startingAt;
 
 +(NSArray *)issuesFromNKLibrary;
 +(NIAUIssue *)issueWithDictionary:(NSDictionary *)dict;

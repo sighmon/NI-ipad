@@ -20,6 +20,8 @@
 #import "GAIFields.h"
 #import "GAILogger.h"
 
+extern NSString *ArticleDidRefreshNotification;
+
 @interface NIAUArticleViewController : UIViewController <UIScrollViewDelegate, UIGestureRecognizerDelegate, UIWebViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource>
 
 @property (nonatomic, strong) NIAUArticle *article;

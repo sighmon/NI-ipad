@@ -48,6 +48,7 @@ static NSString *CellIdentifier = @"articleCell";
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(publisherReady:) name:ArticlesDidUpdateNotification object:self.issue];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshFromArticle:) name:ArticleDidRefreshNotification object:nil];
 
     // Add observer for the user changing the text size
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(preferredContentSizeChanged:) name:UIContentSizeCategoryDidChangeNotification object:nil];
@@ -101,7 +102,7 @@ static NSString *CellIdentifier = @"articleCell";
 -(void)publisherReady:(NSNotification *)not
 {
     // Clear the array
-    self.sortedCategories = @[];
+    self.sortedCategories = [NSArray array];
     self.sortedCategories = [self.issue getCategoriesSorted];
     
     [self showArticles];
@@ -396,14 +397,22 @@ static NSString *CellIdentifier = @"articleCell";
 #pragma mark Refresh delegate
 
 -(void)handleRefresh:(UIRefreshControl *)refresh {
-    // TODO: set cache object for this issue to nil and refresh
-    // TODO: figure out why it crashes inserting new data to tableView.
+    // set cache object for this issue to nil and refresh
     [self.cellDictionary removeAllObjects];
     [[NIAUPublisher getInstance] forceDownloadIssues];
     self.issue = [[NIAUPublisher getInstance] issueWithName:self.issue.name];
     [self.issue forceDownloadArticles];
+    // Reset the sortedCategories cache
+    self.sortedCategories = [self.issue getCategoriesSortedStartingAt:@"net"];
+    // Reset the sortedArticles cache
+    [self.issue getArticlesSortedStartingAt:@"net"];
     [self.tableView reloadData];
     [refresh endRefreshing];
+}
+
+-(void)refreshFromArticle:(NSNotification *)notification
+{
+    [self handleRefresh:[[notification userInfo] objectForKey:@"refresh"]];
 }
 
 #pragma mark -

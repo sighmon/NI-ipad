@@ -240,9 +240,19 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
     return [coverThumbCache readWithOptions:@{@"size":[NSValue valueWithCGSize:size]}];
 }
 
+- (NSArray *)getCategoriesSortedStartingAt:(NSString *)startingAt
+{
+    return [categoriesSortedCache readWithOptions:nil startingAt:startingAt stoppingAt:nil];
+}
+
 - (NSArray *)getCategoriesSorted
 {
     return [categoriesSortedCache readWithOptions:nil];
+}
+
+- (NSArray *)getArticlesSortedStartingAt:(NSString *)startingAt
+{
+    return [articlesSortedCache readWithOptions:nil startingAt:startingAt stoppingAt:nil];
 }
 
 - (NSArray *)getArticlesSorted
