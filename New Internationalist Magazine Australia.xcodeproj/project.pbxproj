@@ -557,6 +557,7 @@
 				055A8EBF177290CE003D9407 /* Frameworks */,
 				055A8EC0177290CE003D9407 /* Resources */,
 				9CA7297DD8AF414E829FA876 /* Copy Pods Resources */,
+				0547A65A18FC717800566B19 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -697,6 +698,19 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		0547A65A18FC717800566B19 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./Crashlytics.framework/run 93b57617620e351110a61806412e4a827829d162 e8703b39da5549efa9f01b9c382b2042b5f3451811eb884e58425966a7e4bcb9";
+		};
 		94B113D43D6946C58D037F59 /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;

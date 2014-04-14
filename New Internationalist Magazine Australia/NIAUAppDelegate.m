@@ -25,13 +25,15 @@ const char NotificationKey;
 #import "GAIFields.h"
 #import "GAILogger.h"
 
+#import <Crashlytics/Crashlytics.h>
+
 @implementation NIAUAppDelegate
-{
-    BOOL moveSuccess;
-}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    // Load Crashlytics
+    [Crashlytics startWithAPIKey:@"93b57617620e351110a61806412e4a827829d162"];
+    
     // Load the In App Purchase Helper at launch to check for unfinished purchases.
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
         [NIAUInAppPurchaseHelper sharedInstance];
