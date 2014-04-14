@@ -534,7 +534,9 @@ NSString *ArticleDidRefreshNotification = @"ArticleDidRefresh";
         }
     } else if ([identifier isEqualToString:@"articleToPreviousArticle"]) {
         if ([self.article previousArticle]) {
-            return YES;
+            NSLog(@"Disabled previous segue, navigation seems wrong.");
+            return NO;
+//            return YES;
         } else {
             NSLog(@"First article!");
             return NO;

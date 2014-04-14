@@ -29,6 +29,7 @@
 @property (nonatomic, weak) NIAUArticle *firstArticle;
 
 @property (nonatomic, strong) IBOutlet UIImageView *cover;
+@property (nonatomic, weak) IBOutlet UIActivityIndicatorView *coverLoadingIndicator;
 
 @property (nonatomic, weak) IBOutlet UIButton *magazineArchiveButton;
 @property (nonatomic, weak) IBOutlet UIButton *subscribeButton;

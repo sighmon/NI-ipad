@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5053" systemVersion="13C64" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="oKe-c9-yQ2">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13C64" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="oKe-c9-yQ2">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
@@ -103,16 +103,22 @@
                                     <segue destination="2Yk-dz-bzQ" kind="modal" id="N2g-c5-i7c"/>
                                 </connections>
                             </button>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="hly-oN-CkD">
+                                <rect key="frame" x="374" y="324" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" red="0.2392156869" green="0.2588235438" blue="0.2823529541" alpha="1" colorSpace="deviceRGB"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="9Ip-lN-uYD" secondAttribute="trailing" constant="20" id="0L8-X7-VjH"/>
                             <constraint firstItem="sCG-7l-LMd" firstAttribute="top" secondItem="sGR-UI-43W" secondAttribute="bottom" constant="25" id="2Od-Vm-9o0"/>
+                            <constraint firstItem="sGR-UI-43W" firstAttribute="centerY" secondItem="hly-oN-CkD" secondAttribute="centerY" constant="53.5" id="5Jp-ZS-iZj"/>
                             <constraint firstAttribute="trailing" secondItem="sCG-7l-LMd" secondAttribute="trailing" constant="20" id="5UW-WS-jDU"/>
                             <constraint firstItem="sGR-UI-43W" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="65a-eQ-EEq"/>
                             <constraint firstItem="hza-Yw-P0j" firstAttribute="leading" secondItem="ztv-AX-HV8" secondAttribute="trailing" constant="50" id="9Xn-Ex-X6c"/>
                             <constraint firstItem="QGH-kd-WQM" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="50" id="F5G-0m-uON"/>
+                            <constraint firstItem="sGR-UI-43W" firstAttribute="centerX" secondItem="hly-oN-CkD" secondAttribute="centerX" id="FqU-To-mcP"/>
                             <constraint firstItem="ztv-AX-HV8" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="20" id="Gei-Nb-4fY"/>
                             <constraint firstItem="8kw-PJ-HHn" firstAttribute="top" secondItem="QGH-kd-WQM" secondAttribute="bottom" constant="20" id="J2G-gJ-c7J"/>
                             <constraint firstAttribute="trailing" secondItem="hza-Yw-P0j" secondAttribute="trailing" constant="60" id="LH2-Zx-hrl"/>
@@ -141,6 +147,7 @@
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="cover" destination="sGR-UI-43W" id="2Ti-vF-qRH"/>
+                        <outlet property="coverLoadingIndicator" destination="hly-oN-CkD" id="0nW-AD-gCG"/>
                         <outlet property="issueBanner" destination="bjh-9n-PLY" id="wSv-zv-nFp"/>
                         <outlet property="loginButton" destination="QGH-kd-WQM" id="7kk-Ei-KnO"/>
                         <outlet property="magazineArchiveButton" destination="sCG-7l-LMd" id="cQp-QS-B8p"/>
@@ -1468,12 +1475,12 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="WLv-dP-nWF"/>
-        <segue reference="TYl-bi-yIk"/>
-        <segue reference="w2Z-Bz-DtP"/>
-        <segue reference="d5N-e1-WGj"/>
-        <segue reference="JBV-bs-efO"/>
-        <segue reference="PvO-ql-dqR"/>
         <segue reference="mho-0V-J7B"/>
+        <segue reference="WLv-dP-nWF"/>
+        <segue reference="7r1-dy-lxK"/>
+        <segue reference="EBU-8G-ECI"/>
+        <segue reference="MS4-LT-1l5"/>
+        <segue reference="PvO-ql-dqR"/>
+        <segue reference="JBV-bs-efO"/>
     </inferredMetricsTieBreakers>
 </document>

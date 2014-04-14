@@ -124,7 +124,9 @@
 
 - (void)loadLatestMagazineCover
 {
+    [self.coverLoadingIndicator startAnimating];
     [self.issue getCoverWithCompletionBlock:^(UIImage *img) {
+        [self.coverLoadingIndicator stopAnimating];
         [self.cover setContentMode:UIViewContentModeScaleAspectFit];
         [self.cover setAlpha:0.0];
         [self.cover setImage:[NIAUHelper imageWithRoundedCornersSize:10. usingImage:img]];
@@ -215,32 +217,36 @@
     //table_.alpha=1.0;
     //[table_ reloadData];
     
+    // Set issue to newest issue
+    self.issue = [[NIAUPublisher getInstance] issueAtIndex:0];
+    
     // Check to see if there are any new issues available
-    NSURL *issuesURL = [NSURL URLWithString:@"issues.json" relativeToURL:[NSURL URLWithString:SITE_URL]];
-    NSLog(@"try to download issues.json from %@", issuesURL);
-    NSData *data = [NSData dataWithContentsOfCookielessURL:issuesURL];
-    NSArray *tmpIssues = @[];
-    if(data) {
-        NSError *error;
-        tmpIssues = [NSJSONSerialization JSONObjectWithData:data
-                                                    options:kNilOptions
-                                                      error:&error];
-    }
-    if ([[NIAUPublisher getInstance] numberOfIssues] < tmpIssues.count) {
-        // A new issue is available, so force reload
-        [[NIAUPublisher getInstance] forceDownloadIssues];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshViewNotification" object:nil];
-        self.showNewIssueBanner = true;
-    } else {
-        // No issues to load
-        self.issue = [[NIAUPublisher getInstance] issueAtIndex:0];
-        
-        // HACK: check if user can read last issue's article to see if they're a rails subscriber
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(articlesReady:) name:ArticlesDidUpdateNotification object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(articlesReady:) name:ArticlesFailedUpdateNotification object:nil];
-        self.lastIssue = [[NIAUPublisher getInstance] lastIssue];
-        [self.lastIssue requestArticles];
-    }
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+        NSURL *issuesURL = [NSURL URLWithString:@"issues.json" relativeToURL:[NSURL URLWithString:SITE_URL]];
+        NSLog(@"try to download issues.json from %@", issuesURL);
+        NSData *data = [NSData dataWithContentsOfCookielessURL:issuesURL];
+        NSArray *tmpIssues = @[];
+        if(data) {
+            NSError *error;
+            tmpIssues = [NSJSONSerialization JSONObjectWithData:data
+                                                        options:kNilOptions
+                                                          error:&error];
+        }
+        if ([[NIAUPublisher getInstance] numberOfIssues] < tmpIssues.count) {
+            // A new issue is available, so force reload
+            [[NIAUPublisher getInstance] forceDownloadIssues];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshViewNotification" object:nil];
+            self.showNewIssueBanner = true;
+        } else {
+            // No issues to load
+            
+            // Check if user can read last issue's article to see if they're a rails subscriber
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(articlesReady:) name:ArticlesDidUpdateNotification object:nil];
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(articlesReady:) name:ArticlesFailedUpdateNotification object:nil];
+            self.lastIssue = [[NIAUPublisher getInstance] lastIssue];
+            [self.lastIssue requestArticles];
+        }
+    });
 }
 
 - (void)loginSuccess: (NSNotification *)notification

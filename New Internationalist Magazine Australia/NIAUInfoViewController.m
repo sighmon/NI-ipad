@@ -159,8 +159,16 @@
     }
 }
 
+- (void)webViewDidStartLoad:(UIWebView *)webView
+{
+    [webView setAlpha:0.0];
+}
+
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
+    [UIView animateWithDuration:0.5 animations:^{
+        [webView setAlpha:1.0];
+    }];
     [self updateWebViewHeight];
     [self updateScrollViewContentHeight];
 }
