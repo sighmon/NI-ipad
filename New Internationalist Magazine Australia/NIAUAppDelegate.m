@@ -25,7 +25,7 @@ const char NotificationKey;
 #import "GAIFields.h"
 #import "GAILogger.h"
 
-#import <Crashlytics/Crashlytics.h>
+#import <Crashlytics.h>
 
 @implementation NIAUAppDelegate
 
