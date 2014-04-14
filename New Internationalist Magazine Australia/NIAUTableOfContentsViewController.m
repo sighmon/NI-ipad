@@ -379,11 +379,13 @@ static NSString *CellIdentifier = @"articleCell";
     [self.editorImageView setImage:[UIImage imageNamed:@"default_editors_photo"]];
     // Load the real editor's image
     [self.issue getEditorsImageWithCompletionBlock:^(UIImage *img) {
-        [self.editorImageView setAlpha:0.0];
-        [self.editorImageView setImage:img];
-        [UIView animateWithDuration:0.3 animations:^{
-            [self.editorImageView setAlpha:1.0];
-        }];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.editorImageView setAlpha:0.0];
+            [self.editorImageView setImage:img];
+            [UIView animateWithDuration:0.3 animations:^{
+                [self.editorImageView setAlpha:1.0];
+            }];
+        });
     }];
     [NIAUHelper roundedCornersWithRadius:(self.editorImageView.bounds.size.width / 2.) inImageView:self.editorImageView];
     

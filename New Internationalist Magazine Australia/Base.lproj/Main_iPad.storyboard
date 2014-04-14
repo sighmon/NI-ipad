@@ -179,12 +179,12 @@
                                     <rect key="frame" x="0.0" y="0.0" width="192" height="273"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="tyQ-to-wEq">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ni-logo-grey.png" translatesAutoresizingMaskIntoConstraints="NO" id="tyQ-to-wEq">
                                             <rect key="frame" x="0.0" y="0.0" width="192" height="273"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         </imageView>
-                                        <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="lZS-3N-hzC">
-                                            <rect key="frame" x="78" y="118" width="37" height="37"/>
+                                        <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="lZS-3N-hzC">
+                                            <rect key="frame" x="86" y="79" width="20" height="20"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <color key="color" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="deviceRGB"/>
                                         </activityIndicatorView>
@@ -197,7 +197,7 @@
                                     <constraint firstItem="tyQ-to-wEq" firstAttribute="bottom" secondItem="9Wg-Yx-jLm" secondAttribute="bottom" id="GXO-j4-MQq"/>
                                     <constraint firstItem="tyQ-to-wEq" firstAttribute="leading" secondItem="9Wg-Yx-jLm" secondAttribute="leading" id="U7V-sv-Fxo"/>
                                     <constraint firstItem="tyQ-to-wEq" firstAttribute="trailing" secondItem="9Wg-Yx-jLm" secondAttribute="trailing" id="g6n-gV-amu"/>
-                                    <constraint firstAttribute="centerY" secondItem="lZS-3N-hzC" secondAttribute="centerY" id="xuQ-Gy-Ceu"/>
+                                    <constraint firstAttribute="centerY" secondItem="lZS-3N-hzC" secondAttribute="centerY" constant="47.5" id="xuQ-Gy-Ceu"/>
                                 </constraints>
                                 <connections>
                                     <outlet property="coverLoadingIndicator" destination="lZS-3N-hzC" id="4uW-M6-Bl1"/>
@@ -1459,6 +1459,7 @@
         <image name="UIWebViewBack.png" width="12" height="21"/>
         <image name="UIWebViewNext.png" width="12" height="21"/>
         <image name="new-internationalist-logo.png" width="177" height="53"/>
+        <image name="ni-logo-grey.png" width="200" height="98"/>
     </resources>
     <color key="tintColor" red="0.29803921568627451" green="0.64547217153284675" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

@@ -117,20 +117,31 @@ NSString *kCellID = @"magazineCellID";              // UICollectionViewCell stor
     size = [self calculateCellSizeForScreenSize:self.view.frame.size];
     
     // TODO: need to do this in a background thread, as the cover image is large and causing lag!
-    cell.image.image = [NIAUHelper imageWithRoundedCornersSize:3. usingImage:[[[NIAUPublisher getInstance] issueAtIndex:indexPath.row] attemptToGetCoverThumbFromMemoryForSize:size]];
+//    cell.image.image = [NIAUHelper imageWithRoundedCornersSize:3. usingImage:[[[NIAUPublisher getInstance] issueAtIndex:indexPath.row] attemptToGetCoverThumbFromMemoryForSize:size]];
     
-    if (cell.image.image == nil || cell.image.image == [UIImage imageNamed:@"ni-logo-grey.png"]) {
+    cell.image.image = nil;
+    
+    if (cell.image.image == nil) {
         // Start the loading indicator
+        cell.image.image = [UIImage imageNamed:@"ni-logo-grey.png"];
         [cell.coverLoadingIndicator startAnimating];
         
         [[[NIAUPublisher getInstance] issueAtIndex:indexPath.row] getCoverThumbWithSize:size andCompletionBlock:^(UIImage *img) {
             dispatch_async(dispatch_get_main_queue(), ^{
-                [cell.coverLoadingIndicator stopAnimating];
-                [cell.image setAlpha:0.0];
-                [cell.image setImage:[NIAUHelper imageWithRoundedCornersSize:3. usingImage:img]];
-                [UIView animateWithDuration:0.3 animations:^{
-                    [cell.image setAlpha:1.0];
-                }];
+                
+                if (img) {
+                    // If cell is still in view
+                    NIAUCell *updateCell = (id)[self.collectionView cellForItemAtIndexPath:indexPath];
+                    NSLog(@"Cell: (%f,%f), IndexPath: %ld", updateCell.frame.origin.x, updateCell.frame.origin.y, (long)indexPath.row);
+                    if (updateCell) {
+                        [updateCell.coverLoadingIndicator stopAnimating];
+                        [updateCell.image setAlpha:0.0];
+                        [updateCell.image setImage:[NIAUHelper imageWithRoundedCornersSize:3. usingImage:img]];
+                        [UIView animateWithDuration:0.3 animations:^{
+                            [updateCell.image setAlpha:1.0];
+                        }];
+                    }
+                }
             });
         }];
     }
@@ -162,7 +173,7 @@ NSString *kCellID = @"magazineCellID";              // UICollectionViewCell stor
         }
     }
     CGSize returnSize = CGSizeMake((size.width/columns)-2, size.width*1415/(1000*columns));
-    NSLog(@"Calculated size: %f, %f", returnSize.width, returnSize.height);
+//    NSLog(@"Calculated size: %f, %f", returnSize.width, returnSize.height);
     return returnSize;
 }
 

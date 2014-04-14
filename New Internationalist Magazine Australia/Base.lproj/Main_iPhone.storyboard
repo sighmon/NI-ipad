@@ -200,8 +200,8 @@
                                             <rect key="frame" x="0.0" y="0.0" width="106" height="151"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         </imageView>
-                                        <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="i50-5v-zwU">
-                                            <rect key="frame" x="35" y="57" width="37" height="37"/>
+                                        <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="i50-5v-zwU">
+                                            <rect key="frame" x="43" y="34" width="20" height="20"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <color key="color" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="deviceRGB"/>
                                         </activityIndicatorView>
@@ -210,7 +210,7 @@
                                 </view>
                                 <constraints>
                                     <constraint firstItem="8yQ-69-2Yi" firstAttribute="leading" secondItem="7ZL-x0-7NN" secondAttribute="leading" id="7wb-ro-74I"/>
-                                    <constraint firstAttribute="centerY" secondItem="i50-5v-zwU" secondAttribute="centerY" id="9QQ-zq-r5z"/>
+                                    <constraint firstAttribute="centerY" secondItem="i50-5v-zwU" secondAttribute="centerY" constant="31.5" id="9QQ-zq-r5z"/>
                                     <constraint firstItem="8yQ-69-2Yi" firstAttribute="top" secondItem="7ZL-x0-7NN" secondAttribute="top" id="LTd-fS-F3c"/>
                                     <constraint firstItem="8yQ-69-2Yi" firstAttribute="trailing" secondItem="7ZL-x0-7NN" secondAttribute="trailing" id="Wki-9q-dr2"/>
                                     <constraint firstAttribute="centerX" secondItem="i50-5v-zwU" secondAttribute="centerX" id="hQx-p4-COo"/>
