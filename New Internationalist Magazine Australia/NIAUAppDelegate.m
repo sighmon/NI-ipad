@@ -25,15 +25,12 @@ const char NotificationKey;
 #import "GAIFields.h"
 #import "GAILogger.h"
 
-#import <Crashlytics.h>
+#import <Crashlytics/Crashlytics.h>
 
 @implementation NIAUAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // Load Crashlytics
-    [Crashlytics startWithAPIKey:@"93b57617620e351110a61806412e4a827829d162"];
-    
     // Load the In App Purchase Helper at launch to check for unfinished purchases.
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
         [NIAUInAppPurchaseHelper sharedInstance];
@@ -79,7 +76,8 @@ const char NotificationKey;
     // Google Analytics
     
     // Optional: automatically send uncaught exceptions to Google Analytics.
-    [GAI sharedInstance].trackUncaughtExceptions = YES;
+//    [GAI sharedInstance].trackUncaughtExceptions = YES;
+    [GAI sharedInstance].trackUncaughtExceptions = NO;
     
     // Optional: set Google Analytics dispatch interval to e.g. 20 seconds.
     [GAI sharedInstance].dispatchInterval = 20;
@@ -109,6 +107,11 @@ const char NotificationKey;
     } else if ([[NSUserDefaults standardUserDefaults] boolForKey:@"showHelp"] == 0) {
         // User has asked not to display help anymore.
         NSLog(@"Help disabled (at app delegate).");
+    }
+    
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"googleAnalytics"] == 1) {
+        // Okay to load Crashlytics
+        [Crashlytics startWithAPIKey:@"93b57617620e351110a61806412e4a827829d162"];
     }
     
     // Override point for customization after application launch.
