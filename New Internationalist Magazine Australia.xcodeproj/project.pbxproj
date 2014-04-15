@@ -946,11 +946,9 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/simos/Coding/NI/New,
-					Internationalist,
-					Magazine,
-					Australia,
+					"/Users/simos/Coding/NI/New\\ Internationalist\\ Magazine\\ Australia",
 					"$(PROJECT_DIR)",
+					"$(SRCROOT)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "New Internationalist Magazine Australia/New Internationalist Magazine Australia-Prefix.pch";
@@ -971,11 +969,9 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/simos/Coding/NI/New,
-					Internationalist,
-					Magazine,
-					Australia,
+					"/Users/simos/Coding/NI/New\\ Internationalist\\ Magazine\\ Australia",
 					"$(PROJECT_DIR)",
+					"$(SRCROOT)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "New Internationalist Magazine Australia/New Internationalist Magazine Australia-Prefix.pch";

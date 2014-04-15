@@ -41,8 +41,11 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
 
 - (NSURL *)coverURL
 {
-    // TODO: Get JPG version instead of PNG
-    NSString *url = [[[dictionary objectForKey:@"cover"] objectForKey:@"png"] objectForKey:@"url"];
+    // Get JPG version instead of PNG
+    // PNG Version
+//    NSString *url = [[[dictionary objectForKey:@"cover"] objectForKey:@"png"] objectForKey:@"url"];
+    // JPG Version
+    NSString *url = [[dictionary objectForKey:@"cover"] objectForKey:@"url"];
     // online location of cover
     return [NSURL URLWithString:url relativeToURL:[NSURL URLWithString:SITE_URL]];
 }
@@ -68,7 +71,7 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
 {
     NSString *coverFileName = [[self coverURL] lastPathComponent];
     // local URL to where the cover is/would be stored
-    NSString *coverCacheFileName = [coverFileName stringByAppendingPathExtension:[NSString stringWithFormat:@".thumb%dx%d.png",(int)size.width,(int)size.height]];
+    NSString *coverCacheFileName = [coverFileName stringByAppendingPathExtension:[NSString stringWithFormat:@"thumb%dx%d.%@",(int)size.width,(int)size.height,[coverFileName pathExtension]]];
     return [NSURL URLWithString:coverCacheFileName relativeToURL:[self.nkIssue contentURL]];
 }
 
