@@ -83,9 +83,7 @@ NSString *LoginUnsuccessfulNotification = @"LoginUnsuccessful";
 }
 
 - (IBAction)loginButtonTapped:(id)sender
-{
-    [NIAUHelper forceCrash];
-    
+{    
     Reachability *reachability = [Reachability reachabilityForInternetConnection];
     NetworkStatus netStatus = [reachability currentReachabilityStatus];
     
