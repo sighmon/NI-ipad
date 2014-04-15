@@ -128,10 +128,11 @@ NSString *kCellID = @"magazineCellID";              // UICollectionViewCell stor
         
         [[[NIAUPublisher getInstance] issueAtIndex:indexPath.row] getCoverThumbWithSize:size andCompletionBlock:^(UIImage *img) {
             dispatch_async(dispatch_get_main_queue(), ^{
+                // Is cell is still in view
+                NIAUCell *updateCell = (id)[self.collectionView cellForItemAtIndexPath:indexPath];
                 
-                if (img) {
-                    // If cell is still in view
-                    NIAUCell *updateCell = (id)[self.collectionView cellForItemAtIndexPath:indexPath];
+                if (img && [[self.collectionView visibleCells] containsObject:updateCell]) {
+                    
                     NSLog(@"Cell: (%f,%f), IndexPath: %ld", updateCell.frame.origin.x, updateCell.frame.origin.y, (long)indexPath.row);
                     if (updateCell) {
                         [updateCell.coverLoadingIndicator stopAnimating];

@@ -1475,12 +1475,12 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="mho-0V-J7B"/>
-        <segue reference="WLv-dP-nWF"/>
-        <segue reference="7r1-dy-lxK"/>
-        <segue reference="EBU-8G-ECI"/>
         <segue reference="MS4-LT-1l5"/>
-        <segue reference="PvO-ql-dqR"/>
+        <segue reference="EBU-8G-ECI"/>
+        <segue reference="TYl-bi-yIk"/>
+        <segue reference="WLv-dP-nWF"/>
+        <segue reference="mho-0V-J7B"/>
         <segue reference="JBV-bs-efO"/>
+        <segue reference="PvO-ql-dqR"/>
     </inferredMetricsTieBreakers>
 </document>

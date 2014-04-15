@@ -10,7 +10,7 @@
 
 @interface NIAUCell : UICollectionViewCell
 
-@property (strong, nonatomic) IBOutlet UIImageView *image;
+@property (nonatomic, weak) IBOutlet UIImageView *image;
 
 @property (nonatomic, weak) IBOutlet UIActivityIndicatorView *coverLoadingIndicator;
 

@@ -41,6 +41,7 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
 
 - (NSURL *)coverURL
 {
+    // TODO: Get JPG version instead of PNG
     NSString *url = [[[dictionary objectForKey:@"cover"] objectForKey:@"png"] objectForKey:@"url"];
     // online location of cover
     return [NSURL URLWithString:url relativeToURL:[NSURL URLWithString:SITE_URL]];
