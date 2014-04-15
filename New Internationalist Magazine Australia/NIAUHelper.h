@@ -17,4 +17,6 @@
 + (void)showHelpAlertWithMessage:(NSString *)message andDelegate:(NSObject *)delegate;
 + (NSString *)helpAlertTitle;
 
++ (void)forceCrash;
+
 @end

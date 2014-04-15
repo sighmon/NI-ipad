@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0507DB6A177AA0F60099540D /* NIAUTableOfContentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0507DB69177AA0F60099540D /* NIAUTableOfContentsViewController.m */; };
 		0511F13B17BB1E25004B5A72 /* article-body.css in Resources */ = {isa = PBXBuildFile; fileRef = 0511F13A17BB1E24004B5A72 /* article-body.css */; };
+		051877D018FD9B9200DCFA24 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 051877CF18FD9B9200DCFA24 /* Crashlytics.framework */; };
 		051A72B1177950D600BDD346 /* default_cover.png in Resources */ = {isa = PBXBuildFile; fileRef = 051A72AF177950D600BDD346 /* default_cover.png */; };
 		051A72B2177950D600BDD346 /* default_cover@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 051A72B0177950D600BDD346 /* default_cover@2x.png */; };
 		051AF559184ECE7D00A91A8C /* NIAUCategoriesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 051AF558184ECE7D00A91A8C /* NIAUCategoriesViewController.m */; };
@@ -125,6 +126,7 @@
 		0507DB68177AA0F60099540D /* NIAUTableOfContentsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NIAUTableOfContentsViewController.h; sourceTree = "<group>"; };
 		0507DB69177AA0F60099540D /* NIAUTableOfContentsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NIAUTableOfContentsViewController.m; sourceTree = "<group>"; };
 		0511F13A17BB1E24004B5A72 /* article-body.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = "article-body.css"; sourceTree = "<group>"; };
+		051877CF18FD9B9200DCFA24 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		051A72AF177950D600BDD346 /* default_cover.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = default_cover.png; sourceTree = "<group>"; };
 		051A72B0177950D600BDD346 /* default_cover@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "default_cover@2x.png"; sourceTree = "<group>"; };
 		051AF557184ECE7D00A91A8C /* NIAUCategoriesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NIAUCategoriesViewController.h; sourceTree = "<group>"; };
@@ -276,6 +278,7 @@
 				052D3A8B187DEED200377021 /* AudioToolbox.framework in Frameworks */,
 				0577E07617FBED0400A52A8E /* StoreKit.framework in Frameworks */,
 				055A8EC8177290CE003D9407 /* CoreGraphics.framework in Frameworks */,
+				051877D018FD9B9200DCFA24 /* Crashlytics.framework in Frameworks */,
 				059EF8F7187E12FF0079FA88 /* Parse.framework in Frameworks */,
 				059EF8F9187E13220079FA88 /* FacebookSDK.framework in Frameworks */,
 				055A8ECA177290CE003D9407 /* UIKit.framework in Frameworks */,
@@ -365,6 +368,7 @@
 		055A8EC4177290CE003D9407 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				051877CF18FD9B9200DCFA24 /* Crashlytics.framework */,
 				05EF22F218E1E7B70017244C /* libz.1.2.5.dylib */,
 				059EF8F8187E13220079FA88 /* FacebookSDK.framework */,
 				059EF8F6187E12FF0079FA88 /* Parse.framework */,
@@ -709,7 +713,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# ./Pods/CrashlyticsFramework/Crashlytics.framework/run 93b57617620e351110a61806412e4a827829d162 e8703b39da5549efa9f01b9c382b2042b5f3451811eb884e58425966a7e4bcb9";
+			shellScript = "./Crashlytics.framework/run 93b57617620e351110a61806412e4a827829d162 e8703b39da5549efa9f01b9c382b2042b5f3451811eb884e58425966a7e4bcb9";
 		};
 		94B113D43D6946C58D037F59 /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -942,7 +946,11 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"/Users/simos/Coding/NI/New\\ Internationalist\\ Magazine\\ Australia",
+					/Users/simos/Coding/NI/New,
+					Internationalist,
+					Magazine,
+					Australia,
+					"$(PROJECT_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "New Internationalist Magazine Australia/New Internationalist Magazine Australia-Prefix.pch";
@@ -963,7 +971,11 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"/Users/simos/Coding/NI/New\\ Internationalist\\ Magazine\\ Australia",
+					/Users/simos/Coding/NI/New,
+					Internationalist,
+					Magazine,
+					Australia,
+					"$(PROJECT_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "New Internationalist Magazine Australia/New Internationalist Magazine Australia-Prefix.pch";

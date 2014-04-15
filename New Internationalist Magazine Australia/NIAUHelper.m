@@ -92,4 +92,13 @@ NSString *kAlertTitle = @"Did you know?";
     return kAlertTitle;
 }
 
+#pragma mark - Force Crash for Crashlytics
+
++ (void)forceCrash
+{
+    NSArray *emptyArray = @[];
+    NSLog(@"Making a crash: %@",[emptyArray objectAtIndex:1]);
+}
+
+
 @end
