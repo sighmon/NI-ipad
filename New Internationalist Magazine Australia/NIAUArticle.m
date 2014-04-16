@@ -320,7 +320,13 @@ NSString *ImageDidSaveToCacheNotification = @"ImageDidSaveToCache";
         NSData *imageData = [NSData dataWithContentsOfURL:[weakSelf featuredImageCacheURL]];
         return [UIImage imageWithData:imageData];
     } andWriteBlock:^(id object, id options, id state) {
-        [UIImagePNGRepresentation(object) writeToURL:[weakSelf featuredImageCacheURL] atomically:YES];
+        // Using original file type instead of PNG to save memory.
+//        [UIImagePNGRepresentation(object) writeToURL:[weakSelf featuredImageCacheURL] atomically:YES];
+        if ([[[[weakSelf featuredImageCacheURL] lastPathComponent] pathExtension] isEqualToString:@"jpg"]) {
+            [UIImageJPEGRepresentation(object,1.0) writeToURL:[weakSelf featuredImageCacheURL] atomically:YES];
+        } else {
+            [UIImagePNGRepresentation(object) writeToURL:[weakSelf featuredImageCacheURL] atomically:YES];
+        }
     }]];
     [cache addMethod:[[NIAUCacheMethod alloc] initMethod:@"net" withReadBlock:^id(id options, id state) {
         NSData *imageData = [NSData dataWithContentsOfCookielessURL:[weakSelf featuredImageURL]];
@@ -331,8 +337,26 @@ NSString *ImageDidSaveToCacheNotification = @"ImageDidSaveToCache";
     return cache;
 }
 
+-(NSURL *)imageURLForId:(NSString *)imageId
+{
+    // TODO: Loop through images to get image with imageId, then get its url.
+    __block NSString *url;
+    [[self images] enumerateObjectsUsingBlock:^(id object, NSUInteger idx, BOOL *stop) {
+        if ([[[object objectForKey:@"id"] stringValue] isEqualToString:imageId]) {
+            url = [[object objectForKey:@"data"] objectForKey:@"url"];
+        }
+    }];
+    if ((url != (id)[NSNull null]) && url) {
+        return [NSURL URLWithString:url relativeToURL:[NSURL URLWithString:SITE_URL]];
+    } else {
+        //        return [[NSBundle mainBundle] URLForResource:@"default_article_image_table_view" withExtension:@"png"];
+        return nil;
+    }
+}
+
 -(NSURL *)imageCacheURLForId:(NSString *)imageId {
-    return [NSURL URLWithString:[imageId stringByAppendingPathExtension:@"png"] relativeToURL:[self cacheURL]];
+    NSString *imageFileName = [[self imageURLForId:imageId]lastPathComponent];
+    return [NSURL URLWithString:imageFileName relativeToURL:[self cacheURL]];
 }
 
 -(NSDictionary *)firstImage
@@ -375,7 +399,13 @@ NSString *ImageDidSaveToCacheNotification = @"ImageDidSaveToCache";
         NSData *imageData = [NSData dataWithContentsOfURL:imageCacheURL];
         return [UIImage imageWithData:imageData];
     } andWriteBlock:^(id object, id options, id state) {
-        [UIImagePNGRepresentation(object) writeToURL:imageCacheURL atomically:YES];
+        // Using original file type instead of PNG to save memory.
+//        [UIImagePNGRepresentation(object) writeToURL:imageCacheURL atomically:YES];
+        if ([[[imageCacheURL lastPathComponent] pathExtension] isEqualToString:@"jpg"]) {
+            [UIImageJPEGRepresentation(object,1.0) writeToURL:imageCacheURL atomically:YES];
+        } else {
+            [UIImagePNGRepresentation(object) writeToURL:imageCacheURL atomically:YES];
+        }
     }]];
     [cache addMethod:[[NIAUCacheMethod alloc] initMethod:@"net" withReadBlock:^id(id options, id state) {
         NSData *imageData = [NSData dataWithContentsOfCookielessURL:imageNetURL];
@@ -413,7 +443,12 @@ NSString *ImageDidSaveToCacheNotification = @"ImageDidSaveToCache";
         }
     } andWriteBlock:^(id object, id options, id state) {
         // writeFeaturedImageThumbToDisk
-        [UIImagePNGRepresentation(object) writeToURL:[weakSelf featuredImageThumbCacheURL] atomically:YES];
+//        [UIImagePNGRepresentation(object) writeToURL:[weakSelf featuredImageThumbCacheURL] atomically:YES];
+        if ([[[[weakSelf featuredImageThumbCacheURL] lastPathComponent] pathExtension] isEqualToString:@"jpg"]) {
+            [UIImageJPEGRepresentation(object,1.0) writeToURL:[weakSelf featuredImageThumbCacheURL] atomically:YES];
+        } else {
+            [UIImagePNGRepresentation(object) writeToURL:[weakSelf featuredImageThumbCacheURL] atomically:YES];
+        }
     }]];
     [cache addMethod:[[NIAUCacheMethod alloc] initMethod:@"generate" withReadBlock:^id(id options, id state) {
         CGSize size = [(NSValue *)options[@"size"] CGSizeValue];
@@ -550,11 +585,16 @@ NSString *ImageDidSaveToCacheNotification = @"ImageDidSaveToCache";
    
     NSData *data = [NSData dataWithContentsOfURL:[self metadataURLWithIssue:_issue andId:_id]];
     NSError *error;
-    NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-
-    // call the init directly to avoid saving back to cache
-    return [[NIAUArticle alloc] initWithIssue:_issue andDictionary: dictionary];
-
+    if (data) {
+        NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+        
+        // call the init directly to avoid saving back to cache
+        return [[NIAUArticle alloc] initWithIssue:_issue andDictionary: dictionary];
+    } else {
+        // No metadata for article
+        NSLog(@"ERROR: No metadata for article id: %d",[_id intValue]);
+        return nil;
+    }
 }
 
 +(NSArray *)articlesFromIssue:(NIAUIssue *)_issue {
@@ -565,7 +605,10 @@ NSString *ImageDidSaveToCacheNotification = @"ImageDidSaveToCache";
     for (NSURL *url in [[NSFileManager defaultManager] contentsOfDirectoryAtURL:_issue.nkIssue.contentURL includingPropertiesForKeys:keys options:0 error:&error]) {
         NSDictionary *properties = [url resourceValuesForKeys:keys error:&error];
         if ([[properties objectForKey:NSURLIsDirectoryKey] boolValue]==YES) {
-            [articles addObject:[self articleFromCacheWithIssue:_issue andId:[nf numberFromString:[properties objectForKey:NSURLNameKey]]]];
+            NIAUArticle *articleToAdd = [self articleFromCacheWithIssue:_issue andId:[nf numberFromString:[properties objectForKey:NSURLNameKey]]];
+            if (articleToAdd) {
+                [articles addObject:articleToAdd];
+            }
         }
     }
     return articles;
@@ -599,7 +642,7 @@ NSString *ImageDidSaveToCacheNotification = @"ImageDidSaveToCache";
 
 -(NSURL *)featuredImageThumbCacheURL {
     NSString *featuredImageBaseName = [[[self featuredImageURL] lastPathComponent] stringByDeletingPathExtension];
-    return [NSURL URLWithString:[featuredImageBaseName stringByAppendingPathExtension:@"_thumb.png"] relativeToURL:[self cacheURL]];
+    return [NSURL URLWithString:[featuredImageBaseName stringByAppendingPathExtension:[NSString stringWithFormat:@"_thumb.%@", [[[self featuredImageURL] lastPathComponent] pathExtension]]] relativeToURL:[self cacheURL]];
 }
 
 -(UIImage *)getFeaturedImageThumbFromDisk {
@@ -631,8 +674,6 @@ NSString *ImageDidSaveToCacheNotification = @"ImageDidSaveToCache";
     UIGraphicsEndImageContext();
     return thumb;
 }
-
-
 
 -(void)getFeaturedImageThumbWithSize:(CGSize)size andCompletionBlock:(void (^)(UIImage *))block {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0),

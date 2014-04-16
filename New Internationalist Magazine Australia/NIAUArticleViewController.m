@@ -401,7 +401,7 @@ NSString *ArticleDidRefreshNotification = @"ArticleDidRefresh";
     [issue forceDownloadArticles];
     [issue getCategoriesSortedStartingAt:@"net"];
     [issue getArticlesSortedStartingAt:@"net"];
-    // TODO: Send notification for TableViewController to refresh
+    // Send notification for TableViewController to refresh
     NSDictionary *info = [NSDictionary dictionaryWithObject:refresh forKey:@"refresh"];
     [[NSNotificationCenter defaultCenter] postNotificationName:ArticleDidRefreshNotification object:nil userInfo:info];
     [refresh endRefreshing];
@@ -412,10 +412,9 @@ NSString *ArticleDidRefreshNotification = @"ArticleDidRefresh";
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
-    // TODO: Clean this up.
     if (navigationType == UIWebViewNavigationTypeLinkClicked) {
         // User tapped something in the UIWebView
-        if (!([[request.URL absoluteString] rangeOfString:@".png"].location == NSNotFound)) {
+        if ([[[request.URL lastPathComponent] pathExtension] isEqualToString:@"jpg"] || [[[request.URL lastPathComponent] pathExtension] isEqualToString:@"png"]) {
             // An image was tapped
             // Request URL includes Newsstand, so we assume it's an image clicked within an article.
             [self performSegueWithIdentifier:@"showImageZoom" sender:request.URL];
@@ -533,14 +532,14 @@ NSString *ArticleDidRefreshNotification = @"ArticleDidRefresh";
             return NO;
         }
     } else if ([identifier isEqualToString:@"articleToPreviousArticle"]) {
-        if ([self.article previousArticle]) {
-            NSLog(@"Disabled previous segue, navigation seems wrong.");
-            return NO;
+//        if ([self.article previousArticle]) {
 //            return YES;
-        } else {
-            NSLog(@"First article!");
-            return NO;
-        }
+//        } else {
+//            NSLog(@"First article!");
+//            return NO;
+//        }
+//        NSLog(@"Disabled previous segue, navigation seems wrong.");
+        return NO;
     } else {
         return YES;
     }
@@ -557,7 +556,7 @@ NSString *ArticleDidRefreshNotification = @"ArticleDidRefresh";
             // User tapped a native UIImage, so zoom it.
             UIImageView *imageTapped = (UIImageView *)sender;
             imageZoomViewController.imageToLoad = imageTapped.image;
-        } else if (!([[sender absoluteString] rangeOfString:@".png"].location == NSNotFound)) {
+        } else if ([[[sender lastPathComponent] pathExtension] isEqualToString:@"jpg"] || [[[sender lastPathComponent] pathExtension] isEqualToString:@"png"]) {
             // User tapped an image in an article (embedded in a UIWebView), so zoom it.
             imageZoomViewController.imageToLoad = [UIImage imageWithData: [NSData dataWithContentsOfURL:sender]];
         } else {

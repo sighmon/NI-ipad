@@ -200,6 +200,7 @@
     
     // Set the article date
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"GMT"]];
     [dateFormatter setDateFormat:@"MMMM yyyy"];
     articleDate.text = [NSString stringWithFormat: @"%@ - %@", [[article issue] name], [dateFormatter stringFromDate:[[article issue] publication]]];
     
