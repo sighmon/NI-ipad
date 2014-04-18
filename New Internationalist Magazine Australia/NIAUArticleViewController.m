@@ -173,7 +173,14 @@ NSString *ArticleDidRefreshNotification = @"ArticleDidRefresh";
         if (img) {
             [self.featuredImage setAlpha:0.0];
             [self.featuredImage setImage:img];
-            [self.featuredImage.constraints[0] setConstant:135.0];
+            // Image ratio of raw image from Rails
+            float featuredImageRatio = 1890/800.;
+            float featuredImageHeight = self.featuredImage.frame.size.width/featuredImageRatio;
+            if (IS_IPAD()) {
+                [self.featuredImage.constraints[0] setConstant:featuredImageHeight];
+            } else {
+                [self.featuredImage.constraints[0] setConstant:featuredImageHeight];
+            }
             [UIView animateWithDuration:0.3 animations:^{
                 [self.featuredImage setAlpha:1.0];
             }];
