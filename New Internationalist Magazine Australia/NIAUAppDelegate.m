@@ -109,6 +109,13 @@ const char NotificationKey;
         NSLog(@"Help disabled (at app delegate).");
     }
     
+    // For first run, set Big Images to TRUE
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"bigImages"] == nil) {
+        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+        [userDefaults setBool:TRUE forKey:@"bigImages"];
+        [userDefaults synchronize];
+    }
+    
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"googleAnalytics"] == 1) {
         // Okay to load Crashlytics
         [Crashlytics startWithAPIKey:@"93b57617620e351110a61806412e4a827829d162"];

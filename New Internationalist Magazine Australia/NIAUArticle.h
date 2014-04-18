@@ -43,6 +43,9 @@ extern NSString *ImageDidSaveToCacheNotification;
 
 -(NSArray *)images;
 -(NSURL *)imageCacheURLForId:(NSString *)imageId;
+-(NSURL *)imageCacheURLForId:(NSString *)imageId andSize:(CGSize)size;
+-(UIImage *)getImageWithID:(NSString *)imageID;
+-(UIImage *)getImageWithID:(NSString *)imageID andSize:(CGSize)size;
 -(NSDictionary *)firstImage;
 
 +(NSArray *)articlesFromIssue:(NIAUIssue *)issue;

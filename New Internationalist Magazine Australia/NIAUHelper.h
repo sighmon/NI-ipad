@@ -17,6 +17,8 @@
 + (void)showHelpAlertWithMessage:(NSString *)message andDelegate:(NSObject *)delegate;
 + (NSString *)helpAlertTitle;
 
++ (CGSize)screenSize;
+
 + (void)forceCrash;
 
 @end

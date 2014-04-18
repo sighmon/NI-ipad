@@ -142,9 +142,13 @@ NSString *ArticleDidRefreshNotification = @"ArticleDidRefresh";
 - (void)imageFinishedDownloadingToCache:(NSNotification *)notification
 {
     // Find image in webview by ID and then replace with real URL
-    NSLog(@"Received image cache notification from ID:%@", notification.object[0]);
-    NSString *javascriptString = [NSString stringWithFormat:@"var img = document.getElementById('image%@'); img.src = '%@';", notification.object[0], notification.object[1]];
+    NSArray *imageInformation = [notification.userInfo objectForKey:@"image"];
+    NSLog(@"Received image cache notification from ID:%@", imageInformation[0]);
+    NSString *javascriptString = [NSString stringWithFormat:@"var img = document.getElementById('image%@'); img.src = '%@'; img.parentElement.href = '%@'", imageInformation[0], imageInformation[1], imageInformation[1]];
+    
+    // TODO: Work out why this is causing memory warnings. Possibly 10mb javascript limit?
     [self.bodyWebView stringByEvaluatingJavaScriptFromString:javascriptString];
+    
     [self updateWebViewHeight];
     [self updateScrollViewContentHeight];
 }
@@ -228,7 +232,7 @@ NSString *ArticleDidRefreshNotification = @"ArticleDidRefresh";
     NSURL *baseURL = [NSURL fileURLWithPath:path];
     NSString *bodyWebViewHTML = [NSString stringWithFormat:@"<html> \n"
                                    "<head> \n"
-                                   "<link rel=\"stylesheet\" type=\"text/css\" href=\"%@\">"
+                                   "<link rel=\"stylesheet\" type=\"text/css\" href=\"%@\"> \n"
                                    "<link rel=\"stylesheet\" type=\"text/css\" href=\"%@\"> \n"
                                    "</head> \n"
                                    "<body>%@</body> \n"
@@ -475,8 +479,19 @@ NSString *ArticleDidRefreshNotification = @"ArticleDidRefresh";
     } else if (self.article.images.count > 0) {
         // Set image to share
         NSString *imageIDOfFirstImage = [[self.article.firstImage objectForKey:@"id"] stringValue];
-        NSURL *imageURL = [self.article imageCacheURLForId:imageIDOfFirstImage];
-        [itemsToShare addObject:[UIImage imageWithData:[NSData dataWithContentsOfURL:imageURL]]];
+        UIImage *imageToShare;
+        
+        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"bigImages"]) {
+            // share big image
+            imageToShare = [self.article getImageWithID:imageIDOfFirstImage];
+        } else {
+            // share screen size image
+            imageToShare = [self.article getImageWithID:imageIDOfFirstImage andSize:[NIAUHelper screenSize]];
+        }
+        
+        if (imageToShare) {
+            [itemsToShare addObject:imageToShare];
+        }
     }
     
     UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:itemsToShare applicationActivities:nil];

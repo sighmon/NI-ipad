@@ -92,6 +92,11 @@ NSString *kAlertTitle = @"Did you know?";
     return kAlertTitle;
 }
 
++ (CGSize)screenSize
+{
+    return [[UIScreen mainScreen] bounds].size;
+}
+
 #pragma mark - Force Crash for Crashlytics
 
 + (void)forceCrash
