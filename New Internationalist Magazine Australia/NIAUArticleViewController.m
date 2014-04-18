@@ -418,7 +418,7 @@ NSString *ArticleDidRefreshNotification = @"ArticleDidRefresh";
 {
     if (navigationType == UIWebViewNavigationTypeLinkClicked) {
         // User tapped something in the UIWebView
-        if ([[[request.URL lastPathComponent] pathExtension] isEqualToString:@"jpg"] || [[[request.URL lastPathComponent] pathExtension] isEqualToString:@"png"]) {
+        if ([[[request.URL lastPathComponent] pathExtension] isEqualToString:@"jpg"] || [[[request.URL lastPathComponent] pathExtension] isEqualToString:@"png"]|| [[[request.URL lastPathComponent] pathExtension] isEqualToString:@"jpeg"]) {
             // An image was tapped
             // Request URL includes Newsstand, so we assume it's an image clicked within an article.
             [self performSegueWithIdentifier:@"showImageZoom" sender:request.URL];
@@ -571,7 +571,7 @@ NSString *ArticleDidRefreshNotification = @"ArticleDidRefresh";
             // User tapped a native UIImage, so zoom it.
             UIImageView *imageTapped = (UIImageView *)sender;
             imageZoomViewController.imageToLoad = imageTapped.image;
-        } else if ([[[sender lastPathComponent] pathExtension] isEqualToString:@"jpg"] || [[[sender lastPathComponent] pathExtension] isEqualToString:@"png"]) {
+        } else if ([[[sender lastPathComponent] pathExtension] isEqualToString:@"jpg"] || [[[sender lastPathComponent] pathExtension] isEqualToString:@"png"]|| [[[sender lastPathComponent] pathExtension] isEqualToString:@"jpeg"]) {
             // User tapped an image in an article (embedded in a UIWebView), so zoom it.
             imageZoomViewController.imageToLoad = [UIImage imageWithData: [NSData dataWithContentsOfURL:sender]];
         } else {

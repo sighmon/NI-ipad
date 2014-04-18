@@ -133,7 +133,7 @@ NSString *kCellID = @"magazineCellID";              // UICollectionViewCell stor
                 
                 if (img && [[self.collectionView visibleCells] containsObject:updateCell]) {
                     
-                    NSLog(@"Cell: (%f,%f), IndexPath: %ld", updateCell.frame.origin.x, updateCell.frame.origin.y, (long)indexPath.row);
+//                    NSLog(@"Cell: (%f,%f), IndexPath: %ld", updateCell.frame.origin.x, updateCell.frame.origin.y, (long)indexPath.row);
                     if (updateCell) {
                         [updateCell.coverLoadingIndicator stopAnimating];
                         [updateCell.image setAlpha:0.0];

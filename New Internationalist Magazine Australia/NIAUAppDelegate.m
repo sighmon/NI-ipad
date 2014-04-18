@@ -61,8 +61,8 @@ const char NotificationKey;
      UIRemoteNotificationTypeSound|
      UIRemoteNotificationTypeNewsstandContentAvailability];
     
-    // TODO: Remove this for launch - allows multiple NewsStand notifications. :-)
-    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"NKDontThrottleNewsstandContentNotifications"];
+    // Remove this for launch - allows multiple NewsStand notifications. :-)
+//    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"NKDontThrottleNewsstandContentNotifications"];
     
     // When we receive a Remote Notification, grab the issue number from the payload and download it.
     NSDictionary *payload = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];

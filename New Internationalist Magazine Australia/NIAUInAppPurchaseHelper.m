@@ -53,7 +53,7 @@ NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurcha
 
 + (NIAUInAppPurchaseHelper *)sharedInstance {
     
-    // TODO: Possible race condition with sharedInstance being nil while dispatch_once is being called.
+    // Possible race condition with sharedInstance being nil while dispatch_once is being called.
     
     static dispatch_once_t once;
     static NIAUInAppPurchaseHelper *sharedInstance;
@@ -357,9 +357,11 @@ NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurcha
                                                          error:&jsonError
                         ];
 //    NSLog(@"JSON: %@",[[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]);
+    
     // URL for sandbox receipt validation; replace "sandbox" with "buy" in production or you will receive
     // error codes 21006 or 21007
-    NSURL *requestURL = [NSURL URLWithString:@"https://sandbox.itunes.apple.com/verifyReceipt"];
+//    NSURL *requestURL = [NSURL URLWithString:@"https://sandbox.itunes.apple.com/verifyReceipt"];
+    NSURL *requestURL = [NSURL URLWithString:@"https://buy.itunes.apple.com/verifyReceipt"];
     
     NSMutableURLRequest *req = [[NSMutableURLRequest alloc] initWithURL:requestURL];
     [req setHTTPMethod:@"POST"];
