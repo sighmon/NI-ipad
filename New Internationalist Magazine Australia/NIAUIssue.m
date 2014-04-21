@@ -142,12 +142,19 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
     [cache addMethod:[[NIAUCacheMethod alloc] initMethod:@"memory" withReadBlock:^id(id options, id state) {
         return state[@"categoriesSorted"];
     } andWriteBlock:^(id object, id options, id state) {
-        state[@"categoriesSorted"] = object;
+        if ([object count] > 0) {
+            state[@"categoriesSorted"] = object;
+        }
     }]];
     [cache addMethod:[[NIAUCacheMethod alloc] initMethod:@"disk" withReadBlock:^id(id options, id state) {
         NSLog(@"Trying to read cached sorted categories from %@",[weakSelf categoriesSortedURL]);
         NSData *data = [NSData dataWithContentsOfURL:[weakSelf categoriesSortedURL]];
-        return [NSKeyedUnarchiver unarchiveObjectWithData:data];
+        NSArray *unarchived = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+        if ([unarchived count] > 0) {
+            return unarchived;
+        } else {
+            return nil;
+        }
     } andWriteBlock:^(id object, id options, id state) {
         NSData *data = [NSKeyedArchiver archivedDataWithRootObject:object];
         // TODO: FIX THIS SEE WHY MULTIPLE WRITES
@@ -160,7 +167,7 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
     }]];
     [cache addMethod:[[NIAUCacheMethod alloc] initMethod:@"net" withReadBlock:^id(id options, id state) {
         NSLog(@"NET(ish) building sorted categories.");
-        return self.sortedCategories;
+        return weakSelf.sortedCategories;
     } andWriteBlock:^(id object, id options, id state) {
         // Nothing to do, can't write to the net.
     }]];
@@ -175,12 +182,19 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
     [cache addMethod:[[NIAUCacheMethod alloc] initMethod:@"memory" withReadBlock:^id(id options, id state) {
         return state[@"articlesSorted"];
     } andWriteBlock:^(id object, id options, id state) {
-        state[@"articlesSorted"] = object;
+        if ([object count] > 0) {
+            state[@"articlesSorted"] = object;
+        }
     }]];
     [cache addMethod:[[NIAUCacheMethod alloc] initMethod:@"disk" withReadBlock:^id(id options, id state) {
         NSLog(@"Trying to read cached sorted articles from %@",[weakSelf articlesSortedURL]);
         NSData *data = [NSData dataWithContentsOfURL:[weakSelf articlesSortedURL]];
-        return [NSKeyedUnarchiver unarchiveObjectWithData:data];
+        NSArray *unarchived = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+        if ([unarchived count] > 0) {
+            return unarchived;
+        } else {
+            return nil;
+        }
     } andWriteBlock:^(id object, id options, id state) {
         // TODO: FIX THIS SEE WHY MULTIPLE WRITES
         NSData *data = [NSKeyedArchiver archivedDataWithRootObject:object];
@@ -193,7 +207,7 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
     }]];
     [cache addMethod:[[NIAUCacheMethod alloc] initMethod:@"net" withReadBlock:^id(id options, id state) {
         NSLog(@"NET(ish) building sorted articles.");
-        return self.sortedArticles;
+        return weakSelf.sortedArticles;
     } andWriteBlock:^(id object, id options, id state) {
         // Nothing to do, can't write to the net.
     }]];
@@ -485,8 +499,9 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
 -(NSArray *)sortedArticles
 {
     NSMutableArray *sorted = [NSMutableArray array];
-    for (int i = 0; i < self.sortedCategories.count; i++) {
-        [sorted addObjectsFromArray:[self.sortedCategories[i] objectForKey:@"articles"]];
+    NSArray *_sortedCategories = [self getCategoriesSorted];
+    for (int i = 0; i < _sortedCategories.count; i++) {
+        [sorted addObjectsFromArray:[_sortedCategories[i] objectForKey:@"articles"]];
     }
     return [[NSArray alloc] initWithArray:sorted];
 }

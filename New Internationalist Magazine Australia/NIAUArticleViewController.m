@@ -60,6 +60,9 @@ NSString *ArticleDidRefreshNotification = @"ArticleDidRefresh";
     self.teaserLabel.text = @"";
     self.dateLabel.text = @"";
     
+    // TODO: Set navigation back button title - this isn't working
+    [self.navigationController.navigationBar.topItem.backBarButtonItem setTitle:self.article.title];
+    
     [self updateScrollViewContentHeight];
     
     [self updateCategoryCollectionViewHeight];

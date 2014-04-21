@@ -89,10 +89,10 @@ NSString *ImageDidSaveToCacheNotification = @"ImageDidSaveToCache";
 
 -(NIAUArticle *)previousArticle
 {
-    // TODO: retrieve from cache
+    // Retrieve from cache
     NSArray *sorted = [self.issue getArticlesSorted];
     NSUInteger articleIndex = [self indexInSortedArticles:sorted];
-    if (articleIndex > 0) {
+    if ([sorted count] > 0 && articleIndex > 0) {
         return [sorted objectAtIndex:(articleIndex - 1)];
     } else {
         return nil;
@@ -102,10 +102,10 @@ NSString *ImageDidSaveToCacheNotification = @"ImageDidSaveToCache";
 
 -(NIAUArticle *)nextArticle
 {
-    // TODO: retrieve from cache
+    // Retrieve from cache
     NSArray *sorted = [self.issue getArticlesSorted];
     NSUInteger articleIndex = [self indexInSortedArticles:sorted];
-    if (articleIndex < ([sorted count] -1)) {
+    if ([sorted count] > 0 && articleIndex < ([sorted count] -1)) {
         return [sorted objectAtIndex:(articleIndex + 1)];
     } else {
         return nil;
@@ -268,17 +268,23 @@ NSString *ImageDidSaveToCacheNotification = @"ImageDidSaveToCache";
                     NIAUCache *imageCache = [self buildImageCacheFromDictionary:imageDictionary forSize:size];
                     [imageCaches setObject:imageCache forKey:imageId];
                     
-                    // and fire off a background priority cache read
-                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+                    // If iPhone is 4S or below, don't do this in the background, not enough RAM to handle the multiple javascript updates.
+                    if (IS_IPHONE() && IS_IPHONE4S_OR_LOWER()) {
+                        // Do this in real time to avoid memory warning crash.
                         [imageCache readWithOptions:nil];
-                        
-                        // Send a notification when the image has been read successfully
-                        dispatch_async(dispatch_get_main_queue(), ^{
-                            NSDictionary *imageInformation = @{@"image":@[imageId,imageSource]};
-                            [[NSNotificationCenter defaultCenter] postNotificationName:ImageDidSaveToCacheNotification object:nil userInfo:imageInformation];
-                            NSLog(@"Sent Image saved notification for ID:%@",imageId);
+                    } else {
+                        // and fire off a background priority cache read
+                        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+                            [imageCache readWithOptions:nil];
+                            
+                            // Send a notification when the image has been read successfully
+                            dispatch_async(dispatch_get_main_queue(), ^{
+                                NSDictionary *imageInformation = @{@"image":@[imageId,imageSource]};
+                                [[NSNotificationCenter defaultCenter] postNotificationName:ImageDidSaveToCacheNotification object:nil userInfo:imageInformation];
+                                NSLog(@"Sent Image saved notification for ID:%@",imageId);
+                            });
                         });
-                    });
+                    }
                 }
                 
                 NSString *credit_div = @"";

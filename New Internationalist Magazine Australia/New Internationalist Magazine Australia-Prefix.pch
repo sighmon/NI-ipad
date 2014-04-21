@@ -31,3 +31,6 @@
 
 // Test if device is an iPad
 #define IS_IPAD() (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+#define IS_IPHONE() (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+#define IS_IPHONE5() ([[UIScreen mainScreen] bounds].size.height == 568)
+#define IS_IPHONE4S_OR_LOWER() ([[UIScreen mainScreen] bounds].size.height < 568)
