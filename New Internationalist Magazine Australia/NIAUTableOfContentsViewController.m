@@ -209,10 +209,10 @@ static NSString *CellIdentifier = @"articleCell";
     CGSize fittingSize = CGSizeMake(tableView.bounds.size.width, 0);
     CGSize size = [cell.contentView systemLayoutSizeFittingSize:fittingSize];
     
-//    int width = size.width;
-//    int height = size.height;
+    // HACK: on the iPad the cell height isn't quite big enough to fit the full heading. So adding this slop. :-/
+    size.height += 5;
     
-//    NSLog(@"%@ %ix%i",((UILabel *)[cell viewWithTag:101]).text,width,height);
+//    NSLog(@"%@ - %@ - %@",((UILabel *)[cell viewWithTag:101]).text, NSStringFromCGSize(size), NSStringFromCGSize(cell.frame.size));
     
     return size;
 }
@@ -344,7 +344,6 @@ static NSString *CellIdentifier = @"articleCell";
     // Set the cover from the issue cover tapped
     [self.issue getCoverWithCompletionBlock:^(UIImage *img) {
         [self.imageView setAlpha:0.0];
-        [self.imageView setImage:img];
         [self.imageView setImage:[NIAUHelper imageWithRoundedCornersSize:10. usingImage:img]];
         [NIAUHelper addShadowToImageView:self.imageView withRadius:3. andOffset:CGSizeMake(0, 2) andOpacity:0.3];
         [UIView animateWithDuration:0.3 animations:^{
@@ -361,7 +360,6 @@ static NSString *CellIdentifier = @"articleCell";
     self.labelNumberAndDate.text = [NSString stringWithFormat: @"%@ - %@", self.issue.name, [dateFormatter stringFromDate:self.issue.publication]];
     
     self.labelEditor.text = [NSString stringWithFormat:@"Edited by:\n%@", self.issue.editorsName];
-//    self.editorsLetterTextView.text = self.issue.editorsLetter;
     
     // Load CSS from the filesystem
     NSURL *cssURL = [[NSBundle mainBundle] URLForResource:@"article-body" withExtension:@"css"];
@@ -442,7 +440,7 @@ static NSString *CellIdentifier = @"articleCell";
 {
     if ([[segue identifier] isEqualToString:@"showImageZoom"])
     {
-        // TODO: Load the large version of the image to be zoomed.
+        // Load the large version of the image to be zoomed.
         NIAUImageZoomViewController *imageZoomViewController = [segue destinationViewController];
         imageZoomViewController.issueOfOrigin = self.issue;
         

@@ -1476,12 +1476,12 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="EBU-8G-ECI"/>
-        <segue reference="7r1-dy-lxK"/>
-        <segue reference="MS4-LT-1l5"/>
         <segue reference="WLv-dP-nWF"/>
+        <segue reference="7r1-dy-lxK"/>
+        <segue reference="EBU-8G-ECI"/>
+        <segue reference="MS4-LT-1l5"/>
+        <segue reference="w0v-2Q-MmG"/>
+        <segue reference="fFO-5s-0tA"/>
         <segue reference="mho-0V-J7B"/>
-        <segue reference="PvO-ql-dqR"/>
-        <segue reference="JBV-bs-efO"/>
     </inferredMetricsTieBreakers>
 </document>
