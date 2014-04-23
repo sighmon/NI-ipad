@@ -21,6 +21,7 @@ extern NSString *ImageDidSaveToCacheNotification;
     NIAUCache *bodyCache;
     NIAUCache *featuredImageThumbCache;
     NIAUCache *featuredImageCache;
+    NIAUCache *firstImageCache;
     NSMutableDictionary *imageCaches;
 }
 
@@ -47,6 +48,8 @@ extern NSString *ImageDidSaveToCacheNotification;
 -(UIImage *)getImageWithID:(NSString *)imageID;
 -(UIImage *)getImageWithID:(NSString *)imageID andSize:(CGSize)size;
 -(NSDictionary *)firstImage;
+-(UIImage *)getFirstImageWithID:(NSString *)imageID andSize:(CGSize)size;
+-(void)getFirstImageWithID:(NSString *)imageID andSize:(CGSize)size withCompletionBlock:(void(^)(UIImage *img)) block;
 
 +(NSArray *)articlesFromIssue:(NIAUIssue *)issue;
 +(NIAUArticle *)articleWithIssue:(NIAUIssue *)issue andDictionary:(NSDictionary *)dict;

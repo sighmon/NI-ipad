@@ -268,17 +268,24 @@ static NSString *CellIdentifier = @"articleCell";
 
 - (void)setupCell: (UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
 
-    UIImageView *articleImageView = (UIImageView *)[cell viewWithTag:100];
+    __block UIImageView *articleImageView = (UIImageView *)[cell viewWithTag:100];
     NIAUArticle *article = [self.sortedCategories[indexPath.section] objectForKey:@"articles"][indexPath.row];
     CGSize thumbSize = CGSizeMake(20,72);
     if (self.tableView.dragging == NO && self.tableView.decelerating == NO) {
         if (articleImageView.image == nil) {
             [article getFeaturedImageThumbWithSize:thumbSize andCompletionBlock:^(UIImage *thumb) {
                 if (thumb) {
-                    [articleImageView setImage:thumb];
+                    [NIAUHelper fadeInImage:thumb intoImageView:articleImageView];
                 } else {
-//                    [articleImageView.constraints[0] setConstant:20.];
-//                    [cell setSeparatorInset:UIEdgeInsetsMake(0, 21., 0, 0)];
+                    // If the article has an article image, get it.
+                    NSDictionary *firstImage = [article firstImage];
+                    if ([firstImage count] > 0) {
+                        [article getFirstImageWithID:[[firstImage objectForKey:@"id"] stringValue] andSize:thumbSize withCompletionBlock:^(UIImage *img) {
+                            if (img) {
+                                [NIAUHelper fadeInImage:img intoImageView:articleImageView];
+                            }
+                        }];
+                    }
                 }
             }];
         } else {
@@ -287,7 +294,7 @@ static NSString *CellIdentifier = @"articleCell";
     } else {
         UIImage *thumb = [article attemptToGetFeaturedImageThumbFromDiskWithSize:thumbSize];
         if (thumb) {
-            [articleImageView setImage:thumb];
+            [NIAUHelper fadeInImage:thumb intoImageView:articleImageView];
         } else {
 //            [articleImageView.constraints[0] setConstant:20.];
 //            [cell setSeparatorInset:UIEdgeInsetsMake(0, 21., 0, 0)];

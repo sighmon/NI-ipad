@@ -215,19 +215,33 @@
     if (self.tableView.dragging == NO && self.tableView.decelerating == NO) {
         [article getFeaturedImageThumbWithSize:thumbSize andCompletionBlock:^(UIImage *thumb) {
             if (thumb) {
-                [articleImage setImage:thumb];
-                [articleImage.constraints[0] setConstant:57.];
-                [cell setSeparatorInset:UIEdgeInsetsMake(0, 58., 0, 0)];
-                [cell setNeedsLayout];
+                [NIAUHelper fadeInImage:thumb intoImageView:articleImage];
+            } else {
+                // If the article has an article image, get it.
+                NSDictionary *firstImage = [article firstImage];
+                if ([firstImage count] > 0) {
+                    [article getFirstImageWithID:[[firstImage objectForKey:@"id"] stringValue] andSize:thumbSize withCompletionBlock:^(UIImage *img) {
+                        if (img) {
+                            [NIAUHelper fadeInImage:img intoImageView:articleImage];
+                        }
+                    }];
+                }
             }
         }];
     } else {
         UIImage *thumb = [article attemptToGetFeaturedImageThumbFromDiskWithSize:thumbSize];
         if (thumb) {
-            [articleImage setImage:thumb];
-            [articleImage.constraints[0] setConstant:57.];
-            [cell setSeparatorInset:UIEdgeInsetsMake(0, 58., 0, 0)];
-            [cell setNeedsLayout];
+            [NIAUHelper fadeInImage:thumb intoImageView:articleImage];
+        } else {
+            // If the article has an article image, get it.
+            NSDictionary *firstImage = [article firstImage];
+            if ([firstImage count] > 0) {
+                [article getFirstImageWithID:[[firstImage objectForKey:@"id"] stringValue] andSize:thumbSize withCompletionBlock:^(UIImage *img) {
+                    if (img) {
+                        [NIAUHelper fadeInImage:img intoImageView:articleImage];
+                    }
+                }];
+            }
         }
     }
     

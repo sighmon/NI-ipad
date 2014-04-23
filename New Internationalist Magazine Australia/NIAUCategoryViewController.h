@@ -10,6 +10,7 @@
 #import "NIAUPublisher.h"
 #import "NIAUIssue.h"
 #import "NIAUArticleViewController.h"
+#import "NIAUHelper.h"
 
 #import "GAI.h"
 #import "GAITracker.h"

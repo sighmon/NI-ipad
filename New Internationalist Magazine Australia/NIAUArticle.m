@@ -392,13 +392,25 @@ NSString *ImageDidSaveToCacheNotification = @"ImageDidSaveToCache";
 -(NSDictionary *)firstImage
 {
     // Select the image by first position
-    NSArray *sortedImagesByPosition;
-    sortedImagesByPosition = [self.images sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
-        NSString *first = [(NSDictionary *)a objectForKey:@"position"];
-        NSString *second = [(NSDictionary *)b objectForKey:@"position"];
-        return [first compare:second];
-    }];
-    return [sortedImagesByPosition objectAtIndex:0];
+    if ([self.images count] > 0) {
+        NSArray *sortedImagesByPosition;
+        sortedImagesByPosition = [self.images sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
+            NSString *first = [(NSDictionary *)a objectForKey:@"position"];
+            NSString *second = [(NSDictionary *)b objectForKey:@"position"];
+            if (first != (id)[NSNull null] && second != (id)[NSNull null]) {
+                // Try sorting by position
+                return [first compare:second];
+            } else {
+                // If position is NULL, sort by id
+                first = [(NSDictionary *)a objectForKey:@"id"];
+                second = [(NSDictionary *)b objectForKey:@"id"];
+                return [first compare:second];
+            }
+        }];
+        return [sortedImagesByPosition objectAtIndex:0];
+    } else {
+        return nil;
+    }
 }
 
 -(NIAUCache *)buildImageCacheFromDictionary:(NSDictionary *)imageDictionary forSize:(CGSize)size {
@@ -429,33 +441,65 @@ NSString *ImageDidSaveToCacheNotification = @"ImageDidSaveToCache";
         imageNetURL = [NSURL URLWithString:[[imageDictionary objectForKey:@"data"] objectForKey:@"url"]];
     }
     
-    // TODO: Check that this works, and that the options["size"] is right...
-    // Note: Ignoring options["size"] and only listening to the handed in size.
+    __block NSURL *_imageCacheURL = imageCacheURL;
     
     [cache addMethod:[[NIAUCacheMethod alloc] initMethod:@"memory" withReadBlock:^id(id options, id state) {
         id entry = state[imageStateNameSize];
         if(!entry) return nil;
         CGSize cachedSize = [(NSValue *)[entry objectForKey:@"size"] CGSizeValue];
-        CGSize requestedSize = size;
+        CGSize optionsSize = [(NSValue *)options[@"size"] CGSizeValue];
+        CGSize requestedSize = CGSizeMake(0, 0);
+        if (optionsSize.width > 0) {
+            if (optionsSize.width > size.width) {
+                requestedSize = size;
+            } else {
+                requestedSize = optionsSize;
+            }
+        } else {
+            requestedSize = size;
+        }
+        
         if(CGSizeEqualToSize(cachedSize,requestedSize)) {
             return state[imageStateName];
         } else {
             return nil;
         }
     } andWriteBlock:^(id object, id options, id state) {
+        CGSize optionsSize = [(NSValue *)options[@"size"] CGSizeValue];
         CGSize sizeToWrite;
         if ([[NSUserDefaults standardUserDefaults] boolForKey:@"bigImages"]) {
-            sizeToWrite = [object size];
+            if (optionsSize.width > 0) {
+                sizeToWrite = optionsSize;
+            } else {
+                sizeToWrite = [object size];
+            }
         } else {
-            sizeToWrite = size;
+            if (optionsSize.width > 0) {
+                sizeToWrite = optionsSize;
+            } else {
+                sizeToWrite = size;
+            }
         }
         state[imageStateNameSize]=@{@"size":[NSValue valueWithCGSize:sizeToWrite]};
         state[imageStateName]=object;
     }]];
     [cache addMethod:[[NIAUCacheMethod alloc] initMethod:@"disk" withReadBlock:^id(id options, id state) {
         
-//        CGSize sizeFromOptions = [(NSValue *)options[@"size"] CGSizeValue];
-        NSData *data = [NSData dataWithContentsOfURL:imageCacheURL];
+        CGSize optionsSize = [(NSValue *)options[@"size"] CGSizeValue];
+        if (optionsSize.width > 0) {
+            
+            if (optionsSize.width > size.width) {
+                // Use size calculated above
+            } else {
+                // Use size from options
+                // Use the size in options.
+                _imageCacheURL = [weakSelf imageCacheURLForId:imageId andSize:optionsSize];
+            }
+
+        } else {
+            // No options size, so use current imageCacheURL
+        }
+        NSData *data = [NSData dataWithContentsOfURL:_imageCacheURL];
         UIImage *image = [UIImage imageWithData:data scale:[[UIScreen mainScreen] scale]];
         
         if(image) {
@@ -467,21 +511,100 @@ NSString *ImageDidSaveToCacheNotification = @"ImageDidSaveToCache";
     } andWriteBlock:^(id object, id options, id state) {
         // Using original file type instead of PNG to save memory.
 //        [UIImagePNGRepresentation(object) writeToURL:imageCacheURL atomically:YES];
-        if ([[[imageCacheURL lastPathComponent] pathExtension] isEqualToString:@"jpg"]) {
-            [UIImageJPEGRepresentation(object,1.0) writeToURL:imageCacheURL atomically:YES];
+        
+        CGSize optionsSize = [(NSValue *)options[@"size"] CGSizeValue];
+        if (optionsSize.width > 0) {
+            
+            if (optionsSize.width > size.width) {
+                // Use size calculated above
+            } else {
+                // Use size from options
+                // Use the size in options.
+                _imageCacheURL = [weakSelf imageCacheURLForId:imageId andSize:optionsSize];
+            }
+            
         } else {
-            [UIImagePNGRepresentation(object) writeToURL:imageCacheURL atomically:YES];
+            // No options size, so use current imageCacheURL
         }
+        
+        if ([[[_imageCacheURL lastPathComponent] pathExtension] isEqualToString:@"jpg"]) {
+            [UIImageJPEGRepresentation(object,1.0) writeToURL:_imageCacheURL atomically:YES];
+        } else {
+            [UIImagePNGRepresentation(object) writeToURL:_imageCacheURL atomically:YES];
+        }
+    }]];
+    [cache addMethod:[[NIAUCacheMethod alloc] initMethod:@"generate" withReadBlock:^id(id options, id state) {
+        // Get full sized image from disk
+        NSData *data = [NSData dataWithContentsOfURL:[weakSelf imageCacheURLForId:imageId]];
+        UIImage *image = [UIImage imageWithData:data scale:[[UIScreen mainScreen] scale]];
+        // return screen size images
+        CGSize optionsSize = [(NSValue *)options[@"size"] CGSizeValue];
+        CGSize sizeToFit;
+        if (optionsSize.width > 0) {
+            
+            if (optionsSize.width > size.width) {
+                // Use size calculated above
+                sizeToFit = size;
+            } else {
+                // Use size from options
+                // Use the size in options.
+                sizeToFit = optionsSize;
+            }
+            
+        } else {
+            // No options size, so use current imageCacheURL
+            sizeToFit = size;
+        }
+        // User defaults for big images or not. (helps speed up response on older iPhones)
+        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"bigImages"]) {
+            if (optionsSize.width > 0) {
+                return [weakSelf scaleImage:image toSize:sizeToFit];
+            } else {
+                return image;
+            }
+        } else {
+            if (optionsSize.width > 0) {
+                return [weakSelf scaleImage:image toSize:sizeToFit];
+            } else {
+                return [weakSelf scaleImage:image toFitWidth:sizeToFit];
+            }
+        }
+    } andWriteBlock:^(id object, id options, id state) {
+        // noop
     }]];
     [cache addMethod:[[NIAUCacheMethod alloc] initMethod:@"net" withReadBlock:^id(id options, id state) {
         NSData *imageData = [NSData dataWithContentsOfCookielessURL:imageNetURL];
-        // User defaults for big images or not. (helps speed up response on older iPhones)
-        // TODO: MAKE OTHER METHODS BUILD WITHOUT SIZE TOO
-        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"bigImages"]) {
-            return [UIImage imageWithData:imageData];
+        // return screen size images
+        CGSize optionsSize = [(NSValue *)options[@"size"] CGSizeValue];
+        CGSize sizeToFit;
+        if (optionsSize.width > 0) {
+            
+            if (optionsSize.width > size.width) {
+                // Use size calculated above
+                sizeToFit = size;
+            } else {
+                // Use size from options
+                // Use the size in options.
+                sizeToFit = optionsSize;
+            }
+            
         } else {
-            // return screen size images
-            return [weakSelf scaleImage:[UIImage imageWithData:imageData] toFitWidth:size];
+            // No options size, so use current imageCacheURL
+            sizeToFit = size;
+        }
+        // User defaults for big images or not. (helps speed up response on older iPhones)
+        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"bigImages"]) {
+            if (optionsSize.width > 0) {
+                return [weakSelf scaleImage:[UIImage imageWithData:imageData] toSize:sizeToFit];
+            } else {
+                return [UIImage imageWithData:imageData];
+            }
+        } else {
+            if (optionsSize.width > 0) {
+                return [weakSelf scaleImage:[UIImage imageWithData:imageData] toSize:sizeToFit];
+            } else {
+                return [weakSelf scaleImage:[UIImage imageWithData:imageData] toFitWidth:sizeToFit];
+            }
         }
     } andWriteBlock:^(id object, id options, id state) {
         // noop
@@ -614,6 +737,10 @@ NSString *ImageDidSaveToCacheNotification = @"ImageDidSaveToCache";
         
         featuredImageCache = [self buildFeaturedImageCache];
         featuredImageThumbCache = [self buildFeaturedImageThumbCache];
+        NSDictionary *firstImageDictionary = self.firstImage;
+        if ([firstImageDictionary count] > 0) {
+            firstImageCache = [self buildImageCacheFromDictionary:firstImageDictionary forSize:[NIAUHelper screenSize]];
+        }
         // Note: Use this call if we want to pre-build image caches for articles.
         // Not in a thread yet though I don't think... (or is it)
         // Might get called for each article at table of contents stage though..
@@ -822,6 +949,22 @@ NSString *ImageDidSaveToCacheNotification = @"ImageDidSaveToCache";
 
 -(UIImage *)getImageWithID:(NSString *)imageID andSize:(CGSize)size {
     return [[imageCaches objectForKey:imageID] readWithOptions:@{@"size":[NSValue valueWithCGSize:size]}];
+}
+
+-(UIImage *)getFirstImageWithID:(NSString *)imageID andSize:(CGSize)size {
+    return [firstImageCache readWithOptions:@{@"size":[NSValue valueWithCGSize:size]} stoppingAt:@"net"];
+}
+
+-(void)getFirstImageWithID:(NSString *)imageID andSize:(CGSize)size withCompletionBlock:(void(^)(UIImage *img)) block {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0),
+                   ^{
+                       UIImage *image = [self getFirstImageWithID:imageID andSize:size];
+                       // run the block on the main queue so it can do ui stuff
+                       dispatch_async(dispatch_get_main_queue(), ^{
+                           block(image);
+                       });
+                       
+                   });
 }
 
 -(NSString *)attemptToGetBodyFromDisk {

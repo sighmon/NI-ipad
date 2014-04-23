@@ -92,6 +92,19 @@ NSString *kAlertTitle = @"Did you know?";
     return kAlertTitle;
 }
 
++ (void)fadeInImage:(UIImage *)image intoImageView:(UIImageView *)imageView
+{
+    // Note: this is for fading images once they load, say for UITableViews
+    [imageView setAlpha:0.0];
+    [imageView setImage:image];
+    //    [articleImage.constraints[0] setConstant:57.];
+    //    [cell setSeparatorInset:UIEdgeInsetsMake(0, 58., 0, 0)];
+    //    [cell setNeedsLayout];
+    [UIView animateWithDuration:0.3 animations:^{
+        [imageView setAlpha:1.0];
+    }];
+}
+
 + (CGSize)screenSize
 {
     return [[UIScreen mainScreen] bounds].size;

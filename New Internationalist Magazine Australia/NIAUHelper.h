@@ -16,6 +16,7 @@
 + (UIImage *)imageWithRoundedCornersSize:(float)cornerRadius usingImage:(UIImage *)original;
 + (void)showHelpAlertWithMessage:(NSString *)message andDelegate:(NSObject *)delegate;
 + (NSString *)helpAlertTitle;
++ (void)fadeInImage:(UIImage *)image intoImageView:(UIImageView *)imageView;
 
 + (CGSize)screenSize;
 
