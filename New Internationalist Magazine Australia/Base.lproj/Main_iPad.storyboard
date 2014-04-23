@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13C64" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="oKe-c9-yQ2">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13C1021" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="oKe-c9-yQ2">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
@@ -125,6 +125,7 @@
                             <constraint firstItem="4cE-wm-UVR" firstAttribute="top" secondItem="ztv-AX-HV8" secondAttribute="bottom" id="ORk-ll-964"/>
                             <constraint firstItem="sCG-7l-LMd" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="20" id="Pss-jm-BQc"/>
                             <constraint firstItem="4cE-wm-UVR" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="20" id="Raf-xC-l51"/>
+                            <constraint firstItem="hza-Yw-P0j" firstAttribute="height" secondItem="ztv-AX-HV8" secondAttribute="height" id="TB4-HJ-8Vk"/>
                             <constraint firstItem="sGR-UI-43W" firstAttribute="top" secondItem="57J-QL-wcM" secondAttribute="bottom" constant="40" id="cNE-GQ-TuB"/>
                             <constraint firstAttribute="trailing" secondItem="4cE-wm-UVR" secondAttribute="trailing" constant="20" id="cdf-gZ-oyw"/>
                             <constraint firstAttribute="centerY" secondItem="sGR-UI-43W" secondAttribute="centerY" constant="92.5" id="dPo-uL-oFk"/>
@@ -1475,12 +1476,12 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="MS4-LT-1l5"/>
         <segue reference="EBU-8G-ECI"/>
-        <segue reference="TYl-bi-yIk"/>
+        <segue reference="7r1-dy-lxK"/>
+        <segue reference="MS4-LT-1l5"/>
         <segue reference="WLv-dP-nWF"/>
         <segue reference="mho-0V-J7B"/>
-        <segue reference="JBV-bs-efO"/>
         <segue reference="PvO-ql-dqR"/>
+        <segue reference="JBV-bs-efO"/>
     </inferredMetricsTieBreakers>
 </document>

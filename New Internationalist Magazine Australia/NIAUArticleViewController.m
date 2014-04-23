@@ -376,7 +376,7 @@ NSString *ArticleDidRefreshNotification = @"ArticleDidRefresh";
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    if ([alertView.title isEqualToString:@"Subscribe?"]) {
+    if ([alertView.title isEqualToString:@"Subscribe?"] || [alertView.title isEqualToString:@"Internet access?"]) {
         switch (buttonIndex) {
             case 0:
                 // Cancel pressed
@@ -577,7 +577,7 @@ NSString *ArticleDidRefreshNotification = @"ArticleDidRefresh";
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([[segue identifier] isEqualToString:@"showImageZoom"]) {
-        // TODO: Load the large version of the image to be zoomed.
+        // Load the large version of the image to be zoomed.
         NIAUImageZoomViewController *imageZoomViewController = [segue destinationViewController];
         imageZoomViewController.articleOfOrigin = self.article;
         
