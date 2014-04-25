@@ -147,10 +147,14 @@ NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurcha
 
 - (void)provideContentForProductIdentifier:(NSString *)productIdentifier {
     
-    [_purchasedProductIdentifiers addObject:productIdentifier];
-    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:productIdentifier];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-    [[NSNotificationCenter defaultCenter] postNotificationName:IAPHelperProductPurchasedNotification object:productIdentifier userInfo:nil];
+    if (productIdentifier) {
+        [_purchasedProductIdentifiers addObject:productIdentifier];
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:productIdentifier];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        [[NSNotificationCenter defaultCenter] postNotificationName:IAPHelperProductPurchasedNotification object:productIdentifier userInfo:nil];
+    } else {
+        NSLog(@"ERROR - no product identifier: %@", productIdentifier);
+    }
 }
 
 - (void)restoreCompletedTransactions {
