@@ -94,6 +94,13 @@ static NSString *CellIdentifier = @"articleCell";
     [self sendGoogleAnalyticsStats];
 }
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+    if (self.alertView) {
+        [self.alertView setDelegate:nil];
+    }
+}
+
 - (void)sendGoogleAnalyticsStats
 {
     // Setup Google Analytics
@@ -498,8 +505,8 @@ static NSString *CellIdentifier = @"articleCell";
 
 - (void)handleDoubleTap:(UITapGestureRecognizer *)gestureRecognizer
 {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Download" message:@"Would you like to download this issue for offline reading?" delegate:self cancelButtonTitle:@"No thanks" otherButtonTitles:@"Download", nil];
-    [alert show];
+    self.alertView = [[UIAlertView alloc] initWithTitle:@"Download" message:@"Would you like to download this issue for offline reading?" delegate:self cancelButtonTitle:@"No thanks" otherButtonTitles:@"Download", nil];
+    [self.alertView show];
 }
 
 - (void)handleTwoFingerSwipe:(UISwipeGestureRecognizer *)swipe
@@ -536,6 +543,22 @@ static NSString *CellIdentifier = @"articleCell";
             default:
                 break;
         }
+    } else if ([alertView.title isEqualToString:@"Sorry"]) {
+        switch (buttonIndex) {
+            case 0:
+                // Cancel pressed, do nothing
+                break;
+            case 1:
+                // Segue to subscription
+                [self performSegueWithIdentifier:@"sorryAlertToSubscribe" sender:nil];
+                break;
+            case 2:
+                // Segue to log-in
+                [self performSegueWithIdentifier:@"sorryAlertToLogin" sender:nil];
+                break;
+            default:
+                break;
+        }
     } else if ([alertView.title isEqualToString:[NIAUHelper helpAlertTitle]]) {
         NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
         switch (buttonIndex) {
@@ -555,21 +578,33 @@ static NSString *CellIdentifier = @"articleCell";
 
 -(void)startDownload
 {
-    NSString *zipURL = [[NIAUInAppPurchaseHelper sharedInstance] requestZipURLforRailsID: [self.issue.railsID stringValue]];
+    // Check for internet access
+    Reachability *reachability = [Reachability reachabilityForInternetConnection];
+    NetworkStatus netStatus = [reachability currentReachabilityStatus];
     
-    if (zipURL) {
-        // schedule for issue downloading in background
-        NKIssue *newNKIssue = [[NKLibrary sharedLibrary] issueWithName:self.issue.name];
-        if(newNKIssue) {
-            NSURL *downloadURL = [NSURL URLWithString:zipURL];
-            NSURLRequest *req = [NSURLRequest requestWithURL:downloadURL];
-            NKAssetDownload *assetDownload = [newNKIssue addAssetWithRequest:req];
-            [assetDownload downloadWithDelegate:self];
-        }
+    if (netStatus == NotReachable) {
+        // Ask them to turn on wifi or get internet access.
+        self.alertView = [[UIAlertView alloc] initWithTitle:@"Internet access?" message:@"It doesn't seem like you have internet access, turn it on to subscribe or download this article." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [self.alertView show];
     } else {
-        NSLog(@"No zipURL, so aborting.");
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Sorry" message:@"It doesn't look like you have a valid subscription or have purchased this issue." delegate:self cancelButtonTitle:@"Oh, okay" otherButtonTitles:nil];
-        [alert show];
+        // Has internet..
+        NSString *zipURL = [[NIAUInAppPurchaseHelper sharedInstance] requestZipURLforRailsID: [self.issue.railsID stringValue]];
+        
+        if (zipURL) {
+            // schedule for issue downloading in background
+            NKIssue *newNKIssue = [[NKLibrary sharedLibrary] issueWithName:self.issue.name];
+            if(newNKIssue) {
+                NSURL *downloadURL = [NSURL URLWithString:zipURL];
+                NSURLRequest *req = [NSURLRequest requestWithURL:downloadURL];
+                NKAssetDownload *assetDownload = [newNKIssue addAssetWithRequest:req];
+                [assetDownload downloadWithDelegate:self];
+            }
+        } else {
+            NSLog(@"No zipURL, so aborting.");
+            
+            self.alertView = [[UIAlertView alloc] initWithTitle:@"Sorry" message:@"It doesn't look like you're a subscriber or if you are, perhaps you haven't logged in yet. What would you like to do?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Subscribe", @"Log-in", nil];
+            [self.alertView show];
+        }
     }
 }
 

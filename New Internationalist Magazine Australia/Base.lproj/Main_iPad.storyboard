@@ -650,6 +650,8 @@
                         <outlet property="tableView" destination="SJ4-ca-Goj" id="o7k-zH-Cpf"/>
                         <segue destination="p7L-KM-t4i" kind="push" identifier="showImageZoom" id="fFO-5s-0tA"/>
                         <segue destination="Mze-ob-E7u" kind="modal" identifier="webLinkTappedFromContents" id="w0v-2Q-MmG"/>
+                        <segue destination="d0z-vn-J25" kind="push" identifier="sorryAlertToSubscribe" id="79s-8k-9uG"/>
+                        <segue destination="rZc-6Q-DEj" kind="push" identifier="sorryAlertToLogin" id="B6w-37-kcT"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AQJ-ZV-TLu" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1476,12 +1478,12 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="WLv-dP-nWF"/>
         <segue reference="7r1-dy-lxK"/>
-        <segue reference="EBU-8G-ECI"/>
-        <segue reference="MS4-LT-1l5"/>
+        <segue reference="WLv-dP-nWF"/>
         <segue reference="w0v-2Q-MmG"/>
+        <segue reference="79s-8k-9uG"/>
         <segue reference="fFO-5s-0tA"/>
+        <segue reference="B6w-37-kcT"/>
         <segue reference="mho-0V-J7B"/>
     </inferredMetricsTieBreakers>
 </document>

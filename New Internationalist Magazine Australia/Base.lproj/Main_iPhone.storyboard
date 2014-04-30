@@ -203,7 +203,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="106" height="151"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="9B242CDD-BB01-4549-877A-565C93C2F678" translatesAutoresizingMaskIntoConstraints="NO" id="8yQ-69-2Yi">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="A6E5ADAC-371F-4655-8C5E-479E099647FD" translatesAutoresizingMaskIntoConstraints="NO" id="8yQ-69-2Yi">
                                             <rect key="frame" x="0.0" y="0.0" width="106" height="151"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         </imageView>
@@ -1056,6 +1056,8 @@
                         <outlet property="tableViewFooterView" destination="9lb-Lk-61p" id="inh-wt-sUE"/>
                         <segue destination="GGn-sZ-3sw" kind="push" identifier="showImageZoom" id="fI5-Du-KTZ"/>
                         <segue destination="aFP-ao-u02" kind="modal" identifier="webLinkTappedFromContents" id="lhr-aW-Muh"/>
+                        <segue destination="qrh-8f-IqL" kind="push" identifier="sorryAlertToSubscribe" id="v4V-Nv-yqh"/>
+                        <segue destination="fEr-qG-YdO" kind="push" identifier="sorryAlertToLogin" id="W9L-kn-pvc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5Ob-iX-ukg" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1435,7 +1437,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="9B242CDD-BB01-4549-877A-565C93C2F678" width="200" height="98">
+        <image name="A6E5ADAC-371F-4655-8C5E-479E099647FD" width="200" height="98">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGOzxYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK0HCBEW
 GxwgISksLzU4VSRudWxs1AkKCwwNDg8QViRjbGFzc1xOU0ltYWdlRmxhZ3NWTlNSZXBzV05TQ29sb3KA
@@ -2825,12 +2827,12 @@ AAAAAAAAAAAAAAAAAAFA/A
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="v7S-KP-l8O"/>
-        <segue reference="qUJ-ry-144"/>
-        <segue reference="jkZ-Dh-FHT"/>
         <segue reference="fFr-gL-mDW"/>
-        <segue reference="Qwc-Oh-1W1"/>
-        <segue reference="mdp-6r-s59"/>
+        <segue reference="v4V-Nv-yqh"/>
+        <segue reference="W9L-kn-pvc"/>
+        <segue reference="W9z-A8-KEC"/>
+        <segue reference="fI5-Du-KTZ"/>
+        <segue reference="lhr-aW-Muh"/>
         <segue reference="IfR-jT-MPw"/>
     </inferredMetricsTieBreakers>
 </document>

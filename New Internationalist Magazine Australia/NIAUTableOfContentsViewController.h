@@ -13,6 +13,7 @@
 #import "NIAUWebsiteViewController.h"
 #import "NIAUHelper.h"
 #import "NIAUInAppPurchaseHelper.h"
+#import "Reachability.h"
 
 #import "GAI.h"
 #import "GAITracker.h"
@@ -52,5 +53,7 @@
 @property (nonatomic, weak) IBOutlet UINavigationItem *shareAction;
 
 @property (nonatomic, weak) IBOutlet UIProgressView *progressView;
+
+@property (nonatomic, strong) UIAlertView *alertView;
 
 @end
