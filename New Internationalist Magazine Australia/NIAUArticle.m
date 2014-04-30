@@ -150,6 +150,11 @@ NSString *ImageDidSaveToCacheNotification = @"ImageDidSaveToCache";
         
         NSString *modifiedBody = body;
         
+        // Check to see if the modifiedBody is blank from the zip file, add article-body div.
+        if ([modifiedBody isEqualToString:@""]) {
+            modifiedBody = @"<div class=\"article-body\"></div>";
+        }
+        
         // Sort the images by their position
         NSSortDescriptor *lowestPositionToHighest = [NSSortDescriptor sortDescriptorWithKey:@"position" ascending:NO];
         imagesToAdd = [NSMutableArray arrayWithArray:[imagesToAdd sortedArrayUsingDescriptors:[NSArray arrayWithObject:lowestPositionToHighest]]];
@@ -157,7 +162,7 @@ NSString *ImageDidSaveToCacheNotification = @"ImageDidSaveToCache";
         for (int i = 0; i < [imagesToAdd count]; i++) {
             NSError *error = nil;
             NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"<div class=\"article-body\">" options:NSRegularExpressionCaseInsensitive error:&error];
-            modifiedBody = [regex stringByReplacingMatchesInString:modifiedBody options:0 range:NSMakeRange(0, [body length]) withTemplate:[NSString stringWithFormat:@"<div class=\"article-body\">[File:%@|full|ns]", [imagesToAdd[i] objectForKey:@"id"]]];
+            modifiedBody = [regex stringByReplacingMatchesInString:modifiedBody options:0 range:NSMakeRange(0, [modifiedBody length]) withTemplate:[NSString stringWithFormat:@"<div class=\"article-body\">[File:%@|full|ns]", [imagesToAdd[i] objectForKey:@"id"]]];
 //            NSLog(@"%@", modifiedBody);
         }
         

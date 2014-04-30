@@ -283,7 +283,7 @@ static NSString *CellIdentifier = @"articleCell";
 
     __block UIImageView *articleImageView = (UIImageView *)[cell viewWithTag:100];
     NIAUArticle *article = [self.sortedCategories[indexPath.section] objectForKey:@"articles"][indexPath.row];
-    CGSize thumbSize = CGSizeMake(20,72);
+    CGSize thumbSize = CGSizeMake(20,cell.frame.size.height);
     if (self.tableView.dragging == NO && self.tableView.decelerating == NO) {
         if (articleImageView.image == nil) {
             [article getFeaturedImageThumbWithSize:thumbSize andCompletionBlock:^(UIImage *thumb) {
@@ -323,7 +323,12 @@ static NSString *CellIdentifier = @"articleCell";
 - (void)loadImagesForOnscreenRows
 {
     NSArray *visiblePaths = [self.tableView indexPathsForVisibleRows];
-    [self.tableView reloadRowsAtIndexPaths:visiblePaths withRowAnimation:UITableViewRowAnimationNone];
+    for (NSIndexPath *indexPath in visiblePaths) {
+        UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+        [self setupCell:cell atIndexPath:indexPath];
+    }
+    // TODO: Check to see if not calling reload has any implications
+//    [self.tableView reloadRowsAtIndexPaths:visiblePaths withRowAnimation:UITableViewRowAnimationNone];
 }
 
 #pragma mark - UIScrollViewDelegate
