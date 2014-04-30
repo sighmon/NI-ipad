@@ -54,6 +54,13 @@
     }
     
     [self.tableViewLoadingIndicator startAnimating];
+    
+    // Setup two finger swipe to pop to root view
+    UISwipeGestureRecognizer *twoFingerSwipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleTwoFingerSwipe:)];
+    twoFingerSwipe.numberOfTouchesRequired = 2;
+    
+    [self.view addGestureRecognizer:twoFingerSwipe];
+    
     [self sendGoogleAnalyticsStats];
 }
 
@@ -312,6 +319,14 @@
     
     NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
     categoryViewController.category = [self.sectionsArray[selectedIndexPath.section][selectedIndexPath.row] objectForKey:@"name"];
+}
+
+#pragma mark - Gestures
+
+- (void)handleTwoFingerSwipe:(UISwipeGestureRecognizer *)swipe
+{
+    // Pop back to the root view controller on triple tap
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 @end

@@ -49,4 +49,6 @@ extern NSString *ArticleDidRefreshNotification;
 @property (weak, nonatomic) IBOutlet UISwipeGestureRecognizer *swipeLeft;
 @property (weak, nonatomic) IBOutlet UISwipeGestureRecognizer *swipeRight;
 
+@property (strong, nonatomic) UIAlertView *alertView;
+
 @end

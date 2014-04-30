@@ -82,6 +82,12 @@ static NSString *CellIdentifier = @"articleCell";
     
     [singleTap requireGestureRecognizerToFail:doubleTap];
     
+    // Setup two finger swipe to pop to root view
+    UISwipeGestureRecognizer *twoFingerSwipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleTwoFingerSwipe:)];
+    twoFingerSwipe.numberOfTouchesRequired = 2;
+    
+    [self.view addGestureRecognizer:twoFingerSwipe];
+    
     // Progress view for zip download
     [self.progressView setHidden:YES];
     
@@ -494,6 +500,12 @@ static NSString *CellIdentifier = @"articleCell";
 {
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Download" message:@"Would you like to download this issue for offline reading?" delegate:self cancelButtonTitle:@"No thanks" otherButtonTitles:@"Download", nil];
     [alert show];
+}
+
+- (void)handleTwoFingerSwipe:(UISwipeGestureRecognizer *)swipe
+{
+    // Pop back to the root view controller on triple tap
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 - (IBAction)handleEditorSingleTap:(UITapGestureRecognizer *)recognizer
