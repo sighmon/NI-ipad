@@ -492,7 +492,16 @@ static NSString *CellIdentifier = @"articleCell";
 {
     NSLog(@"Share tapped!");
     
-    NSArray *itemsToShare = @[[NSString stringWithFormat:@"I'm reading '%@' - New Internationalist magazine",self.issue.title], self.imageView.image, self.issue.getWebURL];
+    UIImage *coverToShare;
+    
+    // To prevent a crash if the cover hasn't loaded yet.
+    if (self.imageView.image) {
+        coverToShare = self.imageView.image;
+    } else {
+        coverToShare = [UIImage imageNamed:@"default_cover@2x.png"];
+    }
+    
+    NSArray *itemsToShare = @[[NSString stringWithFormat:@"I'm reading '%@' - New Internationalist magazine",self.issue.title], coverToShare, self.issue.getWebURL];
     
     UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:itemsToShare applicationActivities:nil];
     [activityController setValue:[NSString stringWithFormat:@"%@ - New Internationalist magazine %@", self.issue.title, self.issue.name] forKey:@"subject"];
