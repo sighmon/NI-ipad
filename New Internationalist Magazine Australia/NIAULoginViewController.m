@@ -64,7 +64,7 @@ NSString *LoginUnsuccessfulNotification = @"LoginUnsuccessful";
 
 - (void)viewDidDisappear:(BOOL)animated
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:UIContentSizeCategoryDidChangeNotification];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIContentSizeCategoryDidChangeNotification object:nil];
 }
 
 - (void)sendGoogleAnalyticsStats

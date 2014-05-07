@@ -62,7 +62,23 @@
     self.subscriptionExpiryDateLabel.text = @"";
     [self.tableViewLoadingIndicator startAnimating];
     
+    // Add observer for the user changing the text size
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(preferredContentSizeChanged:) name:UIContentSizeCategoryDidChangeNotification object:nil];
+    
     [self sendGoogleAnalyticsStats];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(productPurchased:) name:IAPHelperProductPurchasedNotification object:nil];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIContentSizeCategoryDidChangeNotification object:nil];
 }
 
 - (void)updateExpiryDate
@@ -211,14 +227,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(productPurchased:) name:IAPHelperProductPurchasedNotification object:nil];
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
 - (void)productPurchased:(NSNotification *)notification {
     
     NSString *productIdentifier = notification.object;
@@ -294,6 +302,11 @@
             productDescription.text = [product localizedDescription];
         }
         
+        // Set fonts so it responds to Dynamic Type
+        productTitle.font = [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
+        productPrice.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
+        productDescription.font = [UIFont preferredFontForTextStyle:UIFontTextStyleFootnote];
+        
         if (purchased) {
             // Product has already been purchased
             cell.accessoryType = UITableViewCellAccessoryCheckmark;
@@ -339,6 +352,8 @@
     CGSize fittingSize = CGSizeMake(tableView.bounds.size.width, 0);
     CGSize size = [cell.contentView systemLayoutSizeFittingSize:fittingSize];
     
+    NSLog(@"Cell: %@\nSize: %@", NSStringFromCGSize(cell.frame.size), NSStringFromCGSize(size));
+    
     return size;
 }
 
@@ -346,7 +361,10 @@
     
     UITableViewCell *cell = [self tableView:tableView cellForRowAtIndexPath:indexPath];
     
-    return [self calculateCellSize:cell inTableView:tableView].height;
+    // Add in the padding of the cell
+    float padding = 16.;
+    
+    return [self calculateCellSize:cell inTableView:tableView].height + padding;
 }
 
 #pragma mark -
@@ -435,6 +453,15 @@
 //    for (int i = 0; i < self.tableView.indexPathsForVisibleRows.count; i++) {
 //        [self tableView:self.tableView heightForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
 //    }
+    [self.tableView reloadData];
+}
+
+#pragma mark - Dynamic Text
+
+- (void)preferredContentSizeChanged:(NSNotification *)notification
+{
+    NSLog(@"Notification received for text change!");
+    
     [self.tableView reloadData];
 }
 
