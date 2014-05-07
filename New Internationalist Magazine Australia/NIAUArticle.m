@@ -268,6 +268,10 @@ NSString *ImageDidSaveToCacheNotification = @"ImageDidSaveToCache";
                     imageSource = [[self imageCacheURLForId:imageId] path];
                 }
                 
+                if (imageCaches == nil) {
+                    imageCaches = [[NSMutableDictionary alloc] init];
+                }
+                
                 // make entry in imageCaches dictionary if necessary
                 if (![imageCaches objectForKey:imageId]) {
                     NIAUCache *imageCache = [self buildImageCacheFromDictionary:imageDictionary forSize:size];
@@ -332,7 +336,7 @@ NSString *ImageDidSaveToCacheNotification = @"ImageDidSaveToCache";
     for (NSDictionary *image in [self images]) {
         CGSize size = [NIAUHelper screenSize];
         NIAUCache *imageCache = [self buildImageCacheFromDictionary:image forSize:size];
-        [imageCaches setObject:imageCache forKey:[[image objectForKey:@"id"] stringValue]];
+        [imageCaches setObject:imageCache forKey:(NSString *)[image objectForKey:@"id"]];
     }
     return imageCaches;
 }
