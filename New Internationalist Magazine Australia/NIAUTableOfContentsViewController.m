@@ -519,7 +519,11 @@ static NSString *CellIdentifier = @"articleCell";
     
     UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:itemsToShare applicationActivities:nil];
     [activityController setValue:[NSString stringWithFormat:@"%@ - New Internationalist magazine %@", self.issue.title, self.issue.name] forKey:@"subject"];
+    
+    // HACK: to fix UIActivityViewController bar button tintColor
+    [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil] setTintColor:self.view.tintColor];
     [[UINavigationBar appearance] setTintColor:self.view.tintColor];
+    
     [self presentViewController:activityController animated:YES completion:nil];
 }
 
