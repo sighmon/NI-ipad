@@ -118,5 +118,39 @@ NSString *kAlertTitle = @"Did you know?";
     NSLog(@"Making a crash: %@",[emptyArray objectAtIndex:1]);
 }
 
+#pragma mark - Dynamic Text Font Size
+
++ (NSString *)fontSizePercentage
+{
+    // Set dynamic font size adjustment from phone setting
+    
+    NSString *fontSize = @"100%";
+	NSString *userContentSize = [[UIApplication sharedApplication] preferredContentSizeCategory];
+    
+	if ([userContentSize isEqualToString:UIContentSizeCategoryExtraSmall]) {
+		fontSize = @"70%";
+        
+	} else if ([userContentSize isEqualToString:UIContentSizeCategorySmall]) {
+		fontSize = @"80%";
+        
+	} else if ([userContentSize isEqualToString:UIContentSizeCategoryMedium]) {
+		fontSize = @"90%";
+        
+	} else if ([userContentSize isEqualToString:UIContentSizeCategoryLarge]) {
+		fontSize = @"100%";
+        
+	} else if ([userContentSize isEqualToString:UIContentSizeCategoryExtraLarge]) {
+		fontSize = @"110%";
+        
+	} else if ([userContentSize isEqualToString:UIContentSizeCategoryExtraExtraLarge]) {
+		fontSize = @"120%";
+        
+	} else if ([userContentSize isEqualToString:UIContentSizeCategoryExtraExtraExtraLarge]) {
+		fontSize = @"130%";
+	}
+    
+    return fontSize;
+}
+
 
 @end

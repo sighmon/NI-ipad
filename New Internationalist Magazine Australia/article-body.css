@@ -24,18 +24,54 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
     color: #fff;
 }
 
+
+/*****************/
+/* Heading fonts */
+/*****************/
+
+h1, h2, h3, h4, h5, h6 {
+    margin: 0.5em 0;
+    font-family: inherit;
+    font-weight: bold;
+    line-height: 1em;
+    color: inherit;
+    text-rendering: optimizelegibility;
+}
+h1, h2, h3 {
+    line-height: 1.1em; /* 40px; */
+}
+h1 {
+    font-size: 1.6em; /* 35.75px; */
+}
+h2 {
+    font-size: 1.5em; /* 29.25px; */
+}
+h3 {
+    font-size: 1.4em; /* 22.75px; */
+}
+h4 {
+    font-size: 1.3em; /* 16.25px; */
+}
+h5 {
+    font-size: 1.2em; /* 13px; */
+}
+h6 {
+    font-size: 1.1em; /* 11.049999999999999px; */
+}
+
+
 /*****************************/
 /* Table of Contents styling */
 /*****************************/
 
-
 .table-of-contents-article-teaser {
-    font-size: 14px;
+    font-size: 1.2em;
     color: #363636;
 }
 
 .table-of-contents-editors-letter {
-    font-size: 14px;
+    font-size: 1.25em;
+    line-height: 1.5em;
 }
 
 
@@ -44,7 +80,7 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
 /*******************/
 
 .article-teaser {
-    font-size: 18px;
+    font-size: 1.5em;
     color: #363636;
 }
 
@@ -139,8 +175,8 @@ a.btn-primary:visited, a.btn-danger:visited, a.btn-success:visited, a.btn-warnin
     border-radius: 5px;
 }
 .article-body {
-    font-size: 15px;
-    line-height: 24px;
+    font-size: 0.95em;
+    line-height: 1.6em;
 }
 .article-body p {
     margin-bottom: 1em;
@@ -236,7 +272,7 @@ blockquote.pull-left p,
 blockquote.pull- p {
     margin-bottom: 0;
     font-weight: bold;
-    font-size: 16px;
+    font-size: 1.02em;
 }
 blockquote.pull-right,
 blockquote.pull- {

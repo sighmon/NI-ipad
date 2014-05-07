@@ -100,6 +100,7 @@
     
     UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:itemsToShare applicationActivities:nil];
     [activityController setValue:[NSString stringWithFormat:@"Link from New Internationalist"] forKey:@"subject"];
+    [[UINavigationBar appearance] setTintColor:self.view.tintColor];
     [self presentViewController:activityController animated:YES completion:nil];
 
 }

@@ -198,6 +198,7 @@
     
     UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:itemsToShare applicationActivities:nil];
     [activityController setValue:[NSString stringWithFormat:@"NI App feedback - %@ (%@)", self.version, self.build] forKey:@"subject"];
+    [[UINavigationBar appearance] setTintColor:self.view.tintColor];
     [self presentViewController:activityController animated:YES completion:nil];
 }
 

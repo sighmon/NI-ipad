@@ -59,7 +59,15 @@
     
     [self.view addGestureRecognizer:twoFingerSwipe];
     
+    // Add observer for the user changing the text size
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(preferredContentSizeChanged:) name:UIContentSizeCategoryDidChangeNotification object:nil];
+    
     [self sendGoogleAnalyticsStats];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:UIContentSizeCategoryDidChangeNotification];
 }
 
 - (void)sendGoogleAnalyticsStats
@@ -150,7 +158,9 @@
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
-{    
+{
+    // TODO: WORK OUT HOW TO CHANGE THE BACKGROUND COLOUR FOR THE HEADERS.
+    
     if (tableView == self.searchDisplayController.searchResultsTableView) {
         NIAUIssue *issue = [(NIAUArticle *)[[self.filteredIssueArticlesArray objectAtIndex:section] firstObject] issue];
         return [NSString stringWithFormat:@"%@ - %@", [issue name], [issue title]];
@@ -197,6 +207,7 @@
     teaser = (teaser==[NSNull null]) ? @"" : teaser;
     
     cell.textLabel.text = article.title;
+    cell.textLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
     
     // Regex to remove <strong> and <b> and any other <html>
     NSError *error = NULL;
@@ -204,6 +215,7 @@
     NSString *cleanTeaser = [regex stringByReplacingMatchesInString:teaser options:0 range:NSMakeRange(0, [teaser length]) withTemplate:@""];
     
     cell.detailTextLabel.text = cleanTeaser;
+    cell.detailTextLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
     
     return cell;
 }
@@ -225,14 +237,15 @@
     
     NSString *articleTitle = article.title;
     CGFloat width = tableView.frame.size.width - 50;
-    UIFont *font = [UIFont fontWithName:@"Helvetica" size:18];
+    
+    UIFont *font = [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
     NSAttributedString *attributedText = [[NSAttributedString alloc] initWithString:articleTitle attributes:@{ NSFontAttributeName : font }];
     CGRect rect = [attributedText boundingRectWithSize:(CGSize){width, CGFLOAT_MAX}
                                                options:NSStringDrawingUsesLineFragmentOrigin
                                                context:nil];
     CGSize sizeofTitle = rect.size;
     
-    UIFont *teaserFont = [UIFont fontWithName:@"Helvetica" size:12];
+    UIFont *teaserFont = [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
     NSAttributedString *attributedTextTeaser = [[NSAttributedString alloc] initWithString:teaser attributes:@{ NSFontAttributeName : teaserFont }];
     CGRect teaserRect = [attributedTextTeaser boundingRectWithSize:(CGSize){width, CGFLOAT_MAX}
                                                            options:NSStringDrawingUsesLineFragmentOrigin
@@ -371,6 +384,15 @@
 {
     // Pop back to the root view controller on triple tap
     [self.navigationController popToRootViewControllerAnimated:YES];
+}
+
+#pragma mark - Dynamic Text
+
+- (void)preferredContentSizeChanged:(NSNotification *)notification
+{
+    NSLog(@"Notification received for text change!");
+    
+    [self.tableView reloadData];
 }
 
 @end

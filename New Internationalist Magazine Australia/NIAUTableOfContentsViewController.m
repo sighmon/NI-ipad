@@ -101,6 +101,11 @@ static NSString *CellIdentifier = @"articleCell";
     }
 }
 
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:UIContentSizeCategoryDidChangeNotification];
+}
+
 - (void)sendGoogleAnalyticsStats
 {
     // Setup Google Analytics
@@ -121,6 +126,8 @@ static NSString *CellIdentifier = @"articleCell";
     [self showArticles];
 }
 
+#pragma mark - Dynamic Text
+
 - (void)preferredContentSizeChanged:(NSNotification *)aNotification
 {
     NSLog(@"Notification received for text change!");
@@ -130,9 +137,8 @@ static NSString *CellIdentifier = @"articleCell";
     self.labelEditor.font = [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
     [self.view setNeedsLayout];
     
-    // refresh view...
-    // TODO: work out why the titles aren't wrapping at the biggest size.
-//    self.cellDictionary = [NSMutableDictionary dictionary];
+    [self.cellDictionary removeAllObjects];
+    [self setupData];
     [self.tableView reloadData];
 }
 
@@ -263,14 +269,17 @@ static NSString *CellIdentifier = @"articleCell";
     NSURL *cssURL = [[NSBundle mainBundle] URLForResource:@"article-body" withExtension:@"css"];
     NSURL *bootstrapCssURL = [[NSBundle mainBundle] URLForResource:@"bootstrap" withExtension:@"css"];
     
+    // Set the font size percentage from Dynamic Type
+    NSString *fontSizePercentage = [NIAUHelper fontSizePercentage];
+    
     // Load the article teaser into the attributedText
     NSString *teaserHTML = [NSString stringWithFormat:@"<html> \n"
                                  "<head> \n"
                                  "  <link rel=\"stylesheet\" type=\"text/css\" href=\"%@\"> \n"
                                  "  <link rel=\"stylesheet\" type=\"text/css\" href=\"%@\"> \n"
                                  "</head> \n"
-                                 "<body><div class='table-of-contents-article-teaser'>%@</div></body> \n"
-                                 "</html>",bootstrapCssURL, cssURL, teaser];
+                                 "<body style='font-size: %@'><div class='table-of-contents-article-teaser'>%@</div></body> \n"
+                                 "</html>",bootstrapCssURL, cssURL, fontSizePercentage, teaser];
     
     articleTeaser.attributedText = [[NSAttributedString alloc] initWithData:[teaserHTML dataUsingEncoding:NSUTF8StringEncoding]
                                                                     options:@{NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType,
@@ -381,14 +390,19 @@ static NSString *CellIdentifier = @"articleCell";
     
     // Load CSS from the filesystem
     NSURL *cssURL = [[NSBundle mainBundle] URLForResource:@"article-body" withExtension:@"css"];
+    NSURL *bootstrapCssURL = [[NSBundle mainBundle] URLForResource:@"bootstrap" withExtension:@"css"];
+    
+    // Set the font size percentage from Dynamic Type
+    NSString *fontSizePercentage = [NIAUHelper fontSizePercentage];
     
     // Load the editor's letter into the attributedText
     NSString *editorHTML = [NSString stringWithFormat:@"<html> \n"
                             "<head> \n"
-                            "<link rel=\"stylesheet\" type=\"text/css\" href=\"%@\">"
+                            "<link rel=\"stylesheet\" type=\"text/css\" href=\"%@\"> \n"
+                            "<link rel=\"stylesheet\" type=\"text/css\" href=\"%@\"> \n"
                             "</head> \n"
-                            "<body><div class='table-of-contents-editors-letter'>%@</div></body> \n"
-                            "</html>", cssURL, self.issue.editorsLetter];
+                            "<body style='font-size: %@'><div class='table-of-contents-editors-letter'>%@</div></body> \n"
+                            "</html>", bootstrapCssURL, cssURL, fontSizePercentage, self.issue.editorsLetter];
     
     self.editorsLetterTextView.attributedText = [[NSAttributedString alloc] initWithData:[editorHTML dataUsingEncoding:NSUTF8StringEncoding]
                                                                     options:@{NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType,
@@ -505,6 +519,7 @@ static NSString *CellIdentifier = @"articleCell";
     
     UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:itemsToShare applicationActivities:nil];
     [activityController setValue:[NSString stringWithFormat:@"%@ - New Internationalist magazine %@", self.issue.title, self.issue.name] forKey:@"subject"];
+    [[UINavigationBar appearance] setTintColor:self.view.tintColor];
     [self presentViewController:activityController animated:YES completion:nil];
 }
 

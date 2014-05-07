@@ -56,7 +56,15 @@ NSString *LoginUnsuccessfulNotification = @"LoginUnsuccessful";
     UITapGestureRecognizer *backgroundTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
     [self.view addGestureRecognizer:backgroundTap];
     
+    // Add observer for the user changing the text size
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(preferredContentSizeChanged:) name:UIContentSizeCategoryDidChangeNotification object:nil];
+    
     [self sendGoogleAnalyticsStats];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:UIContentSizeCategoryDidChangeNotification];
 }
 
 - (void)sendGoogleAnalyticsStats
@@ -238,6 +246,22 @@ NSString *LoginUnsuccessfulNotification = @"LoginUnsuccessful";
     if ([buttonTitle isEqualToString:@"Thanks!"]) {
         [self.navigationController popViewControllerAnimated:YES];
     }
+}
+
+#pragma mark - Dynamic Text
+
+- (void)preferredContentSizeChanged:(NSNotification *)notification
+{
+    NSLog(@"Notification received for text change!");
+    
+    self.username.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
+    self.password.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
+    self.loginButton.titleLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
+    self.signupButton.titleLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
+    
+    [self.username setNeedsDisplay];
+    [self.password setNeedsDisplay];
+    [self.loginButton setNeedsDisplay];
 }
 
 @end

@@ -67,7 +67,15 @@
     
     [self.view addGestureRecognizer:twoFingerSwipe];
     
+    // Add observer for the user changing the text size
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(preferredContentSizeChanged:) name:UIContentSizeCategoryDidChangeNotification object:nil];
+    
     [self sendGoogleAnalyticsStats];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:UIContentSizeCategoryDidChangeNotification];
 }
 
 - (void)sendGoogleAnalyticsStats
@@ -350,6 +358,15 @@
 {
     // Pop back to the root view controller on triple tap
     [self.navigationController popToRootViewControllerAnimated:YES];
+}
+
+#pragma mark - Dynamic Text
+
+- (void)preferredContentSizeChanged:(NSNotification *)notification
+{
+    NSLog(@"Notification received for text change!");
+    
+    [self.tableView reloadData];
 }
 
 @end

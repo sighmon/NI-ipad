@@ -60,6 +60,11 @@
     [self animateMinimumZoomScaleWithScale:[self calculateScale]];
 }
 
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:UIContentSizeCategoryDidChangeNotification];
+}
+
 - (void)sendGoogleAnalyticsStats
 {
     // Setup Google Analytics
@@ -142,6 +147,7 @@
     
     UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:itemsToShare applicationActivities:nil];
     [activityController setValue:[NSString stringWithFormat:@"Image from New Internationalist magazine."] forKey:@"subject"];
+    [[UINavigationBar appearance] setTintColor:self.view.tintColor];
     [self presentViewController:activityController animated:YES completion:nil];
 }
 

@@ -89,17 +89,6 @@ NSString *ArticleDidRefreshNotification = @"ArticleDidRefresh";
     [self sendGoogleAnalyticsStats];
 }
 
-- (void)sendGoogleAnalyticsStats
-{
-    // Setup Google Analytics
-    [[GAI sharedInstance].defaultTracker set:kGAIScreenName
-                                       value:[NSString stringWithFormat:@"%@ (%@)", self.article.title, self.article.issue.name]];
-    
-    // Send the screen view.
-    [[GAI sharedInstance].defaultTracker
-     send:[[GAIDictionaryBuilder createAppView] build]];
-}
-
 - (void)viewWillAppear:(BOOL)animated
 {
     if (self.isArticleBodyLoaded) {
@@ -114,6 +103,22 @@ NSString *ArticleDidRefreshNotification = @"ArticleDidRefresh";
     if (self.alertView) {
         [self.alertView setDelegate:nil];
     }
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:UIContentSizeCategoryDidChangeNotification];
+}
+
+- (void)sendGoogleAnalyticsStats
+{
+    // Setup Google Analytics
+    [[GAI sharedInstance].defaultTracker set:kGAIScreenName
+                                       value:[NSString stringWithFormat:@"%@ (%@)", self.article.title, self.article.issue.name]];
+    
+    // Send the screen view.
+    [[GAI sharedInstance].defaultTracker
+     send:[[GAIDictionaryBuilder createAppView] build]];
 }
 
 - (void)articleBodyLoaded:(NSNotification *)notification
@@ -149,19 +154,6 @@ NSString *ArticleDidRefreshNotification = @"ArticleDidRefresh";
     [self.article requestBody];
 }
 
-- (void)preferredContentSizeChanged:(NSNotification *)aNotification
-{
-    NSLog(@"Notification received for text change!");
-    
-    // adjust the layout of the cells
-    self.titleLabel.font = [NIAUArticleViewController headlineFontWithScale:2];
-    
-    // TODO: work out how to update the webView & textView.attributedText font sizes.
-//    self.teaserLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
-    
-    [self.view setNeedsLayout];
-}
-
 - (void)imageFinishedDownloadingToCache:(NSNotification *)notification
 {
     // Find image in webview by ID and then replace with real URL
@@ -176,6 +168,20 @@ NSString *ArticleDidRefreshNotification = @"ArticleDidRefresh";
     [self updateScrollViewContentHeight];
 }
 
+#pragma mark - Dynamic Text
+
+- (void)preferredContentSizeChanged:(NSNotification *)notification
+{
+    NSLog(@"Notification received for text change!");
+    
+    // adjust the layout of the title
+    self.titleLabel.font = [NIAUArticleViewController headlineFontWithScale:2];
+    
+    // NIAUHelper fontSizePercentage is set by the current user font scaling size
+    // Then we call setupData to reload everything.
+    [self setupData];
+}
+
 + (UIFont *)headlineFontWithScale: (float)scale
 {
     UIFont *currentDynamicFontSize = [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
@@ -185,6 +191,8 @@ NSString *ArticleDidRefreshNotification = @"ArticleDidRefresh";
         return [currentDynamicFontSize fontWithSize:currentDynamicFontSize.pointSize*scale*.8];
     }
 }
+
+#pragma mark - Setup
 
 - (void)setupData
 {
@@ -228,14 +236,17 @@ NSString *ArticleDidRefreshNotification = @"ArticleDidRefresh";
     NSURL *cssURL = [[NSBundle mainBundle] URLForResource:@"article-body" withExtension:@"css"];
     NSURL *bootstrapCssURL = [[NSBundle mainBundle] URLForResource:@"bootstrap" withExtension:@"css"];
     
+    // Set the font size percentage from Dynamic Type
+    NSString *fontSizePercentage = [NIAUHelper fontSizePercentage];
+    
     // Load the article teaser into the attributedText
     NSString *teaserHTML = [NSString stringWithFormat:@"<html> \n"
                             "<head> \n"
                             "<link rel=\"stylesheet\" type=\"text/css\" href=\"%@\"> \n"
                             "<link rel=\"stylesheet\" type=\"text/css\" href=\"%@\"> \n"
                             "</head> \n"
-                            "<body><div class='article-teaser'>%@</div></body> \n"
-                            "</html>", bootstrapCssURL, cssURL, WITH_DEFAULT(self.article.teaser,IF_DEBUG(@"!!!NOTEASER!!!",@""))];
+                            "<body style='font-size: %@'><div class='article-teaser'>%@</div></body> \n"
+                            "</html>", bootstrapCssURL, cssURL, fontSizePercentage, WITH_DEFAULT(self.article.teaser,IF_DEBUG(@"!!!NOTEASER!!!",@""))];
     
     if ([self.article.teaser isEqualToString:@""]) {
         NSLog(@"Article doesn't have a teaser");
@@ -265,8 +276,8 @@ NSString *ArticleDidRefreshNotification = @"ArticleDidRefresh";
                                    "<link rel=\"stylesheet\" type=\"text/css\" href=\"%@\"> \n"
                                    "<link rel=\"stylesheet\" type=\"text/css\" href=\"%@\"> \n"
                                    "</head> \n"
-                                   "<body>%@</body> \n"
-                                   "</html>", bootstrapCssURL, cssURL, WITH_DEFAULT(bodyFromDisk, @"")];
+                                   "<body style='font-size: %@'>%@</body> \n"
+                                   "</html>", bootstrapCssURL, cssURL, fontSizePercentage, WITH_DEFAULT(bodyFromDisk, @"")];
     [self.bodyWebView loadHTMLString:bodyWebViewHTML baseURL:baseURL];
     
     // Prevent webview from scrolling
@@ -526,6 +537,7 @@ NSString *ArticleDidRefreshNotification = @"ArticleDidRefresh";
     
     UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:itemsToShare applicationActivities:nil];
     [activityController setValue:[NSString stringWithFormat:@"%@", self.article.title] forKey:@"subject"];
+    [[UINavigationBar appearance] setTintColor:self.view.tintColor];
     [self presentViewController:activityController animated:YES completion:nil];
 }
 

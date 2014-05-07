@@ -22,4 +22,6 @@
 
 + (void)forceCrash;
 
++ (NSString *)fontSizePercentage;
+
 @end

@@ -61,7 +61,15 @@
     
     [self.view addGestureRecognizer:twoFingerSwipe];
     
+    // Add observer for the user changing the text size
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(preferredContentSizeChanged:) name:UIContentSizeCategoryDidChangeNotification object:nil];
+    
     [self sendGoogleAnalyticsStats];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:UIContentSizeCategoryDidChangeNotification];
 }
 
 - (void)sendGoogleAnalyticsStats
@@ -253,6 +261,7 @@
     NSString *textString = [self.sectionsArray[indexPath.section][indexPath.row] objectForKey:@"name"];
     categoryParts = [textString componentsSeparatedByString:@"/"];
     cell.textLabel.text = [[categoryParts[[categoryParts count]-2] capitalizedString] stringByReplacingOccurrencesOfString:@"-" withString:@" "];
+    cell.textLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
     cell.detailTextLabel.text = textString;
     
     // Draw a blank UIImage so that category colours can show through
@@ -327,6 +336,15 @@
 {
     // Pop back to the root view controller on triple tap
     [self.navigationController popToRootViewControllerAnimated:YES];
+}
+
+#pragma mark - Dynamic Text
+
+- (void)preferredContentSizeChanged:(NSNotification *)notification
+{
+    NSLog(@"Notification received for text change!");
+    
+    [self.tableView reloadData];
 }
 
 @end
