@@ -555,7 +555,11 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
 }
 
 -(NIAUArticle *)articleAtIndex:(NSInteger)index {
-    return [articles objectAtIndex:index];
+    if (articles) {
+        return [articles objectAtIndex:index];
+    } else {
+        return nil;
+    }
 }
 
 -(NIAUArticle *)articleWithRailsID:(NSNumber *)railsID {

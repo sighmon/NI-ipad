@@ -236,6 +236,10 @@
     teaser = (teaser==[NSNull null]) ? @"" : teaser;
     
     NSString *articleTitle = article.title;
+    if (articleTitle == nil) {
+        // Hmmm.. something fishy going on, but let's avoid a crash
+        articleTitle = @"";
+    }
     CGFloat width = tableView.frame.size.width - 50;
     
     UIFont *font = [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];

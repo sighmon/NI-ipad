@@ -324,9 +324,13 @@
 {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(articleBodyLoaded:) name:ArticleDidUpdateNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(articleBodyDidntLoad:) name:ArticleFailedUpdateNotification object:nil];
-    self.firstArticle = [self.lastIssue articleAtIndex:0];
-    [self.firstArticle deleteArticleFromCache];
-    [self.firstArticle requestBody];
+    
+    if (self.lastIssue) {
+        // Check to see if self.lastIssue exists.. might not if no internet is available on first run
+        self.firstArticle = [self.lastIssue articleAtIndex:0];
+        [self.firstArticle deleteArticleFromCache];
+        [self.firstArticle requestBody];
+    }
 }
 
 - (void)updateLoginButton
