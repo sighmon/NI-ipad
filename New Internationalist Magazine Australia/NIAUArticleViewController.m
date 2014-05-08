@@ -164,8 +164,8 @@ NSString *ArticleDidRefreshNotification = @"ArticleDidRefresh";
     // TODO: Work out why this is causing memory warnings. Possibly 10mb javascript limit?
     [self.bodyWebView stringByEvaluatingJavaScriptFromString:javascriptString];
     
-    [self updateWebViewHeight];
-    [self updateScrollViewContentHeight];
+//    [self updateWebViewHeight];
+//    [self updateScrollViewContentHeight];
 }
 
 #pragma mark - Dynamic Text
@@ -232,9 +232,10 @@ NSString *ArticleDidRefreshNotification = @"ArticleDidRefresh";
 //    self.teaserLabel.text = WITH_DEFAULT(self.article.teaser,IF_DEBUG(@"!!!NOTEASER!!!",@""));
     self.authorLabel.text = WITH_DEFAULT(self.article.author,IF_DEBUG(@"!!!NOAUTHOR!!!",@""));
     
-    // Load CSS from the filesystem
+    // Load CSS & JS from the filesystem
     NSURL *cssURL = [[NSBundle mainBundle] URLForResource:@"article-body" withExtension:@"css"];
     NSURL *bootstrapCssURL = [[NSBundle mainBundle] URLForResource:@"bootstrap" withExtension:@"css"];
+    NSURL *javascriptURL = [[NSBundle mainBundle] URLForResource:@"article-body" withExtension:@"js"];
     
     // Set the font size percentage from Dynamic Type
     NSString *fontSizePercentage = [NIAUHelper fontSizePercentage];
@@ -276,8 +277,9 @@ NSString *ArticleDidRefreshNotification = @"ArticleDidRefresh";
                                    "<link rel=\"stylesheet\" type=\"text/css\" href=\"%@\"> \n"
                                    "<link rel=\"stylesheet\" type=\"text/css\" href=\"%@\"> \n"
                                    "</head> \n"
-                                   "<body style='font-size: %@'>%@</body> \n"
-                                   "</html>", bootstrapCssURL, cssURL, fontSizePercentage, WITH_DEFAULT(bodyFromDisk, @"")];
+                                   "<body style=\"font-size: %@\">%@</body> \n"
+                                   "<script type=\"text/javascript\" src=\"%@\"></script> \n"
+                                   "</html>", bootstrapCssURL, cssURL, fontSizePercentage, WITH_DEFAULT(bodyFromDisk, @""), javascriptURL];
     [self.bodyWebView loadHTMLString:bodyWebViewHTML baseURL:baseURL];
     
     // Prevent webview from scrolling
@@ -663,13 +665,23 @@ NSString *ArticleDidRefreshNotification = @"ArticleDidRefresh";
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+    
+    NSString *javascriptFilePath = [[NSBundle mainBundle] pathForResource:@"article-body" ofType:@"js"];
+    NSString *javascriptString = [NSString stringWithContentsOfFile:javascriptFilePath encoding:NSUTF8StringEncoding error:NULL];
+    if (UIInterfaceOrientationIsLandscape(toInterfaceOrientation)) {
+        NSError *error = nil;
+        NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"window.screen.width" options:NSRegularExpressionCaseInsensitive error:&error];
+        javascriptString = [regex stringByReplacingMatchesInString:javascriptString options:0 range:NSMakeRange(0, [javascriptString length]) withTemplate:@"window.screen.height"];
+    }
+    
+    [self.bodyWebView stringByEvaluatingJavaScriptFromString:javascriptString];
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
     // TODO: Fix the scrollview height for landscape.
-    [self updateWebViewHeight];
-    [self updateScrollViewContentHeight];
+//    [self updateWebViewHeight];
+//    [self updateScrollViewContentHeight];
 }
 
 @end
