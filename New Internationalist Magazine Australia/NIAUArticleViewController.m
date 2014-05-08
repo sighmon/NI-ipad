@@ -164,8 +164,9 @@ NSString *ArticleDidRefreshNotification = @"ArticleDidRefresh";
     // TODO: Work out why this is causing memory warnings. Possibly 10mb javascript limit?
     [self.bodyWebView stringByEvaluatingJavaScriptFromString:javascriptString];
     
-    [self updateWebViewHeight];
-    [self updateScrollViewContentHeight];
+    // TODO: these calls don't do anything.
+//    [self updateWebViewHeight];
+//    [self updateScrollViewContentHeight];
 }
 
 #pragma mark - Dynamic Text
@@ -667,9 +668,9 @@ NSString *ArticleDidRefreshNotification = @"ArticleDidRefresh";
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
-    // TODO: Fix the scrollview height for landscape.
-    [self updateWebViewHeight];
-    [self updateScrollViewContentHeight];
+    // TODO: Fix the scrollview height for landscape. These calls don't do anything.
+//    [self updateWebViewHeight];
+//    [self updateScrollViewContentHeight];
 }
 
 @end

@@ -367,7 +367,12 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
 
 -(void)addToNewsstand {
     if(!self.nkIssue) {
-        [[NKLibrary sharedLibrary] addIssueWithName:self.name date:self.publication];
+        if (self.name && self.publication) {
+            [[NKLibrary sharedLibrary] addIssueWithName:self.name date:self.publication];
+        } else {
+            // CRASH: Crashlytics issue #23 - low disk space, low ram?
+            NSLog(@"ERROR: Trying to add issue to library with name '%@' and date '%@' failed.", self.name, self.publication);
+        }
     }
 }
 
