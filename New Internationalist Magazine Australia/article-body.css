@@ -11,8 +11,13 @@ body {
 /* Padding reset */
 /*****************/
 
-p, h1, h2, h3, h4, h5, h6, span, dl, ol, ul, form {
+p, h1, h2, h3, h4, h5, h6, dl, ol, ul, form {
     margin: 0 20px 0 20px;
+}
+
+ol {
+    padding-left: 20px;
+    padding-right: 0px;
 }
 
 
@@ -179,6 +184,15 @@ h6 {
 }
 .article-body ul li {
     padding-bottom: 0.5em;
+}
+.bold-list li {
+	margin-bottom: 1em;
+	line-height: 1.5em;
+	font-weight: bold;
+}
+
+.bold-list li span {
+	font-weight: normal;
 }
 .article-source {
     display: none;
@@ -461,7 +475,7 @@ ul.ui-autocomplete li a:active {
     body {
         /* margin: 0 25px 0 25px; */
     }
-    p, h1, h2, h3, h4, h5, h6, span, dl, ol, ul, form {
+    p, h1, h2, h3, h4, h5, h6, dl, ol, ul, form {
         margin: 0 25px 0 25px;
     }
     .table-of-contents-editors-letter p, .table-of-contents-editors-letter h4, .table-of-contents-editors-letter h5, .table-of-contents-editors-letter h6 {
