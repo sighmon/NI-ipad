@@ -553,15 +553,15 @@
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Editor" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="211" translatesAutoresizingMaskIntoConstraints="NO" id="i6V-Mh-aMJ">
-                                        <rect key="frame" x="153" y="650" width="211" height="20"/>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Editor" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="206" translatesAutoresizingMaskIntoConstraints="NO" id="i6V-Mh-aMJ">
+                                        <rect key="frame" x="158" y="650" width="206" height="20"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" editable="NO" text="This is some sample text for the editor's letter. " translatesAutoresizingMaskIntoConstraints="NO" id="ewB-NK-0ve">
-                                        <rect key="frame" x="20" y="730" width="344" height="343"/>
+                                        <rect key="frame" x="0.0" y="730" width="384" height="343"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
@@ -574,7 +574,7 @@
                                         </connections>
                                     </textView>
                                     <imageView multipleTouchEnabled="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fpA-Cj-zEf">
-                                        <rect key="frame" x="20" y="597" width="125" height="125"/>
+                                        <rect key="frame" x="25" y="597" width="125" height="125"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <gestureRecognizers/>
                                         <constraints>
@@ -597,7 +597,7 @@
                                     <constraint firstItem="ewB-NK-0ve" firstAttribute="top" secondItem="fpA-Cj-zEf" secondAttribute="bottom" constant="8" symbolic="YES" id="EvR-JX-jfA"/>
                                     <constraint firstAttribute="trailing" secondItem="i6V-Mh-aMJ" secondAttribute="trailing" constant="20" symbolic="YES" id="KXC-Hi-KTO"/>
                                     <constraint firstItem="Rje-Zk-cVx" firstAttribute="leading" secondItem="Zqd-QL-8wn" secondAttribute="leading" id="Lgu-Ul-DdW"/>
-                                    <constraint firstItem="ewB-NK-0ve" firstAttribute="leading" secondItem="Zqd-QL-8wn" secondAttribute="leading" constant="20" symbolic="YES" id="Oek-5u-ywG"/>
+                                    <constraint firstItem="ewB-NK-0ve" firstAttribute="leading" secondItem="Zqd-QL-8wn" secondAttribute="leading" id="Oek-5u-ywG"/>
                                     <constraint firstAttribute="trailing" secondItem="Rje-Zk-cVx" secondAttribute="trailing" id="PbD-vy-R2M"/>
                                     <constraint firstItem="2Jy-dG-VkX" firstAttribute="top" secondItem="ebt-QH-0s8" secondAttribute="bottom" constant="8" id="Q8s-3o-Zvo"/>
                                     <constraint firstItem="ebt-QH-0s8" firstAttribute="leading" secondItem="Zqd-QL-8wn" secondAttribute="leading" id="Rv4-4q-Z2G"/>
@@ -608,8 +608,8 @@
                                     <constraint firstItem="i6V-Mh-aMJ" firstAttribute="leading" secondItem="fpA-Cj-zEf" secondAttribute="trailing" constant="8" symbolic="YES" id="h44-lY-EN3"/>
                                     <constraint firstItem="ebt-QH-0s8" firstAttribute="width" secondItem="Zqd-QL-8wn" secondAttribute="width" id="kid-nh-Sbc"/>
                                     <constraint firstItem="i6V-Mh-aMJ" firstAttribute="centerY" secondItem="fpA-Cj-zEf" secondAttribute="centerY" id="weC-sk-xX1"/>
-                                    <constraint firstAttribute="trailing" secondItem="ewB-NK-0ve" secondAttribute="trailing" constant="20" symbolic="YES" id="xBF-KD-rBT"/>
-                                    <constraint firstItem="fpA-Cj-zEf" firstAttribute="leading" secondItem="Zqd-QL-8wn" secondAttribute="leading" constant="20" id="yk6-S9-dQb"/>
+                                    <constraint firstAttribute="trailing" secondItem="ewB-NK-0ve" secondAttribute="trailing" id="xBF-KD-rBT"/>
+                                    <constraint firstItem="fpA-Cj-zEf" firstAttribute="leading" secondItem="Zqd-QL-8wn" secondAttribute="leading" constant="25" id="yk6-S9-dQb"/>
                                 </constraints>
                                 <connections>
                                     <outlet property="delegate" destination="Pia-vN-nb6" id="9mb-iV-GUA"/>
@@ -1481,11 +1481,11 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="7r1-dy-lxK"/>
+        <segue reference="wEC-zk-Hnv"/>
+        <segue reference="WLv-dP-nWF"/>
+        <segue reference="w0v-2Q-MmG"/>
         <segue reference="B6w-37-kcT"/>
         <segue reference="fFO-5s-0tA"/>
-        <segue reference="w0v-2Q-MmG"/>
-        <segue reference="PYT-qA-gCe"/>
-        <segue reference="wEC-zk-Hnv"/>
-        <segue reference="Sfz-PS-vgU"/>
+        <segue reference="79s-8k-9uG"/>
     </inferredMetricsTieBreakers>
 </document>

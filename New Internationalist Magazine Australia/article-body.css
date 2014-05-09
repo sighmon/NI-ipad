@@ -464,6 +464,9 @@ ul.ui-autocomplete li a:active {
     p, h1, h2, h3, h4, h5, h6, span, dl, ol, ul, form {
         margin: 0 25px 0 25px;
     }
+    .table-of-contents-editors-letter p, .table-of-contents-editors-letter h4, .table-of-contents-editors-letter h5, .table-of-contents-editors-letter h6 {
+        margin: 0 20px 0 20px;
+    }
     .article-image, .article-image-full {
         width: 100%;
         position: relative;
