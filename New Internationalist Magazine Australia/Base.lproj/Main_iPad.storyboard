@@ -459,7 +459,7 @@
         <!--Table Of Contents View Controller-->
         <scene sceneID="KMe-Fs-eVd">
             <objects>
-                <viewController id="Pia-vN-nb6" customClass="NIAUTableOfContentsViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="issue" id="Pia-vN-nb6" customClass="NIAUTableOfContentsViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="j2p-9R-rxS"/>
                         <viewControllerLayoutGuide type="bottom" id="fgA-6r-N9d"/>
@@ -1481,11 +1481,11 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="7r1-dy-lxK"/>
-        <segue reference="wEC-zk-Hnv"/>
         <segue reference="WLv-dP-nWF"/>
-        <segue reference="w0v-2Q-MmG"/>
         <segue reference="B6w-37-kcT"/>
-        <segue reference="fFO-5s-0tA"/>
+        <segue reference="w0v-2Q-MmG"/>
         <segue reference="79s-8k-9uG"/>
+        <segue reference="fFO-5s-0tA"/>
+        <segue reference="owb-z5-hL5"/>
     </inferredMetricsTieBreakers>
 </document>

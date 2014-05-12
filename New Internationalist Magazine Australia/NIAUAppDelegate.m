@@ -14,6 +14,7 @@
 #import "local.h"
 #import "NIAUPublisher.h"
 #import "NIAUArticleViewController.h"
+#import "NIAUTableOfContentsViewController.h"
 #import "NIAUIssue.h"
 #import <objc/runtime.h>
 const char NotificationKey;
@@ -131,24 +132,37 @@ const char NotificationKey;
 {
     // Launched from a link newint://issues/id/articles/id
     
-    BOOL okayToLoad = false;
+    BOOL articleOkayToLoad = false;
+    BOOL issueOkayToLoad = false;
     
     NSError *error = NULL;
-    NSRegularExpression *URLRegex = [NSRegularExpression regularExpressionWithPattern:@"(issues)\\/(\\d+)\\/(articles)\\/(\\d+)"
+    NSRegularExpression *articleURLRegex = [NSRegularExpression regularExpressionWithPattern:@"(issues)\\/(\\d+)\\/(articles)\\/(\\d+)"
                                                                               options:NSRegularExpressionCaseInsensitive
                                                                                 error:&error];
     
-    NSUInteger numberOfMatches = [URLRegex numberOfMatchesInString:[url absoluteString]
+    NSRegularExpression *issueURLRegex = [NSRegularExpression regularExpressionWithPattern:@"(issues)\\/(\\d+)"
+                                                                                     options:NSRegularExpressionCaseInsensitive
+                                                                                       error:&error];
+    
+    NSUInteger articleURLMatches = [articleURLRegex numberOfMatchesInString:[url absoluteString]
                                                            options:0
                                                              range:NSMakeRange(0, [[url absoluteString] length])];
     
-    if ((numberOfMatches > 0) && !error && [[url absoluteString] hasPrefix:@"newint"]) {
-        // The launch string passes regex, so should be okay
-        // TODO: handle ids not found.
-        okayToLoad = true;
+    NSUInteger issueURLMatches = [issueURLRegex numberOfMatchesInString:[url absoluteString]
+                                                                    options:0
+                                                                      range:NSMakeRange(0, [[url absoluteString] length])];
+
+    BOOL URLIncludesNewint = [[url absoluteString] hasPrefix:@"newint"];
+    
+    if ((articleURLMatches > 0) && !error && URLIncludesNewint) {
+        // URL looks like it's an article
+        articleOkayToLoad = true;
+    } else if ((issueURLMatches > 0) && !error && URLIncludesNewint) {
+        // URL looks like it's an issue url
+        issueOkayToLoad = true;
     }
     
-    if (okayToLoad) {
+    if (articleOkayToLoad) {
         // It's probably a good link, so let's load it.
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:[[NSBundle mainBundle].infoDictionary objectForKey:@"UIMainStoryboardFile"] bundle:[NSBundle mainBundle]];
         
@@ -159,15 +173,47 @@ const char NotificationKey;
         NSString *issueIDFromURL = [[url pathComponents] objectAtIndex:1];
         NSNumber *issueID = [NSNumber numberWithInt:(int)[issueIDFromURL integerValue]];
         NSArray *arrayOfIssues = [NIAUIssue issuesFromNKLibrary];
-        NIAUIssue *issue = [arrayOfIssues objectAtIndex:[arrayOfIssues indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
+        NSUInteger issueIndexPath = [arrayOfIssues indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
             return ([[obj railsID] isEqualToNumber:issueID]);
-        }]];
-        [issue forceDownloadArticles];
+        }];
+        if (issueIndexPath != NSNotFound) {
+            NIAUIssue *issue = [arrayOfIssues objectAtIndex:issueIndexPath];
+            [issue forceDownloadArticles];
+            
+            articleViewController.article = [issue articleWithRailsID:articleID];
+            [(UINavigationController*)self.window.rootViewController pushViewController:articleViewController animated:YES];
+            
+            return YES;
+        } else {
+            // Can't find that issue..
+            return NO;
+        }
         
-        articleViewController.article = [issue articleWithRailsID:articleID];
-        [(UINavigationController*)self.window.rootViewController pushViewController:articleViewController animated:YES];
+    } else if (issueOkayToLoad) {
+        // Load the issue
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:[[NSBundle mainBundle].infoDictionary objectForKey:@"UIMainStoryboardFile"] bundle:[NSBundle mainBundle]];
         
-        return YES;
+        NIAUTableOfContentsViewController *issueViewController = [storyboard instantiateViewControllerWithIdentifier:@"issue"];
+        NSString *issueIDFromURL = [[url pathComponents] objectAtIndex:1];
+        NSNumber *issueID = [NSNumber numberWithInt:(int)[issueIDFromURL integerValue]];
+        NSArray *arrayOfIssues = [NIAUIssue issuesFromNKLibrary];
+        NSUInteger issueIndexPath = [arrayOfIssues indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
+            return ([[obj railsID] isEqualToNumber:issueID]);
+        }];
+        if (issueIndexPath != NSNotFound) {
+            NIAUIssue *issue = [arrayOfIssues objectAtIndex:issueIndexPath];
+            issueViewController.issue = issue;
+            [(UINavigationController*)self.window.rootViewController pushViewController:issueViewController animated:YES];
+            
+            return YES;
+        } else {
+            // Can't find that issue..
+            return NO;
+        }
+        
+    } else if (URLIncludesNewint && ([url pathComponents] == nil)) {
+        // Just open the app to the home view.
+        return NO;
     } else {
         // Malformed link, so ignore it and just start the app.
         [[[UIAlertView alloc] initWithTitle:@"Sorry!" message:@"We don't recognise that link that you tried to open." delegate:self cancelButtonTitle:@"Okay." otherButtonTitles: nil] show];
