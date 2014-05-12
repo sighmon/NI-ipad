@@ -180,10 +180,16 @@ const char NotificationKey;
             NIAUIssue *issue = [arrayOfIssues objectAtIndex:issueIndexPath];
             [issue forceDownloadArticles];
             
-            articleViewController.article = [issue articleWithRailsID:articleID];
-            [(UINavigationController*)self.window.rootViewController pushViewController:articleViewController animated:YES];
-            
-            return YES;
+            NIAUArticle *articleToLoad = [issue articleWithRailsID:articleID];
+            if (articleToLoad) {
+                articleViewController.article = [issue articleWithRailsID:articleID];
+                [(UINavigationController*)self.window.rootViewController pushViewController:articleViewController animated:YES];
+                
+                return YES;
+            } else {
+                // Can't find the article
+                return NO;
+            }            
         } else {
             // Can't find that issue..
             return NO;

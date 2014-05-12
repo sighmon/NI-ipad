@@ -568,13 +568,18 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
 }
 
 -(NIAUArticle *)articleWithRailsID:(NSNumber *)railsID {
-    // TODO: Catch out of bounds exception when the article doesn't get found.
-    return [articles objectAtIndex:[articles indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
-//        NSLog(@"Object: %@, railsID: %@",[obj railsID], railsID);
+    // Catch out of bounds exception when the article doesn't get found.
+    NSUInteger articleIndexPath = [articles indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
+        //        NSLog(@"Object: %@, railsID: %@",[obj railsID], railsID);
         return ([[obj railsID] isEqualToNumber:railsID]);
-    }]];
+    }];
+    if (articleIndexPath != NSNotFound) {
+        return [articles objectAtIndex:articleIndexPath];
+    } else {
+        // Can't find that article..
+        return nil;
+    }
 }
-
 
 // TODO: how would we do getCover w/o completion block?
 -(void)getCoverWithCompletionBlock:(void(^)(UIImage *img))block {
