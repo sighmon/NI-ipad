@@ -356,7 +356,7 @@ NSString *ImageDidSaveToCacheNotification = @"ImageDidSaveToCache";
         // Using original file type instead of PNG to save memory.
 //        [UIImagePNGRepresentation(object) writeToURL:[weakSelf featuredImageCacheURL] atomically:YES];
         if ([[[[weakSelf featuredImageCacheURL] lastPathComponent] pathExtension] isEqualToString:@"jpg"]) {
-            [UIImageJPEGRepresentation(object,1.0) writeToURL:[weakSelf featuredImageCacheURL] atomically:YES];
+            [UIImageJPEGRepresentation(object,0.9) writeToURL:[weakSelf featuredImageCacheURL] atomically:YES];
         } else {
             [UIImagePNGRepresentation(object) writeToURL:[weakSelf featuredImageCacheURL] atomically:YES];
         }
@@ -537,7 +537,7 @@ NSString *ImageDidSaveToCacheNotification = @"ImageDidSaveToCache";
         }
         
         if ([[[_imageCacheURL lastPathComponent] pathExtension] isEqualToString:@"jpg"]) {
-            [UIImageJPEGRepresentation(object,1.0) writeToURL:_imageCacheURL atomically:YES];
+            [UIImageJPEGRepresentation(object,0.9) writeToURL:_imageCacheURL atomically:YES];
         } else {
             [UIImagePNGRepresentation(object) writeToURL:_imageCacheURL atomically:YES];
         }
@@ -650,7 +650,7 @@ NSString *ImageDidSaveToCacheNotification = @"ImageDidSaveToCache";
         // writeFeaturedImageThumbToDisk
 //        [UIImagePNGRepresentation(object) writeToURL:[weakSelf featuredImageThumbCacheURL] atomically:YES];
         if ([[[[weakSelf featuredImageThumbCacheURL] lastPathComponent] pathExtension] isEqualToString:@"jpg"]) {
-            [UIImageJPEGRepresentation(object,1.0) writeToURL:[weakSelf featuredImageThumbCacheURL] atomically:YES];
+            [UIImageJPEGRepresentation(object,0.9) writeToURL:[weakSelf featuredImageThumbCacheURL] atomically:YES];
         } else {
             [UIImagePNGRepresentation(object) writeToURL:[weakSelf featuredImageThumbCacheURL] atomically:YES];
         }
