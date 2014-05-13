@@ -167,6 +167,7 @@ const char NotificationKey;
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:[[NSBundle mainBundle].infoDictionary objectForKey:@"UIMainStoryboardFile"] bundle:[NSBundle mainBundle]];
         
         NIAUArticleViewController *articleViewController = [storyboard instantiateViewControllerWithIdentifier:@"article"];
+        NIAUTableOfContentsViewController *issueViewController = [storyboard instantiateViewControllerWithIdentifier:@"issue"];
         
         NSString *articleIDFromURL = [[url pathComponents] lastObject];
         NSNumber *articleID = [NSNumber numberWithInt:(int)[articleIDFromURL integerValue]];
@@ -179,16 +180,19 @@ const char NotificationKey;
         if (issueIndexPath != NSNotFound) {
             NIAUIssue *issue = [arrayOfIssues objectAtIndex:issueIndexPath];
             [issue forceDownloadArticles];
+            issueViewController.issue = issue;
             
             NIAUArticle *articleToLoad = [issue articleWithRailsID:articleID];
             if (articleToLoad) {
                 articleViewController.article = [issue articleWithRailsID:articleID];
-                [(UINavigationController*)self.window.rootViewController pushViewController:articleViewController animated:YES];
+                [(UINavigationController *)self.window.rootViewController pushViewController:issueViewController animated:NO];
+                [(UINavigationController *)self.window.rootViewController pushViewController:articleViewController animated:YES];
                 
                 return YES;
             } else {
-                // Can't find the article
-                return NO;
+                // Can't find the article, so let's just push the issue.
+                [(UINavigationController *)self.window.rootViewController pushViewController:issueViewController animated:YES];
+                return YES;
             }            
         } else {
             // Can't find that issue..
@@ -209,7 +213,7 @@ const char NotificationKey;
         if (issueIndexPath != NSNotFound) {
             NIAUIssue *issue = [arrayOfIssues objectAtIndex:issueIndexPath];
             issueViewController.issue = issue;
-            [(UINavigationController*)self.window.rootViewController pushViewController:issueViewController animated:YES];
+            [(UINavigationController *)self.window.rootViewController pushViewController:issueViewController animated:YES];
             
             return YES;
         } else {
