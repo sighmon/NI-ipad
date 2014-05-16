@@ -1,5 +1,5 @@
-NI-ipad
-=======
+NI magazine iOS app
+===================
 
 New Internationalist Magazine for iPad, iPhone & iPod touch.
 
