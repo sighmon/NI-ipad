@@ -132,35 +132,13 @@ const char NotificationKey;
 {
     // Launched from a link newint://issues/id/articles/id
     
+    BOOL URLIncludesNewint = false;
     BOOL articleOkayToLoad = false;
     BOOL issueOkayToLoad = false;
     
-    NSError *error = NULL;
-    NSRegularExpression *articleURLRegex = [NSRegularExpression regularExpressionWithPattern:@"(issues)\\/(\\d+)\\/(articles)\\/(\\d+)"
-                                                                              options:NSRegularExpressionCaseInsensitive
-                                                                                error:&error];
-    
-    NSRegularExpression *issueURLRegex = [NSRegularExpression regularExpressionWithPattern:@"(issues)\\/(\\d+)"
-                                                                                     options:NSRegularExpressionCaseInsensitive
-                                                                                       error:&error];
-    
-    NSUInteger articleURLMatches = [articleURLRegex numberOfMatchesInString:[url absoluteString]
-                                                           options:0
-                                                             range:NSMakeRange(0, [[url absoluteString] length])];
-    
-    NSUInteger issueURLMatches = [issueURLRegex numberOfMatchesInString:[url absoluteString]
-                                                                    options:0
-                                                                      range:NSMakeRange(0, [[url absoluteString] length])];
-
-    BOOL URLIncludesNewint = [[url absoluteString] hasPrefix:@"newint"];
-    
-    if ((articleURLMatches > 0) && !error && URLIncludesNewint) {
-        // URL looks like it's an article
-        articleOkayToLoad = true;
-    } else if ((issueURLMatches > 0) && !error && URLIncludesNewint) {
-        // URL looks like it's an issue url
-        issueOkayToLoad = true;
-    }
+    URLIncludesNewint = [[url absoluteString] hasPrefix:@"newint"];
+    articleOkayToLoad = [NIAUHelper validArticleInURL:url];
+    issueOkayToLoad = [NIAUHelper validIssueInURL:url];
     
     if (articleOkayToLoad) {
         // It's probably a good link, so let's load it.
@@ -184,7 +162,7 @@ const char NotificationKey;
             
             NIAUArticle *articleToLoad = [issue articleWithRailsID:articleID];
             if (articleToLoad) {
-                articleViewController.article = [issue articleWithRailsID:articleID];
+                articleViewController.article = articleToLoad;
                 [(UINavigationController *)self.window.rootViewController pushViewController:issueViewController animated:NO];
                 [(UINavigationController *)self.window.rootViewController pushViewController:articleViewController animated:YES];
                 
@@ -193,7 +171,7 @@ const char NotificationKey;
                 // Can't find the article, so let's just push the issue.
                 [(UINavigationController *)self.window.rootViewController pushViewController:issueViewController animated:YES];
                 return YES;
-            }            
+            }
         } else {
             // Can't find that issue..
             return NO;

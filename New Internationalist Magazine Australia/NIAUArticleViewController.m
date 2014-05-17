@@ -10,6 +10,7 @@
 #import "NIAUImageZoomViewController.h"
 #import "Reachability.h"
 #import "NIAUArticleCategoryCell.h"
+#import "NIAUTableOfContentsViewController.h"
 
 NSString *kCategoryCellID = @"categoryCellID";
 float cellPadding = 10.;
@@ -465,6 +466,14 @@ NSString *ArticleDidRefreshNotification = @"ArticleDidRefresh";
             // Request URL includes Newsstand, so we assume it's an image clicked within an article.
             [self performSegueWithIdentifier:@"showImageZoom" sender:request.URL];
             return NO;
+        } else if ([NIAUHelper validArticleInURL:request.URL]) {
+            // It's an internal article link, segue to that article.
+            [self segueToArticleInURL:request.URL];
+            return NO;
+        } else if ([NIAUHelper validIssueInURL:request.URL]) {
+            // It's an internal issue link, segue to that issue.
+            [self segueToIssueInURL:request.URL];
+            return NO;
         } else if (!([[request.URL absoluteString] rangeOfString:@"#"].location == NSNotFound)) {
             // Link is an internal link so just keep loading.
             // TODO: Work out why this isn't jumping to the #anchor
@@ -655,6 +664,60 @@ NSString *ArticleDidRefreshNotification = @"ArticleDidRefresh";
         // Segue to previous article
         NIAUArticleViewController *articleViewController = [segue destinationViewController];
         articleViewController.article = [self.article previousArticle];
+    }
+}
+
+- (void)segueToArticleInURL:(NSURL *)url
+{
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:[[NSBundle mainBundle].infoDictionary objectForKey:@"UIMainStoryboardFile"] bundle:[NSBundle mainBundle]];
+    
+    NIAUArticleViewController *articleViewController = [storyboard instantiateViewControllerWithIdentifier:@"article"];
+    NIAUTableOfContentsViewController *issueViewController = [storyboard instantiateViewControllerWithIdentifier:@"issue"];
+    
+    NSString *articleIDFromURL = [[url pathComponents] lastObject];
+    NSNumber *articleID = [NSNumber numberWithInt:(int)[articleIDFromURL integerValue]];
+    NSString *issueIDFromURL = [[url pathComponents] objectAtIndex:2];
+    NSNumber *issueID = [NSNumber numberWithInt:(int)[issueIDFromURL integerValue]];
+    NSArray *arrayOfIssues = [NIAUIssue issuesFromNKLibrary];
+    NSUInteger issueIndexPath = [arrayOfIssues indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
+        return ([[obj railsID] isEqualToNumber:issueID]);
+    }];
+    if (issueIndexPath != NSNotFound) {
+        NIAUIssue *issueToLoad = [arrayOfIssues objectAtIndex:issueIndexPath];
+        [issueToLoad forceDownloadArticles];
+        issueViewController.issue = issueToLoad;
+        
+        NIAUArticle *articleToLoad = [issueToLoad articleWithRailsID:articleID];
+        if (articleToLoad) {
+            articleViewController.article = articleToLoad;
+            [self.navigationController pushViewController:articleViewController animated:YES];
+        } else {
+            // Can't find the article, so let's just push the issue.
+            [self.navigationController pushViewController:issueViewController animated:YES];
+        }
+    } else {
+        // Can't find that issue..
+    }
+}
+
+- (void)segueToIssueInURL:(NSURL *)url
+{
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:[[NSBundle mainBundle].infoDictionary objectForKey:@"UIMainStoryboardFile"] bundle:[NSBundle mainBundle]];
+    
+    NIAUTableOfContentsViewController *issueViewController = [storyboard instantiateViewControllerWithIdentifier:@"issue"];
+    
+    NSString *issueIDFromURL = [[url pathComponents] objectAtIndex:2];
+    NSNumber *issueID = [NSNumber numberWithInt:(int)[issueIDFromURL integerValue]];
+    NSArray *arrayOfIssues = [NIAUIssue issuesFromNKLibrary];
+    NSUInteger issueIndexPath = [arrayOfIssues indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
+        return ([[obj railsID] isEqualToNumber:issueID]);
+    }];
+    if (issueIndexPath != NSNotFound) {
+        NIAUIssue *issueToLoad = [arrayOfIssues objectAtIndex:issueIndexPath];
+        issueViewController.issue = issueToLoad;
+        [self.navigationController pushViewController:issueViewController animated:YES];
+    } else {
+        // Can't find that issue..
     }
 }
 

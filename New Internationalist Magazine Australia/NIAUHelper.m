@@ -152,5 +152,43 @@ NSString *kAlertTitle = @"Did you know?";
     return fontSize;
 }
 
++ (BOOL)validArticleInURL:(NSURL *)url
+{
+    NSError *error = NULL;
+    NSRegularExpression *articleURLRegex = [NSRegularExpression regularExpressionWithPattern:@"(issues)\\/(\\d+)\\/(articles)\\/(\\d+)"
+                                                                                     options:NSRegularExpressionCaseInsensitive
+                                                                                       error:&error];
+    
+    NSUInteger articleURLMatches = [articleURLRegex numberOfMatchesInString:[url absoluteString]
+                                                                    options:0
+                                                                      range:NSMakeRange(0, [[url absoluteString] length])];
+    
+    if ((articleURLMatches > 0) && !error) {
+        // URL looks like it's an article
+        return true;
+    } else {
+        return false;
+    }
+}
+
++ (BOOL)validIssueInURL:(NSURL *)url
+{
+    NSError *error = NULL;
+    
+    NSRegularExpression *issueURLRegex = [NSRegularExpression regularExpressionWithPattern:@"(issues)\\/(\\d+)"
+                                                                                   options:NSRegularExpressionCaseInsensitive
+                                                                                     error:&error];
+    
+    NSUInteger issueURLMatches = [issueURLRegex numberOfMatchesInString:[url absoluteString]
+                                                                options:0
+                                                                  range:NSMakeRange(0, [[url absoluteString] length])];
+    
+    if ((issueURLMatches > 0) && !error) {
+        // URL looks like it's an issue url
+        return true;
+    } else {
+        return false;
+    }
+}
 
 @end

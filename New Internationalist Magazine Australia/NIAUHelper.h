@@ -24,4 +24,7 @@
 
 + (NSString *)fontSizePercentage;
 
++ (BOOL)validIssueInURL:(NSURL *)url;
++ (BOOL)validArticleInURL:(NSURL *)url;
+
 @end
