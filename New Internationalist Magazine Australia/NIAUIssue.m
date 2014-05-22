@@ -560,7 +560,7 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
 }
 
 -(NIAUArticle *)articleAtIndex:(NSInteger)index {
-    if (articles) {
+    if (articles && [articles count] > 0) {
         return [articles objectAtIndex:index];
     } else {
         return nil;

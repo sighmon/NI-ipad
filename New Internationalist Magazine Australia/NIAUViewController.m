@@ -328,8 +328,13 @@
     if (self.lastIssue) {
         // Check to see if self.lastIssue exists.. might not if no internet is available on first run
         self.firstArticle = [self.lastIssue articleAtIndex:0];
-        [self.firstArticle deleteArticleFromCache];
-        [self.firstArticle requestBody];
+        if (self.firstArticle) {
+            // Patchy internet might cause a crash here, so check for self.firstArticle
+            [self.firstArticle deleteArticleFromCache];
+            [self.firstArticle requestBody];
+        } else {
+            NSLog(@"ERROR: self.firstArticle is: %@", self.firstArticle);
+        }
     }
 }
 
