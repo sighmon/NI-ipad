@@ -709,4 +709,16 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
     return [NSURL URLWithString:[NSString stringWithFormat:@"issues/%@", self.railsID] relativeToURL:[NSURL URLWithString:SITE_URL]];
 }
 
+- (void)clearCache
+{
+    // For each article, delete the body and then the images
+    if ([articles count] > 0) {
+        for (NIAUArticle *article in articles) {
+            [article deleteArticleFromCache];
+        }
+    } else {
+        NSLog(@"ERROR CLEARING ISSUE CACHE: NSArray articles is empty.");
+    }
+}
+
 @end

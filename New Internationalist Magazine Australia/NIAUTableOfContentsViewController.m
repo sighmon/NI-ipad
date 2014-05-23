@@ -82,6 +82,12 @@ static NSString *CellIdentifier = @"articleCell";
     
     [singleTap requireGestureRecognizerToFail:doubleTap];
     
+    // Tap gesture to delete the issue from cache
+    UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPress:)];
+    [self.imageView addGestureRecognizer:longPress];
+    
+    [singleTap requireGestureRecognizerToFail:longPress];
+    
     // Setup two finger swipe to pop to root view
     UISwipeGestureRecognizer *twoFingerSwipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleTwoFingerSwipe:)];
     twoFingerSwipe.numberOfTouchesRequired = 2;
@@ -542,6 +548,19 @@ static NSString *CellIdentifier = @"articleCell";
     [self.alertView show];
 }
 
+- (void)handleLongPress:(UITapGestureRecognizer *)gestureRecognizer
+{
+    if (gestureRecognizer.state == UIGestureRecognizerStateBegan) {
+        self.alertView = [[UIAlertView alloc] initWithTitle:@"Delete" message:@"Would you like to remove this issue from your cache to free up some disk space?" delegate:self cancelButtonTitle:@"No thanks" otherButtonTitles:@"Yes please", nil];
+        [self.alertView show];
+    }
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
+{
+    return YES;
+}
+
 - (void)handleTwoFingerSwipe:(UISwipeGestureRecognizer *)swipe
 {
     // Pop back to the root view controller on triple tap
@@ -572,6 +591,18 @@ static NSString *CellIdentifier = @"articleCell";
             case 1:
                 // Download pressed
                 [self startDownload];
+                break;
+            default:
+                break;
+        }
+    } else if ([alertView.title isEqualToString:@"Delete"]) {
+        switch (buttonIndex) {
+            case 0:
+                // Cancel pressed
+                break;
+            case 1:
+                // Delete pressed
+                [self.issue clearCache];
                 break;
             default:
                 break;

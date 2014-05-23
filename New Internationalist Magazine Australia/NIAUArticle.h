@@ -64,6 +64,8 @@ extern NSString *ImageDidSaveToCacheNotification;
 
 -(void)clearCache;
 
+-(void)deleteArticleBodyFromCache;
+-(void)deleteImageWithID:(NSString *)imageID;
 -(void)deleteArticleFromCache;
 
 -(NSURL *)getWebURL;

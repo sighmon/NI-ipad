@@ -330,7 +330,7 @@
         self.firstArticle = [self.lastIssue articleAtIndex:0];
         if (self.firstArticle) {
             // Patchy internet might cause a crash here, so check for self.firstArticle
-            [self.firstArticle deleteArticleFromCache];
+            [self.firstArticle deleteArticleBodyFromCache];
             [self.firstArticle requestBody];
         } else {
             NSLog(@"ERROR: self.firstArticle is: %@", self.firstArticle);

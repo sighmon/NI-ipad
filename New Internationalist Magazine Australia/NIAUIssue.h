@@ -72,6 +72,8 @@ extern NSString *ArticlesFailedUpdateNotification;
 -(NIAUArticle *)articleAtIndex:(NSInteger)index;
 -(NIAUArticle *)articleWithRailsID:(NSNumber *)railsID;
 
-- (NSURL *)getWebURL;
+-(NSURL *)getWebURL;
+
+-(void)clearCache;
 
 @end

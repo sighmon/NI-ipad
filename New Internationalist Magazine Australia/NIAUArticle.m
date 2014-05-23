@@ -41,9 +41,43 @@ NSString *ImageDidSaveToCacheNotification = @"ImageDidSaveToCache";
     return [self initWithIssue:_issue andDictionary:_dictionary];
 }
 
+-(void)deleteArticleBodyFromCache
+{
+    // Delete article body from cache
+    NSURL *bodyCacheURL = [self bodyCacheURL];
+    if (bodyCacheURL) {
+        [[NSFileManager defaultManager] removeItemAtURL:bodyCacheURL error:nil];
+    }
+}
+
+-(void)deleteImageWithID:(NSString *)imageID
+{
+    // Delete image from cache
+    NSURL *imageCacheURL = [self imageCacheURLForId:imageID];
+    if (imageCacheURL) {
+        [[NSFileManager defaultManager] removeItemAtURL:imageCacheURL error:nil];
+    }
+    
+    // Delete the thumbs too, which all start with the name imageCacheURL
+    NSArray *files = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:[[self cacheURL] path] error:nil];
+    NSArray *thumbs = [files filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"self BEGINSWITH[cd] %@", [imageCacheURL lastPathComponent]]];
+    for (NSString *thumbURL in thumbs) {
+        [[NSFileManager defaultManager] removeItemAtURL:[NSURL URLWithString:thumbURL relativeToURL:[self cacheURL]] error:nil];
+    }
+}
+
 -(void)deleteArticleFromCache
 {
-    [[NSFileManager defaultManager] removeItemAtURL:[self bodyCacheURL] error:nil];
+    // Delete article body from cache
+    [self deleteArticleBodyFromCache];
+    
+    // Loop through the images, and remove them.
+    if ([self.images count] > 0) {
+        // Remove image for ID
+        for (NSDictionary *image in self.images) {
+            [self deleteImageWithID:[[image objectForKey:@"id"] stringValue]];
+        }
+    }
 }
 
 -(void)clearCache {
