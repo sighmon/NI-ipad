@@ -15,7 +15,7 @@ p, h1, h2, h3, h4, h5, h6, dl, ol, ul, form {
     margin: 0 20px 0 20px;
 }
 
-ol {
+ol, ul {
     padding-left: 20px;
     padding-right: 0px;
 }
