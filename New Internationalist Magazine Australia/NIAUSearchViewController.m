@@ -287,6 +287,7 @@
                 NSMutableArray *searchArticleTitleAndTeaser = [NSMutableArray array];
                 [searchArticleTitleAndTeaser addObject:[NSPredicate predicateWithFormat:@"SELF.title contains[cd] %@",subString]];
                 [searchArticleTitleAndTeaser addObject:[NSPredicate predicateWithFormat:@"SELF.teaser contains[cd] %@",subString]];
+                [searchArticleTitleAndTeaser addObject:[NSPredicate predicateWithFormat:@"SELF.attemptToGetBodyFromDisk contains[cd] %@",subString]];
                 NSPredicate *orPredicate = [NSCompoundPredicate orPredicateWithSubpredicates:searchArticleTitleAndTeaser];
                 [andPredicateArray addObject:orPredicate];
             }

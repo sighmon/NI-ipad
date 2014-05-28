@@ -60,6 +60,7 @@ extern NSString *ImageDidSaveToCacheNotification;
 -(UIImage *)attemptToGetFeaturedImageThumbFromDiskWithSize:(CGSize)size;
 
 -(void)requestBody;
+-(NSString *)attemptToGetBodyFromDisk;
 -(NSString *)attemptToGetExpandedBodyFromDisk;
 
 -(void)clearCache;
