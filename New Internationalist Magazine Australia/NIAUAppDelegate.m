@@ -121,7 +121,7 @@ const char NotificationKey;
         // Okay to load Crashlytics
         [Crashlytics startWithAPIKey:@"93b57617620e351110a61806412e4a827829d162"];
     }
-    
+        
     // Override point for customization after application launch.
     return YES;
 }
@@ -279,7 +279,7 @@ const char NotificationKey;
 {
     // Get zip file from Rails, unpack it and save it to the library as a new nkIssue.
     
-    if(userInfo) {
+    if (userInfo) {
         // Get the zipURL from Rails.
         NSString *railsID = [userInfo objectForKey:@"railsID"];
         NSString *zipURL = [[NIAUInAppPurchaseHelper sharedInstance] requestZipURLforRailsID: railsID];
@@ -288,17 +288,24 @@ const char NotificationKey;
             // Create NIAUIssue from userInfo
             NIAUIssue *newIssue = [NIAUIssue issueWithUserInfo:userInfo];
             
-            // schedule for issue downloading in background
-            NKIssue *newNKIssue = [[NKLibrary sharedLibrary] issueWithName:newIssue.name];
-            if(newNKIssue) {
-                NSURL *downloadURL = [NSURL URLWithString:zipURL];
-                NSURLRequest *req = [NSURLRequest requestWithURL:downloadURL];
-                NKAssetDownload *assetDownload = [newNKIssue addAssetWithRequest:req];
-                [assetDownload downloadWithDelegate:self];
+            if (newIssue) {
+                // schedule for issue downloading in background
+                NKIssue *newNKIssue = [[NKLibrary sharedLibrary] issueWithName:newIssue.name];
+                if (newNKIssue) {
+                    NSURL *downloadURL = [NSURL URLWithString:zipURL];
+                    NSURLRequest *req = [NSURLRequest requestWithURL:downloadURL];
+                    NKAssetDownload *assetDownload = [newNKIssue addAssetWithRequest:req];
+                    [assetDownload downloadWithDelegate:self];
+                }
+            } else {
+                NSLog(@"New Issue couldn't be created from userInfo: %@", userInfo);
             }
+            
         } else {
             NSLog(@"No zipURL, so aborting.");
         }
+    } else {
+        NSLog(@"No userInfo: %@", userInfo);
     }
 }
 

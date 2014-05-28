@@ -136,11 +136,23 @@ static NIAUPublisher *instance =nil;
 }
 
 -(NIAUIssue *)issueWithName:(NSString *)name {
-    // TODO: Catch out of bounds exception when the issue doesn't get found.
-    return [issues objectAtIndex:[issues indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
-        //        NSLog(@"Object: %@, railsID: %@",[obj railsID], railsID);
-        return ([[obj name] isEqualToString:name]);
-    }]];
+    if (issues) {
+        // Catch out of bounds exception when the issue doesn't get found.
+        
+        NIAUIssue *issueFound = [issues objectAtIndex:[issues indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
+            //        NSLog(@"Object: %@, railsID: %@",[obj railsID], railsID);
+            return ([[obj name] isEqualToString:name]);
+        }]];
+        
+        if (issueFound) {
+            return issueFound;
+        } else {
+            return nil;
+        }
+        
+    } else {
+        return nil;
+    }
 }
 
 -(NIAUIssue *)issueWithRailsID:(NSNumber *)railsID

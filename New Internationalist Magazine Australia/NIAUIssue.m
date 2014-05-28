@@ -306,18 +306,22 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
 
 +(NIAUIssue *)issueWithUserInfo:(NSDictionary *)dict {
     // Make the Issue dictionary from the userInfo
-    NSMutableDictionary *tmpDict = [[NSMutableDictionary alloc] init];
-    [tmpDict setObject:[dict objectForKey:@"name"] forKey:@"name"];
-    [tmpDict setObject:[dict objectForKey:@"publication"] forKey:@"release"];
-    
-    // If the nkIssue already exists for this dict @"name", return that issue, else init
-    
-    NIAUIssue *issue = [[NIAUPublisher getInstance] issueWithName:[dict objectForKey:@"name"]];
-    
-    if (issue) {
-        return issue;
+    if (dict) {
+        NSMutableDictionary *tmpDict = [[NSMutableDictionary alloc] init];
+        [tmpDict setObject:[dict objectForKey:@"name"] forKey:@"name"];
+        [tmpDict setObject:[dict objectForKey:@"publication"] forKey:@"release"];
+        
+        // If the nkIssue already exists for this dict @"name", return that issue, else init
+        
+        NIAUIssue *issue = [[NIAUPublisher getInstance] issueWithName:[dict objectForKey:@"name"]];
+        
+        if (issue) {
+            return issue;
+        } else {
+            return [[NIAUIssue alloc] initWithUserInfo:tmpDict];
+        }
     } else {
-        return [[NIAUIssue alloc] initWithUserInfo:tmpDict];
+        return nil;
     }
 }
 
