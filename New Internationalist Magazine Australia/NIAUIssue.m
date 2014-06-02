@@ -383,6 +383,8 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
 -(void)writeToCache {
     // write the relevant issue metadata into cache directory
     NSURL *jsonURL = [NSURL URLWithString:@"issue.json" relativeToURL:[[self nkIssue] contentURL]];
+    
+    // To avoid crashlytics #29, check if the nkIssue hasn't been created yet for some reason.
     if (jsonURL) {
         NSLog(@"%@",[jsonURL absoluteString]);
         NSOutputStream *os = [NSOutputStream outputStreamWithURL:jsonURL append:FALSE];
