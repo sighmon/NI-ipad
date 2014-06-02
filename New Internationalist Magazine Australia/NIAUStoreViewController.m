@@ -131,7 +131,7 @@
         NSError *e;
         NSDictionary *receiptDictionary = [NSJSONSerialization JSONObjectWithData:jsonData options:kNilOptions error:&e];
 //        NSLog(@"Receipt response: \n%d, %@", success, receiptDictionary);
-        if (success && [[receiptDictionary objectForKey:@"status"] integerValue] == 0) {
+        if (success && receiptDictionary && [[receiptDictionary objectForKey:@"status"] integerValue] == 0) {
             // Receipt is valid, lets check for the last expiry date we have.
             NSArray *purchases = [[receiptDictionary objectForKey:@"receipt"] objectForKey:@"in_app"];
             NSMutableDictionary *latestAutoDebit = [[NSMutableDictionary alloc] init];
