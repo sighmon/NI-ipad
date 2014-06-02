@@ -383,15 +383,18 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
 -(void)writeToCache {
     // write the relevant issue metadata into cache directory
     NSURL *jsonURL = [NSURL URLWithString:@"issue.json" relativeToURL:[[self nkIssue] contentURL]];
-    NSLog(@"%@",[jsonURL absoluteString]);
-    NSOutputStream *os = [NSOutputStream outputStreamWithURL:jsonURL append:FALSE];
-    [os open];
-    NSError *error;
-    if ([NSJSONSerialization writeJSONObject:dictionary toStream:os options:0 error:&error]<=0) {
-        NSLog(@"Error writing JSON file");
+    if (jsonURL) {
+        NSLog(@"%@",[jsonURL absoluteString]);
+        NSOutputStream *os = [NSOutputStream outputStreamWithURL:jsonURL append:FALSE];
+        [os open];
+        NSError *error;
+        if ([NSJSONSerialization writeJSONObject:dictionary toStream:os options:0 error:&error]<=0) {
+            NSLog(@"Error writing JSON file");
+        }
+        [os close];
+    } else {
+        NSLog(@"ERROR: no jsonURL in writeToCache - %@", jsonURL);
     }
-    [os close];
- 
 }
 
 -(NSDate *)publication {
