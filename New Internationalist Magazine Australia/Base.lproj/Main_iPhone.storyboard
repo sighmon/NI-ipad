@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13C1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="eQs-ol-VW7">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="eQs-ol-VW7">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
@@ -203,7 +203,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="106" height="151"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="C8CAAB03-390F-45EE-9CB0-7895DDFC4106" translatesAutoresizingMaskIntoConstraints="NO" id="8yQ-69-2Yi">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="2DB4D8C7-8493-4243-A3E7-9846BE66C5B8" translatesAutoresizingMaskIntoConstraints="NO" id="8yQ-69-2Yi">
                                             <rect key="frame" x="0.0" y="0.0" width="106" height="151"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         </imageView>
@@ -1178,13 +1178,18 @@
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="color" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                     </activityIndicatorView>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Article date" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b2q-s8-oDm">
-                                        <rect key="frame" x="20" y="214" width="280" height="15"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TJY-6T-xou">
+                                        <rect key="frame" x="20" y="209" width="280" height="27"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
-                                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
+                                        <state key="normal" title="Article date">
+                                            <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <segue destination="4fR-wf-HfG" kind="push" identifier="articleDateToTableOfContents" id="9C9-O3-5fi"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <gestureRecognizers/>
                                 <constraints>
@@ -1195,21 +1200,21 @@
                                     <constraint firstItem="PAM-Qv-IM5" firstAttribute="leading" secondItem="ftA-uH-mfj" secondAttribute="leading" id="JcH-Gi-QUd"/>
                                     <constraint firstItem="PoX-gg-8cE" firstAttribute="top" secondItem="6Sc-4I-h9J" secondAttribute="bottom" constant="8" id="KSS-2u-GPd"/>
                                     <constraint firstAttribute="trailing" secondItem="6Sc-4I-h9J" secondAttribute="trailing" id="OYV-ft-hHR"/>
+                                    <constraint firstAttribute="trailing" secondItem="TJY-6T-xou" secondAttribute="trailing" constant="20" id="PSy-Pn-qKr"/>
                                     <constraint firstItem="ulX-QY-4Wv" firstAttribute="leading" secondItem="ftA-uH-mfj" secondAttribute="leading" constant="20" symbolic="YES" id="PZ4-LY-w6Z"/>
+                                    <constraint firstItem="6Sc-4I-h9J" firstAttribute="top" secondItem="TJY-6T-xou" secondAttribute="bottom" constant="5" id="QPn-Ry-1EM"/>
                                     <constraint firstItem="6Sc-4I-h9J" firstAttribute="leading" secondItem="ftA-uH-mfj" secondAttribute="leading" id="Vn9-NW-HUv"/>
                                     <constraint firstItem="PoX-gg-8cE" firstAttribute="leading" secondItem="ftA-uH-mfj" secondAttribute="leading" id="YyS-cI-Zqm"/>
-                                    <constraint firstAttribute="trailing" secondItem="b2q-s8-oDm" secondAttribute="trailing" constant="20" id="d3J-bP-MQ0"/>
                                     <constraint firstAttribute="centerX" secondItem="aWi-L9-HiD" secondAttribute="centerX" id="g60-BW-mWw"/>
+                                    <constraint firstItem="TJY-6T-xou" firstAttribute="top" secondItem="ulX-QY-4Wv" secondAttribute="bottom" constant="3" id="h7P-s7-rkb"/>
                                     <constraint firstItem="fuM-gI-7Bu" firstAttribute="leading" secondItem="ftA-uH-mfj" secondAttribute="leading" constant="20" symbolic="YES" id="h7W-aA-u6j"/>
                                     <constraint firstItem="PAM-Qv-IM5" firstAttribute="trailing" secondItem="ftA-uH-mfj" secondAttribute="trailing" id="k68-sx-VHl"/>
+                                    <constraint firstItem="TJY-6T-xou" firstAttribute="leading" secondItem="ftA-uH-mfj" secondAttribute="leading" constant="20" id="l2z-rW-tvF"/>
                                     <constraint firstItem="PoX-gg-8cE" firstAttribute="trailing" secondItem="ftA-uH-mfj" secondAttribute="trailing" id="mCw-oi-6nn"/>
                                     <constraint firstItem="fuM-gI-7Bu" firstAttribute="top" secondItem="PAM-Qv-IM5" secondAttribute="bottom" constant="22" id="nce-JX-yH3"/>
-                                    <constraint firstItem="6Sc-4I-h9J" firstAttribute="top" secondItem="b2q-s8-oDm" secondAttribute="bottom" constant="12" id="pMT-aI-El2"/>
                                     <constraint firstAttribute="trailing" secondItem="ulX-QY-4Wv" secondAttribute="trailing" constant="20" symbolic="YES" id="qwM-Wm-Pd8"/>
                                     <constraint firstItem="aWi-L9-HiD" firstAttribute="top" secondItem="PoX-gg-8cE" secondAttribute="top" constant="15" id="r4w-Mp-YCd"/>
                                     <constraint firstItem="PAM-Qv-IM5" firstAttribute="width" secondItem="ftA-uH-mfj" secondAttribute="width" id="t4a-6H-DJF"/>
-                                    <constraint firstItem="b2q-s8-oDm" firstAttribute="top" secondItem="ulX-QY-4Wv" secondAttribute="bottom" constant="8" id="tOW-DZ-eFg"/>
-                                    <constraint firstItem="b2q-s8-oDm" firstAttribute="leading" secondItem="ftA-uH-mfj" secondAttribute="leading" constant="20" id="yjN-kO-gDB"/>
                                 </constraints>
                                 <connections>
                                     <outletCollection property="gestureRecognizers" destination="EnK-u7-6GB" appends="YES" id="5mf-TB-zWX"/>
@@ -1239,7 +1244,7 @@
                         <outlet property="bodyWebViewHeightConstraint" destination="Zu2-h1-NqP" id="tbM-21-nIy"/>
                         <outlet property="categoryCollectionView" destination="6Sc-4I-h9J" id="87z-iK-Q2s"/>
                         <outlet property="categoryCollectionViewHeightConstraint" destination="SJE-PO-sHh" id="o24-Se-6cf"/>
-                        <outlet property="dateLabel" destination="b2q-s8-oDm" id="4eH-ay-gIE"/>
+                        <outlet property="dateButton" destination="TJY-6T-xou" id="8fz-Eb-1fZ"/>
                         <outlet property="featuredImage" destination="PAM-Qv-IM5" id="Lui-Dn-Ag7"/>
                         <outlet property="scrollView" destination="ftA-uH-mfj" id="uaw-RL-w11"/>
                         <outlet property="shareAction" destination="TQH-mr-pQg" id="cHu-AQ-lui"/>
@@ -1439,7 +1444,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="C8CAAB03-390F-45EE-9CB0-7895DDFC4106" width="200" height="98">
+        <image name="2DB4D8C7-8493-4243-A3E7-9846BE66C5B8" width="200" height="98">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGOzxYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK0HCBEW
 GxwgISksLzU4VSRudWxs1AkKCwwNDg8QViRjbGFzc1xOU0ltYWdlRmxhZ3NWTlNSZXBzV05TQ29sb3KA
@@ -2829,12 +2834,12 @@ AAAAAAAAAAAAAAAAAAFA/A
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="lhr-aW-Muh"/>
-        <segue reference="fFr-gL-mDW"/>
-        <segue reference="W9L-kn-pvc"/>
-        <segue reference="fI5-Du-KTZ"/>
-        <segue reference="v4V-Nv-yqh"/>
-        <segue reference="W9z-A8-KEC"/>
+        <segue reference="v7S-KP-l8O"/>
+        <segue reference="9C9-O3-5fi"/>
+        <segue reference="joJ-Rh-K6j"/>
+        <segue reference="SUv-P7-9yc"/>
+        <segue reference="Qwc-Oh-1W1"/>
         <segue reference="IfR-jT-MPw"/>
+        <segue reference="mdp-6r-s59"/>
     </inferredMetricsTieBreakers>
 </document>

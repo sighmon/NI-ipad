@@ -59,7 +59,7 @@ NSString *ArticleDidRefreshNotification = @"ArticleDidRefresh";
     // In the meantime, blank the placeholder text.
     self.titleLabel.text = @"";
     self.teaserLabel.text = @"";
-    self.dateLabel.text = @"";
+    [self.dateButton setTitle:@"" forState:UIControlStateNormal];
     
     // Set the back button title for the article (first 14 characters, plus 3 dots)
     int titleLength = (int)[self.article.title length];
@@ -266,7 +266,7 @@ NSString *ArticleDidRefreshNotification = @"ArticleDidRefresh";
     [dateFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"GMT"]];
     [dateFormatter setDateFormat:@"MMMM yyyy"];
     
-    self.dateLabel.text = [NSString stringWithFormat: @"%@", [dateFormatter stringFromDate:WITH_DEFAULT(self.article.publication,self.article.issue.publication)]];
+    [self.dateButton setTitle:[NSString stringWithFormat: @"%@", [dateFormatter stringFromDate:WITH_DEFAULT(self.article.publication,self.article.issue.publication)]] forState:UIControlStateNormal];
     
     // Load the article into the webview
     
@@ -664,6 +664,10 @@ NSString *ArticleDidRefreshNotification = @"ArticleDidRefresh";
         // Segue to previous article
         NIAUArticleViewController *articleViewController = [segue destinationViewController];
         articleViewController.article = [self.article previousArticle];
+    } else if ([[segue identifier] isEqualToString:@"articleDateToTableOfContents"]) {
+        // Segue to Table of Contents
+        NIAUTableOfContentsViewController *tableOfContentsViewController = [segue destinationViewController];
+        tableOfContentsViewController.issue = self.article.issue;
     }
 }
 

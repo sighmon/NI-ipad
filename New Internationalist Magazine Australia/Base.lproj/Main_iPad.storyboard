@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13C1021" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="oKe-c9-yQ2">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="oKe-c9-yQ2">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
@@ -1171,13 +1171,18 @@
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Article date" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T4g-rx-Wfv">
-                                        <rect key="frame" x="25" y="398" width="718" height="15"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fnW-iq-T6B">
+                                        <rect key="frame" x="25" y="392" width="718" height="27"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
-                                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
+                                        <state key="normal" title="Article date">
+                                            <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <segue destination="Pia-vN-nb6" kind="push" identifier="articleDateToTableOfContents" id="Qn8-eu-J3m"/>
+                                        </connections>
+                                    </button>
                                     <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="e76-g1-MEQ">
                                         <rect key="frame" x="0.0" y="457" width="768" height="571"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -1198,19 +1203,17 @@
                                 <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstItem="e76-g1-MEQ" firstAttribute="top" secondItem="mdc-xz-zaZ" secondAttribute="bottom" constant="12" id="35l-ov-kca"/>
-                                    <constraint firstItem="T4g-rx-Wfv" firstAttribute="top" secondItem="H3o-ox-YMu" secondAttribute="bottom" constant="8" id="5Hh-cL-uvD"/>
                                     <constraint firstItem="H3o-ox-YMu" firstAttribute="trailing" secondItem="GVh-7U-naF" secondAttribute="trailing" id="6ZR-6B-ebl"/>
+                                    <constraint firstItem="fnW-iq-T6B" firstAttribute="leading" secondItem="6wQ-vV-iqH" secondAttribute="leading" constant="25" id="E9R-nA-NgQ"/>
                                     <constraint firstItem="XxT-mo-NcD" firstAttribute="trailing" secondItem="6wQ-vV-iqH" secondAttribute="trailing" id="GyC-jQ-YqU"/>
                                     <constraint firstItem="s5g-EG-rOf" firstAttribute="top" secondItem="mdc-xz-zaZ" secondAttribute="bottom" constant="72" id="Iuh-F6-fkh"/>
                                     <constraint firstAttribute="trailing" secondItem="mdc-xz-zaZ" secondAttribute="trailing" id="Meb-o3-CDr"/>
                                     <constraint firstAttribute="width" secondItem="XxT-mo-NcD" secondAttribute="width" id="Oth-K8-18J"/>
                                     <constraint firstItem="mdc-xz-zaZ" firstAttribute="leading" secondItem="6wQ-vV-iqH" secondAttribute="leading" id="YgO-wJ-rv8"/>
                                     <constraint firstAttribute="trailing" secondItem="GVh-7U-naF" secondAttribute="trailing" constant="25" id="aHu-UW-AsI"/>
-                                    <constraint firstItem="mdc-xz-zaZ" firstAttribute="top" secondItem="T4g-rx-Wfv" secondAttribute="bottom" constant="12" id="eJw-6s-Zrc"/>
+                                    <constraint firstItem="mdc-xz-zaZ" firstAttribute="top" secondItem="fnW-iq-T6B" secondAttribute="bottom" constant="6" id="dht-en-ihU"/>
                                     <constraint firstItem="H3o-ox-YMu" firstAttribute="leading" secondItem="GVh-7U-naF" secondAttribute="leading" id="gDA-g9-ONu"/>
-                                    <constraint firstAttribute="trailing" secondItem="T4g-rx-Wfv" secondAttribute="trailing" constant="25" id="hIv-Wb-Jr6"/>
                                     <constraint firstItem="GVh-7U-naF" firstAttribute="top" secondItem="XxT-mo-NcD" secondAttribute="bottom" constant="15" id="hN9-XY-iuG"/>
-                                    <constraint firstItem="T4g-rx-Wfv" firstAttribute="leading" secondItem="6wQ-vV-iqH" secondAttribute="leading" constant="25" id="hsX-8v-Cf4"/>
                                     <constraint firstItem="H3o-ox-YMu" firstAttribute="top" secondItem="GVh-7U-naF" secondAttribute="bottom" constant="8" symbolic="YES" id="i3E-CJ-6HD"/>
                                     <constraint firstItem="XxT-mo-NcD" firstAttribute="leading" secondItem="6wQ-vV-iqH" secondAttribute="leading" id="iLa-yI-T2M"/>
                                     <constraint firstAttribute="centerX" secondItem="s5g-EG-rOf" secondAttribute="centerX" id="kr4-H0-aIY"/>
@@ -1218,6 +1221,8 @@
                                     <constraint firstItem="GVh-7U-naF" firstAttribute="leading" secondItem="6wQ-vV-iqH" secondAttribute="leading" constant="25" id="oEY-24-nxa"/>
                                     <constraint firstItem="e76-g1-MEQ" firstAttribute="leading" secondItem="6wQ-vV-iqH" secondAttribute="leading" id="rBr-SZ-bfU"/>
                                     <constraint firstItem="XxT-mo-NcD" firstAttribute="top" secondItem="6wQ-vV-iqH" secondAttribute="top" id="sM0-2d-rr8"/>
+                                    <constraint firstItem="fnW-iq-T6B" firstAttribute="top" secondItem="H3o-ox-YMu" secondAttribute="bottom" constant="2" id="tam-6B-nhK"/>
+                                    <constraint firstAttribute="trailing" secondItem="fnW-iq-T6B" secondAttribute="trailing" constant="25" id="uv4-zJ-Qrf"/>
                                     <constraint firstAttribute="bottom" secondItem="e76-g1-MEQ" secondAttribute="bottom" id="wDS-Eg-Rjg"/>
                                 </constraints>
                                 <connections>
@@ -1247,7 +1252,7 @@
                         <outlet property="bodyWebView" destination="e76-g1-MEQ" id="IC0-Ur-EcN"/>
                         <outlet property="bodyWebViewHeightConstraint" destination="nxh-Da-vJ3" id="Abc-cj-9eR"/>
                         <outlet property="categoryCollectionView" destination="mdc-xz-zaZ" id="kQc-ZX-W66"/>
-                        <outlet property="dateLabel" destination="T4g-rx-Wfv" id="CR7-uD-GJG"/>
+                        <outlet property="dateButton" destination="fnW-iq-T6B" id="91x-ix-qzO"/>
                         <outlet property="featuredImage" destination="XxT-mo-NcD" id="ei8-eP-36V"/>
                         <outlet property="scrollView" destination="6wQ-vV-iqH" id="P1y-pP-paF"/>
                         <outlet property="shareAction" destination="2iK-uL-gFc" id="uuO-2E-YWT"/>
@@ -1480,12 +1485,12 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="7r1-dy-lxK"/>
+        <segue reference="w2Z-Bz-DtP"/>
         <segue reference="WLv-dP-nWF"/>
-        <segue reference="B6w-37-kcT"/>
-        <segue reference="w0v-2Q-MmG"/>
-        <segue reference="79s-8k-9uG"/>
-        <segue reference="fFO-5s-0tA"/>
+        <segue reference="Qn8-eu-J3m"/>
+        <segue reference="d5N-e1-WGj"/>
         <segue reference="owb-z5-hL5"/>
+        <segue reference="JBV-bs-efO"/>
+        <segue reference="PvO-ql-dqR"/>
     </inferredMetricsTieBreakers>
 </document>
