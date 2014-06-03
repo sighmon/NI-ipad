@@ -422,14 +422,26 @@ NSString *ImageDidSaveToCacheNotification = @"ImageDidSaveToCache";
 }
 
 -(NSURL *)imageCacheURLForId:(NSString *)imageId {
-    NSString *imageFileName = [[self imageURLForId:imageId]lastPathComponent];
-    return [NSURL URLWithString:imageFileName relativeToURL:[self cacheURL]];
+    // Check to see if imageId and imageURL are around.
+    NSURL *imageURL = [self imageURLForId:imageId];
+    if (imageId && imageURL) {
+        NSString *imageFileName = [imageURL lastPathComponent];
+        return [NSURL URLWithString:imageFileName relativeToURL:[self cacheURL]];
+    } else {
+        return nil;
+    }
 }
 
 -(NSURL *)imageCacheURLForId:(NSString *)imageId andSize:(CGSize)size {
-    NSString *imageName = [[self imageURLForId:imageId] lastPathComponent];
-    NSString *imageFileName = [imageName stringByAppendingString:[NSString stringWithFormat:@"_%f.%@", size.width, [imageName pathExtension]]];
-    return [NSURL URLWithString:imageFileName relativeToURL:[self cacheURL]];
+    // Check to see if imageId and imageURL are around.
+    NSURL *imageURL = [self imageURLForId:imageId];
+    if (imageId && imageURL) {
+        NSString *imageName = [imageURL lastPathComponent];
+        NSString *imageFileName = [imageName stringByAppendingString:[NSString stringWithFormat:@"_%f.%@", size.width, [imageName pathExtension]]];
+        return [NSURL URLWithString:imageFileName relativeToURL:[self cacheURL]];
+    } else {
+        return nil;
+    }
 }
 
 -(NSDictionary *)firstImage
