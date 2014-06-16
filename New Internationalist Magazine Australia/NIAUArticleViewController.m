@@ -250,7 +250,7 @@ NSString *ArticleDidRefreshNotification = @"ArticleDidRefresh";
                             "<body style='font-size: %@'><div class='article-teaser'>%@</div></body> \n"
                             "</html>", bootstrapCssURL, cssURL, fontSizePercentage, WITH_DEFAULT(self.article.teaser,IF_DEBUG(@"!!!NOTEASER!!!",@""))];
     
-    if ([self.article.teaser isEqualToString:@""]) {
+    if (self.article.teaser == (id)[NSNull null] || [self.article.teaser isEqualToString:@""]) {
         NSLog(@"Article doesn't have a teaser");
         self.teaserLabel.text = nil;
     } else {
