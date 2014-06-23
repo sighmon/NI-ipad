@@ -393,7 +393,21 @@
         if (self.issue) {
             tableOfContentsViewController.issue = self.issue;
         } else {
-            tableOfContentsViewController.issue = [[NIAUPublisher getInstance] issueAtIndex:0];
+            NIAUPublisher *instance = [NIAUPublisher getInstance];
+            if (instance && [instance numberOfIssues] > 0) {
+                NIAUIssue *firstIssue = [instance issueAtIndex:0];
+                if (firstIssue) {
+                    tableOfContentsViewController.issue = firstIssue;
+                }
+                else {
+                    // No issue...
+                    NSLog(@"ERROR: Can't load first issue!");
+                }
+            } else {
+                // No issue...
+                // Avoiding crashlytics #48 that crashed when our elastic search index on Heorku is blank.
+                NSLog(@"ERROR: Can't load first issue!");
+            }
         }
         
     } else if ([[segue identifier] isEqualToString:@"subscribeButtonToStoreView"]) {
@@ -412,7 +426,7 @@
 
 - (IBAction)coverTapped:(UITapGestureRecognizer *)recognizer
 {
-    NSLog(@"Cover tapped!");
+//    NSLog(@"Cover tapped!");
     [self performSegueWithIdentifier:@"homeCoverToContentsView" sender:self];
 }
 

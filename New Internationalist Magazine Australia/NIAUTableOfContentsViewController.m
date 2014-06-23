@@ -374,67 +374,94 @@ static NSString *CellIdentifier = @"articleCell";
 
 - (void)setupData
 {
-    // Set the cover from the issue cover tapped
-    [self.issue getCoverWithCompletionBlock:^(UIImage *img) {
-        [self.imageView setAlpha:0.0];
-        [self.imageView setImage:[NIAUHelper imageWithRoundedCornersSize:10. usingImage:img]];
-        [NIAUHelper addShadowToImageView:self.imageView withRadius:3. andOffset:CGSizeMake(0, 2) andOpacity:0.3];
-        [UIView animateWithDuration:0.3 animations:^{
-            [self.imageView setAlpha:1.0];
-        }];
-
-    }];
-    
-//    self.labelTitle.text = self.issue.title;
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"GMT"]];
-    [dateFormatter setDateFormat:@"MMMM yyyy"];
-    
-    self.labelNumberAndDate.text = [NSString stringWithFormat: @"%@ - %@", self.issue.name, [dateFormatter stringFromDate:self.issue.publication]];
-    
-    self.labelEditor.text = [NSString stringWithFormat:@"Edited by:\n%@", self.issue.editorsName];
-    
-    // Load CSS from the filesystem
-    NSURL *cssURL = [[NSBundle mainBundle] URLForResource:@"article-body" withExtension:@"css"];
-    NSURL *bootstrapCssURL = [[NSBundle mainBundle] URLForResource:@"bootstrap" withExtension:@"css"];
-    
-    // Set the font size percentage from Dynamic Type
-    NSString *fontSizePercentage = [NIAUHelper fontSizePercentage];
-    
-    // Load the editor's letter into the attributedText
-    NSString *editorHTML = [NSString stringWithFormat:@"<html> \n"
-                            "<head> \n"
-                            "<link rel=\"stylesheet\" type=\"text/css\" href=\"%@\"> \n"
-                            "<link rel=\"stylesheet\" type=\"text/css\" href=\"%@\"> \n"
-                            "</head> \n"
-                            "<body style='font-size: %@'><div class='table-of-contents-editors-letter'>%@</div></body> \n"
-                            "</html>", bootstrapCssURL, cssURL, fontSizePercentage, self.issue.editorsLetter];
-    
-    self.editorsLetterTextView.attributedText = [[NSAttributedString alloc] initWithData:[editorHTML dataUsingEncoding:NSUTF8StringEncoding]
-                                                                    options:@{NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType,
-                                                                              NSCharacterEncodingDocumentAttribute: [NSNumber numberWithInt:NSUTF8StringEncoding]}
-                                                         documentAttributes:nil
-                                                                      error:nil];
-    NSLog(@"\nScrollView height: %f \neditorsLetter height: %f",self.scrollView.contentSize.height, self.editorsLetterTextView.attributedText.size.height);
-//    [self.tableView layoutIfNeeded];
-//    [self.editorsLetterTextView setNeedsLayout];
-    
-    [self.editorImageView setImage:[UIImage imageNamed:@"default_editors_photo"]];
-    // Load the real editor's image
-    [self.issue getEditorsImageWithCompletionBlock:^(UIImage *img) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.editorImageView setAlpha:0.0];
-            [self.editorImageView setImage:img];
+    // Check if the issue is available and display defaults if not.
+    if (self.issue) {
+        // Set the cover from the issue cover tapped
+        [self.issue getCoverWithCompletionBlock:^(UIImage *img) {
+            [self.imageView setAlpha:0.0];
+            [self.imageView setImage:[NIAUHelper imageWithRoundedCornersSize:10. usingImage:img]];
+            [NIAUHelper addShadowToImageView:self.imageView withRadius:3. andOffset:CGSizeMake(0, 2) andOpacity:0.3];
             [UIView animateWithDuration:0.3 animations:^{
-                [self.editorImageView setAlpha:1.0];
+                [self.imageView setAlpha:1.0];
             }];
-        });
-    }];
-    [NIAUHelper roundedCornersWithRadius:(self.editorImageView.bounds.size.width / 2.) inImageView:self.editorImageView];
-    
-    // If help is enabled, show help alert
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"showHelp"] == 1) {
-        [NIAUHelper showHelpAlertWithMessage:@"If you want to download the entire issue, double tap the cover." andDelegate:self];
+            
+        }];
+        
+        //    self.labelTitle.text = self.issue.title;
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"GMT"]];
+        [dateFormatter setDateFormat:@"MMMM yyyy"];
+        
+        self.labelNumberAndDate.text = [NSString stringWithFormat: @"%@ - %@", self.issue.name, [dateFormatter stringFromDate:self.issue.publication]];
+        
+        self.labelEditor.text = [NSString stringWithFormat:@"Edited by:\n%@", self.issue.editorsName];
+        
+        // Load CSS from the filesystem
+        NSURL *cssURL = [[NSBundle mainBundle] URLForResource:@"article-body" withExtension:@"css"];
+        NSURL *bootstrapCssURL = [[NSBundle mainBundle] URLForResource:@"bootstrap" withExtension:@"css"];
+        
+        // Set the font size percentage from Dynamic Type
+        NSString *fontSizePercentage = [NIAUHelper fontSizePercentage];
+        
+        // Load the editor's letter into the attributedText
+        NSString *editorHTML = [NSString stringWithFormat:@"<html> \n"
+                                "<head> \n"
+                                "<link rel=\"stylesheet\" type=\"text/css\" href=\"%@\"> \n"
+                                "<link rel=\"stylesheet\" type=\"text/css\" href=\"%@\"> \n"
+                                "</head> \n"
+                                "<body style='font-size: %@'><div class='table-of-contents-editors-letter'>%@</div></body> \n"
+                                "</html>", bootstrapCssURL, cssURL, fontSizePercentage, self.issue.editorsLetter];
+        
+        self.editorsLetterTextView.attributedText = [[NSAttributedString alloc] initWithData:[editorHTML dataUsingEncoding:NSUTF8StringEncoding]
+                                                                                     options:@{NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType,
+                                                                                               NSCharacterEncodingDocumentAttribute: [NSNumber numberWithInt:NSUTF8StringEncoding]}
+                                                                          documentAttributes:nil
+                                                                                       error:nil];
+        NSLog(@"\nScrollView height: %f \neditorsLetter height: %f",self.scrollView.contentSize.height, self.editorsLetterTextView.attributedText.size.height);
+        //    [self.tableView layoutIfNeeded];
+        //    [self.editorsLetterTextView setNeedsLayout];
+        
+        [self.editorImageView setImage:[UIImage imageNamed:@"default_editors_photo"]];
+        // Load the real editor's image
+        [self.issue getEditorsImageWithCompletionBlock:^(UIImage *img) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.editorImageView setAlpha:0.0];
+                [self.editorImageView setImage:img];
+                [UIView animateWithDuration:0.3 animations:^{
+                    [self.editorImageView setAlpha:1.0];
+                }];
+            });
+        }];
+        [NIAUHelper roundedCornersWithRadius:(self.editorImageView.bounds.size.width / 2.) inImageView:self.editorImageView];
+        
+        // If help is enabled, show help alert
+        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"showHelp"] == 1) {
+            [NIAUHelper showHelpAlertWithMessage:@"If you want to download the entire issue, double tap the cover." andDelegate:self];
+        }
+    } else {
+        // self.issue isn't around... set defaults
+        
+        // Cover
+//        [self.imageView setAlpha:0.0];
+//        [self.imageView setImage:[NIAUHelper imageWithRoundedCornersSize:10. usingImage:[UIImage imageNamed:@"default_cover.png"]]];
+//        [NIAUHelper addShadowToImageView:self.imageView withRadius:3. andOffset:CGSizeMake(0, 2) andOpacity:0.3];
+//        [UIView animateWithDuration:0.3 animations:^{
+//            [self.imageView setAlpha:1.0];
+//        }];
+        
+        // Editor's image
+        [self.editorImageView setAlpha:0.0];
+        [self.editorImageView setImage:[UIImage imageNamed:@"default_editors_photo.png"]];
+        [UIView animateWithDuration:0.3 animations:^{
+            [self.editorImageView setAlpha:1.0];
+        }];
+        
+        self.labelEditor.text = @"Uh oh!";
+        
+        // Editor's letter
+        self.editorsLetterTextView.text = @"Sorry, we can't load this issue.. if you'd like to email to let us know what happened, that'd be great!\n\ndesign@newint.com.au";
+        
+        self.labelNumberAndDate.text = @"";
     }
 }
 
