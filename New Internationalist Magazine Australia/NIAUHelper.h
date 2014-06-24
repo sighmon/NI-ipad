@@ -26,5 +26,7 @@
 
 + (BOOL)validIssueInURL:(NSURL *)url;
 + (BOOL)validArticleInURL:(NSURL *)url;
++ (BOOL)validCategoryInURL:(NSURL *)url;
++ (BOOL)validCategoriesInURL:(NSURL *)url;
 
 @end

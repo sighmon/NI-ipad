@@ -23,6 +23,7 @@
 
 @property (nonatomic, strong) NIAUIssue *issue;
 @property (nonatomic, strong) NSString *category;
+@property (nonatomic, strong) NSNumber *categoryID;
 @property (nonatomic, strong) NSMutableArray *issuesArray;
 @property (nonatomic, strong) NSMutableArray *articlesArray;
 

@@ -15,6 +15,8 @@
 #import "NIAUPublisher.h"
 #import "NIAUArticleViewController.h"
 #import "NIAUTableOfContentsViewController.h"
+#import "NIAUCategoryViewController.h"
+#import "NIAUCategoriesViewController.h"
 #import "NIAUIssue.h"
 #import <objc/runtime.h>
 const char NotificationKey;
@@ -135,10 +137,14 @@ const char NotificationKey;
     BOOL URLIncludesNewint = false;
     BOOL articleOkayToLoad = false;
     BOOL issueOkayToLoad = false;
+    BOOL categoryOkayToLoad = false;
+    BOOL categoriesOkayToLoad = false;
     
     URLIncludesNewint = [[url absoluteString] hasPrefix:@"newint"];
     articleOkayToLoad = [NIAUHelper validArticleInURL:url];
     issueOkayToLoad = [NIAUHelper validIssueInURL:url];
+    categoryOkayToLoad = [NIAUHelper validCategoryInURL:url];
+    categoriesOkayToLoad = [NIAUHelper validCategoriesInURL:url];
     
     if (articleOkayToLoad) {
         // It's probably a good link, so let's load it.
@@ -199,6 +205,30 @@ const char NotificationKey;
             return NO;
         }
         
+    } else if (categoryOkayToLoad) {
+        // Load the category
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:[[NSBundle mainBundle].infoDictionary objectForKey:@"UIMainStoryboardFile"] bundle:[NSBundle mainBundle]];
+        
+        NIAUCategoryViewController *categoryViewController = [storyboard instantiateViewControllerWithIdentifier:@"category"];
+        NSString *categoryIDFromURL = [[url pathComponents] objectAtIndex:1];
+        NSNumber *categoryID = [NSNumber numberWithInt:(int)[categoryIDFromURL integerValue]];
+        categoryViewController.categoryID = categoryID;
+        
+        [(UINavigationController *)self.window.rootViewController pushViewController:categoryViewController animated:YES];
+        
+        return YES;
+        
+        // TODO: Build an NIAUCategory model to clean this up.
+        // TODO: Find category by categoryID
+        
+    } else if (categoriesOkayToLoad) {
+        // Load categories view controller
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:[[NSBundle mainBundle].infoDictionary objectForKey:@"UIMainStoryboardFile"] bundle:[NSBundle mainBundle]];
+        
+        NIAUCategoriesViewController *categoriesViewController = [storyboard instantiateViewControllerWithIdentifier:@"categories"];
+        [(UINavigationController *)self.window.rootViewController pushViewController:categoriesViewController animated:YES];
+        return YES;
+    
     } else if (URLIncludesNewint && ([url pathComponents] == nil)) {
         // Just open the app to the home view.
         return NO;

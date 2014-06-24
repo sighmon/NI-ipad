@@ -191,4 +191,44 @@ NSString *kAlertTitle = @"Did you know?";
     }
 }
 
++ (BOOL)validCategoryInURL:(NSURL *)url
+{
+    NSError *error = NULL;
+    
+    NSRegularExpression *categoryURLRegex = [NSRegularExpression regularExpressionWithPattern:@"(categories)\\/(\\d+)"
+                                                                                   options:NSRegularExpressionCaseInsensitive
+                                                                                     error:&error];
+    
+    NSUInteger categoryURLMatches = [categoryURLRegex numberOfMatchesInString:[url absoluteString]
+                                                                options:0
+                                                                  range:NSMakeRange(0, [[url absoluteString] length])];
+    
+    if ((categoryURLMatches > 0) && !error) {
+        // URL looks like it's a category url
+        return true;
+    } else {
+        return false;
+    }
+}
+
++ (BOOL)validCategoriesInURL:(NSURL *)url
+{
+    NSError *error = NULL;
+    
+    NSRegularExpression *categoriesURLRegex = [NSRegularExpression regularExpressionWithPattern:@"(categories)"
+                                                                                      options:NSRegularExpressionCaseInsensitive
+                                                                                        error:&error];
+    
+    NSUInteger categoriesURLMatches = [categoriesURLRegex numberOfMatchesInString:[url absoluteString]
+                                                                      options:0
+                                                                        range:NSMakeRange(0, [[url absoluteString] length])];
+    
+    if ((categoriesURLMatches > 0) && !error) {
+        // URL looks like it's a category url
+        return true;
+    } else {
+        return false;
+    }
+}
+
 @end
