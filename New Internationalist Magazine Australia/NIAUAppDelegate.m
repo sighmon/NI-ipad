@@ -28,6 +28,10 @@ const char NotificationKey;
 #import "GAIFields.h"
 #import "GAILogger.h"
 
+#import "TAGContainer.h"
+#import "TAGContainerOpener.h"
+#import "TAGManager.h"
+
 #import <Crashlytics/Crashlytics.h>
 
 @implementation NIAUAppDelegate
@@ -112,6 +116,31 @@ const char NotificationKey;
         NSLog(@"Help disabled (at app delegate).");
     }
     
+    // Google Tag Manager
+    self.tagManager = [TAGManager instance];
+    
+    // Optional: Change the LogLevel to Verbose to enable logging at VERBOSE and higher levels.
+    [self.tagManager.logger setLogLevel:kTAGLoggerLogLevelVerbose];
+    
+    /*
+     * Opens a container and returns a TAGContainerFuture.
+     *
+     * @param containerId The ID of the container to load.
+     * @param tagManager The TAGManager instance for getting the container.
+     * @param openType The choice of how to open the container.
+     * @param timeout The timeout period (default is 2.0 seconds).
+     */
+    id future =
+    [TAGContainerOpener openContainerWithId:GOOGLE_TAG_MANAGER_ID
+                                 tagManager:self.tagManager
+                                   openType:kTAGOpenTypePreferNonDefault
+                                    timeout:nil];
+    
+    // Method calls that don't need the container.
+    
+    self.container = [future get];
+    // Other methods calls that use this container.
+    
     // For first run, set Big Images to TRUE
     if ([[NSUserDefaults standardUserDefaults] objectForKey:@"bigImages"] == nil) {
         NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
@@ -119,9 +148,10 @@ const char NotificationKey;
         [userDefaults synchronize];
     }
     
+    // Crashlytics - only load if user hasn't opted out of analytics
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"googleAnalytics"] == 1) {
         // Okay to load Crashlytics
-        [Crashlytics startWithAPIKey:@"93b57617620e351110a61806412e4a827829d162"];
+        [Crashlytics startWithAPIKey:CRASHLYTICS_API_KEY];
     }
         
     // Override point for customization after application launch.

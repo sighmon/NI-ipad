@@ -114,13 +114,23 @@ static NSString *CellIdentifier = @"articleCell";
 
 - (void)sendGoogleAnalyticsStats
 {
+    NSString *screenName = [NSString stringWithFormat:@"%@ - %@", self.issue.name, self.issue.title];
+    
     // Setup Google Analytics
     [[GAI sharedInstance].defaultTracker set:kGAIScreenName
-                                       value:[NSString stringWithFormat:@"%@ - %@", self.issue.name, self.issue.title]];
+                                       value:screenName];
     
     // Send the screen view.
     [[GAI sharedInstance].defaultTracker
      send:[[GAIDictionaryBuilder createAppView] build]];
+    
+    // Google Tag Manager send
+    // The container should have already been opened, otherwise events pushed to
+    // the data layer will not fire tags in that container.
+    TAGDataLayer *dataLayer = [TAGManager instance].dataLayer;
+    
+    [dataLayer push:@{@"event": @"openScreen", @"screenName": screenName}];
+    NSLog(@"Google Tag pushed: %@", screenName);
 }
 
 -(void)publisherReady:(NSNotification *)not

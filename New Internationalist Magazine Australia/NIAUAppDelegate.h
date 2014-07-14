@@ -10,8 +10,14 @@
 
 extern const char NotificationKey;
 
+@class TAGManager;
+@class TAGContainer;
+
 @interface NIAUAppDelegate : UIResponder <UIApplicationDelegate, NSURLConnectionDownloadDelegate, NSURLConnectionDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
+
+@property (nonatomic, strong) TAGManager *tagManager;
+@property (nonatomic, strong) TAGContainer *container;
 
 @end

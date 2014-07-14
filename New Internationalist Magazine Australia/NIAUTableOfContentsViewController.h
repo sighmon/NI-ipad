@@ -22,6 +22,9 @@
 #import "GAIFields.h"
 #import "GAILogger.h"
 
+#import "TAGDataLayer.h"
+#import "TAGManager.h"
+
 @interface NIAUTableOfContentsViewController : UIViewController <UIScrollViewDelegate, UITextViewDelegate, NSURLConnectionDownloadDelegate, UIGestureRecognizerDelegate>
 
 @property (nonatomic, strong) NIAUIssue *issue;
