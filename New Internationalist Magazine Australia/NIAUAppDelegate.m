@@ -77,7 +77,10 @@ const char NotificationKey;
         // This only fires if the application is launched from a remote notification by the user
         // Also fires when the newsstand content-available starts the app in the background.
         
-        [self handleRemoteNotification:application andUserInfo:payload];
+        // TODO: Think this is double handling... 13th Aug 2014
+        // Going to leave it out for now, seeing as I'm not sending content-available notifications now anyway.
+//        NSLog(@"Opened from the push notification!");
+//        [self handleRemoteNotification:application andUserInfo:payload];
     }
     
     // Google Analytics
@@ -305,29 +308,61 @@ const char NotificationKey;
 
 - (void)handleRemoteNotification: (UIApplication *)application andUserInfo: (NSDictionary *)userInfo
 {
-    // Start background download.
-    [self startBackgroundDownloadWithUserInfo:userInfo];
+    // Check userInfo to see if the notification is about a new issue, or a specific article
     
-    UILocalNotification *localNotif = [[UILocalNotification alloc] init];
-    if (localNotif) {
-        localNotif.alertBody = [NSString stringWithFormat:
-                                NSLocalizedString(@"%@", nil), [[userInfo objectForKey:@"aps"] objectForKey:@"alert"]];
-        localNotif.alertAction = NSLocalizedString(@"Read it now.", nil);
-        localNotif.soundName = [NSString stringWithFormat:
-                                NSLocalizedString(@"%@", nil), [[userInfo objectForKey:@"aps"] objectForKey:@"sound"]];
-        localNotif.applicationIconBadgeNumber = [[[userInfo objectForKey:@"aps"] objectForKey:@"badge"] intValue];
-        [application presentLocalNotificationNow:localNotif];
+    if ([self isArticleIdIncludedInUserInfo: userInfo]) {
+        // It's a specific article, open it
+        
+        NSURL *urlFromUserInfo = [NSURL URLWithString:[NSString stringWithFormat:@"newint://issues/%@/articles/%@", [userInfo objectForKey:@"issueID"], [userInfo objectForKey:@"articleID"]]];
+        
+        [self application:application handleOpenURL:urlFromUserInfo];
+        
+    } else {
+        // It's an issue ready for download
+        // Start background download.
+        [self startBackgroundDownloadWithUserInfo:userInfo];
+        
+        UILocalNotification *localNotif = [[UILocalNotification alloc] init];
+        if (localNotif) {
+            localNotif.alertBody = [NSString stringWithFormat:
+                                    NSLocalizedString(@"%@", nil), [[userInfo objectForKey:@"aps"] objectForKey:@"alert"]];
+            localNotif.alertAction = NSLocalizedString(@"Read it now.", nil);
+            localNotif.soundName = [NSString stringWithFormat:
+                                    NSLocalizedString(@"%@", nil), [[userInfo objectForKey:@"aps"] objectForKey:@"sound"]];
+            localNotif.applicationIconBadgeNumber = [[[userInfo objectForKey:@"aps"] objectForKey:@"badge"] intValue];
+            [application presentLocalNotificationNow:localNotif];
+        }
     }
 }
 
 - (void)handleNotification: (NSDictionary *)userInfo
 {
-    NSLog(@"UserInfo: %@", userInfo);
-    // Ask the user whether they want to download the new issue now
-    NSString *message = [NSString stringWithFormat:@"%@ Would you like to download it now in the background?", [[userInfo objectForKey:@"aps"] objectForKey:@"alert"]];
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"New issue available" message:message delegate:self cancelButtonTitle:@"Not now." otherButtonTitles:@"Download", nil];
-    [alert show];
-    objc_setAssociatedObject(alert, &NotificationKey, userInfo, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    // Check userInfo to see if the notification is about a new issue, or a specific article
+    
+    if ([self isArticleIdIncludedInUserInfo: userInfo]) {
+        // It's a specific article, ask if they want to open it
+        NSString *message = [NSString stringWithFormat:@"%@ Would you like to read it now?", [[userInfo objectForKey:@"aps"] objectForKey:@"alert"]];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Have you read..." message:message delegate:self cancelButtonTitle:@"Not now." otherButtonTitles:@"Read it now.", nil];
+        [alert show];
+        objc_setAssociatedObject(alert, &NotificationKey, userInfo, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+        
+    } else {
+        // It's an issue ready for download
+        // Ask the user whether they want to download the new issue now
+        NSString *message = [NSString stringWithFormat:@"%@ Would you like to download it now in the background?", [[userInfo objectForKey:@"aps"] objectForKey:@"alert"]];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"New issue available" message:message delegate:self cancelButtonTitle:@"Not now." otherButtonTitles:@"Download", nil];
+        [alert show];
+        objc_setAssociatedObject(alert, &NotificationKey, userInfo, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    }
+}
+
+- (BOOL)isArticleIdIncludedInUserInfo: (NSDictionary *)userInfo
+{
+    if (userInfo && [userInfo objectForKey:@"articleID"]) {
+        return YES;
+    } else {
+        return NO;
+    }
 }
 
 - (void)turnBadgeIconOn
@@ -380,8 +415,15 @@ const char NotificationKey;
             // Cancel pressed
             break;
         case 1:
-            // Download pressed
-            [self startBackgroundDownloadWithUserInfo:userInfo];
+            if ([self isArticleIdIncludedInUserInfo: userInfo]) {
+                // Read article pressed
+                NSURL *urlFromUserInfo = [NSURL URLWithString:[NSString stringWithFormat:@"newint://issues/%@/articles/%@", [userInfo objectForKey:@"issueID"], [userInfo objectForKey:@"articleID"]]];
+                
+                [self application:[UIApplication sharedApplication] handleOpenURL:urlFromUserInfo];
+            } else {
+                // Download pressed
+                [self startBackgroundDownloadWithUserInfo:userInfo];
+            }
             break;
         default:
             break;
