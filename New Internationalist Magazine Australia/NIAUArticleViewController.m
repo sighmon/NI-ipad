@@ -159,7 +159,7 @@ NSString *ArticleDidRefreshNotification = @"ArticleDidRefresh";
 {
     // Find image in webview by ID and then replace with real URL
     NSArray *imageInformation = [notification.userInfo objectForKey:@"image"];
-    NSLog(@"Received image cache notification from ID:%@", imageInformation[0]);
+//    NSLog(@"Received image cache notification from ID:%@", imageInformation[0]);
     NSString *javascriptString = [NSString stringWithFormat:@"var img = document.getElementById('image%@'); img.src = '%@'; img.parentElement.href = '%@'", imageInformation[0], imageInformation[1], imageInformation[1]];
     
     // TODO: Work out why this is causing memory warnings. Possibly 10mb javascript limit?

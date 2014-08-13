@@ -160,7 +160,7 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
         // TODO: FIX THIS SEE WHY MULTIPLE WRITES
         BOOL writeSuccessful = [data writeToFile:[[weakSelf categoriesSortedURL] path] atomically:YES];
         if (writeSuccessful) {
-            NSLog(@"Categories write successful!");
+//            NSLog(@"Categories write successful!");
         } else {
             NSLog(@"Categories write FAILED.");
         }

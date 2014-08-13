@@ -324,7 +324,7 @@ NSString *ImageDidSaveToCacheNotification = @"ImageDidSaveToCache";
                             dispatch_async(dispatch_get_main_queue(), ^{
                                 NSDictionary *imageInformation = @{@"image":@[imageId,imageSource]};
                                 [[NSNotificationCenter defaultCenter] postNotificationName:ImageDidSaveToCacheNotification object:nil userInfo:imageInformation];
-                                NSLog(@"Sent Image saved notification for ID:%@",imageId);
+//                                NSLog(@"Sent Image saved notification for ID:%@",imageId);
                             });
                         });
                     }
@@ -879,11 +879,11 @@ NSString *ImageDidSaveToCacheNotification = @"ImageDidSaveToCache";
 }
 
 -(void)writeToCache {
-    NSLog(@"TODO: %s", __PRETTY_FUNCTION__);
+//    NSLog(@"TODO: %s", __PRETTY_FUNCTION__);
     NSError *error;
     if ([[NSFileManager defaultManager] createDirectoryAtURL:[self cacheURL] withIntermediateDirectories:TRUE attributes:nil error:&error]) {
         
-        NSLog(@"writing article to cache: %@",[[self metadataURL] absoluteString]);
+//        NSLog(@"writing article to cache: %@",[[self metadataURL] absoluteString]);
         
         NSOutputStream *os = [NSOutputStream outputStreamWithURL:[self metadataURL] append:FALSE];
         
