@@ -503,9 +503,74 @@ static NSString *CellIdentifier = @"articleCell";
 - (BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)URL inRange:(NSRange)characterRange
 {
     // A link was tapped
-    // Segue to NIAUWebsiteViewController so users don't leave the app.
-    [self performSegueWithIdentifier:@"webLinkTappedFromContents" sender:URL];
-    return NO;
+    
+    // Check to see if the link is an internal link or external link by looking for http?
+    
+    if ([NIAUHelper validArticleInURL:URL]) {
+        // Build article segue from URL and set sender to NIAUArticle
+        
+        NSString *articleIDFromURL = [[URL pathComponents] lastObject];
+        NSNumber *articleID = [NSNumber numberWithInt:(int)[articleIDFromURL integerValue]];
+        NSString *issueIDFromURL = [[URL pathComponents] objectAtIndex:2];
+        NSNumber *issueID = [NSNumber numberWithInt:(int)[issueIDFromURL integerValue]];
+        NSArray *arrayOfIssues = [NIAUIssue issuesFromNKLibrary];
+        NSUInteger issueIndexPath = [arrayOfIssues indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
+            return ([[obj railsID] isEqualToNumber:issueID]);
+        }];
+        if (issueIndexPath != NSNotFound) {
+            NIAUIssue *issueToLoad = [arrayOfIssues objectAtIndex:issueIndexPath];
+            [issueToLoad forceDownloadArticles];
+            
+            NIAUArticle *articleToLoad = [issueToLoad articleWithRailsID:articleID];
+            if (articleToLoad) {
+                // Segue to that article
+                [self performSegueWithIdentifier:@"tappedArticle" sender:articleToLoad];
+            } else {
+                // Can't find the article, pop up a UIAlertView?
+                self.alertView = [[UIAlertView alloc] initWithTitle:@"Bad link, sorry!" message:@"It looks like we can't find that article, sorry!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                [self.alertView show];
+            }
+        } else {
+            // Can't find that issue.. UIAlertView?
+            self.alertView = [[UIAlertView alloc] initWithTitle:@"Bad link, sorry!" message:@"It looks like we can't find that issue, sorry!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [self.alertView show];
+        }
+        
+        // Return NO so that the UITextView doesn't load the URL. :-)
+        return NO;
+    } else if ([NIAUHelper validIssueInURL:URL]) {
+        // Build issue segue from URL and set sender to NIAUIssue
+        
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:[[NSBundle mainBundle].infoDictionary objectForKey:@"UIMainStoryboardFile"] bundle:[NSBundle mainBundle]];
+        
+        NIAUTableOfContentsViewController *issueViewController = [storyboard instantiateViewControllerWithIdentifier:@"issue"];
+        
+        NSString *issueIDFromURL = [[URL pathComponents] objectAtIndex:2];
+        NSNumber *issueID = [NSNumber numberWithInt:(int)[issueIDFromURL integerValue]];
+        NSArray *arrayOfIssues = [NIAUIssue issuesFromNKLibrary];
+        NSUInteger issueIndexPath = [arrayOfIssues indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
+            return ([[obj railsID] isEqualToNumber:issueID]);
+        }];
+        if (issueIndexPath != NSNotFound) {
+            NIAUIssue *issueToLoad = [arrayOfIssues objectAtIndex:issueIndexPath];
+            // Push the issueViewController - would be nice to segue to self, but not possible.
+            issueViewController.issue = issueToLoad;
+            [self.navigationController pushViewController:issueViewController animated:YES];
+        } else {
+            // Can't find that issue.. UIAlertView?
+            self.alertView = [[UIAlertView alloc] initWithTitle:@"Bad link, sorry!" message:@"It looks like we can't find that issue, sorry!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [self.alertView show];
+        }
+        
+        // Return NO so that the UITextView doesn't load the URL. :-)
+        return NO;
+    } else {
+        // Segue to NIAUWebsiteViewController so users don't leave the app.
+        [self performSegueWithIdentifier:@"webLinkTappedFromContents" sender:URL];
+        
+        // Return NO so that the UITextView doesn't load the URL. :-)
+        return NO;
+    }
 }
 
 #pragma mark -
@@ -526,12 +591,24 @@ static NSString *CellIdentifier = @"articleCell";
             imageZoomViewController.imageToLoad = [UIImage imageNamed:@"default_article_image.png"];
         }
     } else if ([[segue identifier] isEqualToString:@"tappedArticle"]) {
-        // Load the article tapped.
+        if ([sender isKindOfClass:[NIAUArticle class]]) {
+            // Segue to Article link from Editor's letter
+            NIAUArticleViewController *articleViewController = [segue destinationViewController];
+            articleViewController.article = sender;
+            
+        } else {
+            // Load the article tapped from UITableView.
+            
+            NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
+            
+            NIAUArticleViewController *articleViewController = [segue destinationViewController];
+            articleViewController.article = [self.sortedCategories[selectedIndexPath.section] objectForKey:@"articles"][selectedIndexPath.row];
+        }
         
-        NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
-        
-        NIAUArticleViewController *articleViewController = [segue destinationViewController];
-        articleViewController.article = [self.sortedCategories[selectedIndexPath.section] objectForKey:@"articles"][selectedIndexPath.row];
+    } else if ([[segue identifier] isEqualToString:@"tappedIssue"]) {
+        // Segue to Issue link from Editor's letter
+        NIAUTableOfContentsViewController *issueViewController = [segue destinationViewController];
+        issueViewController.issue = sender;
         
     } else if ([[segue identifier] isEqualToString:@"webLinkTappedFromContents"]) {
         // Send the weblink
