@@ -32,7 +32,7 @@ NSMutableArray *notifications;
 }
 
 -(int)countNotificationsWithName:(NSString *)_name {
-    return [[notifications indexesOfObjectsPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
+    return (int)[[notifications indexesOfObjectsPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
         return [obj name]==_name;
     }] count];
 }
@@ -114,7 +114,7 @@ NSMutableArray *notifications;
         [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:deadline];
     }
     XCTAssertTrue([deadline timeIntervalSinceNow]>0,@"timed out waiting for failure");
-    NSLog(@"%d",[[NIAUPublisher getInstance] numberOfIssues]);
+    NSLog(@"%ld",(long)[[NIAUPublisher getInstance] numberOfIssues]);
     XCTAssertTrue([[NIAUPublisher getInstance] numberOfIssues]==0);
 }
 
