@@ -147,6 +147,9 @@
             // Feedback link in HTML tapped
             [self feedbackButtonTapped:request];
             return NO;
+        } else if ([[[request URL] scheme] isEqualToString:@"x-apple-data-detectors"] || [[[request URL] scheme] isEqualToString:@"tel"]) {
+            // It's an auto map lookup or telephone number
+            return YES;
         } else {
             // A web link was tapped
             // Segue to NIAUWebsiteViewController so users don't leave the app.
