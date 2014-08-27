@@ -127,6 +127,7 @@
                                           cancelButtonTitle:@"Close"
                                           otherButtonTitles:nil];
     [alert show];
+    alert.delegate = nil;
 }
 
 - (void)articlesReady:(NSNotification *)notification

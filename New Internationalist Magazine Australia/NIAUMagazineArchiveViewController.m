@@ -88,6 +88,7 @@ NSString *kCellID = @"magazineCellID";              // UICollectionViewCell stor
                                           cancelButtonTitle:@"Close"
                                           otherButtonTitles:nil];
     [alert show];
+    alert.delegate = nil;
     //[alert release];
     //[self.navigationItem setRightBarButtonItem:refreshButton];
 }

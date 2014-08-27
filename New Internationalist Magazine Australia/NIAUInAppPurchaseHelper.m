@@ -458,6 +458,7 @@ NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurcha
         [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshViewNotification" object:nil];
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Download complete" message:@"The latest issue of New Internationalist has been downloaded and is ready to read." delegate:self cancelButtonTitle:@"Thanks!" otherButtonTitles:nil];
         [alert show];
+        alert.delegate = nil;
     } else {
         NSLog(@"ERROR: Nothing was moved, so either the user already had the entire issue in cache, or something went wrong.");
     }
