@@ -231,4 +231,18 @@ NSString *kAlertTitle = @"Did you know?";
     }
 }
 
++ (NSString *)URLEncodedString:(NSString *)string
+{
+    if (string && string.length > 0) {
+        return (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(
+                                                                                     NULL,
+                                                                                     (CFStringRef)string,
+                                                                                     NULL,
+                                                                                     (CFStringRef)@"!*'();:@&=+$,/?%#[]",
+                                                                                     kCFStringEncodingUTF8 ));
+    } else {
+        return @"";
+    }
+}
+
 @end

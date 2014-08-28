@@ -103,6 +103,10 @@ NSString *LoginUnsuccessfulNotification = @"LoginUnsuccessful";
         NSString *username = self.username.text;
         NSString *password = self.password.text;
         
+        // URLencode the strings so they don't break with & symbols. Thanks Terry M!
+        NSString *usernameEncoded = [NIAUHelper URLEncodedString:username];
+        NSString *passwordEncoded = [NIAUHelper URLEncodedString:password];
+        
         NSError *error;
         if ([SSKeychain setPassword:password forService:@"NIWebApp" account:username error:&error]) {
             
@@ -127,10 +131,10 @@ NSString *LoginUnsuccessfulNotification = @"LoginUnsuccessful";
             
             // Try logging in to Rails.
             NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-            [request setURL:[NSURL URLWithString:[NSString stringWithFormat:@"users/sign_in.json?password=%@&username=%@", password, username] relativeToURL:[NSURL URLWithString:SITE_URL]]];
+            [request setURL:[NSURL URLWithString:[NSString stringWithFormat:@"users/sign_in.json?username=%@", usernameEncoded] relativeToURL:[NSURL URLWithString:SITE_URL]]];
             [request setHTTPMethod:@"POST"];
             [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
-            NSData *postData = [[NSString stringWithFormat:@"user[login]=%@&user[password]=%@",username,password] dataUsingEncoding:NSUTF8StringEncoding];
+            NSData *postData = [[NSString stringWithFormat:@"user[login]=%@&user[password]=%@",usernameEncoded,passwordEncoded] dataUsingEncoding:NSUTF8StringEncoding];
             NSString *postLength = [NSString stringWithFormat:@"%d", (int)[postData length]];
             [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
             [request setHTTPBody:postData];

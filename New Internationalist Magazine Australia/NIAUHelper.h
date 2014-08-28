@@ -29,4 +29,6 @@
 + (BOOL)validCategoryInURL:(NSURL *)url;
 + (BOOL)validCategoriesInURL:(NSURL *)url;
 
++ (NSString *)URLEncodedString:(NSString *)string;
+
 @end
