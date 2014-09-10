@@ -641,7 +641,7 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
 }
 
 -(void)requestArticles {
-    NSLog(@"requestArticles called on %@",self);
+    NSLog(@"requestArticles called on %@",self.name);
     if(requestingArticles) {
         NSLog(@"already requesting articles");
     } else {

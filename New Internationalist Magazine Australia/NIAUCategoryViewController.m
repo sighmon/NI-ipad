@@ -147,7 +147,7 @@
     // Save only the articles of this category to self.articlesArray
     for (int a = 0; a < allArticles.count; a++) {
         for (int c = 0; c < [[allArticles[a] categories] count]; c++) {
-            NSDictionary *category = [allArticles[a] categories][c];
+            NSDictionary *category = [(NSArray *)[[allArticles objectAtIndex:a] categories] objectAtIndex:c];
             if ([[category objectForKey:@"name"] isEqualToString:self.category] || ([NSNumber numberWithInt:[[category objectForKey:@"id"] intValue]] == self.categoryID)) {
                 [self.articlesArray addObject:allArticles[a]];
             }

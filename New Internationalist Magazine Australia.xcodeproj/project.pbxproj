@@ -93,6 +93,11 @@
 		059EF8F7187E12FF0079FA88 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 059EF8F6187E12FF0079FA88 /* Parse.framework */; };
 		059EF8F9187E13220079FA88 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 059EF8F8187E13220079FA88 /* FacebookSDK.framework */; };
 		059FFCA0185026F100422824 /* NIAUCategoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 059FFC9F185026F100422824 /* NIAUCategoryViewController.m */; };
+		05B0982F19BFD88C0072A88C /* 180.png in Resources */ = {isa = PBXBuildFile; fileRef = 05B0982E19BFD88C0072A88C /* 180.png */; };
+		05B0983119BFD8B20072A88C /* 87.png in Resources */ = {isa = PBXBuildFile; fileRef = 05B0983019BFD8B20072A88C /* 87.png */; };
+		05B0983319BFDBFF0072A88C /* Default-750x1334@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 05B0983219BFDBFF0072A88C /* Default-750x1334@2x.png */; };
+		05B0983519BFDC7F0072A88C /* Default-1242x2208@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 05B0983419BFDC7F0072A88C /* Default-1242x2208@3x.png */; };
+		05B0983719BFDCCF0072A88C /* Default-1242x2208-landscape@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 05B0983619BFDCCF0072A88C /* Default-1242x2208-landscape@3x.png */; };
 		05B910A0181632050027E5BF /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 05B9109F181632050027E5BF /* Reachability.m */; };
 		05BB6B43180E1802000B2FD3 /* NIAUSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05BB6B42180E1802000B2FD3 /* NIAUSearchViewController.m */; };
 		05BC3CEB18BE6EFC00769F81 /* new-internationalist-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 05BC3CE918BE6EFC00769F81 /* new-internationalist-logo.png */; };
@@ -220,6 +225,11 @@
 		059EF8F8187E13220079FA88 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
 		059FFC9E185026F100422824 /* NIAUCategoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NIAUCategoryViewController.h; sourceTree = "<group>"; };
 		059FFC9F185026F100422824 /* NIAUCategoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NIAUCategoryViewController.m; sourceTree = "<group>"; };
+		05B0982E19BFD88C0072A88C /* 180.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 180.png; sourceTree = "<group>"; };
+		05B0983019BFD8B20072A88C /* 87.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 87.png; sourceTree = "<group>"; };
+		05B0983219BFDBFF0072A88C /* Default-750x1334@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-750x1334@2x.png"; sourceTree = "<group>"; };
+		05B0983419BFDC7F0072A88C /* Default-1242x2208@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-1242x2208@3x.png"; sourceTree = "<group>"; };
+		05B0983619BFDCCF0072A88C /* Default-1242x2208-landscape@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-1242x2208-landscape@3x.png"; sourceTree = "<group>"; };
 		05B9109E181632050027E5BF /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		05B9109F181632050027E5BF /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		05BB6B41180E1802000B2FD3 /* NIAUSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NIAUSearchViewController.h; sourceTree = "<group>"; };
@@ -496,6 +506,11 @@
 		055A8F011772C70F003D9407 /* Icons */ = {
 			isa = PBXGroup;
 			children = (
+				05B0983619BFDCCF0072A88C /* Default-1242x2208-landscape@3x.png */,
+				05B0983419BFDC7F0072A88C /* Default-1242x2208@3x.png */,
+				05B0983219BFDBFF0072A88C /* Default-750x1334@2x.png */,
+				05B0983019BFD8B20072A88C /* 87.png */,
+				05B0982E19BFD88C0072A88C /* 180.png */,
 				055A8F0B1772CF67003D9407 /* iPad-landscape.png */,
 				055A8F0C1772CF67003D9407 /* iPad-landscape@2x.png */,
 				055A8F0D1772CF67003D9407 /* iPad-portrait.png */,
@@ -644,6 +659,7 @@
 				052E32B518E1FBAC00A1906E /* fontawesome-webfont.woff in Resources */,
 				052A84F917C5E12900D36E6C /* iPad-landscape@2x.png in Resources */,
 				052A850A17C5E13900D36E6C /* 152.png in Resources */,
+				05B0982F19BFD88C0072A88C /* 180.png in Resources */,
 				0528EC3C17853C1F000175AB /* default_article_image.png in Resources */,
 				05C29EFE188736B1004FC28D /* new-issue.caf in Resources */,
 				05BC3CEC18BE6EFC00769F81 /* new-internationalist-logo@2x.png in Resources */,
@@ -657,7 +673,9 @@
 				051FB64618AC15BF00FA734C /* UIWebViewBack@2x.png in Resources */,
 				052A850217C5E13900D36E6C /* 58.png in Resources */,
 				051FB64718AC15BF00FA734C /* UIWebViewNext.png in Resources */,
+				05B0983319BFDBFF0072A88C /* Default-750x1334@2x.png in Resources */,
 				052A850717C5E13900D36E6C /* 114.png in Resources */,
+				05B0983719BFDCCF0072A88C /* Default-1242x2208-landscape@3x.png in Resources */,
 				052BBF8C17EFF6E100B12071 /* home-background@2x.png in Resources */,
 				052A850017C5E13900D36E6C /* 50.png in Resources */,
 				0528EC3717850989000175AB /* default_editors_photo.png in Resources */,
@@ -672,6 +690,7 @@
 				052A84FB17C5E13900D36E6C /* iPad-portrait@2x.png in Resources */,
 				052A850917C5E13900D36E6C /* 144.png in Resources */,
 				052A850517C5E13900D36E6C /* 80.png in Resources */,
+				05B0983519BFDC7F0072A88C /* Default-1242x2208@3x.png in Resources */,
 				0571759218C64A370075A604 /* Settings.bundle in Resources */,
 				052A84FF17C5E13900D36E6C /* 40.png in Resources */,
 				0528EC3F17853C1F000175AB /* default_featured_image@2x.png in Resources */,
@@ -696,6 +715,7 @@
 				05D55E9A19745E2100C5B913 /* GTM-W4P6WH in Resources */,
 				05BC3CEB18BE6EFC00769F81 /* new-internationalist-logo.png in Resources */,
 				052A850817C5E13900D36E6C /* 120.png in Resources */,
+				05B0983119BFD8B20072A88C /* 87.png in Resources */,
 				052A84F817C5E12700D36E6C /* iPad-landscape.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
