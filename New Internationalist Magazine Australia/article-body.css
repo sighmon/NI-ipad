@@ -395,7 +395,7 @@ ul.ui-autocomplete li a:active {
 /* iPhone size styling */
 /***********************/
 
-@media (max-width: 767px) {
+@media (max-width: 569px) {
     body {
         /* margin: 0 20px 0 20px; */
     }
@@ -403,6 +403,7 @@ ul.ui-autocomplete li a:active {
         width: 100%;
         position: relative;
         margin: 1em 0px 1em 0px;
+        max-width: 100%;
     }
     .article-image img, .article-image-full img, .article-image-cartoon img {
         width: 100%;
@@ -446,6 +447,7 @@ ul.ui-autocomplete li a:active {
         width: 100%;
         position: relative;
         margin: 1em 0px 1.5em 0em;
+        max-width: 340px;
     }
     .article-image img, .article-image-full img, .article-image-cartoon img {
         width: 100%;
@@ -475,7 +477,7 @@ ul.ui-autocomplete li a:active {
     }
 }
 
-@media (min-width: 768px) and (max-width: 1024px) {
+@media (min-width: 569px) and (max-width: 1024px) {
     body {
         /* margin: 0 25px 0 25px; */
     }

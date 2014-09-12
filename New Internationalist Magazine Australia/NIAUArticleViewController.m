@@ -261,6 +261,9 @@ NSString *ArticleDidRefreshNotification = @"ArticleDidRefresh";
                                                                              error:nil];
     }
     
+    // Autolayout magic to set it to the right width
+    self.teaserLabel.preferredMaxLayoutWidth = self.scrollView.frame.size.width;
+    
     // Format the date
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"GMT"]];
