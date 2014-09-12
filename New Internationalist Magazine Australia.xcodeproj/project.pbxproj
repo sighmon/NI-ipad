@@ -44,7 +44,6 @@
 		052A850517C5E13900D36E6C /* 80.png in Resources */ = {isa = PBXBuildFile; fileRef = 05FA184D17A8B83200E023A0 /* 80.png */; };
 		052A850617C5E13900D36E6C /* 100.png in Resources */ = {isa = PBXBuildFile; fileRef = 055A8F061772C72F003D9407 /* 100.png */; };
 		052A850717C5E13900D36E6C /* 114.png in Resources */ = {isa = PBXBuildFile; fileRef = 05FA185417A8B98000E023A0 /* 114.png */; };
-		052A850817C5E13900D36E6C /* 120.png in Resources */ = {isa = PBXBuildFile; fileRef = 055A8F071772C72F003D9407 /* 120.png */; };
 		052A850917C5E13900D36E6C /* 144.png in Resources */ = {isa = PBXBuildFile; fileRef = 055A8F081772C72F003D9407 /* 144.png */; };
 		052A850A17C5E13900D36E6C /* 152.png in Resources */ = {isa = PBXBuildFile; fileRef = 05FA185217A8B90000E023A0 /* 152.png */; };
 		052BBF8717EFF31D00B12071 /* cover-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 052BBF8517EFF31D00B12071 /* cover-icon.png */; };
@@ -108,6 +107,7 @@
 		05CAF9E218E9FBC0000BE0BF /* loading_image@2x.gif in Resources */ = {isa = PBXBuildFile; fileRef = 05CAF9E018E9FBC0000BE0BF /* loading_image@2x.gif */; };
 		05D55E9A19745E2100C5B913 /* GTM-W4P6WH in Resources */ = {isa = PBXBuildFile; fileRef = 05D55E9819745E2100C5B913 /* GTM-W4P6WH */; };
 		05D55E9B19745E2100C5B913 /* GTM-W4P6WH.plist in Resources */ = {isa = PBXBuildFile; fileRef = 05D55E9919745E2100C5B913 /* GTM-W4P6WH.plist */; };
+		05E7839B19C3514E0003D34D /* 120.png in Resources */ = {isa = PBXBuildFile; fileRef = 055A8F071772C72F003D9407 /* 120.png */; };
 		05F856CF1864C67E001D1A75 /* NIAUArticleCategoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 05F856CE1864C67E001D1A75 /* NIAUArticleCategoryCell.m */; };
 		3CA1C435E64C4F6F866B2E9B /* libPods-New Internationalist Magazine Australia.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BC803423D2F743538C4A77A9 /* libPods-New Internationalist Magazine Australia.a */; };
 		52090A62178CF7D1002D5162 /* NIAUPublisher.m in Sources */ = {isa = PBXBuildFile; fileRef = 52090A61178CF7D1002D5162 /* NIAUPublisher.m */; };
@@ -706,6 +706,7 @@
 				0511F13B17BB1E25004B5A72 /* article-body.css in Resources */,
 				05CAF9E218E9FBC0000BE0BF /* loading_image@2x.gif in Resources */,
 				051DD2A018F5F2A8000A1CEA /* ni-logo-grey.png in Resources */,
+				05E7839B19C3514E0003D34D /* 120.png in Resources */,
 				052A84FD17C5E13900D36E6C /* Default@2x.png in Resources */,
 				052BBF8717EFF31D00B12071 /* cover-icon.png in Resources */,
 				0528EC3E17853C1F000175AB /* default_featured_image.png in Resources */,
@@ -714,7 +715,6 @@
 				052A84FA17C5E12D00D36E6C /* iPad-portrait.png in Resources */,
 				05D55E9A19745E2100C5B913 /* GTM-W4P6WH in Resources */,
 				05BC3CEB18BE6EFC00769F81 /* new-internationalist-logo.png in Resources */,
-				052A850817C5E13900D36E6C /* 120.png in Resources */,
 				05B0983119BFD8B20072A88C /* 87.png in Resources */,
 				052A84F817C5E12700D36E6C /* iPad-landscape.png in Resources */,
 			);
