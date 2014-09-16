@@ -234,10 +234,19 @@
                                                           error:&error];
         }
         if ([[NIAUPublisher getInstance] numberOfIssues] < tmpIssues.count) {
-            // A new issue is available, so force reload
+            // Check if there's a brand new issue or just a new back issue
+            if (self.issue.railsID != [tmpIssues.firstObject objectForKey:@"id"]) {
+                self.showNewIssueBanner = true;
+            };
+            
+            // An extra issue is available, so force reload
             [[NIAUPublisher getInstance] forceDownloadIssues];
             [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshViewNotification" object:nil];
-            self.showNewIssueBanner = true;
+            
+        } else if ([[NIAUPublisher getInstance] numberOfIssues] > tmpIssues.count) {
+            // An issue has been un-published
+            // TODO: remove issue from device..?
+            
         } else {
             // No issues to load
             
