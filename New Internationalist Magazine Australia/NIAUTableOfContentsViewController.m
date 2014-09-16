@@ -302,7 +302,9 @@ static NSString *CellIdentifier = @"articleCell";
                                                                               NSCharacterEncodingDocumentAttribute: [NSNumber numberWithInt:NSUTF8StringEncoding]}
                                                          documentAttributes:nil
                                                                       error:nil];
-    articleTeaser.preferredMaxLayoutWidth = cell.frame.size.width;
+    // This call doesn't work for iPhone 4S.
+    // Tries to fix the extra space in the UITableView under the teaser.
+//    articleTeaser.preferredMaxLayoutWidth = cell.frame.size.width;
 }
 
 - (void)setupCell: (UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
