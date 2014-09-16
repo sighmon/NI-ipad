@@ -66,6 +66,13 @@
     return [userDefaults objectForKey:@"recentlyReadArticles"];
 }
 
+- (void)syncRecentlyReadArticlesToUserDefaults: (NSArray *)recentlyReadArticles
+{
+    NSUserDefaults *userDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.au.com.newint.New-Internationalist-Magazine-Australia"];
+    [userDefaults setObject:recentlyReadArticles forKey:@"recentlyReadArticles"];
+    [userDefaults synchronize];
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -85,10 +92,29 @@
     }
 }
 
+// Editing doesn't make sense here. Swiping right takes you to notifications.
+
 //- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 //{
 //    tableView.sectionIndexBackgroundColor = [UIColor clearColor];
 //    return @"Recently read articles";
+//}
+
+//- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    return YES;
+//}
+//
+//// Override to support editing the table view.
+//- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    if (editingStyle == UITableViewCellEditingStyleDelete) {
+//        //add code here for when you hit delete
+//        NSMutableArray *recentlyReadArticles = [[NSMutableArray alloc] initWithArray:[self getRecentlyReadArticlesFromUserDefaults]];
+//        [recentlyReadArticles removeObjectAtIndex:indexPath.row];
+//        [self syncRecentlyReadArticlesToUserDefaults:recentlyReadArticles];
+//        [tableView reloadData];
+//    }
 //}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -113,11 +139,13 @@
     if (articleTapped && articleTapped.count > 0) {
         // open the app to the article tapped
         [self.extensionContext openURL:[NSURL URLWithString:[NSString stringWithFormat:@"newint://issues/%@/articles/%@", [articleTapped objectForKey:@"issueRailsID"],[articleTapped objectForKey:@"railsID"]]] completionHandler:^(BOOL success) {
-            NSLog(@"Success? %d", success);
+            // open the article
+            [tableView deselectRowAtIndexPath:indexPath animated:YES];
         }];
     } else {
         [self.extensionContext openURL:[NSURL URLWithString:[NSString stringWithFormat:@"newint://"]] completionHandler:^(BOOL success) {
             // Just opening the app to the default view.
+            [tableView deselectRowAtIndexPath:indexPath animated:YES];
         }];
     }
 }
