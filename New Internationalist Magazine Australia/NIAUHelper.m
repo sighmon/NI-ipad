@@ -245,4 +245,14 @@ NSString *kAlertTitle = @"Did you know?";
     }
 }
 
++ (void)updateSharedUserDefaults
+{
+    NSUserDefaults *groupUserDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.au.com.newint.New-Internationalist-Magazine-Australia"];
+    NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
+    [groupUserDefaults setBool:[standardUserDefaults boolForKey:@"showHelp"] forKey:@"showHelp"];
+    [groupUserDefaults setBool:[standardUserDefaults boolForKey:@"googleAnalytics"] forKey:@"googleAnalytics"];
+    [groupUserDefaults setBool:[standardUserDefaults boolForKey:@"bigImages"] forKey:@"bigImages"];
+    [groupUserDefaults synchronize];
+}
+
 @end

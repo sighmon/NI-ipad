@@ -88,6 +88,9 @@ NSString *ArticleDidRefreshNotification = @"ArticleDidRefresh";
     [self.view addGestureRecognizer:twoFingerSwipe];
 
     [self sendGoogleAnalyticsStats];
+    
+    // Add article to recently read list
+    [self addArticleToRecentlyReadArticles];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -120,6 +123,40 @@ NSString *ArticleDidRefreshNotification = @"ArticleDidRefresh";
     // Send the screen view.
     [[GAI sharedInstance].defaultTracker
      send:[[GAIDictionaryBuilder createAppView] build]];
+}
+
+- (void)addArticleToRecentlyReadArticles
+{
+    NSUserDefaults *userDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.au.com.newint.New-Internationalist-Magazine-Australia"];
+    NSMutableArray *recentlyReadArticles = [[NSMutableArray alloc] initWithArray:[userDefaults objectForKey:@"recentlyReadArticles"]];
+    
+    NSMutableArray *reversedRecentlyReadArticles = [[NSMutableArray alloc] initWithArray:[[recentlyReadArticles reverseObjectEnumerator] allObjects]];
+    
+    // Check to see if it's in the list already
+    NSArray *filtered = [reversedRecentlyReadArticles filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"title = %@", self.article.title]];
+    if ([filtered count] < 1) {
+        // Create a dictionary with the title, railsID and issueRailsID.
+        NSMutableDictionary *articleToAdd = [[NSMutableDictionary alloc] init];
+        [articleToAdd setObject:self.article.title forKey:@"title"];
+        [articleToAdd setObject:self.article.railsID forKey:@"railsID"];
+        [articleToAdd setObject:self.article.issue.railsID forKey:@"issueRailsID"];
+        
+        // Add it to the array.
+        [reversedRecentlyReadArticles addObject:articleToAdd];
+        
+        // If the list is bigger than 5, remove the first.
+        if (reversedRecentlyReadArticles.count > 5) {
+            [reversedRecentlyReadArticles removeObjectAtIndex:0];
+        }
+        
+        // Reverse the order once again.
+        [recentlyReadArticles removeAllObjects];
+        [recentlyReadArticles addObjectsFromArray:[[reversedRecentlyReadArticles reverseObjectEnumerator] allObjects]];
+        
+        // Sync the articles back again.
+        [userDefaults setObject:recentlyReadArticles forKey:@"recentlyReadArticles"];
+        [userDefaults synchronize];
+    }
 }
 
 - (void)articleBodyLoaded:(NSNotification *)notification

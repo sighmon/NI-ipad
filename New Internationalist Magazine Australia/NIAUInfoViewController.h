@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "NIAUWebsiteViewController.h"
+#import "NIAUHelper.h"
 
 #import "GAI.h"
 #import "GAITracker.h"

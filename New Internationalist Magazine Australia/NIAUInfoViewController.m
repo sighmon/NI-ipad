@@ -129,6 +129,7 @@
         }
     }
     [userDefaults synchronize];
+    [NIAUHelper updateSharedUserDefaults];
 }
 
 - (void)didReceiveMemoryWarning

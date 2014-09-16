@@ -31,4 +31,6 @@
 
 + (NSString *)URLEncodedString:(NSString *)string;
 
++ (void)updateSharedUserDefaults;
+
 @end

@@ -68,6 +68,9 @@ const char NotificationKey;
      UIRemoteNotificationTypeSound|
      UIRemoteNotificationTypeNewsstandContentAvailability];
     
+    // Get User Defaults.
+    NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
+    
     // Remove this for launch - allows multiple NewsStand notifications. :-)
 //    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"NKDontThrottleNewsstandContentNotifications"];
     
@@ -100,21 +103,19 @@ const char NotificationKey;
     NSLog(@"Google Analytics tracker initialized: %@", tracker);
     
     // If user hasn't set a default, set it to TRUE
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"googleAnalytics"] == nil) {
-        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-        [userDefaults setBool:TRUE forKey:@"googleAnalytics"];
-        [userDefaults synchronize];
-    } else if ([[NSUserDefaults standardUserDefaults] boolForKey:@"googleAnalytics"] == 0) {
+    if ([standardUserDefaults objectForKey:@"googleAnalytics"] == nil) {
+        [standardUserDefaults setBool:TRUE forKey:@"googleAnalytics"];
+        [standardUserDefaults synchronize];
+    } else if ([standardUserDefaults boolForKey:@"googleAnalytics"] == 0) {
         // User has asked to opt-out of Google Analytics
         [[GAI sharedInstance] setOptOut:YES];
     }
     
     // For first run, set show help to TRUE
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"showHelp"] == nil) {
-        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-        [userDefaults setBool:TRUE forKey:@"showHelp"];
-        [userDefaults synchronize];
-    } else if ([[NSUserDefaults standardUserDefaults] boolForKey:@"showHelp"] == 0) {
+    if ([standardUserDefaults objectForKey:@"showHelp"] == nil) {
+        [standardUserDefaults setBool:TRUE forKey:@"showHelp"];
+        [standardUserDefaults synchronize];
+    } else if ([standardUserDefaults boolForKey:@"showHelp"] == 0) {
         // User has asked not to display help anymore.
         NSLog(@"Help disabled (at app delegate).");
     }
@@ -145,18 +146,20 @@ const char NotificationKey;
     // Other methods calls that use this container.
     
     // For first run, set Big Images to TRUE
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"bigImages"] == nil) {
-        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-        [userDefaults setBool:TRUE forKey:@"bigImages"];
-        [userDefaults synchronize];
+    if ([standardUserDefaults objectForKey:@"bigImages"] == nil) {
+        [standardUserDefaults setBool:TRUE forKey:@"bigImages"];
+        [standardUserDefaults synchronize];
     }
     
     // Crashlytics - only load if user hasn't opted out of analytics
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"googleAnalytics"] == 1) {
+    if ([standardUserDefaults boolForKey:@"googleAnalytics"] == 1) {
         // Okay to load Crashlytics
         [Crashlytics startWithAPIKey:CRASHLYTICS_API_KEY];
     }
-        
+    
+    // Update sharedUserDefaults
+    [NIAUHelper updateSharedUserDefaults];
+    
     // Override point for customization after application launch.
     return YES;
 }
