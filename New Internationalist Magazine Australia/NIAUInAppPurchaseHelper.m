@@ -524,7 +524,7 @@ NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurcha
         }
         else {
             // Got a response from Rails, display it.
-            NSLog(@"JSON: %@", jsonDictionary);
+//            NSLog(@"JSON: %@", jsonDictionary);
             if ([jsonDictionary objectForKey:@"zipURL"] != [NSNull null]) {
                 // return URL
                 return [jsonDictionary objectForKey:@"zipURL"];

@@ -9,6 +9,8 @@
 #import "TodayViewController.h"
 #import <NotificationCenter/NotificationCenter.h>
 
+static NSString *cellIdentifier = @"extensionCell";
+
 @interface TodayViewController () <NCWidgetProviding>
 
 @end
@@ -28,10 +30,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    [self updateReadingList];
     
-    // Call this to fit to size of articleTableView.
-    [self setPreferredContentSize:self.articleTableView.frame.size];
+    // This will remove extra separators from tableview
+    self.articleTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -58,6 +59,11 @@
 - (void)updateReadingList
 {
     [self.articleTableView reloadData];
+    
+//    NSLog(@"\nTableView height: %f\nView height: %f", self.articleTableView.frame.size.height, self.view.frame.size.height);
+    
+    // Set height to tableview height
+    self.preferredContentSize = self.articleTableView.contentSize;
 }
 
 - (NSArray *)getRecentlyReadArticlesFromUserDefaults
@@ -92,45 +98,63 @@
     }
 }
 
-// Editing doesn't make sense here. Swiping right takes you to notifications.
-
-//- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
-//{
-//    tableView.sectionIndexBackgroundColor = [UIColor clearColor];
-//    return @"Recently read articles";
-//}
-
-//- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    return YES;
-//}
-//
-//// Override to support editing the table view.
-//- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    if (editingStyle == UITableViewCellEditingStyleDelete) {
-//        //add code here for when you hit delete
-//        NSMutableArray *recentlyReadArticles = [[NSMutableArray alloc] initWithArray:[self getRecentlyReadArticlesFromUserDefaults]];
-//        [recentlyReadArticles removeObjectAtIndex:indexPath.row];
-//        [self syncRecentlyReadArticlesToUserDefaults:recentlyReadArticles];
-//        [tableView reloadData];
-//    }
-//}
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"extensionCell" forIndexPath:indexPath];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
     
     // Load the recently read articles from user defaults
+    [self configureCell:cell atIndexPath:indexPath];
+    
+    return cell;
+}
+
+//- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    return 44.0 + 5.0;
+//}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static UITableViewCell *sizingCell = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sizingCell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    });
+    
+    [self configureCell:sizingCell atIndexPath:indexPath];
+    return [self calculateHeightForConfiguredSizingCell:sizingCell];
+}
+
+- (CGFloat)calculateHeightForConfiguredSizingCell:(UITableViewCell *)sizingCell
+{
+    // Auto-layout method didn't work. Boo hiss.
+//    [sizingCell setNeedsLayout];
+//    [sizingCell layoutIfNeeded];
+//    
+//    CGSize size = [sizingCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
+    
+    CGSize maxSize = CGSizeMake(sizingCell.textLabel.frame.size.width, MAXFLOAT);
+    
+    CGRect labelRect = [sizingCell.textLabel.text boundingRectWithSize:maxSize options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:sizingCell.textLabel.font} context:nil];
+    
+//    NSLog(@"Label size %@", NSStringFromCGSize(labelRect.size));
+    
+    CGFloat padding = 22.0;
+    
+    return ceil(labelRect.size.height + padding);
+}
+
+- (void)configureCell: (UITableViewCell *)cell atIndexPath: (NSIndexPath *)indexPath
+{
     NSArray *recentlyReadArticles = [self getRecentlyReadArticlesFromUserDefaults];
     if (recentlyReadArticles && recentlyReadArticles.count > 0) {
         cell.textLabel.text = [[recentlyReadArticles objectAtIndex:indexPath.row] objectForKey:@"title"];
     } else {
         cell.textLabel.text = @"No recently read articles.";
     }
-    
-    return cell;
 }
+
+#pragma mark - UITableView did select
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -140,12 +164,10 @@
         // open the app to the article tapped
         [self.extensionContext openURL:[NSURL URLWithString:[NSString stringWithFormat:@"newint://issues/%@/articles/%@", [articleTapped objectForKey:@"issueRailsID"],[articleTapped objectForKey:@"railsID"]]] completionHandler:^(BOOL success) {
             // open the article
-            [tableView deselectRowAtIndexPath:indexPath animated:YES];
         }];
     } else {
         [self.extensionContext openURL:[NSURL URLWithString:[NSString stringWithFormat:@"newint://"]] completionHandler:^(BOOL success) {
             // Just opening the app to the default view.
-            [tableView deselectRowAtIndexPath:indexPath animated:YES];
         }];
     }
 }

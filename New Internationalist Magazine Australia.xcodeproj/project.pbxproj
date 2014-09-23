@@ -1278,6 +1278,7 @@
 				058E564F19C7424800D6AF66 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
