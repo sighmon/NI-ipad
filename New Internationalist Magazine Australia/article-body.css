@@ -300,6 +300,28 @@ blockquote.pull-left {
     margin: 1.5em 0 1.5em 0;
     border-radius: 0px;
 }
+.factbox {
+    background-color: #e4e1df;
+    padding: 1em 0;
+    margin: 1.5em 0 1.5em 0;
+    border-radius: 0px;
+    width: 30%;
+    margin: 0;
+}
+.factbox p {
+    margin-bottom: 0;
+}
+.factbox p + p {
+    margin-top: 1em;
+}
+.factbox.pull-left {
+    margin-right: 1.5em;
+    margin-bottom: 1em
+}
+.factbox.pull-right {
+    margin-left: 1.5em;
+    margin-bottom: 1em;
+}
 .author-note {
     font-size: 0.9em;
     color: #555555;
@@ -394,6 +416,21 @@ ul.ui-autocomplete li a:active {
 /***********************/
 /* iPhone size styling */
 /***********************/
+
+@media (max-width: 360px) {
+    .factbox {
+        width: inherit;
+        margin: inherit;
+        margin-bottom: 1em;
+        padding: 1em;
+    }
+    .factbox.pull-left {
+        margin-right: inherit;
+    }
+    .factbox.pull-right {
+        margin-left: inherit;
+    }
+}
 
 @media (max-width: 569px) {
     body {
