@@ -107,6 +107,8 @@ NSString *ArticleDidRefreshNotification = @"ArticleDidRefresh";
     if (self.alertView) {
         [self.alertView setDelegate:nil];
     }
+    // Avoiding crash where user manages to tap to an article before the screen has finished scrolling
+    [self.scrollView setDelegate:nil];
 }
 
 - (void)viewDidDisappear:(BOOL)animated

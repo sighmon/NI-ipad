@@ -63,6 +63,9 @@
 - (void)viewDidDisappear:(BOOL)animated
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIContentSizeCategoryDidChangeNotification object:nil];
+    
+    // Avoiding crash where user manages to tap to an article before the screen has finished scrolling
+    [self.scrollView setDelegate:nil];
 }
 
 - (void)sendGoogleAnalyticsStats
