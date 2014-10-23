@@ -63,10 +63,21 @@ const char NotificationKey;
     }
     
     // Setup app to receive UIRemoteNotifications
-    [application registerForRemoteNotificationTypes:UIRemoteNotificationTypeBadge|
-     UIRemoteNotificationTypeAlert|
-     UIRemoteNotificationTypeSound|
-     UIRemoteNotificationTypeNewsstandContentAvailability];
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0")) {
+        UIUserNotificationSettings *settings =
+        [UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert |
+         UIUserNotificationTypeBadge |
+         UIUserNotificationTypeSound
+                                          categories:nil];
+        [application registerUserNotificationSettings:settings];
+        [application registerForRemoteNotifications];
+    } else {
+        // iOS 7.x
+        [application registerForRemoteNotificationTypes:UIRemoteNotificationTypeBadge|
+         UIRemoteNotificationTypeAlert|
+         UIRemoteNotificationTypeSound|
+         UIRemoteNotificationTypeNewsstandContentAvailability];
+    }
     
     // Get User Defaults.
     NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
