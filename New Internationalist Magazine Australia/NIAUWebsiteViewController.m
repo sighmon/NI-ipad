@@ -101,6 +101,12 @@
     UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:itemsToShare applicationActivities:nil];
     [activityController setValue:[NSString stringWithFormat:@"Link from New Internationalist"] forKey:@"subject"];
     [[UINavigationBar appearance] setTintColor:self.view.tintColor];
+    
+    // Avoid the iOS 8 iPad crash
+    if (IS_IPAD() && SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0")) {
+        activityController.popoverPresentationController.barButtonItem = sender;
+    };
+    
     [self presentViewController:activityController animated:YES completion:nil];
 
 }

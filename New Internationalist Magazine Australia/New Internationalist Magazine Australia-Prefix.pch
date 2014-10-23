@@ -36,3 +36,6 @@
 #define IS_IPHONE6PLUS() ([[UIScreen mainScreen] nativeScale] == 3)
 #define IS_IPHONE5() ([[UIScreen mainScreen] bounds].size.height == 568)
 #define IS_IPHONE4S_OR_LOWER() ([[UIScreen mainScreen] bounds].size.height < 568)
+
+// Test if OS version number is v
+#define SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)

@@ -593,6 +593,11 @@ NSString *ArticleDidRefreshNotification = @"ArticleDidRefresh";
     UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:itemsToShare applicationActivities:nil];
     [activityController setValue:[NSString stringWithFormat:@"%@", self.article.title] forKey:@"subject"];
     
+    // Avoid the iOS 8 iPad crash
+    if (IS_IPAD() && SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0")) {
+        activityController.popoverPresentationController.barButtonItem = sender;
+    };
+    
     // HACK: to fix UIActivityViewController bar button tintColor
     [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil] setTintColor:self.view.tintColor];
     [[UINavigationBar appearance] setTintColor:self.view.tintColor];
