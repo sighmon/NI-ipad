@@ -97,7 +97,11 @@ static NSString *CellIdentifier = @"articleCell";
     // Progress view for zip download
     [self.progressView setHidden:YES];
     
-    [self sendGoogleAnalyticsStats];
+    // Check if user is okay with sending analytics
+    NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
+    if ([standardUserDefaults boolForKey:@"googleAnalytics"] == 1) {
+        [self sendGoogleAnalyticsStats];
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated

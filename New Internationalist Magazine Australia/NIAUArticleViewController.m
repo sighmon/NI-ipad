@@ -87,7 +87,11 @@ NSString *ArticleDidRefreshNotification = @"ArticleDidRefresh";
     
     [self.view addGestureRecognizer:twoFingerSwipe];
 
-    [self sendGoogleAnalyticsStats];
+    // Check if user is okay with sending analytics
+    NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
+    if ([standardUserDefaults boolForKey:@"googleAnalytics"] == 1) {
+        [self sendGoogleAnalyticsStats];
+    }
     
     // Add article to recently read list
     [self addArticleToRecentlyReadArticles];

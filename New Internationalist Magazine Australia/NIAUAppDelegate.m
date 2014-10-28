@@ -34,6 +34,9 @@ const char NotificationKey;
 
 #import <Crashlytics/Crashlytics.h>
 
+@interface NIAUAppDelegate () <TAGContainerOpenerNotifier>
+@end
+
 @implementation NIAUAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -131,30 +134,30 @@ const char NotificationKey;
         NSLog(@"Help disabled (at app delegate).");
     }
     
-    // Google Tag Manager
-    self.tagManager = [TAGManager instance];
-    
-    // Optional: Change the LogLevel to Verbose to enable logging at VERBOSE and higher levels.
-    [self.tagManager.logger setLogLevel:kTAGLoggerLogLevelVerbose];
-    
-    /*
-     * Opens a container and returns a TAGContainerFuture.
-     *
-     * @param containerId The ID of the container to load.
-     * @param tagManager The TAGManager instance for getting the container.
-     * @param openType The choice of how to open the container.
-     * @param timeout The timeout period (default is 2.0 seconds).
-     */
-    id future =
-    [TAGContainerOpener openContainerWithId:GOOGLE_TAG_MANAGER_ID
-                                 tagManager:self.tagManager
-                                   openType:kTAGOpenTypePreferNonDefault
-                                    timeout:nil];
-    
-    // Method calls that don't need the container.
-    
-    self.container = [future get];
-    // Other methods calls that use this container.
+    // If user says analytics are okay, load Google Tag Manager
+    if ([standardUserDefaults boolForKey:@"googleAnalytics"] == 1) {
+
+        // Google Tag Manager
+        self.tagManager = [TAGManager instance];
+        
+        // Optional: Change the LogLevel to Verbose to enable logging at VERBOSE and higher levels.
+        [self.tagManager.logger setLogLevel:kTAGLoggerLogLevelVerbose];
+        
+        /*
+         * Opens a container.
+         *
+         * @param containerId The ID of the container to load.
+         * @param tagManager The TAGManager instance for getting the container.
+         * @param openType The choice of how to open the container.
+         * @param timeout The timeout period (default is 2.0 seconds).
+         * @param notifier The notifier to inform on container load events.
+         */
+        [TAGContainerOpener openContainerWithId:GOOGLE_TAG_MANAGER_ID
+                                     tagManager:self.tagManager
+                                       openType:kTAGOpenTypePreferFresh
+                                        timeout:nil
+                                       notifier:self];
+    }
     
     // For first run, set Big Images to TRUE
     if ([standardUserDefaults objectForKey:@"bigImages"] == nil) {
@@ -173,6 +176,15 @@ const char NotificationKey;
     
     // Override point for customization after application launch.
     return YES;
+}
+
+// TAGContainerOpenerNotifier callback.
+- (void)containerAvailable:(TAGContainer *)container {
+    // Note that containerAvailable may be called on any thread, so you may need to dispatch back to
+    // your main thread.
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.container = container;
+    });
 }
 
 #pragma mark - URL open handling
