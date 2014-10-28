@@ -1,0 +1,150 @@
+
+/* Class = "IBUIButton"; normalTitle = "Buy a subscription"; ObjectID = "0Zf-hj-av1"; */
+"0Zf-hj-av1.normalTitle" = "Buy a subscription";
+
+/* Class = "IBUILabel"; text = "Number - Date"; ObjectID = "2Jy-dG-VkX"; */
+"2Jy-dG-VkX.text" = "Number - Date";
+
+/* Class = "IBUINavigationItem"; title = "Subscribe"; ObjectID = "2OE-cQ-LrY"; */
+"2OE-cQ-LrY.title" = "Subscribe";
+
+/* Class = "IBUIBarButtonItem"; title = "Home"; ObjectID = "2W3-e3-N8n"; */
+"2W3-e3-N8n.title" = "Home";
+
+/* Class = "IBUILabel"; text = "Article title"; ObjectID = "3rd-Mv-6v7"; */
+"3rd-Mv-6v7.text" = "Article title";
+
+/* Class = "IBUILabel"; text = "Subtitle"; ObjectID = "3s8-UT-vf0"; */
+"3s8-UT-vf0.text" = "Subtitle";
+
+/* Class = "IBUIButton"; normalTitle = "Subscribe"; ObjectID = "4cE-wm-UVR"; */
+"4cE-wm-UVR.normalTitle" = "Subscribe";
+
+/* Class = "IBUILabel"; text = "Articles in this month's issue"; ObjectID = "5AU-Kw-elj"; */
+"5AU-Kw-elj.text" = "Articles in this month's issue";
+
+/* Class = "IBUINavigationItem"; title = "Category"; ObjectID = "7Bh-rz-szg"; */
+"7Bh-rz-szg.title" = "Category";
+
+/* Class = "IBUINavigationItem"; title = "New Internationalist"; ObjectID = "7ZE-IO-8Wi"; */
+"7ZE-IO-8Wi.title" = "New Internationalist";
+
+/* Class = "IBUIBarButtonItem"; title = "Back"; ObjectID = "7vf-xN-ODd"; */
+"7vf-xN-ODd.title" = "Back";
+
+/* Class = "IBUITextField"; placeholder = "Password"; ObjectID = "BaC-Z4-nI3"; */
+"BaC-Z4-nI3.placeholder" = "Surname";
+
+/* Class = "IBUITextView"; text = "Version"; ObjectID = "Cnn-pX-Pxx"; */
+"Cnn-pX-Pxx.text" = "Version";
+
+/* Class = "IBUIBarButtonItem"; title = "Contents"; ObjectID = "DAA-Mb-c6c"; */
+"DAA-Mb-c6c.title" = "Contents";
+
+/* Class = "IBUISearchBar"; placeholder = "Search"; ObjectID = "FRS-tB-5HO"; */
+"FRS-tB-5HO.placeholder" = "Search";
+
+/* Class = "IBUILabel"; text = "Article title"; ObjectID = "GVh-7U-naF"; */
+"GVh-7U-naF.text" = "Article title";
+
+/* Class = "IBUITextField"; placeholder = "Username or email"; ObjectID = "Go6-h8-59V"; */
+"Go6-h8-59V.placeholder" = "Subscription number";
+
+/* Class = "IBUILabel"; text = "Article teaser"; ObjectID = "H3o-ox-YMu"; */
+"H3o-ox-YMu.text" = "Article teaser";
+
+/* Class = "IBUILabel"; text = "Category"; ObjectID = "OYH-K4-yX1"; */
+"OYH-K4-yX1.text" = "Category";
+
+/* Class = "IBUIButton"; normalTitle = "Login"; ObjectID = "QGH-kd-WQM"; */
+"QGH-kd-WQM.normalTitle" = "Login";
+
+/* Class = "IBUIButton"; normalTitle = "Restore purchases"; ObjectID = "T52-zg-wDj"; */
+"T52-zg-wDj.normalTitle" = "Restore purchases";
+
+/* Class = "IBUILabel"; text = "Yearly or quarterly subscriptions"; ObjectID = "U22-g9-5nb"; */
+"U22-g9-5nb.text" = "Yearly or quarterly subscriptions";
+
+/* Class = "IBUINavigationItem"; title = "Article search"; ObjectID = "Uwv-6n-EvK"; */
+"Uwv-6n-EvK.title" = "Article search";
+
+/* Class = "IBUILabel"; text = "Subtitle"; ObjectID = "XJC-wC-CwL"; */
+"XJC-wC-CwL.text" = "Subtitle";
+
+/* Class = "IBUILabel"; text = "New"; ObjectID = "bjh-9n-PLY"; */
+"bjh-9n-PLY.text" = "New";
+
+/* Class = "IBUITableViewController"; title = "Subscribe"; ObjectID = "d0z-vn-J25"; */
+"d0z-vn-J25.title" = "Subscribe";
+
+/* Class = "IBUILabel"; text = "Label"; ObjectID = "ecg-bt-6QH"; */
+"ecg-bt-6QH.text" = "Label";
+
+/* Class = "IBUITextView"; text = "This is some sample text for the editor's letter. "; ObjectID = "ewB-NK-0ve"; */
+"ewB-NK-0ve.text" = "This is some sample text for the editor's letter. ";
+
+/* Class = "IBUIBarButtonItem"; title = "Search"; ObjectID = "ewH-Un-tJv"; */
+"ewH-Un-tJv.title" = "Search";
+
+/* Class = "IBUIButton"; normalTitle = "Article date"; ObjectID = "fnW-iq-T6B"; */
+"fnW-iq-T6B.normalTitle" = "Article date";
+
+/* Class = "IBUILabel"; text = "Title"; ObjectID = "gfD-ya-ZQ0"; */
+"gfD-ya-ZQ0.text" = "Title";
+
+/* Class = "IBUIButton"; normalTitle = "Categories"; ObjectID = "hza-Yw-P0j"; */
+"hza-Yw-P0j.normalTitle" = "Categories";
+
+/* Class = "IBUILabel"; text = "Editor"; ObjectID = "i6V-Mh-aMJ"; */
+"i6V-Mh-aMJ.text" = "Editor";
+
+/* Class = "IBUILabel"; text = "Log in to your NI account"; ObjectID = "jDk-9G-bxe"; */
+"jDk-9G-bxe.text" = "Log in to your NI UK account";
+
+/* Class = "IBUILabel"; text = "Show help alerts"; ObjectID = "ksU-I5-rcc"; */
+"ksU-I5-rcc.text" = "Show help alerts";
+
+/* Class = "IBUIButton"; normalTitle = "Login"; ObjectID = "lo0-0b-cYh"; */
+"lo0-0b-cYh.normalTitle" = "Login";
+
+/* Class = "IBUILabel"; text = "$00.00"; ObjectID = "m5L-mi-Y8C"; */
+"m5L-mi-Y8C.text" = "$00.00";
+
+/* Class = "IBUILabel"; text = "Article teaser"; ObjectID = "mdR-VP-sbQ"; */
+"mdR-VP-sbQ.text" = "Article teaser";
+
+/* Class = "IBUINavigationItem"; title = "Categories"; ObjectID = "nNE-iV-7ef"; */
+"nNE-iV-7ef.title" = "Categories";
+
+/* Class = "IBUILabel"; text = "Allow anonymous statistics"; ObjectID = "p8l-4f-JxL"; */
+"p8l-4f-JxL.text" = "Allow anonymous statistics";
+
+/* Class = "IBUILabel"; text = "Title"; ObjectID = "pLI-g5-XM1"; */
+"pLI-g5-XM1.text" = "Title";
+
+/* Class = "IBUILabel"; text = "Product title"; ObjectID = "pcX-Zx-eZ5"; */
+"pcX-Zx-eZ5.text" = "Product title";
+
+/* Class = "IBUIButton"; normalTitle = "Magazine archive"; ObjectID = "sCG-7l-LMd"; */
+"sCG-7l-LMd.normalTitle" = "Magazine archive";
+
+/* Class = "IBUILabel"; text = "About"; ObjectID = "tSs-c7-X5f"; */
+"tSs-c7-X5f.text" = "About";
+
+/* Class = "IBUILabel"; text = "Title"; ObjectID = "uBF-Vu-m5O"; */
+"uBF-Vu-m5O.text" = "Title";
+
+/* Class = "IBUILabel"; text = "Description"; ObjectID = "w4N-UI-kz4"; */
+"w4N-UI-kz4.text" = "Description";
+
+/* Class = "IBUIBarButtonItem"; title = "website"; ObjectID = "ws9-UA-Atw"; */
+"ws9-UA-Atw.title" = "website";
+
+/* Class = "IBUILabel"; text = "000 - Article date"; ObjectID = "xey-uS-ebI"; */
+"xey-uS-ebI.text" = "000 - Article date";
+
+/* Class = "IBUIBarButtonItem"; title = "Article"; ObjectID = "zmy-xV-iMN"; */
+"zmy-xV-iMN.title" = "Article";
+
+/* Class = "IBUIButton"; normalTitle = "Search"; ObjectID = "ztv-AX-HV8"; */
+"ztv-AX-HV8.normalTitle" = "Search";

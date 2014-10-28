@@ -63,6 +63,7 @@
 		052E32B318E1F74300A1906E /* bootstrap.css in Resources */ = {isa = PBXBuildFile; fileRef = 052E32B218E1F74300A1906E /* bootstrap.css */; };
 		052E32B518E1FBAC00A1906E /* fontawesome-webfont.woff in Resources */ = {isa = PBXBuildFile; fileRef = 052E32B418E1FBAC00A1906E /* fontawesome-webfont.woff */; };
 		053878261777D767001E60F6 /* NIAUIssue.m in Sources */ = {isa = PBXBuildFile; fileRef = 053878251777D767001E60F6 /* NIAUIssue.m */; };
+		053EB8FF1A0035F500058669 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 053EB9011A0035F500058669 /* Localizable.strings */; };
 		05424C361803AD0400399194 /* NIAUStoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05424C351803AD0400399194 /* NIAUStoreViewController.m */; };
 		05424C391803BD7000399194 /* NIAULoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05424C381803BD7000399194 /* NIAULoginViewController.m */; };
 		0550B50018A437C0002E09D4 /* NIAUWebsiteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0550B4FF18A437C0002E09D4 /* NIAUWebsiteViewController.m */; };
@@ -203,6 +204,20 @@
 		052E32B418E1FBAC00A1906E /* fontawesome-webfont.woff */ = {isa = PBXFileReference; lastKnownFileType = file; path = "fontawesome-webfont.woff"; sourceTree = "<group>"; };
 		053878241777D767001E60F6 /* NIAUIssue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NIAUIssue.h; sourceTree = "<group>"; };
 		053878251777D767001E60F6 /* NIAUIssue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NIAUIssue.m; sourceTree = "<group>"; };
+		053EB8F11A002ABC00058669 /* en-GB */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-GB"; path = "en-GB.lproj/Main_iPhone.strings"; sourceTree = "<group>"; };
+		053EB8F21A002ABC00058669 /* en-GB */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-GB"; path = "en-GB.lproj/Main_iPad.strings"; sourceTree = "<group>"; };
+		053EB8F31A002ABC00058669 /* en-GB */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-GB"; path = "en-GB.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		053EB8F41A002ABC00058669 /* en-GB */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-GB"; path = "en-GB.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		053EB8F51A002DDA00058669 /* en-AU */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-AU"; path = "en-AU.lproj/Main_iPhone.strings"; sourceTree = "<group>"; };
+		053EB8F61A002DDA00058669 /* en-AU */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-AU"; path = "en-AU.lproj/Main_iPad.strings"; sourceTree = "<group>"; };
+		053EB8F71A002DDA00058669 /* en-AU */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-AU"; path = "en-AU.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		053EB8F81A002DDA00058669 /* en-AU */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-AU"; path = "en-AU.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		053EB8F91A002EB600058669 /* en-US */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-US"; path = "en-US.lproj/Main_iPhone.strings"; sourceTree = "<group>"; };
+		053EB8FA1A002EB600058669 /* en-US */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-US"; path = "en-US.lproj/Main_iPad.strings"; sourceTree = "<group>"; };
+		053EB8FB1A002EB600058669 /* en-US */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-US"; path = "en-US.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		053EB8FC1A002EB600058669 /* en-US */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-US"; path = "en-US.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		053EB9001A0035F500058669 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
+		053EB9031A00367800058669 /* en-GB */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-GB"; path = "en-GB.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		05424C341803AD0400399194 /* NIAUStoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NIAUStoreViewController.h; sourceTree = "<group>"; };
 		05424C351803AD0400399194 /* NIAUStoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NIAUStoreViewController.m; sourceTree = "<group>"; };
 		05424C371803BD7000399194 /* NIAULoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NIAULoginViewController.h; sourceTree = "<group>"; };
@@ -408,6 +423,7 @@
 		055A8EB9177290CE003D9407 = {
 			isa = PBXGroup;
 			children = (
+				053EB9011A0035F500058669 /* Localizable.strings */,
 				055A8ECB177290CE003D9407 /* New Internationalist Magazine Australia */,
 				058E564119C7424800D6AF66 /* New Internationalist Magazine Australia Extension */,
 				055A8EED177290CF003D9407 /* New Internationalist Magazine AustraliaTests */,
@@ -745,6 +761,9 @@
 			knownRegions = (
 				en,
 				Base,
+				"en-GB",
+				"en-AU",
+				"en-US",
 			);
 			mainGroup = 055A8EB9177290CE003D9407;
 			productRefGroup = 055A8EC3177290CE003D9407 /* Products */;
@@ -810,6 +829,7 @@
 				051A72B2177950D600BDD346 /* default_cover@2x.png in Resources */,
 				0571759018C63C640075A604 /* about.html in Resources */,
 				052BBF8B17EFF6E100B12071 /* home-background.png in Resources */,
+				053EB8FF1A0035F500058669 /* Localizable.strings in Resources */,
 				0511F13B17BB1E25004B5A72 /* article-body.css in Resources */,
 				05CAF9E218E9FBC0000BE0BF /* loading_image@2x.gif in Resources */,
 				051DD2A018F5F2A8000A1CEA /* ni-logo-grey.png in Resources */,
@@ -1006,10 +1026,23 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		053EB9011A0035F500058669 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				053EB9001A0035F500058669 /* Base */,
+				053EB9031A00367800058669 /* en-GB */,
+			);
+			name = Localizable.strings;
+			path = "New Internationalist Magazine Australia";
+			sourceTree = "<group>";
+		};
 		055A8ECE177290CE003D9407 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
 				055A8ECF177290CE003D9407 /* en */,
+				053EB8F31A002ABC00058669 /* en-GB */,
+				053EB8F71A002DDA00058669 /* en-AU */,
+				053EB8FB1A002EB600058669 /* en-US */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -1018,6 +1051,9 @@
 			isa = PBXVariantGroup;
 			children = (
 				055A8ED8177290CF003D9407 /* Base */,
+				053EB8F11A002ABC00058669 /* en-GB */,
+				053EB8F51A002DDA00058669 /* en-AU */,
+				053EB8F91A002EB600058669 /* en-US */,
 			);
 			name = Main_iPhone.storyboard;
 			sourceTree = "<group>";
@@ -1026,6 +1062,9 @@
 			isa = PBXVariantGroup;
 			children = (
 				055A8EDB177290CF003D9407 /* Base */,
+				053EB8F21A002ABC00058669 /* en-GB */,
+				053EB8F61A002DDA00058669 /* en-AU */,
+				053EB8FA1A002EB600058669 /* en-US */,
 			);
 			name = Main_iPad.storyboard;
 			sourceTree = "<group>";
@@ -1034,6 +1073,9 @@
 			isa = PBXVariantGroup;
 			children = (
 				055A8EF1177290CF003D9407 /* en */,
+				053EB8F41A002ABC00058669 /* en-GB */,
+				053EB8F81A002DDA00058669 /* en-AU */,
+				053EB8FC1A002EB600058669 /* en-US */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";

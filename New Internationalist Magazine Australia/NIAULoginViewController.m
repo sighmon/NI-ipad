@@ -45,8 +45,10 @@ NSString *LoginUnsuccessfulNotification = @"LoginUnsuccessful";
         self.username.text = dict[@"acct"];
         self.password.text = [SSKeychain passwordForService:dict[@"svce"] account:dict[@"acct"]];
     } else {
-        self.username.text = @"username";
-        self.password.text = @"password";
+//        self.username.text = @"username";
+//        self.password.text = @"password";
+        self.username.text = NSLocalizedString(@"username", nil);
+        self.password.text = NSLocalizedString(@"password", nil);
     }
     
     // Register for keyboard notifications
