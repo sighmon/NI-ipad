@@ -136,7 +136,7 @@ static NSString *CellIdentifier = @"articleCell";
     TAGDataLayer *dataLayer = [TAGManager instance].dataLayer;
     
     [dataLayer push:@{@"event": @"openScreen", @"screenName": screenName}];
-    NSLog(@"Google Tag pushed: %@", screenName);
+    DebugLog(@"Google Tag pushed: %@", screenName);
 }
 
 -(void)publisherReady:(NSNotification *)not
@@ -217,9 +217,9 @@ static NSString *CellIdentifier = @"articleCell";
     NSMutableDictionary *cellSectionDictionary = [NSMutableDictionary dictionary];
     id cell = [[self.cellDictionary objectForKey:[NSNumber numberWithInt:(int)indexPath.section]] objectForKey:[NSNumber numberWithInt:(int)indexPath.row]];
     if (cell != nil) {
-//        NSLog(@"Cell cache hit");
+//        DebugLog(@"Cell cache hit");
     } else {
-//        NSLog(@"\nSection: %@, Index path: %@",[NSNumber numberWithInt:(int)indexPath.section], [NSNumber numberWithInt:(int)indexPath.row]);
+//        DebugLog(@"\nSection: %@, Index path: %@",[NSNumber numberWithInt:(int)indexPath.section], [NSNumber numberWithInt:(int)indexPath.row]);
         cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (cell == nil) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
@@ -237,7 +237,7 @@ static NSString *CellIdentifier = @"articleCell";
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-//    NSLog(@"cellForRow.. %ld",(long)indexPath.row);
+//    DebugLog(@"cellForRow.. %ld",(long)indexPath.row);
     UITableViewCell *cell = [self tableView:tableView cellForHeightForRowAtIndexPath:indexPath];
     [self setupCell:cell atIndexPath:indexPath];
     UILabel *articleTitle = (UILabel *)[cell viewWithTag:101];
@@ -253,7 +253,7 @@ static NSString *CellIdentifier = @"articleCell";
     // HACK: on the iPad the cell height isn't quite big enough to fit the full heading. So adding this slop. :-/
     size.height += 5;
     
-//    NSLog(@"%@ - %@ - %@",((UILabel *)[cell viewWithTag:101]).text, NSStringFromCGSize(size), NSStringFromCGSize(cell.frame.size));
+//    DebugLog(@"%@ - %@ - %@",((UILabel *)[cell viewWithTag:101]).text, NSStringFromCGSize(size), NSStringFromCGSize(cell.frame.size));
     
     return size;
 }
@@ -336,7 +336,7 @@ static NSString *CellIdentifier = @"articleCell";
                 }
             }];
         } else {
-            //NSLog(@"Cell has an image.");
+            //DebugLog(@"Cell has an image.");
         }
     } else {
         UIImage *thumb = [article attemptToGetFeaturedImageThumbFromDiskWithSize:thumbSize];
@@ -436,7 +436,7 @@ static NSString *CellIdentifier = @"articleCell";
                                                                                                NSCharacterEncodingDocumentAttribute: [NSNumber numberWithInt:NSUTF8StringEncoding]}
                                                                           documentAttributes:nil
                                                                                        error:nil];
-        NSLog(@"\nScrollView height: %f \neditorsLetter height: %f",self.scrollView.contentSize.height, self.editorsLetterTextView.attributedText.size.height);
+        DebugLog(@"\nScrollView height: %f \neditorsLetter height: %f",self.scrollView.contentSize.height, self.editorsLetterTextView.attributedText.size.height);
         //    [self.tableView layoutIfNeeded];
         //    [self.editorsLetterTextView setNeedsLayout];
         
@@ -633,7 +633,7 @@ static NSString *CellIdentifier = @"articleCell";
 
 - (IBAction)shareActionTapped:(id)sender
 {
-    NSLog(@"Share tapped!");
+    DebugLog(@"Share tapped!");
     
     UIImage *coverToShare;
     

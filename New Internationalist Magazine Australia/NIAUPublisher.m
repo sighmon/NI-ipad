@@ -72,7 +72,7 @@ static NIAUPublisher *instance =nil;
     }]];
     [cache addMethod:[[NIAUCacheMethod alloc] initMethod:@"net"withReadBlock:^id(id options, id state) {
         NSURL *issuesURL = [NSURL URLWithString:@"issues.json" relativeToURL:[NSURL URLWithString:SITE_URL]];
-        NSLog(@"try to download issues.json from %@", issuesURL);
+        DebugLog(@"try to download issues.json from %@", issuesURL);
         NSData *data = [NSData dataWithContentsOfCookielessURL:issuesURL];
         if(data) {
             NSError *error;
@@ -140,7 +140,7 @@ static NIAUPublisher *instance =nil;
         // Catch out of bounds exception when the issue doesn't get found.
         
         NSUInteger issueIndexFromName = [issues indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
-            //        NSLog(@"Object: %@, railsID: %@",[obj railsID], railsID);
+            //        DebugLog(@"Object: %@, railsID: %@",[obj railsID], railsID);
             return ([[obj name] isEqualToString:name]);
         }];
         

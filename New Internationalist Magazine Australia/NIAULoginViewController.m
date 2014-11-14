@@ -126,7 +126,7 @@ NSString *LoginUnsuccessfulNotification = @"LoginUnsuccessful";
             NSHTTPCookieStorage *cookieStorage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
             for (NSHTTPCookie *cookie in cookieStorage.cookies) {
                 if ([cookie.domain isEqualToString:[[NSURL URLWithString:SITE_URL] host]]) {
-                    NSLog(@"Deleting old cookie: %@", cookie);
+                    DebugLog(@"Deleting old cookie: %@", cookie);
                     [cookieStorage deleteCookie:cookie];
                 }
             }

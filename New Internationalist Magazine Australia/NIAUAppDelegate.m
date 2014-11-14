@@ -96,7 +96,7 @@ const char NotificationKey;
         
         // TODO: Think this is double handling... 13th Aug 2014
         // Going to leave it out for now, seeing as I'm not sending content-available notifications now anyway.
-//        NSLog(@"Opened from the push notification!");
+//        DebugLog(@"Opened from the push notification!");
 //        [self handleRemoteNotification:application andUserInfo:payload];
     }
     
@@ -114,7 +114,7 @@ const char NotificationKey;
     
     // Initialize tracker.
     id<GAITracker> tracker = [[GAI sharedInstance] trackerWithTrackingId:GOOGLE_ANALYTICS_ID];
-    NSLog(@"Google Analytics tracker initialized: %@", tracker);
+    DebugLog(@"Google Analytics tracker initialized: %@", tracker);
     
     // If user hasn't set a default, set it to TRUE
     if ([standardUserDefaults objectForKey:@"googleAnalytics"] == nil) {
@@ -131,7 +131,7 @@ const char NotificationKey;
         [standardUserDefaults synchronize];
     } else if ([standardUserDefaults boolForKey:@"showHelp"] == 0) {
         // User has asked not to display help anymore.
-        NSLog(@"Help disabled (at app delegate).");
+        DebugLog(@"Help disabled (at app delegate).");
     }
     
     // If user says analytics are okay, load Google Tag Manager
@@ -306,7 +306,7 @@ const char NotificationKey;
     PFInstallation *currentInstallation = [PFInstallation currentInstallation];
     [currentInstallation setDeviceTokenFromData:deviceToken];
     [currentInstallation saveInBackground];
-    NSLog(@"Parse installation objectId: %@", [currentInstallation objectId]);
+    DebugLog(@"Parse installation objectId: %@", [currentInstallation objectId]);
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo

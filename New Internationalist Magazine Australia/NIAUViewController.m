@@ -172,7 +172,7 @@
 -(void)publisherFailed:(NSNotification *)not {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:PublisherDidUpdateNotification object:[NIAUPublisher getInstance]];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:PublisherFailedUpdateNotification object:[NIAUPublisher getInstance]];
-    NSLog(@"%@",not);
+    NSLog(@"Error - Publisher Failed: %@",not);
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
                                                     message:@"Cannot get issues from publisher server."
                                                    delegate:nil
@@ -224,7 +224,7 @@
     // Check to see if there are any new issues available
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
         NSURL *issuesURL = [NSURL URLWithString:@"issues.json" relativeToURL:[NSURL URLWithString:SITE_URL]];
-        NSLog(@"try to download issues.json from %@", issuesURL);
+        DebugLog(@"try to download issues.json from %@", issuesURL);
         NSData *data = [NSData dataWithContentsOfCookielessURL:issuesURL];
         NSArray *tmpIssues = @[];
         if(data) {
@@ -294,7 +294,7 @@
     NSString *password = [SSKeychain passwordForService:@"NIWebApp" account:keychainAccount[@"acct"] error:&keychainError];
     
     if (keychainError == nil) {
-        NSLog(@"Account found: %@", username);
+        DebugLog(@"Account found: %@", username);
         
         // Try logging in to Rails.
         NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
@@ -325,7 +325,7 @@
             [self updateLoginButton];
         }
     } else {
-        NSLog(@"Uh oh: %@", keychainError);
+        NSLog(@"Uh oh, keychain error: %@", keychainError);
     }
 
 }
@@ -355,7 +355,7 @@
             [self.loginButton setTitle:@"Logged in" forState:UIControlStateNormal];
             [self.loginButton setNeedsLayout];
             [self.loginButton layoutIfNeeded];
-            NSLog(@"Logged in.");
+            DebugLog(@"Logged in.");
         });
     } else {
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -364,7 +364,7 @@
             [self.loginButton setTitle:@"Login" forState:UIControlStateNormal];
             [self.loginButton setNeedsLayout];
             [self.loginButton layoutIfNeeded];
-            NSLog(@"Not logged in.");
+            DebugLog(@"Not logged in.");
         });
     }
 }
@@ -376,7 +376,7 @@
             [self.subscribeButton setTitle:@"Thanks for subscribing" forState:UIControlStateNormal];
             [self.subscribeButton setNeedsLayout];
             [self.subscribeButton layoutIfNeeded];
-            NSLog(@"Subscription button disabled.");
+            DebugLog(@"Subscription button disabled.");
         });
     } else {
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -385,7 +385,7 @@
             [self.subscribeButton setTitle:@"Subscribe" forState:UIControlStateNormal];
             [self.subscribeButton setNeedsLayout];
             [self.subscribeButton layoutIfNeeded];
-            NSLog(@"Subscription button enabled.");
+            DebugLog(@"Subscription button enabled.");
         });
     }
 }
@@ -436,7 +436,7 @@
 
 - (IBAction)coverTapped:(UITapGestureRecognizer *)recognizer
 {
-//    NSLog(@"Cover tapped!");
+//    DebugLog(@"Cover tapped!");
     [self performSegueWithIdentifier:@"homeCoverToContentsView" sender:self];
 }
 

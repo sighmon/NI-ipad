@@ -91,14 +91,14 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
     }]];
     [cache addMethod:[[NIAUCacheMethod alloc] initMethod:@"disk" withReadBlock:^id(id options, id state) {
         // TODO: Pull the CGSize out of the options string.
-        NSLog(@"Trying to read cached image from %@",[weakSelf coverCacheURL]);
+        DebugLog(@"Trying to read cached image from %@",[weakSelf coverCacheURL]);
         NSData *data = [NSData dataWithContentsOfURL:[weakSelf coverCacheURL]];
         return [UIImage imageWithData:data];
     } andWriteBlock:^(id object, id options, id state) {
         [UIImagePNGRepresentation(object) writeToURL:[weakSelf coverCacheURL] atomically:YES];
     }]];
     [cache addMethod:[[NIAUCacheMethod alloc] initMethod:@"net" withReadBlock:^id(id options, id state) {
-        NSLog(@"NET trying to read cached image from %@",[[weakSelf coverURL] absoluteURL]);
+        DebugLog(@"NET trying to read cached image from %@",[[weakSelf coverURL] absoluteURL]);
         NSData *imageData = [NSData dataWithContentsOfCookielessURL:[weakSelf coverURL]];
         return [UIImage imageWithData:imageData];
     } andWriteBlock:^(id object, id options, id state) {
@@ -119,7 +119,7 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
     }]];
     [cache addMethod:[[NIAUCacheMethod alloc] initMethod:@"disk" withReadBlock:^id(id options, id state) {
         CGSize size = [(NSValue *)options[@"size"] CGSizeValue];
-        NSLog(@"Trying to read cached thumb image from %@",[weakSelf coverCacheURLForSize:size]);
+        DebugLog(@"Trying to read cached thumb image from %@",[weakSelf coverCacheURLForSize:size]);
         return [UIImage imageWithData:[NSData dataWithContentsOfURL:[weakSelf coverCacheURLForSize:size]]];
     } andWriteBlock:^(id object, id options, id state) {
         CGSize size = [(NSValue *)options[@"size"] CGSizeValue];
@@ -147,7 +147,7 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
         }
     }]];
     [cache addMethod:[[NIAUCacheMethod alloc] initMethod:@"disk" withReadBlock:^id(id options, id state) {
-        NSLog(@"Trying to read cached sorted categories from %@",[weakSelf categoriesSortedURL]);
+        DebugLog(@"Trying to read cached sorted categories from %@",[weakSelf categoriesSortedURL]);
         NSData *data = [NSData dataWithContentsOfURL:[weakSelf categoriesSortedURL]];
         NSArray *unarchived = [NSKeyedUnarchiver unarchiveObjectWithData:data];
         if ([unarchived count] > 0) {
@@ -160,13 +160,13 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
         // TODO: FIX THIS SEE WHY MULTIPLE WRITES
         BOOL writeSuccessful = [data writeToFile:[[weakSelf categoriesSortedURL] path] atomically:YES];
         if (writeSuccessful) {
-//            NSLog(@"Categories write successful!");
+//            DebugLog(@"Categories write successful!");
         } else {
-            NSLog(@"Categories write FAILED.");
+            DebugLog(@"Categories write FAILED.");
         }
     }]];
     [cache addMethod:[[NIAUCacheMethod alloc] initMethod:@"net" withReadBlock:^id(id options, id state) {
-        NSLog(@"NET(ish) building sorted categories.");
+        DebugLog(@"NET(ish) building sorted categories.");
         return weakSelf.sortedCategories;
     } andWriteBlock:^(id object, id options, id state) {
         // Nothing to do, can't write to the net.
@@ -187,7 +187,7 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
         }
     }]];
     [cache addMethod:[[NIAUCacheMethod alloc] initMethod:@"disk" withReadBlock:^id(id options, id state) {
-        NSLog(@"Trying to read cached sorted articles from %@",[weakSelf articlesSortedURL]);
+        DebugLog(@"Trying to read cached sorted articles from %@",[weakSelf articlesSortedURL]);
         NSData *data = [NSData dataWithContentsOfURL:[weakSelf articlesSortedURL]];
         NSArray *unarchived = [NSKeyedUnarchiver unarchiveObjectWithData:data];
         if ([unarchived count] > 0) {
@@ -200,13 +200,13 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
         NSData *data = [NSKeyedArchiver archivedDataWithRootObject:object];
         BOOL writeSuccessful = [data writeToFile:[[weakSelf articlesSortedURL] path] atomically:YES];
         if (writeSuccessful) {
-            NSLog(@"Articles write successful!");
+            DebugLog(@"Articles write successful!");
         } else {
-            NSLog(@"Articles write FAILED.");
+            DebugLog(@"Articles write FAILED.");
         }
     }]];
     [cache addMethod:[[NIAUCacheMethod alloc] initMethod:@"net" withReadBlock:^id(id options, id state) {
-        NSLog(@"NET(ish) building sorted articles.");
+        DebugLog(@"NET(ish) building sorted articles.");
         return weakSelf.sortedArticles;
     } andWriteBlock:^(id object, id options, id state) {
         // Nothing to do, can't write to the net.
@@ -386,16 +386,16 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
     
     // To avoid crashlytics #29, check if the nkIssue hasn't been created yet for some reason.
     if (jsonURL) {
-        NSLog(@"%@",[jsonURL absoluteString]);
+        DebugLog(@"%@",[jsonURL absoluteString]);
         NSOutputStream *os = [NSOutputStream outputStreamWithURL:jsonURL append:FALSE];
         [os open];
         NSError *error;
         if ([NSJSONSerialization writeJSONObject:dictionary toStream:os options:0 error:&error]<=0) {
-            NSLog(@"Error writing JSON file");
+            DebugLog(@"Error writing JSON file");
         }
         [os close];
     } else {
-        NSLog(@"ERROR: no jsonURL in writeToCache - %@", jsonURL);
+        DebugLog(@"ERROR: no jsonURL in writeToCache - %@", jsonURL);
     }
 }
 
@@ -503,10 +503,10 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
     int numberOfArticlesCategorised = 0;
     for (int i = 0; i < sorted.count; i++) {
         numberOfArticlesCategorised += [[sorted[i] objectForKey:@"articles"] count];
-        NSLog(@"Category #%d has #%d articles", i, (int)[[sorted[i] objectForKey:@"articles"] count]);
+        DebugLog(@"Category #%d has #%d articles", i, (int)[[sorted[i] objectForKey:@"articles"] count]);
     }
-    NSLog(@"Number of articles categorised: %d", numberOfArticlesCategorised);
-    NSLog(@"Number of articles in this issue: %d", (int)[self numberOfArticles]);
+    DebugLog(@"Number of articles categorised: %d", numberOfArticlesCategorised);
+    DebugLog(@"Number of articles in this issue: %d", (int)[self numberOfArticles]);
     return [[NSArray alloc] initWithArray:sorted];
 }
 
@@ -579,7 +579,7 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
 -(NIAUArticle *)articleWithRailsID:(NSNumber *)railsID {
     // Catch out of bounds exception when the article doesn't get found.
     NSUInteger articleIndexPath = [articles indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
-        //        NSLog(@"Object: %@, railsID: %@",[obj railsID], railsID);
+        DebugLog(@"Object: %@, railsID: %@",[obj railsID], railsID);
         return ([[obj railsID] isEqualToNumber:railsID]);
     }];
     if (articleIndexPath != NSNotFound) {
@@ -593,13 +593,13 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
 // TODO: how would we do getCover w/o completion block?
 -(void)getCoverWithCompletionBlock:(void(^)(UIImage *img))block {
     if (requestingCover) {
-        NSLog(@"Already requesting cover");
+        DebugLog(@"Already requesting cover");
     } else {
         requestingCover = true;
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0),
                        ^{
                            UIImage *image = [self getCoverImage];
-                           NSLog(@"got cover image %@",image);
+                           DebugLog(@"got cover image %@",image);
                            // run the block on the main queue so it can 	do ui stuff
                            dispatch_async(dispatch_get_main_queue(), ^{
                                block(image);
@@ -617,7 +617,7 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
     NSString *coverFileName = [photoURL lastPathComponent];
     // local URL to where the cover is/would be stored
     NSURL *photoCacheURL = [NSURL URLWithString:coverFileName relativeToURL:[self.nkIssue contentURL]];
-    NSLog(@"trying to read cached editor's image from %@",photoCacheURL);
+    DebugLog(@"trying to read cached editor's image from %@",photoCacheURL);
     UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:photoCacheURL]];
     
     if(image) {
@@ -625,7 +625,7 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
         block(image);
     } else {
         // cache miss, download
-        NSLog(@"cache miss, downloading image from %@",photoURL);
+        DebugLog(@"cache miss, downloading image from %@",photoURL);
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0),
                        ^{
                            // download image data
@@ -641,9 +641,9 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
 }
 
 -(void)requestArticles {
-    NSLog(@"requestArticles called on %@",self.name);
+    DebugLog(@"requestArticles called on %@",self.name);
     if(requestingArticles) {
-        NSLog(@"already requesting articles");
+        DebugLog(@"already requesting articles");
     } else {
         requestingArticles = TRUE;
         // put dispatch magic here
@@ -654,13 +654,13 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
             articles = [NIAUArticle articlesFromIssue:self];		
             
             if ([articles count]>0) {
-                NSLog(@"read #%d articles from issue #%@ cache",(int)[articles count], self.name);
+                DebugLog(@"read #%d articles from issue #%@ cache",(int)[articles count], self.name);
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [[NSNotificationCenter defaultCenter] postNotificationName:ArticlesDidUpdateNotification object:self];
                 });
-//                NSLog(@"cache hit. stoppimg");
+//                DebugLog(@"cache hit. stoppimg");
             } else {
-                NSLog(@"no articles found in cache");
+                DebugLog(@"no articles found in cache");
                 [self downloadArticles];
             }
             requestingArticles = FALSE;
@@ -670,7 +670,7 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
 
 -(void)forceDownloadArticles {
     if(requestingArticles) {
-        NSLog(@"already requesting articles");
+        DebugLog(@"already requesting articles");
     } else {
         requestingArticles = TRUE;
         [self downloadArticles];
@@ -726,7 +726,7 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
             [article deleteArticleFromCache];
         }
     } else {
-        NSLog(@"ERROR CLEARING ISSUE CACHE: NSArray articles is empty.");
+        DebugLog(@"ERROR CLEARING ISSUE CACHE: NSArray articles is empty.");
     }
 }
 

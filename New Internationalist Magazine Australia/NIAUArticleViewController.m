@@ -202,7 +202,7 @@ NSString *ArticleDidRefreshNotification = @"ArticleDidRefresh";
 {
     // Find image in webview by ID and then replace with real URL
     NSArray *imageInformation = [notification.userInfo objectForKey:@"image"];
-//    NSLog(@"Received image cache notification from ID:%@", imageInformation[0]);
+    DebugLog(@"Received image cache notification from ID:%@", imageInformation[0]);
     NSString *javascriptString = [NSString stringWithFormat:@"var img = document.getElementById('image%@'); img.src = '%@'; img.parentElement.href = '%@'", imageInformation[0], imageInformation[1], imageInformation[1]];
     
     // TODO: Work out why this is causing memory warnings. Possibly 10mb javascript limit?
@@ -294,7 +294,7 @@ NSString *ArticleDidRefreshNotification = @"ArticleDidRefresh";
                             "</html>", bootstrapCssURL, cssURL, fontSizePercentage, WITH_DEFAULT(self.article.teaser,IF_DEBUG(@"!!!NOTEASER!!!",@""))];
     
     if (self.article.teaser == (id)[NSNull null] || [self.article.teaser isEqualToString:@""]) {
-        NSLog(@"Article doesn't have a teaser");
+        DebugLog(@"Article doesn't have a teaser");
         self.teaserLabel.text = nil;
     } else {
         self.teaserLabel.attributedText = [[NSAttributedString alloc] initWithData:[teaserHTML dataUsingEncoding:NSUTF8StringEncoding]
@@ -352,7 +352,7 @@ NSString *ArticleDidRefreshNotification = @"ArticleDidRefresh";
     self.scrollView.contentSize = contentRect.size;
     [self.scrollView setNeedsUpdateConstraints];
     [self.scrollView setNeedsLayout];
-    NSLog(@"Updated scrollview height to: %f", self.scrollView.contentSize.height);
+    DebugLog(@"Updated scrollview height to: %f", self.scrollView.contentSize.height);
 }
 
 - (void)updateWebViewHeight
@@ -369,8 +369,8 @@ NSString *ArticleDidRefreshNotification = @"ArticleDidRefresh";
     self.bodyWebViewHeightConstraint.constant = contentHeight;
     [self.bodyWebView setNeedsUpdateConstraints];
     [self.bodyWebView setNeedsLayout];
-//    NSLog(@"Current width of self.view: %f", self.view.frame.size.width);
-    NSLog(@"Updated webview height to: %f", self.bodyWebView.frame.size.height);
+//    DebugLog(@"Current width of self.view: %f", self.view.frame.size.width);
+    DebugLog(@"Updated webview height to: %f", self.bodyWebView.frame.size.height);
 }
 
 - (void)updateCategoryCollectionViewHeight
@@ -553,12 +553,12 @@ NSString *ArticleDidRefreshNotification = @"ArticleDidRefresh";
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
-    NSLog(@"Error! - %@", error);
+    DebugLog(@"Error! - %@", error);
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
-    NSLog(@"Response: %@", response);
+    DebugLog(@"Response: %@", response);
 }
 
 - (void)ensureScrollsToTop: (UIView *) ensureView
@@ -629,13 +629,13 @@ NSString *ArticleDidRefreshNotification = @"ArticleDidRefresh";
 - (IBAction)handleSwipeLeft:(UISwipeGestureRecognizer *)swipe
 {
     // Note: Perform segue called before swipe gesture.
-    NSLog(@"Swiped left!");
+    DebugLog(@"Swiped left!");
 }
 
 - (IBAction)handleSwipeRight:(UISwipeGestureRecognizer *)swipe
 {
     // Note: Perform segue called before swipe gesture.
-    NSLog(@"Swiped right!");
+    DebugLog(@"Swiped right!");
 }
 
 - (void)handleTwoFingerSwipe:(UISwipeGestureRecognizer *)swipe
@@ -659,17 +659,17 @@ NSString *ArticleDidRefreshNotification = @"ArticleDidRefresh";
         if ([self.article nextArticle]) {
             return YES;
         } else {
-            NSLog(@"Last article!");
+            DebugLog(@"Last article!");
             return NO;
         }
     } else if ([identifier isEqualToString:@"articleToPreviousArticle"]) {
 //        if ([self.article previousArticle]) {
 //            return YES;
 //        } else {
-//            NSLog(@"First article!");
+//            DebugLog(@"First article!");
 //            return NO;
 //        }
-//        NSLog(@"Disabled previous segue, navigation seems wrong.");
+//        DebugLog(@"Disabled previous segue, navigation seems wrong.");
         return NO;
     } else {
         return YES;

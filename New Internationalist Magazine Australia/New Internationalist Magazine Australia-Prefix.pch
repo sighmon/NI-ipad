@@ -39,3 +39,10 @@
 
 // Test if OS version number is v
 #define SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
+
+// Use DebugLog instead of NSLog so they don't print in production
+#ifdef DEBUG
+#define DebugLog(...) NSLog(__VA_ARGS__)
+#else
+#define DebugLog(...) while(0)
+#endif

@@ -95,7 +95,7 @@
     self.aboutWebViewHightConstraint.constant = contentHeight;
     [self.aboutWebView setNeedsUpdateConstraints];
     [self.aboutWebView setNeedsLayout];
-    NSLog(@"Updated webview height: %f", self.aboutWebView.frame.size.height);
+    DebugLog(@"Updated webview height: %f", self.aboutWebView.frame.size.height);
 }
 
 - (void)updateScrollViewContentHeight
@@ -106,7 +106,7 @@
     }
     self.scrollView.contentSize = contentRect.size;
     [self.scrollView setNeedsLayout];
-    NSLog(@"Scrollview height: %f",self.scrollView.contentSize.height);
+    DebugLog(@"Scrollview height: %f",self.scrollView.contentSize.height);
 }
 
 - (void)sendGoogleAnalyticsStats

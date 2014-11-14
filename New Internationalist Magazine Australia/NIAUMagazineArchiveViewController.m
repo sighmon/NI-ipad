@@ -81,7 +81,7 @@ NSString *kCellID = @"magazineCellID";              // UICollectionViewCell stor
 -(void)publisherFailed:(NSNotification *)not {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:PublisherDidUpdateNotification object:[NIAUPublisher getInstance]];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:PublisherFailedUpdateNotification object:[NIAUPublisher getInstance]];
-    NSLog(@"%@",not);
+    NSLog(@"Error - Publisher failed: %@",not);
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
                                                     message:@"Cannot get issues from publisher server."
                                                    delegate:nil
@@ -134,7 +134,7 @@ NSString *kCellID = @"magazineCellID";              // UICollectionViewCell stor
                 
                 if (img && [[self.collectionView visibleCells] containsObject:updateCell]) {
                     
-//                    NSLog(@"Cell: (%f,%f), IndexPath: %ld", updateCell.frame.origin.x, updateCell.frame.origin.y, (long)indexPath.row);
+//                    DebugLog(@"Cell: (%f,%f), IndexPath: %ld", updateCell.frame.origin.x, updateCell.frame.origin.y, (long)indexPath.row);
                     if (updateCell) {
                         [updateCell.coverLoadingIndicator stopAnimating];
                         [updateCell.image setAlpha:0.0];
@@ -175,7 +175,7 @@ NSString *kCellID = @"magazineCellID";              // UICollectionViewCell stor
         }
     }
     CGSize returnSize = CGSizeMake((size.width/columns)-2, size.width*1415/(1000*columns));
-//    NSLog(@"Calculated size: %f, %f", returnSize.width, returnSize.height);
+//    DebugLog(@"Calculated size: %f, %f", returnSize.width, returnSize.height);
     return returnSize;
 }
 

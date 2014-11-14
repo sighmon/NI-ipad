@@ -245,7 +245,7 @@ NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurcha
 
 - (void)productsRequest:(SKProductsRequest *)request didReceiveResponse:(SKProductsResponse *)response {
     
-    NSLog(@"Loaded list of products...");
+    DebugLog(@"Loaded list of products...");
     _productsRequest = nil;
     
     self.allProducts = response.products;
@@ -272,7 +272,7 @@ NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurcha
     justSubscriptions = nil;
     
 //    for (SKProduct *skProduct in skProducts) {
-//        NSLog(@"Found product: %@ %@ %0.2f",
+//        DebugLog(@"Found product: %@ %@ %0.2f",
 //              skProduct.productIdentifier,
 //              skProduct.localizedTitle,
 //              skProduct.price.floatValue);
@@ -471,7 +471,7 @@ NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurcha
         NSLog(@"Error moving file from %@ to %@", filePath, destinationPath);
         return NO;
     } else {
-        NSLog(@"File moved from %@ to %@", filePath, destinationPath);
+        DebugLog(@"File moved from %@ to %@", filePath, destinationPath);
         moveSuccess = true;
         return YES;
     }
@@ -524,7 +524,7 @@ NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurcha
         }
         else {
             // Got a response from Rails, display it.
-//            NSLog(@"JSON: %@", jsonDictionary);
+            DebugLog(@"JSON: %@", jsonDictionary);
             if ([jsonDictionary objectForKey:@"zipURL"] != [NSNull null]) {
                 // return URL
                 return [jsonDictionary objectForKey:@"zipURL"];
@@ -537,7 +537,7 @@ NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurcha
 #pragma mark - Connection delegate
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
-    NSLog(@"Cannot transmit receipt data. %@",[error localizedDescription]);
+    DebugLog(@"Cannot transmit receipt data. %@",[error localizedDescription]);
     self.completionBlock(NO,[error localizedDescription]);
 }
 
@@ -551,7 +551,7 @@ NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurcha
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
     NSString *response = [[NSString alloc] initWithData:receivedData encoding:NSUTF8StringEncoding];
-//    NSLog(@"iTunes response: %@",response);
+    DebugLog(@"iTunes response: %@",response);
     self.completionBlock(YES,response);
 }
 

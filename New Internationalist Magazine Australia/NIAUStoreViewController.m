@@ -91,13 +91,13 @@
         NSDictionary *jsonDictionary = [NSJSONSerialization JSONObjectWithData:subscriptionExpiryDate options:kNilOptions error:&error];
         
         if (error != nil) {
-            NSLog(@"Error parsing JSON.");
+            DebugLog(@"Error parsing JSON.");
 //            NSString *decodedString = [[NSString alloc] initWithData:subscriptionExpiryDate encoding:NSUTF8StringEncoding];
-//            NSLog(@"Response: %@", decodedString);
+//            DebugLog(@"Response: %@", decodedString);
         }
         else {
             // Got a response from Rails, display it.
-            NSLog(@"JSON: %@", jsonDictionary);
+            DebugLog(@"JSON: %@", jsonDictionary);
             if ([jsonDictionary objectForKey:@"expiry"] != [NSNull null]) {
                 NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
                 [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZZZ"];
@@ -117,7 +117,7 @@
         }
     } else {
         // No data available, so lets try iTunes
-        NSLog(@"No subscription data from Rails, sorry.");
+        DebugLog(@"No subscription data from Rails, sorry.");
         [self checkItunesForSubscriptionExpiry];
     }
 
@@ -130,7 +130,7 @@
         NSData *jsonData = [response dataUsingEncoding:NSUTF8StringEncoding];
         NSError *e;
         NSDictionary *receiptDictionary = [NSJSONSerialization JSONObjectWithData:jsonData options:kNilOptions error:&e];
-//        NSLog(@"Receipt response: \n%d, %@", success, receiptDictionary);
+//        DebugLog(@"Receipt response: \n%d, %@", success, receiptDictionary);
         if (success && receiptDictionary && [[receiptDictionary objectForKey:@"status"] integerValue] == 0) {
             // Receipt is valid, lets check for the last expiry date we have.
             NSArray *purchases = [[receiptDictionary objectForKey:@"receipt"] objectForKey:@"in_app"];
@@ -331,7 +331,7 @@
         NSError *regError;
         NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"\\b\\d+" options:NSRegularExpressionCaseInsensitive error:&regError];
         if (regError) {
-            NSLog(@"Regex error: %@",regError.localizedDescription);
+            DebugLog(@"Regex error: %@",regError.localizedDescription);
         }
         
         NSString *productID = [product productIdentifier];
@@ -342,7 +342,7 @@
             numberOfMonths = [productID substringWithRange:range];
         }
         
-//        NSLog(@"Number of months: %@", numberOfMonths);
+//        DebugLog(@"Number of months: %@", numberOfMonths);
         return numberOfMonths;
     }
 }
@@ -352,7 +352,7 @@
     CGSize fittingSize = CGSizeMake(tableView.bounds.size.width, 0);
     CGSize size = [cell.contentView systemLayoutSizeFittingSize:fittingSize];
     
-    NSLog(@"Cell: %@\nSize: %@", NSStringFromCGSize(cell.frame.size), NSStringFromCGSize(size));
+    DebugLog(@"Cell: %@\nSize: %@", NSStringFromCGSize(cell.frame.size), NSStringFromCGSize(size));
     
     return size;
 }
@@ -446,7 +446,7 @@
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
-    NSLog(@"TODO: Work out how to recalculate the cell height and then reload it.");
+    DebugLog(@"TODO: Work out how to recalculate the cell height and then reload it.");
     
 //    Not working!
     

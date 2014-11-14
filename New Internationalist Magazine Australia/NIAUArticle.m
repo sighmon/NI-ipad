@@ -86,7 +86,7 @@ NSString *ImageDidSaveToCacheNotification = @"ImageDidSaveToCache";
     // would need to do a read for every set options we have received since starting.
     // a good argument for an explicit clear block
     //[featuredImageThumbCache clear];
-    NSLog(@"Article cache cleared for #%@",self.railsID);
+    DebugLog(@"Article cache cleared for #%@",self.railsID);
 }
 
 -(NSString *)author {
@@ -324,7 +324,7 @@ NSString *ImageDidSaveToCacheNotification = @"ImageDidSaveToCache";
                             dispatch_async(dispatch_get_main_queue(), ^{
                                 NSDictionary *imageInformation = @{@"image":@[imageId,imageSource]};
                                 [[NSNotificationCenter defaultCenter] postNotificationName:ImageDidSaveToCacheNotification object:nil userInfo:imageInformation];
-//                                NSLog(@"Sent Image saved notification for ID:%@",imageId);
+                                DebugLog(@"Sent Image saved notification for ID:%@",imageId);
                             });
                         });
                     }
@@ -768,7 +768,7 @@ NSString *ImageDidSaveToCacheNotification = @"ImageDidSaveToCache";
     int statusCode = (int)[response statusCode];
     NSString *data = [[NSString alloc]initWithData:responseData encoding:NSUTF8StringEncoding];
     if (!error && statusCode >= 200 && statusCode < 300) {
-//        NSLog(@"Response from Rails: %@", data);
+//        DebugLog(@"Response from Rails: %@", data);
     } else {
         NSLog(@"Rails returned statusCode: %d\n an error: %@\nAnd data: %@", statusCode, error, data);
         responseData = nil;
@@ -1085,7 +1085,7 @@ NSString *ImageDidSaveToCacheNotification = @"ImageDidSaveToCache";
     
     if (!error && statusCode >= 200 && statusCode < 300) {
         // If there aren't any errors, they have a subscription or have purchased this issue, so return the guest pass url.
-        NSLog(@"Guest Pass: %@", data);
+        DebugLog(@"Guest Pass: %@", data);
         tmpGuestPassJsonData = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
         
         return [NSURL URLWithString:[NSString stringWithFormat:@"issues/%@/articles/%@?utm_source=%@",self.issue.railsID, self.railsID, [tmpGuestPassJsonData objectForKey:@"key"]] relativeToURL:[NSURL URLWithString:SITE_URL]];

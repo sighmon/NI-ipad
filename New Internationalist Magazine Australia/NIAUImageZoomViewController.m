@@ -89,11 +89,11 @@
 
 - (void)handleSingleTap:(UITapGestureRecognizer *)gestureRecognizer
 {
-    NSLog(@"Single tap detected.");
+    DebugLog(@"Single tap detected.");
     
     // Tap once to show/hide navigation
     if (!self.navigationController.navigationBarHidden) {
-//        NSLog(@"Tapped to hide");
+//        DebugLog(@"Tapped to hide");
         [[self navigationController] setNavigationBarHidden:YES animated:YES];
         [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
         [UIView animateWithDuration:animationSpeed animations:^{
@@ -103,7 +103,7 @@
             [self centerContent];
         } completion:NULL];
     } else {
-//        NSLog(@"Tapped to show");
+//        DebugLog(@"Tapped to show");
         [[self navigationController] setNavigationBarHidden:NO animated:YES];
         [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
         [UIView animateWithDuration:animationSpeed animations:^{
@@ -117,7 +117,7 @@
 - (void)handleDoubleTap:(UITapGestureRecognizer *)gestureRecognizer
 {
     // double tap zooms in
-    NSLog(@"Double-tap detected.");
+    DebugLog(@"Double-tap detected.");
     float newScale = [self.scrollView zoomScale] * ZOOM_STEP;
     CGRect zoomRect = [self zoomRectForScale:newScale withCenter:[gestureRecognizer locationInView:gestureRecognizer.view]];
     [self.scrollView zoomToRect:zoomRect animated:YES];

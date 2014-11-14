@@ -85,7 +85,7 @@
 
 - (void)loadIssues
 {
-    NSLog(@"Loading issues...");
+    DebugLog(@"Loading issues...");
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(publisherReady:) name:PublisherDidUpdateNotification object:[NIAUPublisher getInstance]];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(publisherFailed:) name:PublisherFailedUpdateNotification object:[NIAUPublisher getInstance]];
     [[NIAUPublisher getInstance] requestIssues];
@@ -102,7 +102,7 @@
         [self.issuesArray addObject:self.issue];
         [self.issue requestArticles];
         if (i == ([[NIAUPublisher getInstance] numberOfIssues] - 1)) {
-            NSLog(@"Last issue reached.. setting observer.");
+            DebugLog(@"Last issue reached.. setting observer.");
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(articlesReady:) name:ArticlesDidUpdateNotification object:self.issue];
         }
     }
@@ -111,16 +111,16 @@
 - (void)publisherReady:(NSNotification *)notification
 {
     // issues are downloaded, now get the articles.
-    NSLog(@"Issues loaded OK.");
+    DebugLog(@"Issues loaded OK.");
     [self loadArticles];
-    NSLog(@"Loading articles...");
+    DebugLog(@"Loading articles...");
 }
 
 - (void)publisherFailed:(NSNotification *)notification
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:PublisherDidUpdateNotification object:[NIAUPublisher getInstance]];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:PublisherFailedUpdateNotification object:[NIAUPublisher getInstance]];
-    NSLog(@"%@",notification);
+    NSLog(@"Error - Publisher failed: %@",notification);
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
                                                     message:@"Cannot get issues from publisher server."
                                                    delegate:nil
