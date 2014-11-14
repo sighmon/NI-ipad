@@ -31,6 +31,8 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
+    [self setupGestures];
+    
     [self setupView];
     [self sendGoogleAnalyticsStats];
 }
@@ -68,6 +70,15 @@
         self.aboutWebView.scrollView.scrollEnabled = NO;
     }
     self.scrollView.scrollsToTop = YES;
+}
+
+- (void)setupGestures
+{
+    // add gesture recognizers to the about label
+    UITapGestureRecognizer *doubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleDoubleTap:)];
+    
+    [doubleTap setNumberOfTapsRequired:2];
+    [self.aboutLabel addGestureRecognizer:doubleTap];
 }
 
 - (void)updateWebViewHeight
@@ -193,6 +204,25 @@
 - (IBAction)dismissButtonTapped:(id)sender
 {
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)handleDoubleTap:(UITapGestureRecognizer *)gestureRecognizer
+{
+    // Allow the user to discover their ParseID for debugging
+    PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+    NSString *parseIDString = [NSString stringWithFormat: @"Your installation ID is: %@", [currentInstallation objectId]];
+    
+    // Copy to clipboard
+//    UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
+//    [pasteboard setString:[currentInstallation objectId]];
+    
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"About"
+                                                    message:parseIDString
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil];
+    [alertView show];
+    alertView.delegate = nil;
 }
 
 - (IBAction)feedbackButtonTapped:(id)sender

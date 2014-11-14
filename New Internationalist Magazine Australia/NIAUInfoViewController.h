@@ -17,7 +17,9 @@
 #import "GAIFields.h"
 #import "GAILogger.h"
 
-@interface NIAUInfoViewController : UIViewController <UITextFieldDelegate, UIWebViewDelegate>
+#import <Parse/Parse.h>
+
+@interface NIAUInfoViewController : UIViewController <UITextFieldDelegate, UIWebViewDelegate, UIGestureRecognizerDelegate>
 
 @property (nonatomic, weak) IBOutlet UIScrollView *scrollView;
 @property (nonatomic, weak) IBOutlet UIWebView *aboutWebView;
@@ -28,6 +30,7 @@
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *versionNumberHeight;
 @property (nonatomic, weak) IBOutlet UISwitch *analyticsSwitch;
 @property (nonatomic, weak) IBOutlet UISwitch *helpSwitch;
+@property (nonatomic, weak) IBOutlet UILabel *aboutLabel;
 
 - (IBAction)switchChanged: (id)sender;
 

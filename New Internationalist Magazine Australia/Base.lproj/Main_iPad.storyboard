@@ -913,6 +913,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="aboutLabel" destination="tSs-c7-X5f" id="Sc6-zL-Kq1"/>
                         <outlet property="aboutWebView" destination="8KR-8d-QvV" id="uxv-A7-iHO"/>
                         <outlet property="aboutWebViewHightConstraint" destination="lDp-M9-jEk" id="qFc-X0-NUU"/>
                         <outlet property="analyticsSwitch" destination="o1T-ws-MVv" id="Lgt-Vv-l15"/>
@@ -1420,13 +1421,13 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="JBV-bs-efO"/>
+        <segue reference="PYT-qA-gCe"/>
+        <segue reference="w2Z-Bz-DtP"/>
         <segue reference="Sfz-PS-vgU"/>
         <segue reference="wEC-zk-Hnv"/>
-        <segue reference="w2Z-Bz-DtP"/>
-        <segue reference="PvO-ql-dqR"/>
+        <segue reference="ZRl-y5-oyE"/>
+        <segue reference="JBV-bs-efO"/>
         <segue reference="Qn8-eu-J3m"/>
-        <segue reference="PYT-qA-gCe"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.29803921568627451" green="0.64547217153284675" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
 </document>
