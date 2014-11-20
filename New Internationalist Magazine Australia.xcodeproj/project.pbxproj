@@ -165,6 +165,12 @@
 /* Begin PBXFileReference section */
 		0507DB68177AA0F60099540D /* NIAUTableOfContentsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NIAUTableOfContentsViewController.h; sourceTree = "<group>"; };
 		0507DB69177AA0F60099540D /* NIAUTableOfContentsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NIAUTableOfContentsViewController.m; sourceTree = "<group>"; };
+		050C3C2B1A1E55DC00B4CA3D /* en-AU */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-AU"; path = "en-AU.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		050C3C2C1A1E566800B4CA3D /* en-CA */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-CA"; path = "en-CA.lproj/Main_iPhone.strings"; sourceTree = "<group>"; };
+		050C3C2D1A1E566800B4CA3D /* en-CA */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-CA"; path = "en-CA.lproj/Main_iPad.strings"; sourceTree = "<group>"; };
+		050C3C2E1A1E566800B4CA3D /* en-CA */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-CA"; path = "en-CA.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		050C3C2F1A1E566900B4CA3D /* en-CA */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-CA"; path = "en-CA.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		050C3C301A1E566900B4CA3D /* en-CA */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-CA"; path = "en-CA.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		0511F13A17BB1E24004B5A72 /* article-body.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = "article-body.css"; sourceTree = "<group>"; };
 		051877CF18FD9B9200DCFA24 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		051A72AF177950D600BDD346 /* default_cover.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = default_cover.png; sourceTree = "<group>"; };
@@ -764,6 +770,7 @@
 				"en-GB",
 				"en-AU",
 				"en-US",
+				"en-CA",
 			);
 			mainGroup = 055A8EB9177290CE003D9407;
 			productRefGroup = 055A8EC3177290CE003D9407 /* Products */;
@@ -1031,6 +1038,8 @@
 			children = (
 				053EB9001A0035F500058669 /* Base */,
 				053EB9031A00367800058669 /* en-GB */,
+				050C3C2B1A1E55DC00B4CA3D /* en-AU */,
+				050C3C2E1A1E566800B4CA3D /* en-CA */,
 			);
 			name = Localizable.strings;
 			path = "New Internationalist Magazine Australia";
@@ -1043,6 +1052,7 @@
 				053EB8F31A002ABC00058669 /* en-GB */,
 				053EB8F71A002DDA00058669 /* en-AU */,
 				053EB8FB1A002EB600058669 /* en-US */,
+				050C3C2F1A1E566900B4CA3D /* en-CA */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -1054,6 +1064,7 @@
 				053EB8F11A002ABC00058669 /* en-GB */,
 				053EB8F51A002DDA00058669 /* en-AU */,
 				053EB8F91A002EB600058669 /* en-US */,
+				050C3C2C1A1E566800B4CA3D /* en-CA */,
 			);
 			name = Main_iPhone.storyboard;
 			sourceTree = "<group>";
@@ -1065,6 +1076,7 @@
 				053EB8F21A002ABC00058669 /* en-GB */,
 				053EB8F61A002DDA00058669 /* en-AU */,
 				053EB8FA1A002EB600058669 /* en-US */,
+				050C3C2D1A1E566800B4CA3D /* en-CA */,
 			);
 			name = Main_iPad.storyboard;
 			sourceTree = "<group>";
@@ -1076,6 +1088,7 @@
 				053EB8F41A002ABC00058669 /* en-GB */,
 				053EB8F81A002DDA00058669 /* en-AU */,
 				053EB8FC1A002EB600058669 /* en-US */,
+				050C3C301A1E566900B4CA3D /* en-CA */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
