@@ -165,8 +165,11 @@ NSString *ImageDidSaveToCacheNotification = @"ImageDidSaveToCache";
         return nil;
     }
     
+    // Expand the [Cover:xx|options] tags
+    NSString *newBody = [self expandCoverTagsInBody:body];
+    
     // Expand the [File:xxx|option] tags
-    NSString *newBody = [self expandImageTagsInBody:body];
+    newBody = [self expandImageTagsInBody:newBody];
     
     // Only add the un-embedded images if they aren't hidden and don't have a Media ID from bricolage.
     NSMutableArray *imagesToAdd = [[NSMutableArray alloc] init];
@@ -353,6 +356,113 @@ NSString *ImageDidSaveToCacheNotification = @"ImageDidSaveToCache";
                 //TODO: can we dry up the image URL (it's also defined in the buildImageCache method
                 replacement = [NSString stringWithFormat:@"<div class='%@'><a href='%@'><img id='image%@' width='%@' src='%@'/></a>%@%@</div>", cssClass, imageSource, imageId, imageWidth, imageSource, caption_div, credit_div];
             }
+        }
+        
+        // every iteration, the output string is getting longer
+        // so we need to adjust the range that we are editing
+        NSRange newrange = NSMakeRange(match.range.location+offset, match.range.length);
+        [newBody replaceCharactersInRange:newrange withString:replacement];
+        
+        offset+=[replacement length]-[fullMatch length];
+        
+    }];
+    return newBody;
+}
+
+- (NSString *)expandCoverTagsInBody:(NSString *)body {
+    NSError *error;
+    NSRegularExpression *regex = [NSRegularExpression
+                                  regularExpressionWithPattern:@"\\[Cover:(\\d+)(?:\\|([^\\]]*))?]"
+                                  options:NSRegularExpressionCaseInsensitive
+                                  error:&error];
+    // TODO: we will at least want a list of which ID's we need to cache from the site.
+    // Pix: Still need this?
+    
+    // make a copy of the input string. we are going to edit this one as we iterate
+    NSMutableString *newBody = [NSMutableString stringWithString:body];
+    
+    // keep track of how many additional characters we've added
+    __block NSUInteger offset = 0;
+    
+    // TODO: build cache object for each article image? trigger background download?
+    
+    [regex enumerateMatchesInString:body options:0 range:NSMakeRange(0, [body length]) usingBlock:^(NSTextCheckingResult *match, NSMatchingFlags flags, BOOL *stop){
+        
+        // bored? dry this up.
+        NSString *fullMatch = [body substringWithRange:match.range];
+        NSString *issueId = @"";
+        if ([match numberOfRanges]>1 && [match rangeAtIndex:1].length>0) {
+            issueId = [body substringWithRange:[match rangeAtIndex:1]];
+        }
+        NSArray *options = [NSArray array];
+        if ([match numberOfRanges]>2 && [match rangeAtIndex:2].length>0) {
+            NSString *optionString = [body substringWithRange:[match rangeAtIndex:2]];
+            options = [optionString componentsSeparatedByString:@"|"];
+        }
+        
+        // ported from NI:/app/helpers/article-helper.rb:expand-image-tags
+        NSString *cssClass = @"article-image article-image-small";
+        NSString *imageWidth = @"200";
+        
+        if([options containsObject:@"small"]) {
+            cssClass = @"article-image article-image-small";
+            imageWidth = @"75";
+        }
+        
+        if ([options containsObject:@"ns"]) {
+            cssClass = [cssClass stringByAppendingString:@" no-shadow"];
+        }
+        
+        if ([options containsObject:@"left"]) {
+            cssClass = [cssClass stringByAppendingString:@" article-image-float-none"];
+        }
+        
+        // ruby code from articles_helper
+        /*
+         if media_url
+         tag_method = method(:retina_image_tag)
+         image_options = {:alt => "#{strip_tags(image.caption)}", :title => "#{strip_tags(image.caption)}", :size => "#{image_width}x#{image_width * image.height / image.width}"}
+         if options.include?("full")
+         tag_method = method(:image_tag)
+         end
+         "<div class='#{css_class}'>"+tag_method.call(media_url, image_options)+caption_div+credit_div+"</div>"
+         else
+         */
+        
+        // if imageId is blank, replace the tag with nothing.
+        NSString *replacement = @"";
+        
+        if ([issueId length]>0) {
+            // Find the issue
+            
+            NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
+            NSNumber *issueIdNSNumber = [numberFormatter numberFromString:issueId];
+            
+            NIAUIssue *issueForCover = [[NIAUPublisher getInstance] issueWithRailsID:issueIdNSNumber];
+            
+            NSString *imageSource = [[issueForCover coverCacheURL] path];
+            
+            // Check if we already have the cover on disk, and show it if we do.
+            if ([[NSFileManager defaultManager] fileExistsAtPath:imageSource]) {
+                // Yay, lets use it.
+            } else {
+                // Temporary loading image
+                imageSource = @"loading_image.png";
+                
+                // Download the cover in a background thread
+                [issueForCover getCoverWithCompletionBlock:^(UIImage *img) {
+                    // Send a notification when the cover has been read successfully
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        NSDictionary *imageInformation = @{@"image":@[issueId,imageSource]};
+                        [[NSNotificationCenter defaultCenter] postNotificationName:ImageDidSaveToCacheNotification object:nil userInfo:imageInformation];
+                        DebugLog(@"Sent Cover saved notification for ID:%@",issueId);
+                    });
+                }];
+            }
+            
+            //TODO: can we dry up the image URL (it's also defined in the buildImageCache method
+            replacement = [NSString stringWithFormat:@"<div class='%@'><a href='/issues/%@'><img id='image%@' width='%@' src='%@'/></a></div>", cssClass, issueId, issueId, imageWidth, imageSource];
+            
         }
         
         // every iteration, the output string is getting longer

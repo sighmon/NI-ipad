@@ -56,6 +56,8 @@ extern NSString *ArticlesFailedUpdateNotification;
 +(NIAUIssue *)issueWithDictionary:(NSDictionary *)dict;
 +(NIAUIssue *)issueWithUserInfo:(NSDictionary *)dict;
 
+-(NSURL *)coverCacheURL;
+
 -(void)getCoverWithCompletionBlock:(void(^)(UIImage *img))block;
 
 -(void)getCoverThumbWithSize:(CGSize)size andCompletionBlock:(void (^)(UIImage *))block;
