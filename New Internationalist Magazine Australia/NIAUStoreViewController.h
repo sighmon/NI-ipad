@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "NIAUInAppPurchaseHelper.h"
+#import "NIAUTableOfContentsViewController.h"
 
 #import "GAI.h"
 #import "GAITracker.h"

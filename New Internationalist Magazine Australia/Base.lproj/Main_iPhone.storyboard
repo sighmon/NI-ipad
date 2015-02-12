@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="eQs-ol-VW7">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="eQs-ol-VW7">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
     <scenes>
         <!--Navigation Controller-->
@@ -194,7 +194,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="106" height="151"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="F19BE376-03B6-4F1D-A2F6-84B364BC9B46" translatesAutoresizingMaskIntoConstraints="NO" id="8yQ-69-2Yi">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="2AC75553-BCF2-40A9-A5B7-21918D8BC2A9" translatesAutoresizingMaskIntoConstraints="NO" id="8yQ-69-2Yi">
                                             <rect key="frame" x="0.0" y="0.0" width="106" height="151"/>
                                         </imageView>
                                         <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="i50-5v-zwU">
@@ -658,6 +658,7 @@
                         <outlet property="subscriptionExpiryDateLabel" destination="NdR-ge-LiW" id="jfn-jw-A72"/>
                         <outlet property="subscriptionTitle" destination="Xan-Bn-g4F" id="cPe-l5-4BG"/>
                         <outlet property="tableViewLoadingIndicator" destination="rHX-0a-N4R" id="vEW-OS-t8N"/>
+                        <segue destination="4fR-wf-HfG" kind="push" identifier="showTableOfContents" id="7YI-lD-b3J"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WOw-5v-Fmg" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1381,7 +1382,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="F19BE376-03B6-4F1D-A2F6-84B364BC9B46" width="200" height="98">
+        <image name="2AC75553-BCF2-40A9-A5B7-21918D8BC2A9" width="200" height="98">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGOzxYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK0HCBEW
 GxwgISksLzU4VSRudWxs1AkKCwwNDg8QViRjbGFzc1xOU0ltYWdlRmxhZ3NWTlNSZXBzV05TQ29sb3KA
@@ -2770,13 +2771,13 @@ AAAAAAAAAAAAAAAAAAFA/A
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="nQ6-DH-CWR"/>
+        <segue reference="SUv-P7-9yc"/>
         <segue reference="Miu-Qg-BkO"/>
         <segue reference="IfR-jT-MPw"/>
-        <segue reference="9C9-O3-5fi"/>
-        <segue reference="SUv-P7-9yc"/>
-        <segue reference="joJ-Rh-K6j"/>
         <segue reference="mdp-6r-s59"/>
+        <segue reference="joJ-Rh-K6j"/>
+        <segue reference="7YI-lD-b3J"/>
+        <segue reference="nQ6-DH-CWR"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.29803921568627451" green="0.6470588235294118" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
 </document>

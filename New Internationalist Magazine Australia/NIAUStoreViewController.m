@@ -393,9 +393,16 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if ([self hasProductBeenPurchasedAtRow:(int)indexPath.row]) {
-        // Product has been purchased, so do nothing
-        [[[UIAlertView alloc] initWithTitle:@"Already purchased!" message:@"Looks like you've already purchased this item!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+        if ([self isProductASubscriptionAtRow:(int)indexPath.row]) {
+            // Subscription has been purchased, so do nothing
+            [[[UIAlertView alloc] initWithTitle:@"Already purchased!" message:@"Looks like you've already purchased this item!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+        } else {
+            // Magazine has been purchased, so go to that issue
+            [self performSegueWithIdentifier:@"showTableOfContents" sender:self];
+        }
+        
     } else {
+        // Product hasn't been purchased, so purchase it!
         [self purchaseProductAtRow:(int)indexPath.row];
     }
 }
@@ -465,6 +472,28 @@
     [self.tableView reloadData];
 }
 
+#pragma mark - Navigation
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([[segue identifier] isEqualToString:@"showTableOfContents"])
+    {
+        NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
+        SKProduct *product = _products[selectedIndexPath.row];
+        
+        // Pull the number (issue name) out of the product identifier so we can get the Issue from Publisher
+        NSString *issueNumber = [[product.productIdentifier componentsSeparatedByCharactersInSet:
+                                [[NSCharacterSet decimalDigitCharacterSet] invertedSet]]
+                               componentsJoinedByString:@""];
+        
+        NIAUIssue *issue = [[NIAUPublisher getInstance] issueWithName:issueNumber];
+        
+        NIAUTableOfContentsViewController *tableOfContentsViewController = [segue destinationViewController];
+        tableOfContentsViewController.issue = issue;
+    }
+    
+}
+
 /*
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
@@ -504,16 +533,6 @@
 }
 */
 
-/*
-#pragma mark - Navigation
 
-// In a story board-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-
- */
 
 @end
