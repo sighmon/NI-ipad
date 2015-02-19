@@ -450,6 +450,7 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
     [mixedMedia removeObjectsInArray:[self articlesInCategory:@"viewfrom"]];
     [mixedMedia removeObjectsInArray:[self articlesInCategory:@"mark-engler"]];
     [mixedMedia removeObjectsInArray:[self articlesInCategory:@"steve-parry"]];
+    [mixedMedia removeObjectsInArray:[self articlesInCategory:@"kate-smurthwaite"]];
     [mixedMedia removeObjectsInArray:[self articlesInCategory:@"finally"]];
     [mixedMedia removeObjectsInArray:[self articlesInCategory:@"features"]];
     return [[NSArray alloc] initWithArray:mixedMedia];
@@ -462,6 +463,7 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
     [opinionArticles addObjectsFromArray:[self articlesInCategory:@"viewfrom"]];
     [opinionArticles addObjectsFromArray:[self articlesInCategory:@"steve-parry"]];
     [opinionArticles addObjectsFromArray:[self articlesInCategory:@"mark-engler"]];
+    [opinionArticles addObjectsFromArray:[self articlesInCategory:@"kate-smurthwaite"]];
     return [[NSArray alloc] initWithArray:opinionArticles];
 }
 
@@ -479,6 +481,7 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
     [regularArticles removeObjectsInArray:[self articlesInCategory:@"columns/viewfrom"]];
     [regularArticles removeObjectsInArray:[self articlesInCategory:@"columns/mark-engler"]];
     [regularArticles removeObjectsInArray:[self articlesInCategory:@"columns/steve-parry"]];
+    [regularArticles removeObjectsInArray:[self articlesInCategory:@"columns/kate-smurthwaite"]];
     return [[NSArray alloc] initWithArray:regularArticles];
 }
 
