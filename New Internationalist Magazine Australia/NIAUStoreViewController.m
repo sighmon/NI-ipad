@@ -11,6 +11,7 @@
 @interface NIAUStoreViewController ()
 {
     NSArray *_products;
+    NSDictionary *_railsUserInfo;
     NSNumberFormatter *_priceFormatter;
 }
 @end
@@ -43,6 +44,7 @@
     [[NIAUInAppPurchaseHelper sharedInstance] requestProductsWithCompletionHandler:^(BOOL success, NSArray *products) {
         if (success) {
             _products = products;
+            _railsUserInfo = [self getRailsUserInfo];
             [self.tableViewLoadingIndicator stopAnimating];
             [self.tableView reloadData];
             
@@ -81,7 +83,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIContentSizeCategoryDidChangeNotification object:nil];
 }
 
-- (void)updateExpiryDate
+- (NSDictionary *)getRailsUserInfo
 {
     // Try getting subscription expiry date from Rails
     NSData *subscriptionExpiryDate = [NIAUInAppPurchaseHelper getUserExpiryDateFromRailsAndAppStoreReceipt];
@@ -92,28 +94,38 @@
         
         if (error != nil) {
             DebugLog(@"Error parsing JSON.");
-//            NSString *decodedString = [[NSString alloc] initWithData:subscriptionExpiryDate encoding:NSUTF8StringEncoding];
-//            DebugLog(@"Response: %@", decodedString);
+            return nil;
         }
         else {
-            // Got a response from Rails, display it.
+            // Got a response from Rails, return it.
             DebugLog(@"JSON: %@", jsonDictionary);
-            if ([jsonDictionary objectForKey:@"expiry"] != [NSNull null]) {
-                NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-                [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZZZ"];
-                NSDate *date = [dateFormatter dateFromString:[jsonDictionary objectForKey:@"expiry"]];
-                NSLocale *userLocale = [[NSLocale alloc] initWithLocaleIdentifier:[[NSLocale preferredLanguages] objectAtIndex:0]];
-                [dateFormatter setLocale:userLocale];
-                [dateFormatter setDateStyle:NSDateFormatterLongStyle];
-                [UIView animateWithDuration:0.5 animations:^{
-                    [self.subscriptionTitle setAlpha:0.0];
-                    [self.subscriptionExpiryDateLabel setAlpha:0.0];
-                    self.subscriptionTitle.text = @"Your subscription expiry:";
-                    self.subscriptionExpiryDateLabel.text = [dateFormatter stringFromDate:date];
-                    [self.subscriptionTitle setAlpha:1.0];
-                    [self.subscriptionExpiryDateLabel setAlpha:1.0];
-                }];
-            }
+            return jsonDictionary;
+        }
+    } else {
+        // Failed to get a response from rails
+        return nil;
+    }
+}
+
+- (void)updateExpiryDate
+{
+    if (_railsUserInfo) {
+        // Display expiry date from rails
+        if ([_railsUserInfo objectForKey:@"expiry"] != [NSNull null]) {
+            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+            [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZZZ"];
+            NSDate *date = [dateFormatter dateFromString:[_railsUserInfo objectForKey:@"expiry"]];
+            NSLocale *userLocale = [[NSLocale alloc] initWithLocaleIdentifier:[[NSLocale preferredLanguages] objectAtIndex:0]];
+            [dateFormatter setLocale:userLocale];
+            [dateFormatter setDateStyle:NSDateFormatterLongStyle];
+            [UIView animateWithDuration:0.5 animations:^{
+                [self.subscriptionTitle setAlpha:0.0];
+                [self.subscriptionExpiryDateLabel setAlpha:0.0];
+                self.subscriptionTitle.text = @"Your subscription expiry:";
+                self.subscriptionExpiryDateLabel.text = [dateFormatter stringFromDate:date];
+                [self.subscriptionTitle setAlpha:1.0];
+                [self.subscriptionExpiryDateLabel setAlpha:1.0];
+            }];
         }
     } else {
         // No data available, so lets try iTunes
@@ -352,7 +364,7 @@
     CGSize fittingSize = CGSizeMake(tableView.bounds.size.width, 0);
     CGSize size = [cell.contentView systemLayoutSizeFittingSize:fittingSize];
     
-    DebugLog(@"Cell: %@\nSize: %@", NSStringFromCGSize(cell.frame.size), NSStringFromCGSize(size));
+//    DebugLog(@"Cell: %@\nSize: %@", NSStringFromCGSize(cell.frame.size), NSStringFromCGSize(size));
     
     return size;
 }
@@ -420,17 +432,27 @@
 
 - (BOOL)hasProductBeenPurchasedAtRow:(int)row
 {
+    BOOL purchased = FALSE;
     if (_products) {
         SKProduct *product = _products[row];
-        
         if ([[NIAUInAppPurchaseHelper sharedInstance] productPurchased:product.productIdentifier]) {
-            return TRUE;
-        } else {
-            return FALSE;
+            purchased = TRUE;
+            DebugLog(@"Magazine purchased from iTunes: %@", product.productIdentifier);
         }
-    } else {
-        return FALSE;
+        if (_railsUserInfo) {
+            // Check to see if the user purchased an issue on rails
+            NSArray *purchases = [_railsUserInfo objectForKey:@"purchases"];
+            if (purchases && [purchases count] > 0) {
+                for (NSNumber *issueNumber in purchases) {
+                    if ([product.productIdentifier containsString:[issueNumber stringValue]]) {
+                        purchased = TRUE;
+                        DebugLog(@"Magazine purchased from Rails: %@", [issueNumber stringValue]);
+                    }
+                }
+            }
+        }
     }
+    return purchased;
 }
 
 - (BOOL)isProductASubscriptionAtRow:(int)row
