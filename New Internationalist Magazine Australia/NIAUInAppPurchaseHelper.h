@@ -30,6 +30,7 @@ UIKIT_EXTERN NSString *const IAPHelperProductPurchasedNotification;
     NSSet *_productIdentifiers;
     NSMutableSet *_purchasedProductIdentifiers;
     NSMutableData *receivedData;
+    BOOL iTunesSandboxRequest;
 }
 
 @property (nonatomic, strong) NSArray *allProducts;

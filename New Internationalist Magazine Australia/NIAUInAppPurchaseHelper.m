@@ -364,8 +364,12 @@ NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurcha
     
     // URL for sandbox receipt validation; replace "sandbox" with "buy" in production or you will receive
     // error codes 21006 or 21007
-//    NSURL *requestURL = [NSURL URLWithString:@"https://sandbox.itunes.apple.com/verifyReceipt"];
-    NSURL *requestURL = [NSURL URLWithString:@"https://buy.itunes.apple.com/verifyReceipt"];
+    NSURL *requestURL = [[NSURL alloc] init];
+    if (iTunesSandboxRequest) {
+        requestURL = [NSURL URLWithString:@"https://sandbox.itunes.apple.com/verifyReceipt"];
+    } else {
+        requestURL = [NSURL URLWithString:@"https://buy.itunes.apple.com/verifyReceipt"];
+    }
     
     NSMutableURLRequest *req = [[NSMutableURLRequest alloc] initWithURL:requestURL];
     [req setHTTPMethod:@"POST"];
@@ -551,8 +555,24 @@ NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurcha
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
     NSString *response = [[NSString alloc] initWithData:receivedData encoding:NSUTF8StringEncoding];
-    DebugLog(@"iTunes response: %@",response);
-    self.completionBlock(YES,response);
+//    DebugLog(@"iTunes response: %@",response);
+    NSData *jsonData = [response dataUsingEncoding:NSUTF8StringEncoding];
+    NSError *e;
+    NSDictionary *receiptDictionary = [NSJSONSerialization JSONObjectWithData:jsonData options:kNilOptions error:&e];
+    if (e != nil) {
+        // Uh oh, error reading the JSON.
+        DebugLog(@"iTunes JSON read error: %@", e);
+        
+    } else if (receiptDictionary && [[receiptDictionary objectForKey:@"status"] integerValue] == 21007) {
+        // The receipt is a sandbox receipt.
+        iTunesSandboxRequest = TRUE;
+        receivedData = nil;
+        [self checkReceipt];
+        
+    } else {
+        // Success, return response
+        self.completionBlock(YES,response);
+    }
 }
 
 @end
