@@ -298,7 +298,7 @@
         
         // Try logging in to Rails.
         NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-        [request setURL:[NSURL URLWithString:[NSString stringWithFormat:@"users/sign_in.json?password=%@&username=%@", password, username] relativeToURL:[NSURL URLWithString:SITE_URL]]];
+        [request setURL:[NSURL URLWithString:[NSString stringWithFormat:@"users/sign_in.json?username=%@", username] relativeToURL:[NSURL URLWithString:SITE_URL]]];
         [request setHTTPMethod:@"POST"];
         [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
         NSData *postData = [[NSString stringWithFormat:@"user[login]=%@&user[password]=%@",username,password] dataUsingEncoding:NSUTF8StringEncoding];
