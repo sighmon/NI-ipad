@@ -162,7 +162,7 @@ NSString *kCellID = @"magazineCellID";              // UICollectionViewCell stor
 
 - (CGSize)calculateCellSizeForScreenSize:(CGSize)size
 {
-    BOOL landscape = UIDeviceOrientationIsLandscape(self.interfaceOrientation);
+    BOOL landscape = (UIDeviceOrientationLandscapeLeft == self.interfaceOrientation) || (UIDeviceOrientationLandscapeRight == self.interfaceOrientation);
     int columns = 0;
     
     if (landscape) {

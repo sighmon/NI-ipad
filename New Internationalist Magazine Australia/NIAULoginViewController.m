@@ -199,7 +199,7 @@ NSString *LoginUnsuccessfulNotification = @"LoginUnsuccessful";
 - (void)keyboardWasShown: (NSNotification *)notification
 {
     UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
-    NSDictionary* info = [notification userInfo];
+    NSDictionary *info = [notification userInfo];
     CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
 
     if (orientation == UIDeviceOrientationLandscapeLeft || orientation == UIDeviceOrientationLandscapeRight) {
@@ -207,9 +207,22 @@ NSString *LoginUnsuccessfulNotification = @"LoginUnsuccessful";
         [UIView animateWithDuration:0.3 animations:^{
             CGRect newRect = self.view.frame;
             if (IS_IPAD()) {
-                newRect.origin.y -= ((kbSize.width / 2) - 60.);
+                if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0")) {
+                    // New calculation for iOS 8
+                    newRect.origin.y -= (kbSize.height / 2);
+                } else {
+                    // iOS 7 and below
+                    newRect.origin.y -= ((kbSize.width / 2) - 60.);
+                }
             } else {
-                newRect.origin.y -= (kbSize.width - 60.);
+                // It's an iPhone
+                if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0")) {
+                    // New calculation for iOS 8
+                    newRect.origin.y -= (kbSize.height / 2);
+                } else {
+                    // iOS 7 and below
+                    newRect.origin.y -= (kbSize.width - 60.);
+                }
             }
             self.view.frame = newRect;
         }];
