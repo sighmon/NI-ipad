@@ -390,7 +390,12 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
         NSOutputStream *os = [NSOutputStream outputStreamWithURL:jsonURL append:FALSE];
         [os open];
         NSError *error;
-        if ([NSJSONSerialization writeJSONObject:dictionary toStream:os options:0 error:&error]<=0) {
+        // To avoid crashlytics #175, check if the filesystem is ready to write to
+        double startTime = [NSDate timeIntervalSinceReferenceDate];
+        while (![os hasSpaceAvailable] && ([NSDate timeIntervalSinceReferenceDate] - startTime) < 2) {
+            // Wait until the filesystem is ready or timeout after 2 seconds
+        }
+        if (![os hasSpaceAvailable] || [NSJSONSerialization writeJSONObject:dictionary toStream:os options:0 error:&error]<=0) {
             DebugLog(@"Error writing JSON file");
         }
         [os close];

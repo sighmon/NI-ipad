@@ -63,6 +63,7 @@
 		052E32B318E1F74300A1906E /* bootstrap.css in Resources */ = {isa = PBXBuildFile; fileRef = 052E32B218E1F74300A1906E /* bootstrap.css */; };
 		052E32B518E1FBAC00A1906E /* fontawesome-webfont.woff in Resources */ = {isa = PBXBuildFile; fileRef = 052E32B418E1FBAC00A1906E /* fontawesome-webfont.woff */; };
 		053878261777D767001E60F6 /* NIAUIssue.m in Sources */ = {isa = PBXBuildFile; fileRef = 053878251777D767001E60F6 /* NIAUIssue.m */; };
+		0539DE961B857A7700B5772A /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0539DE951B857A7700B5772A /* Fabric.framework */; };
 		053EB8FF1A0035F500058669 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 053EB9011A0035F500058669 /* Localizable.strings */; };
 		05424C361803AD0400399194 /* NIAUStoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05424C351803AD0400399194 /* NIAUStoreViewController.m */; };
 		05424C391803BD7000399194 /* NIAULoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05424C381803BD7000399194 /* NIAULoginViewController.m */; };
@@ -210,6 +211,7 @@
 		052E32B418E1FBAC00A1906E /* fontawesome-webfont.woff */ = {isa = PBXFileReference; lastKnownFileType = file; path = "fontawesome-webfont.woff"; sourceTree = "<group>"; };
 		053878241777D767001E60F6 /* NIAUIssue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NIAUIssue.h; sourceTree = "<group>"; };
 		053878251777D767001E60F6 /* NIAUIssue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NIAUIssue.m; sourceTree = "<group>"; };
+		0539DE951B857A7700B5772A /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
 		053EB8F11A002ABC00058669 /* en-GB */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-GB"; path = "en-GB.lproj/Main_iPhone.strings"; sourceTree = "<group>"; };
 		053EB8F21A002ABC00058669 /* en-GB */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-GB"; path = "en-GB.lproj/Main_iPad.strings"; sourceTree = "<group>"; };
 		053EB8F31A002ABC00058669 /* en-GB */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-GB"; path = "en-GB.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
@@ -358,6 +360,7 @@
 				059EF8F9187E13220079FA88 /* FacebookSDK.framework in Frameworks */,
 				055A8ECA177290CE003D9407 /* UIKit.framework in Frameworks */,
 				055A8EC6177290CE003D9407 /* Foundation.framework in Frameworks */,
+				0539DE961B857A7700B5772A /* Fabric.framework in Frameworks */,
 				3CA1C435E64C4F6F866B2E9B /* libPods-New Internationalist Magazine Australia.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -454,6 +457,7 @@
 		055A8EC4177290CE003D9407 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0539DE951B857A7700B5772A /* Fabric.framework */,
 				051877CF18FD9B9200DCFA24 /* Crashlytics.framework */,
 				05EF22F218E1E7B70017244C /* libz.1.2.5.dylib */,
 				059EF8F8187E13220079FA88 /* FacebookSDK.framework */,
