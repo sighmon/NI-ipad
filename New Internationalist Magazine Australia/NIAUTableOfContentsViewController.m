@@ -128,7 +128,7 @@ static NSString *CellIdentifier = @"articleCell";
     
     // Send the screen view.
     [[GAI sharedInstance].defaultTracker
-     send:[[GAIDictionaryBuilder createAppView] build]];
+     send:[[GAIDictionaryBuilder createScreenView] build]];
     
     // Google Tag Manager send
     // The container should have already been opened, otherwise events pushed to
@@ -270,7 +270,9 @@ static NSString *CellIdentifier = @"articleCell";
     NIAUArticle *article = [self.sortedCategories[indexPath.section] objectForKey:@"articles"][indexPath.row];
     
     id teaser = article.teaser;
-    teaser = (teaser==[NSNull null]) ? @"" : teaser;
+    if (teaser == nil || teaser == [NSNull null]) {
+        teaser = @"";
+    }
     
     UIImageView *articleImageView = (UIImageView *)[cell viewWithTag:100];
     articleImageView.image = nil;

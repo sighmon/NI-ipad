@@ -86,7 +86,7 @@
     
     // Send the screen view.
     [[GAI sharedInstance].defaultTracker
-     send:[[GAIDictionaryBuilder createAppView] build]];
+     send:[[GAIDictionaryBuilder createScreenView] build]];
 }
 
 - (void)loadIssues
@@ -208,7 +208,9 @@
     
     // Regex to remove <strong> and <b> and any other <html>
     id teaser = [article teaser];
-    teaser = (teaser==[NSNull null]) ? @"" : teaser;
+    if (teaser == nil || teaser == [NSNull null]) {
+        teaser = @"";
+    }
     
     NSError *error = NULL;
     NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"<[^>]*>" options:NSRegularExpressionCaseInsensitive error:&error];

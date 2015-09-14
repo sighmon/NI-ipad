@@ -80,7 +80,7 @@
     
     // Send the screen view.
     [[GAI sharedInstance].defaultTracker
-     send:[[GAIDictionaryBuilder createAppView] build]];
+     send:[[GAIDictionaryBuilder createScreenView] build]];
 }
 
 - (void)loadIssues

@@ -53,7 +53,6 @@
 		052D3A8B187DEED200377021 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 052D3A8A187DEED200377021 /* AudioToolbox.framework */; };
 		052D3A8D187DEEDC00377021 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 052D3A8C187DEEDC00377021 /* CFNetwork.framework */; };
 		052D3A8F187DEEE900377021 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 052D3A8E187DEEE900377021 /* CoreLocation.framework */; };
-		052D3A91187DEEFA00377021 /* libz.1.1.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 052D3A90187DEEFA00377021 /* libz.1.1.3.dylib */; };
 		052D3A93187DEF0400377021 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 052D3A92187DEF0400377021 /* MobileCoreServices.framework */; };
 		052D3A95187DEF0D00377021 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 052D3A94187DEF0D00377021 /* QuartzCore.framework */; };
 		052D3A97187DEF1A00377021 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 052D3A96187DEF1A00377021 /* Security.framework */; };
@@ -115,7 +114,7 @@
 		05D55E9B19745E2100C5B913 /* GTM-W4P6WH.plist in Resources */ = {isa = PBXBuildFile; fileRef = 05D55E9919745E2100C5B913 /* GTM-W4P6WH.plist */; };
 		05E7839B19C3514E0003D34D /* 120.png in Resources */ = {isa = PBXBuildFile; fileRef = 055A8F071772C72F003D9407 /* 120.png */; };
 		05F856CF1864C67E001D1A75 /* NIAUArticleCategoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 05F856CE1864C67E001D1A75 /* NIAUArticleCategoryCell.m */; };
-		3CA1C435E64C4F6F866B2E9B /* libPods-New Internationalist Magazine Australia.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BC803423D2F743538C4A77A9 /* libPods-New Internationalist Magazine Australia.a */; };
+		08A7A1CCF6DEC03F2BF15AB6 /* libPods-New Internationalist Magazine Australia.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BC803423D2F743538C4A77A9 /* libPods-New Internationalist Magazine Australia.a */; };
 		52090A62178CF7D1002D5162 /* NIAUPublisher.m in Sources */ = {isa = PBXBuildFile; fileRef = 52090A61178CF7D1002D5162 /* NIAUPublisher.m */; };
 		528FC17818344C86006BCB44 /* NSData+Cookieless.m in Sources */ = {isa = PBXBuildFile; fileRef = 528FC17718344C86006BCB44 /* NSData+Cookieless.m */; };
 		52CD5EE617D896240038A70C /* NIAUCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 52CD5EE517D896240038A70C /* NIAUCache.m */; };
@@ -321,7 +320,7 @@
 		05FA185217A8B90000E023A0 /* 152.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 152.png; sourceTree = "<group>"; };
 		05FA185317A8B90000E023A0 /* 76.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 76.png; sourceTree = "<group>"; };
 		05FA185417A8B98000E023A0 /* 114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 114.png; sourceTree = "<group>"; };
-		304A308800C74A8892719249 /* Pods-New Internationalist Magazine Australia.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-New Internationalist Magazine Australia.xcconfig"; path = "Pods/Pods-New Internationalist Magazine Australia.xcconfig"; sourceTree = SOURCE_ROOT; };
+		11457EDF389EAC7E6F3CDC39 /* Pods-New Internationalist Magazine Australia.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-New Internationalist Magazine Australia.release.xcconfig"; path = "Pods/Target Support Files/Pods-New Internationalist Magazine Australia/Pods-New Internationalist Magazine Australia.release.xcconfig"; sourceTree = "<group>"; };
 		404F04905A5F4ACCA9F9CAB7 /* libPods-New Internationalist Magazine AustraliaTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-New Internationalist Magazine AustraliaTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		52090A60178CF7D1002D5162 /* NIAUPublisher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NIAUPublisher.h; sourceTree = "<group>"; };
 		52090A61178CF7D1002D5162 /* NIAUPublisher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NIAUPublisher.m; sourceTree = "<group>"; };
@@ -334,10 +333,9 @@
 		52CD5EEB17D8A6DC0038A70C /* NIAUCacheMethod.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NIAUCacheMethod.m; sourceTree = "<group>"; };
 		52EFA528179F877A00C93943 /* XCTestCase+MethodSwizzling.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "XCTestCase+MethodSwizzling.h"; sourceTree = "<group>"; };
 		52EFA529179F877A00C93943 /* XCTestCase+MethodSwizzling.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "XCTestCase+MethodSwizzling.m"; sourceTree = "<group>"; };
-		868019326A98489183B0CADE /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 		BC803423D2F743538C4A77A9 /* libPods-New Internationalist Magazine Australia.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-New Internationalist Magazine Australia.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D227D2D208954210BAF38409 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		DAA089B5209740EFAB63AC35 /* Pods-New Internationalist Magazine AustraliaTests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-New Internationalist Magazine AustraliaTests.xcconfig"; path = "Pods/Pods-New Internationalist Magazine AustraliaTests.xcconfig"; sourceTree = SOURCE_ROOT; };
+		F74058D0BA6127810C7A455B /* Pods-New Internationalist Magazine Australia.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-New Internationalist Magazine Australia.debug.xcconfig"; path = "Pods/Target Support Files/Pods-New Internationalist Magazine Australia/Pods-New Internationalist Magazine Australia.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -349,7 +347,6 @@
 				052D3A97187DEF1A00377021 /* Security.framework in Frameworks */,
 				052D3A95187DEF0D00377021 /* QuartzCore.framework in Frameworks */,
 				052D3A93187DEF0400377021 /* MobileCoreServices.framework in Frameworks */,
-				052D3A91187DEEFA00377021 /* libz.1.1.3.dylib in Frameworks */,
 				052D3A8F187DEEE900377021 /* CoreLocation.framework in Frameworks */,
 				052D3A8D187DEEDC00377021 /* CFNetwork.framework in Frameworks */,
 				052D3A8B187DEED200377021 /* AudioToolbox.framework in Frameworks */,
@@ -361,7 +358,7 @@
 				055A8ECA177290CE003D9407 /* UIKit.framework in Frameworks */,
 				055A8EC6177290CE003D9407 /* Foundation.framework in Frameworks */,
 				0539DE961B857A7700B5772A /* Fabric.framework in Frameworks */,
-				3CA1C435E64C4F6F866B2E9B /* libPods-New Internationalist Magazine Australia.a in Frameworks */,
+				08A7A1CCF6DEC03F2BF15AB6 /* libPods-New Internationalist Magazine Australia.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -438,9 +435,7 @@
 				055A8EED177290CF003D9407 /* New Internationalist Magazine AustraliaTests */,
 				055A8EC4177290CE003D9407 /* Frameworks */,
 				055A8EC3177290CE003D9407 /* Products */,
-				868019326A98489183B0CADE /* Pods.xcconfig */,
-				304A308800C74A8892719249 /* Pods-New Internationalist Magazine Australia.xcconfig */,
-				DAA089B5209740EFAB63AC35 /* Pods-New Internationalist Magazine AustraliaTests.xcconfig */,
+				CD1E850A6A2A12E44DDE3BE9 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -668,6 +663,15 @@
 			name = Caching;
 			sourceTree = "<group>";
 		};
+		CD1E850A6A2A12E44DDE3BE9 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				F74058D0BA6127810C7A455B /* Pods-New Internationalist Magazine Australia.debug.xcconfig */,
+				11457EDF389EAC7E6F3CDC39 /* Pods-New Internationalist Magazine Australia.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -739,7 +743,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = NIAU;
-				LastUpgradeCheck = 0500;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "New Internationalist Australia";
 				TargetAttributes = {
 					055A8EC1177290CE003D9407 = {
@@ -930,7 +934,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Pods-New Internationalist Magazine Australia-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-New Internationalist Magazine Australia/Pods-New Internationalist Magazine Australia-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		B29C4CB8DBC646A7AEAE8514 /* Check Pods Manifest.lock */ = {
@@ -1118,6 +1122,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -1172,13 +1177,14 @@
 		};
 		055A8EF8177290CF003D9407 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 304A308800C74A8892719249 /* Pods-New Internationalist Magazine Australia.xcconfig */;
+			baseConfigurationReference = F74058D0BA6127810C7A455B /* Pods-New Internationalist Magazine Australia.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = "New Internationalist Magazine Australia/New Internationalist Magazine Australia.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"/Users/simos/Coding/NI/New\\ Internationalist\\ Magazine\\ Australia",
@@ -1188,6 +1194,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "New Internationalist Magazine Australia/New Internationalist Magazine Australia-Prefix.pch";
 				INFOPLIST_FILE = "New Internationalist Magazine Australia/New Internationalist Magazine Australia-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "au.com.newint.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
@@ -1196,13 +1203,14 @@
 		};
 		055A8EF9177290CF003D9407 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 304A308800C74A8892719249 /* Pods-New Internationalist Magazine Australia.xcconfig */;
+			baseConfigurationReference = 11457EDF389EAC7E6F3CDC39 /* Pods-New Internationalist Magazine Australia.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = "New Internationalist Magazine Australia/New Internationalist Magazine Australia.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"/Users/simos/Coding/NI/New\\ Internationalist\\ Magazine\\ Australia",
@@ -1212,6 +1220,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "New Internationalist Magazine Australia/New Internationalist Magazine Australia-Prefix.pch";
 				INFOPLIST_FILE = "New Internationalist Magazine Australia/New Internationalist Magazine Australia-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "au.com.newint.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
@@ -1220,7 +1229,6 @@
 		};
 		055A8EFB177290CF003D9407 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DAA089B5209740EFAB63AC35 /* Pods-New Internationalist Magazine AustraliaTests.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/New Internationalist Magazine Australia.app/New Internationalist Magazine Australia";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1231,6 +1239,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "New Internationalist Magazine Australia/New Internationalist Magazine Australia-Prefix.pch";
 				INFOPLIST_FILE = "New Internationalist Magazine AustraliaTests/New Internationalist Magazine AustraliaTests-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "au.com.newint.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
@@ -1239,7 +1248,6 @@
 		};
 		055A8EFC177290CF003D9407 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DAA089B5209740EFAB63AC35 /* Pods-New Internationalist Magazine AustraliaTests.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/New Internationalist Magazine Australia.app/New Internationalist Magazine Australia";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1250,6 +1258,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "New Internationalist Magazine Australia/New Internationalist Magazine Australia-Prefix.pch";
 				INFOPLIST_FILE = "New Internationalist Magazine AustraliaTests/New Internationalist Magazine AustraliaTests-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "au.com.newint.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
@@ -1274,6 +1283,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "au.com.newint.New-Internationalist-Magazine-Australia.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
@@ -1294,6 +1304,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = "au.com.newint.New-Internationalist-Magazine-Australia.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;

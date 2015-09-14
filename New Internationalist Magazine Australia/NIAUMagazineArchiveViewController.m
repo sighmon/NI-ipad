@@ -57,7 +57,7 @@ NSString *kCellID = @"magazineCellID";              // UICollectionViewCell stor
     
     // Send the screen view.
     [[GAI sharedInstance].defaultTracker
-     send:[[GAIDictionaryBuilder createAppView] build]];
+     send:[[GAIDictionaryBuilder createScreenView] build]];
 }
 
 // doublehandling from NIAUViewController...
@@ -132,7 +132,7 @@ NSString *kCellID = @"magazineCellID";              // UICollectionViewCell stor
                 // Is cell is still in view
                 NIAUCell *updateCell = (id)[self.collectionView cellForItemAtIndexPath:indexPath];
                 
-                if (img && [[self.collectionView visibleCells] containsObject:updateCell]) {
+                if (img && [[self.collectionView visibleCells] containsObject:(UITableViewCell *)updateCell]) {
                     
 //                    DebugLog(@"Cell: (%f,%f), IndexPath: %ld", updateCell.frame.origin.x, updateCell.frame.origin.y, (long)indexPath.row);
                     if (updateCell) {

@@ -78,7 +78,7 @@
     
     // Send the screen view.
     [[GAI sharedInstance].defaultTracker
-     send:[[GAIDictionaryBuilder createAppView] build]];
+     send:[[GAIDictionaryBuilder createScreenView] build]];
 }
 
 - (void)loadIssues
@@ -205,7 +205,9 @@
     
     // Hack to check against NULL teasers.
     id teaser = article.teaser;
-    teaser = (teaser==[NSNull null]) ? @"" : teaser;
+    if (teaser == nil || teaser == [NSNull null]) {
+        teaser = @"";
+    }
     
     cell.textLabel.text = article.title;
     cell.textLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
@@ -234,7 +236,9 @@
     }
     
     id teaser = article.teaser;
-    teaser = (teaser==[NSNull null]) ? @"" : teaser;
+    if (teaser == nil || teaser == [NSNull null]) {
+        teaser = @"";
+    }
     
     NSString *articleTitle = article.title;
     if (articleTitle == nil) {
