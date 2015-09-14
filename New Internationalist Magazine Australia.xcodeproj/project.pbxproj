@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0500251E1BA672B70096A46C /* Launch_Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0500251D1BA672B70096A46C /* Launch_Screen.storyboard */; settings = {ASSET_TAGS = (); }; };
 		0507DB6A177AA0F60099540D /* NIAUTableOfContentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0507DB69177AA0F60099540D /* NIAUTableOfContentsViewController.m */; };
 		0511F13B17BB1E25004B5A72 /* article-body.css in Resources */ = {isa = PBXBuildFile; fileRef = 0511F13A17BB1E24004B5A72 /* article-body.css */; };
 		051877D018FD9B9200DCFA24 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 051877CF18FD9B9200DCFA24 /* Crashlytics.framework */; };
@@ -163,6 +164,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0500251D1BA672B70096A46C /* Launch_Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Launch_Screen.storyboard; sourceTree = "<group>"; };
 		0507DB68177AA0F60099540D /* NIAUTableOfContentsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NIAUTableOfContentsViewController.h; sourceTree = "<group>"; };
 		0507DB69177AA0F60099540D /* NIAUTableOfContentsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NIAUTableOfContentsViewController.m; sourceTree = "<group>"; };
 		050C3C2B1A1E55DC00B4CA3D /* en-AU */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-AU"; path = "en-AU.lproj/Localizable.strings"; sourceTree = "<group>"; };
@@ -499,6 +501,7 @@
 				05BC3CEF18BE7B3C00769F81 /* NIAUHelper.m */,
 				055A8ED7177290CF003D9407 /* Main_iPhone.storyboard */,
 				055A8EDA177290CF003D9407 /* Main_iPad.storyboard */,
+				0500251D1BA672B70096A46C /* Launch_Screen.storyboard */,
 				053878241777D767001E60F6 /* NIAUIssue.h */,
 				053878251777D767001E60F6 /* NIAUIssue.m */,
 				052167E2177BD6DF00A4A81A /* NIAUArticle.h */,
@@ -798,6 +801,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				052E32B518E1FBAC00A1906E /* fontawesome-webfont.woff in Resources */,
+				0500251E1BA672B70096A46C /* Launch_Screen.storyboard in Resources */,
 				052A84F917C5E12900D36E6C /* iPad-landscape@2x.png in Resources */,
 				052A850A17C5E13900D36E6C /* 152.png in Resources */,
 				05B0982F19BFD88C0072A88C /* 180.png in Resources */,
