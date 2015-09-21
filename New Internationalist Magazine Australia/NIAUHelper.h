@@ -23,6 +23,7 @@
 + (void)forceCrash;
 
 + (NSString *)fontSizePercentage;
++ (UIFont *)scaleFont:(NSString *)fontTextStyle withScale:(float)scale andiPadSizeCompensation: (BOOL)iPadSizeCompenstation;
 
 + (BOOL)validIssueInURL:(NSURL *)url;
 + (BOOL)validArticleInURL:(NSURL *)url;

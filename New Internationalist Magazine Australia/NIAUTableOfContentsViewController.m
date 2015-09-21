@@ -12,6 +12,8 @@
 // Because S3 doesn't give us expectedTotalBytes we use about 21mb
 #define kExpectedTotalBytesFromS3 22020096.
 
+float headingFontScale = 1.3;
+
 @interface NIAUTableOfContentsViewController ()
 
 @end
@@ -156,7 +158,7 @@ static NSString *CellIdentifier = @"articleCell";
     
     // adjust the layout of the cells
     self.labelNumberAndDate.font = [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
-    self.labelEditor.font = [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
+    self.labelEditor.font = [NIAUHelper scaleFont:UIFontTextStyleHeadline withScale:headingFontScale andiPadSizeCompensation:FALSE];
     [self.view setNeedsLayout];
     
     [self.cellDictionary removeAllObjects];
@@ -241,7 +243,7 @@ static NSString *CellIdentifier = @"articleCell";
     UITableViewCell *cell = [self tableView:tableView cellForHeightForRowAtIndexPath:indexPath];
     [self setupCell:cell atIndexPath:indexPath];
     UILabel *articleTitle = (UILabel *)[cell viewWithTag:101];
-    articleTitle.font = [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
+    articleTitle.font = [NIAUHelper scaleFont:UIFontTextStyleHeadline withScale:headingFontScale andiPadSizeCompensation:FALSE];
     return cell;
 }
 
@@ -283,7 +285,7 @@ static NSString *CellIdentifier = @"articleCell";
     
     UILabel *articleTitle = (UILabel *)[cell viewWithTag:101];
     articleTitle.text = article.title;
-    articleTitle.font = [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
+    articleTitle.font = [NIAUHelper scaleFont:UIFontTextStyleHeadline withScale:headingFontScale andiPadSizeCompensation:FALSE];
     
     UILabel *articleTeaser = (UILabel *)[cell viewWithTag:102];
     

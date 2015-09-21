@@ -14,6 +14,7 @@
 
 NSString *kCategoryCellID = @"categoryCellID";
 float cellPadding = 10.;
+float titleHeadingFontScale = 2.5;
 
 NSString *ArticleDidRefreshNotification = @"ArticleDidRefresh";
 
@@ -220,21 +221,11 @@ NSString *ArticleDidRefreshNotification = @"ArticleDidRefresh";
     NSLog(@"Notification received for text change!");
     
     // adjust the layout of the title
-    self.titleLabel.font = [NIAUArticleViewController headlineFontWithScale:2];
+    self.titleLabel.font = [NIAUHelper scaleFont:UIFontTextStyleHeadline withScale:titleHeadingFontScale andiPadSizeCompensation:TRUE];
     
     // NIAUHelper fontSizePercentage is set by the current user font scaling size
     // Then we call setupData to reload everything.
     [self setupData];
-}
-
-+ (UIFont *)headlineFontWithScale: (float)scale
-{
-    UIFont *currentDynamicFontSize = [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
-    if (IS_IPAD()) {
-        return [currentDynamicFontSize fontWithSize:currentDynamicFontSize.pointSize*scale];
-    } else {
-        return [currentDynamicFontSize fontWithSize:currentDynamicFontSize.pointSize*scale*.8];
-    }
 }
 
 #pragma mark - Setup
@@ -273,7 +264,7 @@ NSString *ArticleDidRefreshNotification = @"ArticleDidRefresh";
     self.featuredImage.backgroundColor = UIColorFromRGB([categoryColour integerValue]);
 
     self.titleLabel.text = WITH_DEFAULT(self.article.title,IF_DEBUG(@"!!!NOTITLE!!!",@""));
-    self.titleLabel.font = [NIAUArticleViewController headlineFontWithScale:2];
+    self.titleLabel.font = [NIAUHelper scaleFont:UIFontTextStyleHeadline withScale:titleHeadingFontScale andiPadSizeCompensation:TRUE];
 //    self.teaserLabel.text = WITH_DEFAULT(self.article.teaser,IF_DEBUG(@"!!!NOTEASER!!!",@""));
     self.authorLabel.text = WITH_DEFAULT(self.article.author,IF_DEBUG(@"!!!NOAUTHOR!!!",@""));
     
@@ -313,6 +304,8 @@ NSString *ArticleDidRefreshNotification = @"ArticleDidRefresh";
     [dateFormatter setDateFormat:@"MMMM yyyy"];
     
     [self.dateButton setTitle:[NSString stringWithFormat: @"%@", [dateFormatter stringFromDate:WITH_DEFAULT(self.article.publication,self.article.issue.publication)]] forState:UIControlStateNormal];
+    
+    [self.dateButton.titleLabel setFont:[NIAUHelper scaleFont:UIFontTextStyleBody withScale:1 andiPadSizeCompensation:FALSE]];
     
     // Load the article into the webview
     

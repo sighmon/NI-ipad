@@ -147,9 +147,35 @@ NSString *kAlertTitle = @"Did you know?";
         
 	} else if ([userContentSize isEqualToString:UIContentSizeCategoryExtraExtraExtraLarge]) {
 		fontSize = @"130%";
-	}
+        
+    } else if ([userContentSize isEqualToString:UIContentSizeCategoryAccessibilityMedium]) {
+        fontSize = @"150%";
+        
+    } else if ([userContentSize isEqualToString:UIContentSizeCategoryAccessibilityLarge]) {
+        fontSize = @"170%";
+        
+    } else if ([userContentSize isEqualToString:UIContentSizeCategoryAccessibilityExtraLarge]) {
+        fontSize = @"190%";
+        
+    } else if ([userContentSize isEqualToString:UIContentSizeCategoryAccessibilityExtraExtraLarge]) {
+        fontSize = @"210%";
+        
+    } else if ([userContentSize isEqualToString:UIContentSizeCategoryAccessibilityExtraExtraExtraLarge]) {
+        fontSize = @"230%";
+        
+    }
     
     return fontSize;
+}
+
++ (UIFont *)scaleFont:(NSString *)fontTextStyle withScale:(float)scale andiPadSizeCompensation: (BOOL)iPadSizeCompensation
+{
+    UIFont *currentDynamicFontSize = [UIFont preferredFontForTextStyle:fontTextStyle];
+    if (iPadSizeCompensation && IS_IPAD()) {
+        return [currentDynamicFontSize fontWithSize:currentDynamicFontSize.pointSize*scale];
+    } else {
+        return [currentDynamicFontSize fontWithSize:currentDynamicFontSize.pointSize*scale*.8];
+    }
 }
 
 + (BOOL)validArticleInURL:(NSURL *)url
