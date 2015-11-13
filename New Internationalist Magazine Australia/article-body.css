@@ -294,6 +294,10 @@ blockquote.pull-left {
     font-size: 0.9em;
     color: #555555;
 }
+.gradient {
+    background: -webkit-linear-gradient(left, #ffe0c2 0%,#eecddb 50%,#c5e2e5 100%);
+    background: linear-gradient(to right, #ffe0c2 0%,#eecddb 50%,#c5e2e5 100%);
+}
 .box {
     background-color: #e4e1df;
     padding: 1em 0;
