@@ -279,23 +279,56 @@
     
     if (_products) {
         SKProduct *product = _products[indexPath.row];
+        
         UIImageView *productImageView = (UIImageView *)[cell viewWithTag:100];
         productImageView.image = nil;
+        if (productImageView.image == nil) {
+            productImageView.image = [UIImage imageNamed:@"ni-logo-grey.png"];
+            
+            if (![self isProductASubscriptionAtRow:(int)indexPath.row]) {
+                // It's a single issue so load the cover
+                NIAUIssue *issue = [self issueAtIndexPath:indexPath];
+                float pixelDepth = 1;
+                if ([[UIScreen mainScreen] respondsToSelector:@selector(scale)]) {
+                    pixelDepth = [[UIScreen mainScreen] scale];
+                }
+                CGSize coverSize = CGSizeMake(productImageView.frame.size.width * pixelDepth, productImageView.frame.size.height *pixelDepth);
+                [issue getCoverThumbWithSize:coverSize andCompletionBlock:^(UIImage *img) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        // Is cell is still in view
+                        UITableViewCell *updateCell = (id)[tableView cellForRowAtIndexPath:indexPath];
+                        
+                        if (img && [[tableView visibleCells] containsObject:(UITableViewCell *)updateCell]) {
+                            
+                            //                    DebugLog(@"Cell: (%f,%f), IndexPath: %ld", updateCell.frame.origin.x, updateCell.frame.origin.y, (long)indexPath.row);
+                            if (updateCell) {
+                                UIImageView *productImageView = (UIImageView *)[updateCell viewWithTag:100];
+                                [productImageView setAlpha:0.0];
+                                [productImageView setImage:[NIAUHelper imageWithRoundedCornersSize:3. usingImage:img]];
+                                [UIView animateWithDuration:0.3 animations:^{
+                                    [productImageView setAlpha:1.0];
+                                }];
+                            }
+                        }
+                    });
+                }];
+            }
+        }
         
         BOOL purchased = [self hasProductBeenPurchasedAtRow:(int)indexPath.row];
         
-        if (purchased) {
-            // Leave background colour purchase green.
-            productImageView.backgroundColor = [[self.navigationController.navigationBar tintColor] colorWithAlphaComponent:0.1];
-        } else {
-            if ([self isProductASubscriptionAtRow:(int)indexPath.row]) {
-                // It's a single issue purchase
-                productImageView.backgroundColor = [UIColor colorWithHue:0.2111 saturation:0.87 brightness:0.61 alpha:1.0];
-            } else {
-                // It's a subscription
-                productImageView.backgroundColor = [UIColor colorWithHue:0.2111 saturation:0.87 brightness:0.76 alpha:1.0];;
-            }
-        }
+//        if (purchased) {
+//            // Leave background colour purchase green.
+//            productImageView.backgroundColor = [[self.navigationController.navigationBar tintColor] colorWithAlphaComponent:0.1];
+//        } else {
+//            if ([self isProductASubscriptionAtRow:(int)indexPath.row]) {
+//                // It's a single issue purchase
+//                productImageView.backgroundColor = [UIColor colorWithHue:0.2111 saturation:0.87 brightness:0.61 alpha:1.0];
+//            } else {
+//                // It's a subscription
+//                productImageView.backgroundColor = [UIColor colorWithHue:0.2111 saturation:0.87 brightness:0.76 alpha:1.0];
+//            }
+//        }
         
         UILabel *productPrice = (UILabel *)[cell viewWithTag:102];
         [_priceFormatter setLocale:product.priceLocale];
@@ -373,10 +406,16 @@
     
     UITableViewCell *cell = [self tableView:tableView cellForRowAtIndexPath:indexPath];
     
-    // Add in the padding of the cell
-    float padding = 16.;
+    // It doesn't want to calculate correctly, so here's some magic
+    float magicMultiplyer = 1.2;
     
-    return [self calculateCellSize:cell inTableView:tableView].height + padding;
+    float cellHeight = [self calculateCellSize:cell inTableView:tableView].height;
+    
+    if (cellHeight * magicMultiplyer < [cell frame].size.height) {
+        return [cell frame].size.height;
+    } else {
+        return cellHeight * magicMultiplyer;
+    }
 }
 
 #pragma mark -
@@ -482,6 +521,7 @@
 //    for (int i = 0; i < self.tableView.indexPathsForVisibleRows.count; i++) {
 //        [self tableView:self.tableView heightForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
 //    }
+    
     [self.tableView reloadData];
 }
 
@@ -501,19 +541,23 @@
     if ([[segue identifier] isEqualToString:@"showTableOfContents"])
     {
         NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
-        SKProduct *product = _products[selectedIndexPath.row];
-        
-        // Pull the number (issue name) out of the product identifier so we can get the Issue from Publisher
-        NSString *issueNumber = [[product.productIdentifier componentsSeparatedByCharactersInSet:
-                                [[NSCharacterSet decimalDigitCharacterSet] invertedSet]]
-                               componentsJoinedByString:@""];
-        
-        NIAUIssue *issue = [[NIAUPublisher getInstance] issueWithName:issueNumber];
         
         NIAUTableOfContentsViewController *tableOfContentsViewController = [segue destinationViewController];
-        tableOfContentsViewController.issue = issue;
+        tableOfContentsViewController.issue = [self issueAtIndexPath:selectedIndexPath];
     }
     
+}
+
+- (NIAUIssue *)issueAtIndexPath: (NSIndexPath *)indexPath
+{
+    SKProduct *product = _products[indexPath.row];
+    
+    // Pull the number (issue name) out of the product identifier so we can get the Issue from Publisher
+    NSString *issueNumber = [[product.productIdentifier componentsSeparatedByCharactersInSet:
+                              [[NSCharacterSet decimalDigitCharacterSet] invertedSet]]
+                             componentsJoinedByString:@""];
+    
+    return [[NIAUPublisher getInstance] issueWithName:issueNumber];
 }
 
 /*

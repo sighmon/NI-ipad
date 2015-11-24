@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="oKe-c9-yQ2">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="oKe-c9-yQ2">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
     </dependencies>
     <scenes>
         <!--New Internationalist-->
@@ -697,7 +697,7 @@
         <scene sceneID="IAt-Oo-HMu">
             <objects>
                 <tableViewController title="Subscribe" id="d0z-vn-J25" customClass="NIAUStoreViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="88" sectionHeaderHeight="22" sectionFooterHeight="22" id="wak-LU-s9b">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="116" sectionHeaderHeight="22" sectionFooterHeight="22" id="wak-LU-s9b">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <animations/>
@@ -740,7 +740,7 @@
                             </constraints>
                         </view>
                         <button key="tableFooterView" opaque="NO" tag="105" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="T52-zg-wDj">
-                            <rect key="frame" x="0.0" y="262" width="768" height="44"/>
+                            <rect key="frame" x="0.0" y="290" width="768" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <animations/>
                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
@@ -752,34 +752,35 @@
                             </connections>
                         </button>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="storeViewCell" id="ka7-rH-mI5">
-                                <rect key="frame" x="0.0" y="174" width="768" height="88"/>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="storeViewCell" rowHeight="116" id="ka7-rH-mI5">
+                                <rect key="frame" x="0.0" y="174" width="768" height="116"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ka7-rH-mI5" id="Olk-5b-h9r">
-                                    <rect key="frame" x="0.0" y="0.0" width="768" height="87.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="682" height="115.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" tag="100" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="MB4-YS-szC">
-                                            <rect key="frame" x="0.0" y="0.0" width="20" height="87"/>
+                                        <imageView userInteractionEnabled="NO" tag="100" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ni-logo-grey.png" translatesAutoresizingMaskIntoConstraints="NO" id="MB4-YS-szC">
+                                            <rect key="frame" x="25" y="8" width="70" height="100"/>
                                             <animations/>
                                             <constraints>
-                                                <constraint firstAttribute="width" constant="20" id="7xS-8B-nS4"/>
+                                                <constraint firstAttribute="width" constant="70" id="7xS-8B-nS4"/>
+                                                <constraint firstAttribute="height" constant="100" id="c4x-94-uX1"/>
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="101" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Product title" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="720" translatesAutoresizingMaskIntoConstraints="NO" id="pcX-Zx-eZ5">
-                                            <rect key="frame" x="28" y="8" width="720" height="20"/>
+                                            <rect key="frame" x="120" y="8" width="562" height="19.5"/>
                                             <animations/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="102" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$00.00" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="720" translatesAutoresizingMaskIntoConstraints="NO" id="m5L-mi-Y8C">
-                                            <rect key="frame" x="28" y="36" width="720" height="17"/>
+                                            <rect key="frame" x="120" y="35" width="562" height="17"/>
                                             <animations/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="103" contentMode="left" horizontalHuggingPriority="251" text="Description" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="720" translatesAutoresizingMaskIntoConstraints="NO" id="w4N-UI-kz4">
-                                            <rect key="frame" x="28" y="61" width="720" height="18"/>
+                                            <rect key="frame" x="120" y="60" width="562" height="47.5"/>
                                             <animations/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -788,19 +789,18 @@
                                     </subviews>
                                     <animations/>
                                     <constraints>
-                                        <constraint firstItem="pcX-Zx-eZ5" firstAttribute="leading" secondItem="MB4-YS-szC" secondAttribute="trailing" constant="8" id="3FU-vU-bH7"/>
+                                        <constraint firstItem="pcX-Zx-eZ5" firstAttribute="leading" secondItem="MB4-YS-szC" secondAttribute="trailing" constant="25" id="3FU-vU-bH7"/>
                                         <constraint firstItem="pcX-Zx-eZ5" firstAttribute="top" secondItem="Olk-5b-h9r" secondAttribute="top" constant="8" id="4s4-P4-cmd"/>
                                         <constraint firstItem="m5L-mi-Y8C" firstAttribute="top" secondItem="pcX-Zx-eZ5" secondAttribute="bottom" constant="8" id="ECx-K6-6RY"/>
-                                        <constraint firstAttribute="trailing" secondItem="pcX-Zx-eZ5" secondAttribute="trailing" constant="20" id="ND0-ih-S5y"/>
-                                        <constraint firstItem="m5L-mi-Y8C" firstAttribute="leading" secondItem="MB4-YS-szC" secondAttribute="trailing" constant="8" id="W9S-ur-m1p"/>
-                                        <constraint firstItem="MB4-YS-szC" firstAttribute="top" secondItem="Olk-5b-h9r" secondAttribute="top" id="aIY-Df-hnS"/>
-                                        <constraint firstAttribute="trailing" secondItem="m5L-mi-Y8C" secondAttribute="trailing" constant="20" id="cEC-Sh-Hho"/>
-                                        <constraint firstAttribute="trailing" secondItem="w4N-UI-kz4" secondAttribute="trailing" constant="20" id="d6r-Rr-Zzh"/>
+                                        <constraint firstAttribute="trailing" secondItem="pcX-Zx-eZ5" secondAttribute="trailing" id="ND0-ih-S5y"/>
+                                        <constraint firstItem="m5L-mi-Y8C" firstAttribute="leading" secondItem="MB4-YS-szC" secondAttribute="trailing" constant="25" id="W9S-ur-m1p"/>
+                                        <constraint firstItem="MB4-YS-szC" firstAttribute="top" secondItem="Olk-5b-h9r" secondAttribute="top" constant="8" id="aIY-Df-hnS"/>
+                                        <constraint firstAttribute="trailing" secondItem="m5L-mi-Y8C" secondAttribute="trailing" id="cEC-Sh-Hho"/>
+                                        <constraint firstAttribute="trailing" secondItem="w4N-UI-kz4" secondAttribute="trailing" id="d6r-Rr-Zzh"/>
                                         <constraint firstItem="w4N-UI-kz4" firstAttribute="top" secondItem="m5L-mi-Y8C" secondAttribute="bottom" constant="8" id="hzU-cg-2UJ"/>
                                         <constraint firstAttribute="bottom" secondItem="w4N-UI-kz4" secondAttribute="bottom" constant="8" id="lem-mc-lr7"/>
-                                        <constraint firstAttribute="bottom" secondItem="MB4-YS-szC" secondAttribute="bottom" id="oK2-we-ySv"/>
-                                        <constraint firstItem="w4N-UI-kz4" firstAttribute="leading" secondItem="MB4-YS-szC" secondAttribute="trailing" constant="8" id="raI-mO-6gZ"/>
-                                        <constraint firstItem="MB4-YS-szC" firstAttribute="leading" secondItem="Olk-5b-h9r" secondAttribute="leading" id="sFg-i5-dcQ"/>
+                                        <constraint firstItem="w4N-UI-kz4" firstAttribute="leading" secondItem="MB4-YS-szC" secondAttribute="trailing" constant="25" id="raI-mO-6gZ"/>
+                                        <constraint firstItem="MB4-YS-szC" firstAttribute="leading" secondItem="Olk-5b-h9r" secondAttribute="leading" constant="25" id="sFg-i5-dcQ"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <animations/>
@@ -1524,12 +1524,12 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="Wy9-lq-uVY"/>
-        <segue reference="Qn8-eu-J3m"/>
+        <segue reference="JBV-bs-efO"/>
         <segue reference="PvO-ql-dqR"/>
+        <segue reference="owb-z5-hL5"/>
         <segue reference="w2Z-Bz-DtP"/>
         <segue reference="d5N-e1-WGj"/>
-        <segue reference="JBV-bs-efO"/>
-        <segue reference="owb-z5-hL5"/>
+        <segue reference="VqB-OI-vCl"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.29803921568627451" green="0.64547217153284675" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
 </document>
