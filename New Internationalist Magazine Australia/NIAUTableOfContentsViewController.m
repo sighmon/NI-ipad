@@ -278,9 +278,40 @@ static NSString *CellIdentifier = @"articleCell";
     
     UIImageView *articleImageView = (UIImageView *)[cell viewWithTag:100];
     articleImageView.image = nil;
+    
     // Set background colour to the category colour.
     NSDictionary *firstCategory = article.categories.firstObject;
     id categoryColour = WITH_DEFAULT([firstCategory objectForKey:@"colour"],[NSNumber numberWithInt:0xFFFFFF]);
+    
+    // Hmmm.. those colours don't make much sense on the Table of Contents,
+    // Use nice gradients of green maybe?
+    
+    NSString *sectionName = [self.sortedCategories[indexPath.section] objectForKey:@"name"];
+    if ([sectionName rangeOfString:@"features" options:NSCaseInsensitiveSearch].location != NSNotFound) {
+        // use Features colour
+        categoryColour = [NSNumber numberWithInt:0x77b447];
+        
+    } else if ([sectionName rangeOfString:@"agenda" options:NSCaseInsensitiveSearch].location != NSNotFound) {
+        // use Agenda colour
+        categoryColour = [NSNumber numberWithInt:0x8ecb5d];
+        
+    } else if ([sectionName rangeOfString:@"reviews" options:NSCaseInsensitiveSearch].location != NSNotFound) {
+        // use Agenda colour
+        categoryColour = [NSNumber numberWithInt:0xa0d377];
+        
+    } else if ([sectionName rangeOfString:@"opinion" options:NSCaseInsensitiveSearch].location != NSNotFound) {
+        // use Agenda colour
+        categoryColour = [NSNumber numberWithInt:0xcbecb1];
+        
+    } else if ([sectionName rangeOfString:@"regulars" options:NSCaseInsensitiveSearch].location != NSNotFound) {
+        // use Agenda colour
+        categoryColour = [NSNumber numberWithInt:0xdef6cb];
+        
+    } else {
+        // Unknown section, leave as it is
+        DebugLog(@"ERROR: unknown category colour for category %@", sectionName);
+    }
+    
     articleImageView.backgroundColor = UIColorFromRGB([categoryColour integerValue]);
     
     UILabel *articleTitle = (UILabel *)[cell viewWithTag:101];
