@@ -288,7 +288,7 @@
             if (![self isProductASubscriptionAtRow:(int)indexPath.row]) {
                 // It's a single issue so load the cover
                 NIAUIssue *issue = [self issueAtIndexPath:indexPath];
-                float pixelDepth = 1;
+                float pixelDepth = 2;
                 if ([[UIScreen mainScreen] respondsToSelector:@selector(scale)]) {
                     pixelDepth = [[UIScreen mainScreen] scale];
                 }
@@ -296,13 +296,10 @@
                 [issue getCoverThumbWithSize:coverSize andCompletionBlock:^(UIImage *img) {
                     dispatch_async(dispatch_get_main_queue(), ^{
                         // Is cell is still in view
-                        UITableViewCell *updateCell = (id)[tableView cellForRowAtIndexPath:indexPath];
-                        
-                        if (img && [[tableView visibleCells] containsObject:(UITableViewCell *)updateCell]) {
+                        if (img && [[tableView visibleCells] containsObject:cell]) {
                             
-                            //                    DebugLog(@"Cell: (%f,%f), IndexPath: %ld", updateCell.frame.origin.x, updateCell.frame.origin.y, (long)indexPath.row);
-                            if (updateCell) {
-                                UIImageView *productImageView = (UIImageView *)[updateCell viewWithTag:100];
+                            if (cell) {
+//                                UIImageView *productImageView = (UIImageView *)[cell viewWithTag:100];
                                 [productImageView setAlpha:0.0];
                                 [productImageView setImage:[NIAUHelper imageWithRoundedCornersSize:3. usingImage:img]];
                                 [UIView animateWithDuration:0.3 animations:^{
@@ -522,7 +519,7 @@
 //        [self tableView:self.tableView heightForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
 //    }
     
-    [self.tableView reloadData];
+//    [self.tableView reloadData];
 }
 
 #pragma mark - Dynamic Text

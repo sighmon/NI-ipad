@@ -206,7 +206,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="106" height="151"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BBB6E3EB-0E48-4D55-840D-8386C4B33191" translatesAutoresizingMaskIntoConstraints="NO" id="8yQ-69-2Yi">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="6124314C-C91E-46D3-891B-08E353A59FB0" translatesAutoresizingMaskIntoConstraints="NO" id="8yQ-69-2Yi">
                                             <rect key="frame" x="0.0" y="0.0" width="106" height="151"/>
                                             <animations/>
                                         </imageView>
@@ -660,7 +660,7 @@
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <imageView userInteractionEnabled="NO" tag="100" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ni-logo-grey.png" translatesAutoresizingMaskIntoConstraints="NO" id="ycI-wB-Pvq">
+                                        <imageView userInteractionEnabled="NO" tag="100" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ycI-wB-Pvq">
                                             <rect key="frame" x="8" y="8" width="70" height="100"/>
                                             <animations/>
                                             <constraints>
@@ -1483,7 +1483,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="BBB6E3EB-0E48-4D55-840D-8386C4B33191" width="200" height="98">
+        <image name="6124314C-C91E-46D3-891B-08E353A59FB0" width="200" height="98">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGOjtYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK0HCBEW
 GxwgISgrLjQ3VSRudWxs1AkKCwwNDg8QViRjbGFzc1xOU0ltYWdlRmxhZ3NWTlNSZXBzV05TQ29sb3KA
@@ -2864,7 +2864,6 @@ wgABQMoAAUDNAAFA3wABQOIAAUDnAAAAAAAABAEAAAAAAAAAPgAAAAAAAAAAAAAAAAABQOk
         <image name="UIWebViewBack.png" width="12" height="21"/>
         <image name="UIWebViewNext.png" width="12" height="21"/>
         <image name="new-internationalist-logo.png" width="177" height="53"/>
-        <image name="ni-logo-grey.png" width="200" height="98"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="v7S-KP-l8O"/>

@@ -759,7 +759,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="682" height="115.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" tag="100" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ni-logo-grey.png" translatesAutoresizingMaskIntoConstraints="NO" id="MB4-YS-szC">
+                                        <imageView userInteractionEnabled="NO" tag="100" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="MB4-YS-szC">
                                             <rect key="frame" x="25" y="8" width="70" height="100"/>
                                             <animations/>
                                             <constraints>
