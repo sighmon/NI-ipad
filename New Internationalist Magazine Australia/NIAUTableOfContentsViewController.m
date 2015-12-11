@@ -289,7 +289,15 @@ static NSString *CellIdentifier = @"articleCell";
     NSString *sectionName = [self.sortedCategories[indexPath.section] objectForKey:@"name"];
     if ([sectionName rangeOfString:@"features" options:NSCaseInsensitiveSearch].location != NSNotFound) {
         // use Features colour
+        categoryColour = [NSNumber numberWithInt:0x69a33b];
+        
+    } else if ([sectionName rangeOfString:@"exclusive" options:NSCaseInsensitiveSearch].location != NSNotFound) {
+        // use Digital exclusive colour
         categoryColour = [NSNumber numberWithInt:0x77b447];
+        
+    } else if ([sectionName rangeOfString:@"video" options:NSCaseInsensitiveSearch].location != NSNotFound) {
+        // use Videos colour
+        categoryColour = [NSNumber numberWithInt:0x7dbf49];
         
     } else if ([sectionName rangeOfString:@"agenda" options:NSCaseInsensitiveSearch].location != NSNotFound) {
         // use Agenda colour

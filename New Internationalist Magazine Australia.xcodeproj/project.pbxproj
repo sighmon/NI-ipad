@@ -114,6 +114,7 @@
 		05D55E9A19745E2100C5B913 /* GTM-W4P6WH in Resources */ = {isa = PBXBuildFile; fileRef = 05D55E9819745E2100C5B913 /* GTM-W4P6WH */; };
 		05D55E9B19745E2100C5B913 /* GTM-W4P6WH.plist in Resources */ = {isa = PBXBuildFile; fileRef = 05D55E9919745E2100C5B913 /* GTM-W4P6WH.plist */; };
 		05E7839B19C3514E0003D34D /* 120.png in Resources */ = {isa = PBXBuildFile; fileRef = 055A8F071772C72F003D9407 /* 120.png */; };
+		05F81FD61C1A840C006D6909 /* 167.png in Resources */ = {isa = PBXBuildFile; fileRef = 05F81FD51C1A840C006D6909 /* 167.png */; };
 		05F856CF1864C67E001D1A75 /* NIAUArticleCategoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 05F856CE1864C67E001D1A75 /* NIAUArticleCategoryCell.m */; };
 		08A7A1CCF6DEC03F2BF15AB6 /* libPods-New Internationalist Magazine Australia.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BC803423D2F743538C4A77A9 /* libPods-New Internationalist Magazine Australia.a */; };
 		52090A62178CF7D1002D5162 /* NIAUPublisher.m in Sources */ = {isa = PBXBuildFile; fileRef = 52090A61178CF7D1002D5162 /* NIAUPublisher.m */; };
@@ -314,6 +315,7 @@
 		05D55E9819745E2100C5B913 /* GTM-W4P6WH */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GTM-W4P6WH"; sourceTree = "<group>"; };
 		05D55E9919745E2100C5B913 /* GTM-W4P6WH.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GTM-W4P6WH.plist"; sourceTree = "<group>"; };
 		05EF22F218E1E7B70017244C /* libz.1.2.5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.5.dylib; path = usr/lib/libz.1.2.5.dylib; sourceTree = SDKROOT; };
+		05F81FD51C1A840C006D6909 /* 167.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 167.png; sourceTree = "<group>"; };
 		05F856CD1864C67E001D1A75 /* NIAUArticleCategoryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NIAUArticleCategoryCell.h; sourceTree = "<group>"; };
 		05F856CE1864C67E001D1A75 /* NIAUArticleCategoryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NIAUArticleCategoryCell.m; sourceTree = "<group>"; };
 		05FA184C17A8B83200E023A0 /* 40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 40.png; sourceTree = "<group>"; };
@@ -582,6 +584,7 @@
 		055A8F011772C70F003D9407 /* Icons */ = {
 			isa = PBXGroup;
 			children = (
+				05F81FD51C1A840C006D6909 /* 167.png */,
 				05B0983619BFDCCF0072A88C /* Default-1242x2208-landscape@3x.png */,
 				05B0983419BFDC7F0072A88C /* Default-1242x2208@3x.png */,
 				05B0983219BFDBFF0072A88C /* Default-750x1334@2x.png */,
@@ -825,6 +828,7 @@
 				052BBF8C17EFF6E100B12071 /* home-background@2x.png in Resources */,
 				052A850017C5E13900D36E6C /* 50.png in Resources */,
 				0528EC3717850989000175AB /* default_editors_photo.png in Resources */,
+				05F81FD61C1A840C006D6909 /* 167.png in Resources */,
 				052A850617C5E13900D36E6C /* 100.png in Resources */,
 				0567082817B1D51400A87818 /* default_article_image_table_view.png in Resources */,
 				05CAF9E118E9FBC0000BE0BF /* loading_image.gif in Resources */,
@@ -1142,6 +1146,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				ENABLE_BITCODE = NO;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -1181,6 +1186,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
+				ENABLE_BITCODE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;

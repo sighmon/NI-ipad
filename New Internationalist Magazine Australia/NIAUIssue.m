@@ -433,7 +433,23 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
 
 -(NSArray *)featureArticles
 {
-    return [self articlesInCategory:@"features"];
+    NSMutableArray *tmp = [NSMutableArray array];
+    [tmp addObjectsFromArray:[self articlesInCategory:@"features"]];
+    [tmp removeObjectsInArray:[self articlesInCategory:@"web-exclusive"]];
+    return [[NSArray alloc] initWithArray:tmp];
+}
+
+-(NSArray *)digitalArticles
+{
+    NSMutableArray *tmp = [NSMutableArray array];
+    [tmp addObjectsFromArray:[self articlesInCategory:@"web-exclusive"]];
+    [tmp removeObjectsInArray:[self articlesInCategory:@"video"]];
+    return [[NSArray alloc] initWithArray:tmp];
+}
+
+-(NSArray *)videoArticles
+{
+    return [self articlesInCategory:@"video"];
 }
 
 -(NSArray *)agendaArticles
@@ -500,6 +516,8 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
 {
     NSMutableArray *sorted = [NSMutableArray array];
     [self addSortedSection:[self sortedCategoryWithSection:self.featureArticles withName:@"Features"] toArray:sorted];
+    [self addSortedSection:[self sortedCategoryWithSection:self.digitalArticles withName:@"Digital exclusives"] toArray:sorted];
+    [self addSortedSection:[self sortedCategoryWithSection:self.videoArticles withName:@"Videos"] toArray:sorted];
     [self addSortedSection:[self sortedCategoryWithSection:self.agendaArticles withName:@"Agenda"] toArray:sorted];
     [self addSortedSection:[self sortedCategoryWithSection:self.currentsArticles withName:@"Currents"] toArray:sorted];
     [self addSortedSection:[self sortedCategoryWithSection:self.mixedMediaArticles withName:@"Film, Book & Music reviews"] toArray:sorted];

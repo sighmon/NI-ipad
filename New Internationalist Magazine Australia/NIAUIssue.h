@@ -37,6 +37,8 @@ extern NSString *ArticlesFailedUpdateNotification;
 -(NSString *)editorsName;
 
 -(NSArray *)featureArticles;
+-(NSArray *)digitalArticles;
+-(NSArray *)videoArticles;
 -(NSArray *)agendaArticles;
 -(NSArray *)currentsArticles;
 -(NSArray *)mixedMediaArticles;
