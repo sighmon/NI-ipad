@@ -78,9 +78,13 @@ static NIAUPublisher *instance =nil;
             NSError *error;
             NSArray *tmpIssues = [NSJSONSerialization
                                   JSONObjectWithData:data //1
-                                  
                                   options:kNilOptions
                                   error:&error];
+            if (error) {
+                // JSON from the server is wonky
+                DebugLog(@"ERROR with issues.json from the server: %@", [error localizedDescription]);
+                return nil;
+            }
             [tmpIssues enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
                 
                 // we could add each of these to our issues array

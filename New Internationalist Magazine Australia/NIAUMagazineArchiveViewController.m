@@ -205,6 +205,14 @@ NSString *kCellID = @"magazineCellID";              // UICollectionViewCell stor
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
     [self.collectionView performBatchUpdates:nil completion:nil];
+    
+    // TODO: get this working for the rotation crash bug that occurs when new issues are downloaded
+    // Tried this, doesn't work
+//    [self.collectionView performBatchUpdates:^{
+//        [self.collectionView reloadData];
+//    } completion:^(BOOL finished) {
+//        
+//    }];
 }
 
 //- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
