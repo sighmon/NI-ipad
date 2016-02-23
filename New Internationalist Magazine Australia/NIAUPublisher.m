@@ -74,6 +74,7 @@ static NIAUPublisher *instance =nil;
         NSURL *issuesURL = [NSURL URLWithString:@"issues.json" relativeToURL:[NSURL URLWithString:SITE_URL]];
         DebugLog(@"try to download issues.json from %@", issuesURL);
         NSData *data = [NSData dataWithContentsOfCookielessURL:issuesURL];
+
         if(data) {
             NSError *error;
             NSArray *tmpIssues = [NSJSONSerialization
@@ -85,16 +86,25 @@ static NIAUPublisher *instance =nil;
                 DebugLog(@"ERROR with issues.json from the server: %@", [error localizedDescription]);
                 return nil;
             }
-            [tmpIssues enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-                
-                // we could add each of these to our issues array
-                // but instead we re-read the nklibrary after building all of the issues
-                // NOTE: this has the side effect of writing to disk
-                [NIAUIssue issueWithDictionary:obj];
-            }];
             
-            // re-read issues
-            return [NIAUIssue issuesFromNKLibrary];
+            // Avoiding Crash #221 - Our elastic search is down, and returns an NSDictionary of error info
+            // instead of an NSArray of issues. Checking its class now.
+            // Was expecting it return an NSArray with one object instead.. hmmmm
+            if (tmpIssues != nil && [tmpIssues isKindOfClass:[NSArray class]]) {
+                
+                [tmpIssues enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                    
+                    // we could add each of these to our issues array
+                    // but instead we re-read the nklibrary after building all of the issues
+                    // NOTE: this has the side effect of writing to disk
+                    [NIAUIssue issueWithDictionary:obj];
+                }];
+                
+                // re-read issues
+                return [NIAUIssue issuesFromNKLibrary];
+            } else {
+                return nil;
+            }
         } else {
             return nil;
         }

@@ -122,7 +122,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:PublisherFailedUpdateNotification object:[NIAUPublisher getInstance]];
     NSLog(@"Error - Publisher failed: %@",notification);
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                    message:@"Cannot get issues from publisher server."
+                                                    message:NSLocalizedString(@"publisher_error", nil)
                                                    delegate:nil
                                           cancelButtonTitle:@"Close"
                                           otherButtonTitles:nil];

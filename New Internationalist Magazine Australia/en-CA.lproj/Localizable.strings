@@ -11,3 +11,7 @@
 "username" = "number";
 
 "password" = "surname";
+
+/* Errors */
+
+"publisher_error" = "Sorry! It looks like our magazine server is down. Please try again later. :-(";
