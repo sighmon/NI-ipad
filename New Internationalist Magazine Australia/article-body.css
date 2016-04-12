@@ -209,7 +209,7 @@ h6 {
     box-shadow: 0px 2px 5px #999999;
     margin-bottom: 1em;
 }
-.article-image-small {
+.article-image-small img {
     max-width: 150px;
 }
 .article-image-float-none {
@@ -469,11 +469,15 @@ ul.ui-autocomplete li a:active {
         margin-right: 20px;
     }
     .article-image-small {
-        max-width: 150px;
+        width: 150px;
         margin: 1em 0px 1em 1em;
     }
     .article-image-small img {
         border-radius: 2px 0 0 2px;
+    }
+    .article-image-centre.article-image-small {
+        width: 100%;
+        margin: 1em 0;
     }
     .article-image-float-none {
         float: left;
@@ -490,6 +494,9 @@ ul.ui-autocomplete li a:active {
         position: relative;
         margin: 1em 0px 1.5em 0em;
         max-width: 340px;
+    }
+    .article-image-small {
+        max-width: 150px;
     }
     .article-image-full, .article-image-cartoon {
         max-width: 100%;
@@ -536,6 +543,13 @@ ul.ui-autocomplete li a:active {
         width: 100%;
         position: relative;
         margin: 1em 0px 1.5em 0px;
+    }
+    .article-image-small {
+        width: 150px;
+    }
+    .article-image-centre.article-image-small {
+        width: 100%;
+        margin: 1em 0;
     }
     .article-image img, .article-image-full img {
         width: 100%;

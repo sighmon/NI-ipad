@@ -254,9 +254,6 @@ NSString *ImageDidSaveToCacheNotification = @"ImageDidSaveToCache";
         } else if([options containsObject:@"centre"]) {
             cssClass = @"all-article-images article-image-cartoon article-image-centre";
             imageWidth = @"300";
-        } else if([options containsObject:@"small"]) {
-            cssClass = @"article-image article-image-small";
-            imageWidth = @"150";
         }
         
         if ([options containsObject:@"ns"]) {
@@ -265,6 +262,11 @@ NSString *ImageDidSaveToCacheNotification = @"ImageDidSaveToCache";
         
         if ([options containsObject:@"left"]) {
             cssClass = [cssClass stringByAppendingString:@" article-image-float-none"];
+        }
+        
+        if ([options containsObject:@"small"]) {
+            cssClass = [cssClass stringByAppendingString:@" article-image-small"];
+            imageWidth = @"150";
         }
         
         // ruby code from articles_helper
