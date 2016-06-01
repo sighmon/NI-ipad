@@ -304,16 +304,20 @@ static NSString *CellIdentifier = @"articleCell";
         categoryColour = [NSNumber numberWithInt:0x8ecb5d];
         
     } else if ([sectionName rangeOfString:@"reviews" options:NSCaseInsensitiveSearch].location != NSNotFound) {
-        // use Agenda colour
+        // use Reviews colour
         categoryColour = [NSNumber numberWithInt:0xa0d377];
         
     } else if ([sectionName rangeOfString:@"opinion" options:NSCaseInsensitiveSearch].location != NSNotFound) {
-        // use Agenda colour
+        // use Opinion colour
         categoryColour = [NSNumber numberWithInt:0xcbecb1];
         
     } else if ([sectionName rangeOfString:@"regulars" options:NSCaseInsensitiveSearch].location != NSNotFound) {
-        // use Agenda colour
+        // use Regulars colour
         categoryColour = [NSNumber numberWithInt:0xdef6cb];
+        
+    } else if ([sectionName rangeOfString:@"blogs" options:NSCaseInsensitiveSearch].location != NSNotFound) {
+        // use Blogs colour
+        categoryColour = [NSNumber numberWithInt:0xe6f5da];
         
     } else {
         // Unknown section, leave as it is

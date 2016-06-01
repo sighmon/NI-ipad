@@ -506,6 +506,11 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
     return [[NSArray alloc] initWithArray:regularArticles];
 }
 
+-(NSArray *)blogArticles
+{
+    return [self articlesInCategory:@"blog"];
+}
+
 -(NSArray *)uncategorisedArticles
 {
     // TODO: calculate these (mostly blog entries)
@@ -524,6 +529,7 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
     [self addSortedSection:[self sortedCategoryWithSection:self.opinionArticles withName:@"Opinion"] toArray:sorted];
     [self addSortedSection:[self sortedCategoryWithSection:self.alternativesArticles withName:@"Alternatives"] toArray:sorted];
     [self addSortedSection:[self sortedCategoryWithSection:self.regularArticles withName:@"Regulars"] toArray:sorted];
+    [self addSortedSection:[self sortedCategoryWithSection:self.blogArticles withName:@"Blogs"] toArray:sorted];
     [self addSortedSection:[self sortedCategoryWithSection:self.uncategorisedArticles withName:@"Others"] toArray:sorted];
     
     int numberOfArticlesCategorised = 0;
