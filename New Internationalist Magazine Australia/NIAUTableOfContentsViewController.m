@@ -303,6 +303,10 @@ static NSString *CellIdentifier = @"articleCell";
         // use Agenda colour
         categoryColour = [NSNumber numberWithInt:0x8ecb5d];
         
+    } else if ([sectionName rangeOfString:@"currents" options:NSCaseInsensitiveSearch].location != NSNotFound) {
+        // use Agenda colour
+        categoryColour = [NSNumber numberWithInt:0x8ecb5d];
+        
     } else if ([sectionName rangeOfString:@"reviews" options:NSCaseInsensitiveSearch].location != NSNotFound) {
         // use Reviews colour
         categoryColour = [NSNumber numberWithInt:0xa0d377];
