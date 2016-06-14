@@ -208,16 +208,18 @@
 
 - (void)handleDoubleTap:(UITapGestureRecognizer *)gestureRecognizer
 {
-    // Allow the user to discover their ParseID for debugging
-    PFInstallation *currentInstallation = [PFInstallation currentInstallation];
-    NSString *parseIDString = [NSString stringWithFormat: @"Your installation ID is: %@", [currentInstallation objectId]];
+    // Allow the user to discover their installToken for debugging
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSString *deviceToken = [userDefaults valueForKey:@"deviceToken"];
+    
+    NSString *pushTokenString = [NSString stringWithFormat: @"Your device token is: \n%@", deviceToken];
     
     // Copy to clipboard
-//    UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
-//    [pasteboard setString:[currentInstallation objectId]];
+    UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
+    [pasteboard setString:[deviceToken description]];
     
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"About"
-                                                    message:parseIDString
+                                                    message:pushTokenString
                                                    delegate:nil
                                           cancelButtonTitle:@"OK"
                                           otherButtonTitles:nil];

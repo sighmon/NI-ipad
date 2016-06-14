@@ -17,8 +17,6 @@
 #import "GAIFields.h"
 #import "GAILogger.h"
 
-#import <Parse/Parse.h>
-
 @interface NIAUInfoViewController : UIViewController <UITextFieldDelegate, UIWebViewDelegate, UIGestureRecognizerDelegate>
 
 @property (nonatomic, weak) IBOutlet UIScrollView *scrollView;
