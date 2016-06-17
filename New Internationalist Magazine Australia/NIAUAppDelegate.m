@@ -301,12 +301,35 @@ const char NotificationKey;
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults setObject:deviceToken forKey:@"deviceToken"];
     
-    // TODO: Push the deviceToken to our NI server for push notifications
     DebugLog(@"Push notification deviceToken: %@", deviceToken);
+    
+    // Push the deviceToken to our NI server for push notifications
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+    [request setURL:[NSURL URLWithString:[NSString stringWithFormat:@"push_registrations"] relativeToURL:[NSURL URLWithString:SITE_URL]]];
+    [request setHTTPMethod:@"POST"];
+    [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+    NSData *postData = [[NSString stringWithFormat:@"token=%@&device=%@", deviceToken, @"ios"] dataUsingEncoding:NSUTF8StringEncoding];
+    NSString *postLength = [NSString stringWithFormat:@"%d", (int)[postData length]];
+    [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
+    [request setHTTPBody:postData];
+    
+    NSOperationQueue *queue = [[NSOperationQueue alloc] init];
+    [NSURLConnection sendAsynchronousRequest:request queue:queue completionHandler:^(NSURLResponse * _Nullable response, NSData * _Nullable data, NSError * _Nullable connectionError)
+    {
+        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+        int statusCode = (int)[httpResponse statusCode];
+        if (statusCode >= 200 && statusCode < 300) {
+            // Push registrations successful
+            DebugLog(@"Status: %d. Push registrations was successful.", statusCode);
+        } else {
+            // Connection error with the Rails server
+            DebugLog(@"ERROR sending push registration to Rails: %@", connectionError);
+        }
+    }];
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
-{    
+{
     if ((application.applicationState == UIApplicationStateInactive) || (application.applicationState == UIApplicationStateBackground)) {
         // TODO: Track the push notification opens?
         [self turnBadgeIconOn];
