@@ -323,7 +323,7 @@ const char NotificationKey;
             DebugLog(@"Status: %d. Push registrations was successful.", statusCode);
         } else {
             // Connection error with the Rails server
-            DebugLog(@"ERROR sending push registration to Rails: %@", connectionError);
+            DebugLog(@"ERROR sending push registration to Rails: %d", statusCode);
         }
     }];
 }
