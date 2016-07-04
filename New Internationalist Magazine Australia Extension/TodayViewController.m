@@ -10,6 +10,7 @@
 #import <NotificationCenter/NotificationCenter.h>
 
 static NSString *cellIdentifier = @"extensionCell";
+static CGFloat padding = 22.0;
 
 @interface TodayViewController () <NCWidgetProviding>
 
@@ -33,7 +34,21 @@ static NSString *cellIdentifier = @"extensionCell";
     
     // This will remove extra separators from tableview
     self.articleTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    
+    // Add the iOS 10 Show More ability
+//    [self.extensionContext setWidgetLargestAvailableDisplayMode:NCWidgetDisplayModeExpanded];
 }
+
+//- (void)widgetActiveDisplayModeDidChange:(NCWidgetDisplayMode)activeDisplayMode withMaximumSize:(CGSize)maxSize {
+//    if (activeDisplayMode == NCWidgetDisplayModeCompact) {
+//        // Changed to compact mode
+//        self.preferredContentSize = maxSize;
+//    }
+//    else {
+//        // Changed to expanded mode
+//        self.preferredContentSize = CGSizeMake(self.articleTableView.contentSize.width, self.articleTableView.contentSize.height + padding);
+//    }
+//}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -138,8 +153,6 @@ static NSString *cellIdentifier = @"extensionCell";
     CGRect labelRect = [sizingCell.textLabel.text boundingRectWithSize:maxSize options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:sizingCell.textLabel.font} context:nil];
     
 //    NSLog(@"Label size %@", NSStringFromCGSize(labelRect.size));
-    
-    CGFloat padding = 22.0;
     
     return ceil(labelRect.size.height + padding);
 }
