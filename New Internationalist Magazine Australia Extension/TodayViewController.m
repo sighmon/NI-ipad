@@ -36,19 +36,19 @@ static CGFloat padding = 22.0;
     self.articleTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     
     // Add the iOS 10 Show More ability
-//    [self.extensionContext setWidgetLargestAvailableDisplayMode:NCWidgetDisplayModeExpanded];
+    [self.extensionContext setWidgetLargestAvailableDisplayMode:NCWidgetDisplayModeExpanded];
 }
 
-//- (void)widgetActiveDisplayModeDidChange:(NCWidgetDisplayMode)activeDisplayMode withMaximumSize:(CGSize)maxSize {
-//    if (activeDisplayMode == NCWidgetDisplayModeCompact) {
-//        // Changed to compact mode
-//        self.preferredContentSize = maxSize;
-//    }
-//    else {
-//        // Changed to expanded mode
-//        self.preferredContentSize = CGSizeMake(self.articleTableView.contentSize.width, self.articleTableView.contentSize.height + padding);
-//    }
-//}
+- (void)widgetActiveDisplayModeDidChange:(NCWidgetDisplayMode)activeDisplayMode withMaximumSize:(CGSize)maxSize {
+    if (activeDisplayMode == NCWidgetDisplayModeCompact) {
+        // Changed to compact mode
+        self.preferredContentSize = maxSize;
+    }
+    else {
+        // Changed to expanded mode
+        self.preferredContentSize = CGSizeMake(self.articleTableView.contentSize.width, self.articleTableView.contentSize.height + padding);
+    }
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
