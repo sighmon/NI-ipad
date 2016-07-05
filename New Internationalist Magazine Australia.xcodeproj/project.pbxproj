@@ -745,7 +745,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = NIAU;
-				LastUpgradeCheck = 0700;
+				LastUpgradeCheck = 0730;
 				ORGANIZATIONNAME = "New Internationalist Australia";
 				TargetAttributes = {
 					055A8EC1177290CE003D9407 = {
@@ -767,6 +767,9 @@
 						DevelopmentTeam = CUMP7ABFVY;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+							com.apple.Push = {
 								enabled = 1;
 							};
 						};
@@ -1176,6 +1179,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1208,6 +1212,8 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				ONLY_ACTIVE_ARCH = NO;
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -1281,6 +1287,7 @@
 				INFOPLIST_FILE = "New Internationalist Magazine AustraliaTests/New Internationalist Magazine AustraliaTests-Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = "au.com.newint.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -1301,6 +1308,7 @@
 				INFOPLIST_FILE = "New Internationalist Magazine AustraliaTests/New Internationalist Magazine AustraliaTests-Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = "au.com.newint.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
 			};
