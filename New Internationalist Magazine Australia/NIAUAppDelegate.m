@@ -10,7 +10,6 @@
 
 #import "NIAUViewController.h"
 #import "NIAUInAppPurchaseHelper.h"
-#import <Parse/Parse.h>
 #import "local.h"
 #import "NIAUPublisher.h"
 #import "NIAUArticleViewController.h"
@@ -45,13 +44,8 @@ const char NotificationKey;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
         [NIAUInAppPurchaseHelper sharedInstance];
     });
-    
-    // Setup Parse for Notifications
-    [Parse setApplicationId:PARSE_APPLICATION_ID
-                  clientKey:PARSE_CLIENT_KEY];
         
-    // Parse tracking analytics
-//    [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
+    // Push notification tracking analytics
     if (application.applicationState != UIApplicationStateBackground) {
         // Track an app open here if we launch with a push, unless
         // "content_available" was used to trigger a background push (introduced
@@ -61,7 +55,8 @@ const char NotificationKey;
         BOOL oldPushHandlerOnly = ![self respondsToSelector:@selector(application:didReceiveRemoteNotification:fetchCompletionHandler:)];
         BOOL noPushPayload = ![launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
         if (preBackgroundPush || oldPushHandlerOnly || noPushPayload) {
-            [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
+            // TODO: Still track opens now that Parse is removed?
+//            [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
         }
     }
     
@@ -298,33 +293,57 @@ const char NotificationKey;
     }
 }
 
-#pragma mark - Parse setup
+#pragma mark - Push notification setup
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
-    // Store the deviceToken in the current installation and save it to Parse.
-    PFInstallation *currentInstallation = [PFInstallation currentInstallation];
-    [currentInstallation setDeviceTokenFromData:deviceToken];
-    [currentInstallation saveInBackground];
-    DebugLog(@"Parse installation objectId: %@", [currentInstallation objectId]);
+    //  Save your token in userSettings so you can see it for debugging if need be.
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setObject:deviceToken forKey:@"deviceToken"];
+    
+    DebugLog(@"Push notification deviceToken: %@", deviceToken);
+    
+    // Push the deviceToken to our NI server for push notifications
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+    [request setURL:[NSURL URLWithString:[NSString stringWithFormat:@"push_registrations"] relativeToURL:[NSURL URLWithString:SITE_URL]]];
+    [request setHTTPMethod:@"POST"];
+    [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+    NSData *postData = [[NSString stringWithFormat:@"token=%@&device=%@", deviceToken, @"ios"] dataUsingEncoding:NSUTF8StringEncoding];
+    NSString *postLength = [NSString stringWithFormat:@"%d", (int)[postData length]];
+    [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
+    [request setHTTPBody:postData];
+    
+    NSOperationQueue *queue = [[NSOperationQueue alloc] init];
+    [NSURLConnection sendAsynchronousRequest:request queue:queue completionHandler:^(NSURLResponse * _Nullable response, NSData * _Nullable data, NSError * _Nullable connectionError)
+    {
+        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+        int statusCode = (int)[httpResponse statusCode];
+        if (statusCode >= 200 && statusCode < 300) {
+            // Push registrations successful
+            DebugLog(@"Status: %d. Push registrations was successful.", statusCode);
+        } else {
+            // Connection error with the Rails server
+            DebugLog(@"ERROR sending push registration to Rails: %d", statusCode);
+        }
+    }];
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
-{    
+{
     if ((application.applicationState == UIApplicationStateInactive) || (application.applicationState == UIApplicationStateBackground)) {
-        [PFAnalytics trackAppOpenedWithRemoteNotificationPayload:userInfo];
+        // TODO: Track the push notification opens?
         [self turnBadgeIconOn];
         [self handleRemoteNotification:application andUserInfo:userInfo];
     } else {
         [self handleNotification:userInfo];
-        [PFPush handlePush:userInfo];
+        // TODO: Track the push notification opens when the app is open?
     }
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
     if ((application.applicationState == UIApplicationStateInactive) || (application.applicationState == UIApplicationStateBackground)) {
-        [PFAnalytics trackAppOpenedWithRemoteNotificationPayload:userInfo];
+        // TODO: Track the push notification opens?
         [self turnBadgeIconOn];
         [self handleRemoteNotification:application andUserInfo:userInfo];
     } else {
