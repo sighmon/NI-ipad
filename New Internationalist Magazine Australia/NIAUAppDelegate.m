@@ -40,6 +40,8 @@ const char NotificationKey;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    BOOL firstRun = false;
+    
     // Load the In App Purchase Helper at launch to check for unfinished purchases.
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
         [NIAUInAppPurchaseHelper sharedInstance];
@@ -115,6 +117,7 @@ const char NotificationKey;
     if ([standardUserDefaults objectForKey:@"googleAnalytics"] == nil) {
         [standardUserDefaults setBool:TRUE forKey:@"googleAnalytics"];
         [standardUserDefaults synchronize];
+        firstRun = true;
     } else if ([standardUserDefaults boolForKey:@"googleAnalytics"] == 0) {
         // User has asked to opt-out of Google Analytics
         [[GAI sharedInstance] setOptOut:YES];
@@ -168,6 +171,14 @@ const char NotificationKey;
     
     // Update sharedUserDefaults
     [NIAUHelper updateSharedUserDefaults];
+    
+    // Send install stat to analytics
+    if (firstRun && [standardUserDefaults boolForKey:@"googleAnalytics"] == 1) {
+        TAGDataLayer *dataLayer = [TAGManager instance].dataLayer;
+        
+        [dataLayer push:@{@"event": @"install", @"label": @"iOS"}];
+        DebugLog(@"Fresh install analytics sent");
+    }
     
     // Override point for customization after application launch.
     return YES;
