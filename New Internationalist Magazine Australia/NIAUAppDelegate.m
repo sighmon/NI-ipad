@@ -70,11 +70,7 @@ const char NotificationKey;
         [application registerUserNotificationSettings:settings];
         [application registerForRemoteNotifications];
     } else {
-        // iOS 7.x
-        [application registerForRemoteNotificationTypes:UIRemoteNotificationTypeBadge|
-         UIRemoteNotificationTypeAlert|
-         UIRemoteNotificationTypeSound|
-         UIRemoteNotificationTypeNewsstandContentAvailability];
+        // iOS 7.x - which we're no longer targeting.
     }
     
     // Get User Defaults.
