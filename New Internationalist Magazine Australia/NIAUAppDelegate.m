@@ -313,11 +313,11 @@ const char NotificationKey;
     // Push the deviceToken to our NI server for push notifications
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
     NSString *siteURLString = @"";
-    if (DEBUG) {
-        siteURLString = DEBUG_SITE_URL;
-    } else {
-        siteURLString = SITE_URL;
-    }
+    siteURLString = SITE_URL;
+#ifdef DEBUG
+    // Use debug Site url
+    siteURLString = DEBUG_SITE_URL;
+#endif
     DebugLog(@"Push registrations URL: %@", siteURLString);
     [request setURL:[NSURL URLWithString:[NSString stringWithFormat:@"push_registrations"] relativeToURL:[NSURL URLWithString:siteURLString]]];
     [request setHTTPMethod:@"POST"];
