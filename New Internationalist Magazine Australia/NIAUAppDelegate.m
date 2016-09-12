@@ -72,11 +72,7 @@ const char NotificationKey;
         [application registerUserNotificationSettings:settings];
         [application registerForRemoteNotifications];
     } else {
-        // iOS 7.x
-        [application registerForRemoteNotificationTypes:UIRemoteNotificationTypeBadge|
-         UIRemoteNotificationTypeAlert|
-         UIRemoteNotificationTypeSound|
-         UIRemoteNotificationTypeNewsstandContentAvailability];
+        // iOS 7.x - which we're no longer targeting.
     }
     
     // Get User Defaults.
@@ -316,7 +312,14 @@ const char NotificationKey;
     
     // Push the deviceToken to our NI server for push notifications
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-    [request setURL:[NSURL URLWithString:[NSString stringWithFormat:@"push_registrations"] relativeToURL:[NSURL URLWithString:SITE_URL]]];
+    NSString *siteURLString = @"";
+    if (DEBUG) {
+        siteURLString = DEBUG_SITE_URL;
+    } else {
+        siteURLString = SITE_URL;
+    }
+    DebugLog(@"Push registrations URL: %@", siteURLString);
+    [request setURL:[NSURL URLWithString:[NSString stringWithFormat:@"push_registrations"] relativeToURL:[NSURL URLWithString:siteURLString]]];
     [request setHTTPMethod:@"POST"];
     [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
     NSData *postData = [[NSString stringWithFormat:@"token=%@&device=%@", deviceToken, @"ios"] dataUsingEncoding:NSUTF8StringEncoding];
