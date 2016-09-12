@@ -7,7 +7,7 @@
 //
 
 #import "NIAULoginViewController.h"
-#import <SSKeychain.h>
+#import <SAMKeychain.h>
 #import "local.h"
 #import "Reachability.h"
 
@@ -39,11 +39,11 @@ NSString *LoginUnsuccessfulNotification = @"LoginUnsuccessful";
     // Draw the nice gradient background
     [NIAUHelper drawGradientInView:self.view];
     
-    NSArray *accounts = [SSKeychain accountsForService:@"NIWebApp"];
+    NSArray *accounts = [SAMKeychain accountsForService:@"NIWebApp"];
     if([accounts count]>0) {
         NSDictionary *dict = accounts[0];
         self.username.text = dict[@"acct"];
-        self.password.text = [SSKeychain passwordForService:dict[@"svce"] account:dict[@"acct"]];
+        self.password.text = [SAMKeychain passwordForService:dict[@"svce"] account:dict[@"acct"]];
     } else {
 //        self.username.text = @"username";
 //        self.password.text = @"password";
@@ -110,15 +110,15 @@ NSString *LoginUnsuccessfulNotification = @"LoginUnsuccessful";
         NSString *passwordEncoded = [NIAUHelper URLEncodedString:password];
         
         NSError *error;
-        if ([SSKeychain setPassword:password forService:@"NIWebApp" account:username error:&error]) {
+        if ([SAMKeychain setPassword:password forService:@"NIWebApp" account:username error:&error]) {
             
     //        [[[UIAlertView alloc] initWithTitle:@"Password saved" message:@"Your password has been successfully saved" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
 
             // delete all other entries from keychain (maybe a bad idea, but we are testing)
-            [[SSKeychain accountsForService:@"NIWebApp"] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            [[SAMKeychain accountsForService:@"NIWebApp"] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
                 NSString *acct = obj[@"acct"];
                 if(![acct isEqualToString:username]) {
-                    [SSKeychain deletePasswordForService:obj[@"svce"] account:obj[@"acct"]];
+                    [SAMKeychain deletePasswordForService:obj[@"svce"] account:obj[@"acct"]];
                 }
             }];
             

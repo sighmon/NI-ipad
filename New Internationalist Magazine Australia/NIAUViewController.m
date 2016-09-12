@@ -10,7 +10,7 @@
 #import "NIAUMagazineArchiveViewController.h"
 #import "NIAUTableOfContentsViewController.h"
 #import "NIAUStoreViewController.h"
-#import <SSKeychain.h>
+#import <SAMKeychain.h>
 #import "local.h"
 
 @interface NIAUViewController ()
@@ -289,9 +289,9 @@
 {    
     // Get keychain details
     NSError *keychainError = nil;
-    id keychainAccount = [[SSKeychain accountsForService:@"NIWebApp"] firstObject];
+    id keychainAccount = [[SAMKeychain accountsForService:@"NIWebApp"] firstObject];
     NSString *username = keychainAccount[@"acct"];
-    NSString *password = [SSKeychain passwordForService:@"NIWebApp" account:keychainAccount[@"acct"] error:&keychainError];
+    NSString *password = [SAMKeychain passwordForService:@"NIWebApp" account:keychainAccount[@"acct"] error:&keychainError];
     
     if (keychainError == nil) {
         DebugLog(@"Account found: %@", username);
