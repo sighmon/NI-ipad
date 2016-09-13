@@ -62,6 +62,17 @@
     // Add observer for the user changing the text size
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(preferredContentSizeChanged:) name:UIContentSizeCategoryDidChangeNotification object:nil];
     
+    // Setup UISearchController
+    self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
+    self.searchController.searchResultsUpdater = self;
+    self.searchController.dimsBackgroundDuringPresentation = NO;
+//    self.searchController.searchBar.scopeButtonTitles = @[NSLocalizedString(@"ScopeButtonCountry",@"Country"),
+//                                                          NSLocalizedString(@"ScopeButtonCapital",@"Capital")];
+    self.searchController.searchBar.delegate = self;
+    self.tableView.tableHeaderView = self.searchController.searchBar;
+    self.definesPresentationContext = YES;
+    [self.searchController.searchBar sizeToFit];
+    
     [self sendGoogleAnalyticsStats];
 }
 
@@ -151,7 +162,7 @@
 {
     // Return the number of sections. (number of issues)
     
-    if (tableView == self.searchDisplayController.searchResultsTableView) {
+    if (self.searchController.active) {
         return [self.filteredIssueArticlesArray count];
     } else {
         return [self.issuesArray count];
@@ -162,7 +173,7 @@
 {
     // TODO: WORK OUT HOW TO CHANGE THE BACKGROUND COLOUR FOR THE HEADERS.
     
-    if (tableView == self.searchDisplayController.searchResultsTableView) {
+    if (self.searchController.active) {
         NIAUIssue *issue = [(NIAUArticle *)[[self.filteredIssueArticlesArray objectAtIndex:section] firstObject] issue];
         return [NSString stringWithFormat:@"%@ - %@", [issue name], [issue title]];
     } else {
@@ -174,7 +185,7 @@
 {
     // Return the number of rows in the section.
     
-    if (tableView == self.searchDisplayController.searchResultsTableView) {
+    if (self.searchController.active) {
         return [self.filteredIssueArticlesArray[section] count];
     } else {
         return [self.issuesArray[section] numberOfArticles];
@@ -187,7 +198,7 @@
     
     UITableViewCell *cell = nil;
     
-    if (tableView == self.searchDisplayController.searchResultsTableView) {
+    if (self.searchController.active) {
         cell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     } else {
         cell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
@@ -197,7 +208,7 @@
     
     NIAUArticle *article = nil;
     
-    if (tableView == self.searchDisplayController.searchResultsTableView) {
+    if (self.searchController.active) {
         article = self.filteredIssueArticlesArray[indexPath.section][indexPath.row];
     } else {
         article = [self.issuesArray[indexPath.section] articleAtIndex:indexPath.row];
@@ -229,7 +240,7 @@
         
     NIAUArticle *article = nil;
     
-    if (tableView == self.searchDisplayController.searchResultsTableView) {
+    if (self.searchController.active) {
         article = self.filteredIssueArticlesArray[indexPath.section][indexPath.row];
     } else {
         article = [self.issuesArray[indexPath.section] articleAtIndex:indexPath.row];
@@ -309,24 +320,19 @@
 }
 
 #pragma mark - 
-#pragma mark UISearchDisplayController Delegate Methods
+#pragma mark UISearchController Delegate Methods
 
--(BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
+-(void)updateSearchResultsForSearchController:(UISearchController *)searchController
 {
     // Tells the table data source to reload when text changes
-    [self filterContentForSearchText:searchString scope:
-     [[self.searchDisplayController.searchBar scopeButtonTitles] objectAtIndex:[self.searchDisplayController.searchBar selectedScopeButtonIndex]]];
-    // Return YES to cause the search result table view to be reloaded.
-    return YES;
+    NSString *searchString = searchController.searchBar.text;
+    [self filterContentForSearchText:searchString scope:[[self.searchController.searchBar scopeButtonTitles] objectAtIndex:[self.searchController.searchBar selectedScopeButtonIndex]]];
+    [self.tableView reloadData];
 }
 
--(BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchScope:(NSInteger)searchOption
+-(void)searchBar:(UISearchBar *)searchBar selectedScopeButtonIndexDidChange:(NSInteger)selectedScope
 {
-    // Tells the table data source to reload when scope bar selection changes
-    [self filterContentForSearchText:self.searchDisplayController.searchBar.text scope:
-     [[self.searchDisplayController.searchBar scopeButtonTitles] objectAtIndex:searchOption]];
-    // Return YES to cause the search result table view to be reloaded.
-    return YES;
+    [self updateSearchResultsForSearchController:self.searchController];
 }
 
 /*
@@ -378,8 +384,8 @@
     
     NIAUArticleViewController *articleViewController = [segue destinationViewController];
     
-    if([sender isDescendantOfView:self.searchDisplayController.searchResultsTableView]) {
-        NSIndexPath *selectedIndexPath = [self.searchDisplayController.searchResultsTableView indexPathForSelectedRow];
+    if ([segue.identifier isEqualToString:@"searchToArticleDetail"]) {
+        NSIndexPath *selectedIndexPath = [self.tableView indexPathForCell:sender];
         articleViewController.article = self.filteredIssueArticlesArray[selectedIndexPath.section][selectedIndexPath.row];
     }
     else {
