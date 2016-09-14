@@ -10,6 +10,8 @@
 
 @interface NIAUSearchViewController ()
 
+@property (nonatomic, strong) NSTimer *searchTimer;
+
 @end
 
 @implementation NIAUSearchViewController
@@ -317,6 +319,7 @@
             [self.filteredIssueArticlesArray addObject:filteredArticlesArray];
         }
     }];
+    [self.tableView reloadData];
 }
 
 #pragma mark - 
@@ -326,13 +329,26 @@
 {
     // Tells the table data source to reload when text changes
     NSString *searchString = searchController.searchBar.text;
-    [self filterContentForSearchText:searchString scope:[[self.searchController.searchBar scopeButtonTitles] objectAtIndex:[self.searchController.searchBar selectedScopeButtonIndex]]];
+    
+    // TODO: Work out how to queue letter presses here.. not currently working..
+    [self.searchTimer invalidate];
+    self.searchTimer = [NSTimer scheduledTimerWithTimeInterval:1.0
+                                                        target:self
+                                                      selector:@selector(delayedSearch:)
+                                                      userInfo:@{@"searchString":searchString}
+                                                       repeats:NO];
+//    [self filterContentForSearchText:searchString scope:[[self.searchController.searchBar scopeButtonTitles] objectAtIndex:[self.searchController.searchBar selectedScopeButtonIndex]]];
     [self.tableView reloadData];
 }
 
 -(void)searchBar:(UISearchBar *)searchBar selectedScopeButtonIndexDidChange:(NSInteger)selectedScope
 {
     [self updateSearchResultsForSearchController:self.searchController];
+}
+
+-(void)delayedSearch:(NSTimer *)timer
+{
+    [self filterContentForSearchText:[timer userInfo][@"searchString"] scope:[[self.searchController.searchBar scopeButtonTitles] objectAtIndex:[self.searchController.searchBar selectedScopeButtonIndex]]];
 }
 
 /*
