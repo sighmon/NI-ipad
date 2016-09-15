@@ -7,6 +7,7 @@
 //
 
 #import "NIAUSearchViewController.h"
+#import "local.h"
 
 @interface NIAUSearchViewController ()
 
@@ -31,6 +32,7 @@
         self.issuesArray = [[NSMutableArray alloc] init];
 //        self.filteredIssuesArray = [[NSMutableArray alloc] init];
         self.filteredIssueArticlesArray = [[NSMutableArray alloc] init];
+        self.webSearchArticlesArray = [[NSMutableArray alloc] init];
     }
     return self;
 }
@@ -66,8 +68,8 @@
     self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
     self.searchController.searchResultsUpdater = self;
     self.searchController.dimsBackgroundDuringPresentation = NO;
-//    self.searchController.searchBar.scopeButtonTitles = @[NSLocalizedString(@"ScopeButtonCountry",@"Country"),
-//                                                          NSLocalizedString(@"ScopeButtonCapital",@"Capital")];
+    self.searchController.searchBar.scopeButtonTitles = @[NSLocalizedString(@"scope_button_phone", nil),
+                                                          NSLocalizedString(@"scope_button_web", nil)];
     self.searchController.searchBar.delegate = self;
     self.tableView.tableHeaderView = self.searchController.searchBar;
     self.definesPresentationContext = YES;
@@ -162,7 +164,11 @@
 {
     // Return the number of sections. (number of issues)
     
-    if (self.searchController.active) {
+    if (self.searchController.active && [self.searchController.searchBar selectedScopeButtonIndex] == 1) {
+        // Web search results
+        return 1;
+    } else if (self.searchController.active) {
+        // Local device search
         return [self.filteredIssueArticlesArray count];
     } else {
         return [self.issuesArray count];
@@ -173,7 +179,9 @@
 {
     // TODO: WORK OUT HOW TO CHANGE THE BACKGROUND COLOUR FOR THE HEADERS.
     
-    if (self.searchController.active) {
+    if (self.searchController.active && [self.searchController.searchBar selectedScopeButtonIndex] == 1) {
+        return [NSString stringWithFormat:@"%lu Search results", (unsigned long)[self.webSearchArticlesArray count]];
+    } else if (self.searchController.active) {
         NIAUIssue *issue = [(NIAUArticle *)[[self.filteredIssueArticlesArray objectAtIndex:section] firstObject] issue];
         return [NSString stringWithFormat:@"%@ - %@", [issue name], [issue title]];
     } else {
@@ -185,7 +193,9 @@
 {
     // Return the number of rows in the section.
     
-    if (self.searchController.active) {
+    if (self.searchController.active && [self.searchController.searchBar selectedScopeButtonIndex] == 1) {
+        return [self.webSearchArticlesArray count];
+    } else if (self.searchController.active) {
         return [self.filteredIssueArticlesArray[section] count];
     } else {
         return [self.issuesArray[section] numberOfArticles];
@@ -207,20 +217,27 @@
     // Configure the cell...
     
     NIAUArticle *article = nil;
+    id teaser = nil;
     
-    if (self.searchController.active) {
+    if (self.searchController.active && [self.searchController.searchBar selectedScopeButtonIndex] == 1) {
+        // Load the title & teaser later
+        teaser = self.webSearchArticlesArray[indexPath.row][@"teaser"];
+        cell.textLabel.text = self.webSearchArticlesArray[indexPath.row][@"title"];
+    } else if (self.searchController.active) {
         article = self.filteredIssueArticlesArray[indexPath.section][indexPath.row];
+        teaser = article.teaser;
+        cell.textLabel.text = article.title;
     } else {
         article = [self.issuesArray[indexPath.section] articleAtIndex:indexPath.row];
+        teaser = article.teaser;
+        cell.textLabel.text = article.title;
     }
     
     // Hack to check against NULL teasers.
-    id teaser = article.teaser;
     if (teaser == nil || teaser == [NSNull null]) {
         teaser = @"";
     }
     
-    cell.textLabel.text = article.title;
     cell.textLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
     
     // Regex to remove <strong> and <b> and any other <html>
@@ -239,19 +256,27 @@
     // Using technique from http://stackoverflow.com/questions/18897896/replacement-for-deprecated-sizewithfont-in-ios-7
         
     NIAUArticle *article = nil;
+    id teaser = nil;
+    NSString *articleTitle;
     
-    if (self.searchController.active) {
+    if (self.searchController.active && [self.searchController.searchBar selectedScopeButtonIndex] == 1) {
+        // Load the title & teaser later
+        teaser = self.webSearchArticlesArray[indexPath.row][@"teaser"];
+        articleTitle = self.webSearchArticlesArray[indexPath.row][@"title"];
+    } else if (self.searchController.active) {
         article = self.filteredIssueArticlesArray[indexPath.section][indexPath.row];
+        articleTitle = article.title;
+        teaser = article.teaser;
     } else {
         article = [self.issuesArray[indexPath.section] articleAtIndex:indexPath.row];
+        articleTitle = article.title;
+        teaser = article.teaser;
     }
     
-    id teaser = article.teaser;
     if (teaser == nil || teaser == [NSNull null]) {
         teaser = @"";
     }
     
-    NSString *articleTitle = article.title;
     if (articleTitle == nil) {
         // Hmmm.. something fishy going on, but let's avoid a crash
         articleTitle = @"";
@@ -284,50 +309,78 @@
     // Remove all objects from the filtered search array
 
     [self.filteredIssueArticlesArray removeAllObjects];
+    [self.webSearchArticlesArray removeAllObjects];
     
-    // Filter the array using NSPredicate
-    
-    [self.issuesArray enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+    if (scope && [scope isEqualToString:NSLocalizedString(@"scope_button_phone", nil)]) {
+        // Local device search
+        // Filter the array using NSPredicate
         
-        NSMutableArray *filteredArticlesArray = [[NSMutableArray alloc] initWithCapacity:[obj numberOfArticles]];
-        for (int i = 0; i < [obj numberOfArticles]; i++) {
-            [filteredArticlesArray addObject:[obj articleAtIndex:i]];
-        }
-        
-        NSArray *searchArray = [searchText componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@" ,\t"]];
-        
-        NSMutableArray *andPredicateArray = [NSMutableArray array];
-        
-        [searchArray enumerateObjectsUsingBlock:^(NSString *subString, NSUInteger idx, BOOL *stop) {
-            if ([subString length] > 0) {
-                NSMutableArray *searchArticleTitleAndTeaser = [NSMutableArray array];
-                [searchArticleTitleAndTeaser addObject:[NSPredicate predicateWithFormat:@"SELF.title contains[cd] %@",subString]];
-                [searchArticleTitleAndTeaser addObject:[NSPredicate predicateWithFormat:@"SELF.teaser contains[cd] %@",subString]];
-                [searchArticleTitleAndTeaser addObject:[NSPredicate predicateWithFormat:@"SELF.attemptToGetBodyFromDisk contains[cd] %@",subString]];
-                NSPredicate *orPredicate = [NSCompoundPredicate orPredicateWithSubpredicates:searchArticleTitleAndTeaser];
-                [andPredicateArray addObject:orPredicate];
+        [self.issuesArray enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            
+            NSMutableArray *filteredArticlesArray = [[NSMutableArray alloc] initWithCapacity:[obj numberOfArticles]];
+            for (int i = 0; i < [obj numberOfArticles]; i++) {
+                [filteredArticlesArray addObject:[obj articleAtIndex:i]];
+            }
+            
+            NSArray *searchArray = [searchText componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@" ,\t"]];
+            
+            NSMutableArray *andPredicateArray = [NSMutableArray array];
+            
+            [searchArray enumerateObjectsUsingBlock:^(NSString *subString, NSUInteger idx, BOOL *stop) {
+                if ([subString length] > 0) {
+                    NSMutableArray *searchArticleTitleAndTeaser = [NSMutableArray array];
+                    [searchArticleTitleAndTeaser addObject:[NSPredicate predicateWithFormat:@"SELF.title contains[cd] %@",subString]];
+                    [searchArticleTitleAndTeaser addObject:[NSPredicate predicateWithFormat:@"SELF.teaser contains[cd] %@",subString]];
+                    [searchArticleTitleAndTeaser addObject:[NSPredicate predicateWithFormat:@"SELF.attemptToGetBodyFromDisk contains[cd] %@",subString]];
+                    NSPredicate *orPredicate = [NSCompoundPredicate orPredicateWithSubpredicates:searchArticleTitleAndTeaser];
+                    [andPredicateArray addObject:orPredicate];
+                }
+            }];
+            
+            NSPredicate *compoundPredicate = [NSCompoundPredicate andPredicateWithSubpredicates:andPredicateArray];
+            
+            [filteredArticlesArray filterUsingPredicate:compoundPredicate];
+            
+            if ([filteredArticlesArray count] > 0) {
+                [self.filteredIssueArticlesArray addObject:filteredArticlesArray];
             }
         }];
+    } else {
+        // Search the web
+        NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+        NSURL *searchURL = [NSURL URLWithString:[NSString stringWithFormat:@"search.json?query=%@&per_page=50", [searchText stringByReplacingOccurrencesOfString:@" " withString:@"+"]] relativeToURL:[NSURL URLWithString:SITE_URL]];
+        [request setURL:searchURL];
+        [request setHTTPMethod:@"GET"];
+        [request setValue:@"application/json;charset=UTF-8" forHTTPHeaderField:@"content-type"];
         
-        NSPredicate *compoundPredicate = [NSCompoundPredicate andPredicateWithSubpredicates:andPredicateArray];
-
-        [filteredArticlesArray filterUsingPredicate:compoundPredicate];
-        
-        if ([filteredArticlesArray count] > 0) {
-            [self.filteredIssueArticlesArray addObject:filteredArticlesArray];
+        NSError *error;
+        NSHTTPURLResponse *response;
+        NSData *responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
+        NSArray *jsonArray = [NSJSONSerialization JSONObjectWithData:responseData options: NSJSONReadingMutableContainers error: &error];
+//        [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
+        int statusCode = (int)[response statusCode];
+        if (statusCode >= 200 && statusCode < 300) {
+            // Process json search results
+            DebugLog(@"Search results: %lu", (unsigned long)[jsonArray count]);
+            [self.webSearchArticlesArray addObjectsFromArray:jsonArray];
+        } else {
+            [[[UIAlertView alloc] initWithTitle:@"Error" message:@"Sorry, either you don't have stable internet, or our site is down." delegate:self cancelButtonTitle:@"Try again." otherButtonTitles:nil] show];
         }
-    }];
+    }
+    
+    [self.tableView reloadData];
 }
 
-#pragma mark - 
+#pragma mark -
 #pragma mark UISearchController Delegate Methods
 
 -(void)updateSearchResultsForSearchController:(UISearchController *)searchController
 {
     // Tells the table data source to reload when text changes
+    
+    // TODO: queue search (see branch 'search')
     NSString *searchString = searchController.searchBar.text;
     [self filterContentForSearchText:searchString scope:[[self.searchController.searchBar scopeButtonTitles] objectAtIndex:[self.searchController.searchBar selectedScopeButtonIndex]]];
-    [self.tableView reloadData];
 }
 
 -(void)searchBar:(UISearchBar *)searchBar selectedScopeButtonIndexDidChange:(NSInteger)selectedScope
@@ -384,7 +437,30 @@
     
     NIAUArticleViewController *articleViewController = [segue destinationViewController];
     
-    if ([segue.identifier isEqualToString:@"searchToArticleDetail"]) {
+    if (self.searchController.active && [self.searchController.searchBar selectedScopeButtonIndex] == 1) {
+        NSIndexPath *selectedIndexPath = [self.tableView indexPathForCell:sender];
+        NSString *articleIDFromURL = self.webSearchArticlesArray[selectedIndexPath.row][@"id"];
+        NSNumber *articleID = [NSNumber numberWithInt:(int)[articleIDFromURL integerValue]];
+        NSString *issueIDFromURL = self.webSearchArticlesArray[selectedIndexPath.row][@"issue_id"];
+        NSNumber *issueID = [NSNumber numberWithInt:(int)[issueIDFromURL integerValue]];
+        NSArray *arrayOfIssues = [NIAUIssue issuesFromNKLibrary];
+        NSUInteger issueIndexPath = [arrayOfIssues indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
+            return ([[obj railsID] isEqualToNumber:issueID]);
+        }];
+        if (issueIndexPath != NSNotFound) {
+            NIAUIssue *issue = [arrayOfIssues objectAtIndex:issueIndexPath];
+            [issue forceDownloadArticles];
+            NIAUArticle *articleToLoad = [issue articleWithRailsID:articleID];
+            if (articleToLoad) {
+                articleViewController.article = articleToLoad;
+            } else {
+                // Can't find that article..
+            }
+        } else {
+            // Can't find that issue..
+        }
+    }
+    else if ([segue.identifier isEqualToString:@"searchToArticleDetail"]) {
         NSIndexPath *selectedIndexPath = [self.tableView indexPathForCell:sender];
         articleViewController.article = self.filteredIssueArticlesArray[selectedIndexPath.section][selectedIndexPath.row];
     }

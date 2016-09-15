@@ -15,3 +15,9 @@
 /* Errors */
 
 "publisher_error" = "Sorry! It looks like our magazine server is down. Please try again later. :-(";
+
+/* Search view controller */
+
+"scope_button_phone" = "On this device";
+
+"scope_button_web" = "Search all articles";

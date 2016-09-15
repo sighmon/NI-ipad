@@ -24,6 +24,7 @@
 @property (nonatomic, strong) NSMutableArray *issuesArray;
 //@property (nonatomic, strong) NSMutableArray *filteredIssuesArray;
 @property (nonatomic, strong) NSMutableArray *filteredIssueArticlesArray;
+@property (nonatomic, strong) NSMutableArray *webSearchArticlesArray;
 
 //@property IBOutlet UISearchBar *articleSearchBar;
 @property (nonatomic, strong) UISearchController *searchController;
