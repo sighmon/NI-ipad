@@ -132,7 +132,7 @@ NSString *kCellID = @"magazineCellID";              // UICollectionViewCell stor
                 // Is cell is still in view
                 NIAUCell *updateCell = (id)[self.collectionView cellForItemAtIndexPath:indexPath];
                 
-                if (img && [[self.collectionView visibleCells] containsObject:(UITableViewCell *)updateCell]) {
+                if (img && [[self.collectionView visibleCells] containsObject:updateCell]) {
                     
 //                    DebugLog(@"Cell: (%f,%f), IndexPath: %ld", updateCell.frame.origin.x, updateCell.frame.origin.y, (long)indexPath.row);
                     if (updateCell) {
