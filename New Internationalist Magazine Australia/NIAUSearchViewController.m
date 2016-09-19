@@ -15,6 +15,8 @@
 
 @implementation NIAUSearchViewController
 
+NSTimer *searchTimer;
+
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
@@ -307,9 +309,8 @@
 {
     // Update the filtered array based on the search text and scope.
     // Remove all objects from the filtered search array
-
-    [self.filteredIssueArticlesArray removeAllObjects];
-    [self.webSearchArticlesArray removeAllObjects];
+    
+    NSMutableArray *tmpArray = [[NSMutableArray alloc] init];
     
     if (scope && [scope isEqualToString:NSLocalizedString(@"scope_button_phone", nil)]) {
         // Local device search
@@ -342,13 +343,16 @@
             [filteredArticlesArray filterUsingPredicate:compoundPredicate];
             
             if ([filteredArticlesArray count] > 0) {
-                [self.filteredIssueArticlesArray addObject:filteredArticlesArray];
+                [tmpArray addObject:filteredArticlesArray];
             }
         }];
+        [self.filteredIssueArticlesArray removeAllObjects];
+        [self.filteredIssueArticlesArray addObjectsFromArray:tmpArray];
+        [self.tableView reloadData];
     } else {
         // Search the web
         NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-        NSURL *searchURL = [NSURL URLWithString:[NSString stringWithFormat:@"search.json?query=%@&per_page=50", [searchText stringByReplacingOccurrencesOfString:@" " withString:@"+"]] relativeToURL:[NSURL URLWithString:SITE_URL]];
+        NSURL *searchURL = [NSURL URLWithString:[NSString stringWithFormat:@"search.json?query=%@&per_page=100", [searchText stringByReplacingOccurrencesOfString:@" " withString:@"+"]] relativeToURL:[NSURL URLWithString:SITE_URL]];
         [request setURL:searchURL];
         [request setHTTPMethod:@"GET"];
         [request setValue:@"application/json;charset=UTF-8" forHTTPHeaderField:@"content-type"];
@@ -362,13 +366,14 @@
         if (statusCode >= 200 && statusCode < 300) {
             // Process json search results
             DebugLog(@"Search results: %lu", (unsigned long)[jsonArray count]);
+            [self.webSearchArticlesArray removeAllObjects];
             [self.webSearchArticlesArray addObjectsFromArray:jsonArray];
+            [self.tableView reloadData];
         } else {
             [[[UIAlertView alloc] initWithTitle:@"Error" message:@"Sorry, either you don't have stable internet, or our site is down." delegate:self cancelButtonTitle:@"Try again." otherButtonTitles:nil] show];
         }
     }
-    
-    [self.tableView reloadData];
+
 }
 
 #pragma mark -
@@ -377,15 +382,32 @@
 -(void)updateSearchResultsForSearchController:(UISearchController *)searchController
 {
     // Tells the table data source to reload when text changes
-    
-    // TODO: queue search (see branch 'search')
     NSString *searchString = searchController.searchBar.text;
-    [self filterContentForSearchText:searchString scope:[[self.searchController.searchBar scopeButtonTitles] objectAtIndex:[self.searchController.searchBar selectedScopeButtonIndex]]];
+    
+    if (searchTimer.isValid) {
+        [searchTimer invalidate];
+    }
+    searchTimer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(delayedSearch:) userInfo:@{@"searchString": searchString} repeats:NO];
+}
+
+-(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+    if (searchTimer.isValid) {
+        [searchTimer invalidate];
+    }
+    [self filterContentForSearchText:searchBar.text scope:[[self.searchController.searchBar scopeButtonTitles] objectAtIndex:[self.searchController.searchBar selectedScopeButtonIndex]]];
 }
 
 -(void)searchBar:(UISearchBar *)searchBar selectedScopeButtonIndexDidChange:(NSInteger)selectedScope
 {
     [self updateSearchResultsForSearchController:self.searchController];
+}
+
+-(void)delayedSearch:(NSTimer *)timer
+{
+    if (timer) {
+        [self filterContentForSearchText:[timer userInfo][@"searchString"] scope:[[self.searchController.searchBar scopeButtonTitles] objectAtIndex:[self.searchController.searchBar selectedScopeButtonIndex]]];
+    }
 }
 
 /*
