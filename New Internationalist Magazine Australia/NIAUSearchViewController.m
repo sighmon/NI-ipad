@@ -360,7 +360,10 @@ NSTimer *searchTimer;
         NSError *error;
         NSHTTPURLResponse *response;
         NSData *responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
-        NSArray *jsonArray = [NSJSONSerialization JSONObjectWithData:responseData options: NSJSONReadingMutableContainers error: &error];
+        NSArray *jsonArray;
+        if (responseData) {
+            jsonArray = [NSJSONSerialization JSONObjectWithData:responseData options: NSJSONReadingMutableContainers error: &error];
+        }
 //        [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
         int statusCode = (int)[response statusCode];
         if (statusCode >= 200 && statusCode < 300) {
@@ -370,7 +373,7 @@ NSTimer *searchTimer;
             [self.webSearchArticlesArray addObjectsFromArray:jsonArray];
             [self.tableView reloadData];
         } else {
-            [[[UIAlertView alloc] initWithTitle:@"Error" message:@"Sorry, either you don't have stable internet, or our site is down." delegate:self cancelButtonTitle:@"Try again." otherButtonTitles:nil] show];
+            [[[UIAlertView alloc] initWithTitle:@"Search error" message:@"Sorry, either you don't have stable internet, or our site is down." delegate:self cancelButtonTitle:@"Try again." otherButtonTitles:nil] show];
         }
     }
 
