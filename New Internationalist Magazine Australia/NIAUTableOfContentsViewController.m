@@ -502,6 +502,7 @@ static NSString *CellIdentifier = @"articleCell";
                 }];
             });
         }];
+        [self.editorImageView layoutIfNeeded];
         [NIAUHelper roundedCornersWithRadius:(self.editorImageView.bounds.size.width / 2.) inImageView:self.editorImageView];
         
         // If help is enabled, show help alert
