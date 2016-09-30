@@ -301,6 +301,7 @@
                             if (cell) {
 //                                UIImageView *productImageView = (UIImageView *)[cell viewWithTag:100];
                                 [productImageView setAlpha:0.0];
+                                [productImageView layoutIfNeeded];
                                 [productImageView setImage:[NIAUHelper imageWithRoundedCornersSize:3. usingImage:img]];
                                 [UIView animateWithDuration:0.3 animations:^{
                                     [productImageView setAlpha:1.0];

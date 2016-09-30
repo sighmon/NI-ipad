@@ -449,6 +449,7 @@ static NSString *CellIdentifier = @"articleCell";
         // Set the cover from the issue cover tapped
         [self.issue getCoverWithCompletionBlock:^(UIImage *img) {
             [self.imageView setAlpha:0.0];
+            [self.imageView layoutIfNeeded];
             [self.imageView setImage:[NIAUHelper imageWithRoundedCornersSize:10. usingImage:img]];
             [NIAUHelper addShadowToImageView:self.imageView withRadius:3. andOffset:CGSizeMake(0, 2) andOpacity:0.3];
             [UIView animateWithDuration:0.3 animations:^{
@@ -490,6 +491,7 @@ static NSString *CellIdentifier = @"articleCell";
         DebugLog(@"\nScrollView height: %f \neditorsLetter height: %f",self.scrollView.contentSize.height, self.editorsLetterTextView.attributedText.size.height);
         //    [self.tableView layoutIfNeeded];
         //    [self.editorsLetterTextView setNeedsLayout];
+        [self.editorsLetterTextView layoutIfNeeded];
         
         [self.editorImageView setImage:[UIImage imageNamed:@"default_editors_photo"]];
         // Load the real editor's image

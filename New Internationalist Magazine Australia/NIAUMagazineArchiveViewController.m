@@ -138,6 +138,7 @@ NSString *kCellID = @"magazineCellID";              // UICollectionViewCell stor
                     if (updateCell) {
                         [updateCell.coverLoadingIndicator stopAnimating];
                         [updateCell.image setAlpha:0.0];
+                        [updateCell.image layoutIfNeeded];
                         [updateCell.image setImage:[NIAUHelper imageWithRoundedCornersSize:3. usingImage:img]];
                         [UIView animateWithDuration:0.3 animations:^{
                             [updateCell.image setAlpha:1.0];

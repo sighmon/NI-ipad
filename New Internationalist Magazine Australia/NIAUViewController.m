@@ -129,6 +129,7 @@
         [self.coverLoadingIndicator stopAnimating];
         [self.cover setContentMode:UIViewContentModeScaleAspectFit];
         [self.cover setAlpha:0.0];
+        [self.cover layoutIfNeeded];
         [self.cover setImage:[NIAUHelper imageWithRoundedCornersSize:10. usingImage:img]];
         [self.issueBanner setAlpha:0.0];
         [self updateNewIssueBanner];
