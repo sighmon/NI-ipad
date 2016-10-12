@@ -18,6 +18,9 @@
 
 @implementation NIAUStoreViewController
 
+#define kMagazineCoverWidth 70
+#define kMagazineCoverHeight 100
+
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
@@ -292,14 +295,16 @@
                 if ([[UIScreen mainScreen] respondsToSelector:@selector(scale)]) {
                     pixelDepth = [[UIScreen mainScreen] scale];
                 }
-                CGSize coverSize = CGSizeMake(productImageView.frame.size.width * pixelDepth, productImageView.frame.size.height *pixelDepth);
+                // Setting the cover size manually - as it was defaulting to 2000 x 2000
+                CGSize coverSize = CGSizeMake(kMagazineCoverWidth * pixelDepth, kMagazineCoverHeight * pixelDepth);
+                
                 [issue getCoverThumbWithSize:coverSize andCompletionBlock:^(UIImage *img) {
                     dispatch_async(dispatch_get_main_queue(), ^{
                         // Is cell is still in view
                         if (img && [[tableView visibleCells] containsObject:cell]) {
                             
                             if (cell) {
-//                                UIImageView *productImageView = (UIImageView *)[cell viewWithTag:100];
+                                //                                UIImageView *productImageView = (UIImageView *)[cell viewWithTag:100];
                                 [productImageView setAlpha:0.0];
                                 [productImageView layoutIfNeeded];
                                 [productImageView setImage:[NIAUHelper imageWithRoundedCornersSize:3. usingImage:img]];
