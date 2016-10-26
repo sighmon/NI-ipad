@@ -36,7 +36,9 @@ static CGFloat padding = 22.0;
     self.articleTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     
     // Add the iOS 10 Show More ability
-    [self.extensionContext setWidgetLargestAvailableDisplayMode:NCWidgetDisplayModeExpanded];
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"10.0")) {
+        [self.extensionContext setWidgetLargestAvailableDisplayMode:NCWidgetDisplayModeExpanded];
+    }
 }
 
 - (void)widgetActiveDisplayModeDidChange:(NCWidgetDisplayMode)activeDisplayMode withMaximumSize:(CGSize)maxSize {
