@@ -433,7 +433,11 @@
     
     if ([self hasProductBeenPurchasedAtRow:(int)indexPath.row]) {
         // Product has been purchased, so do nothing
-        [[[UIAlertView alloc] initWithTitle:@"Already purchased!" message:@"Looks like you've already purchased this item!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+        [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"purchaseAlertTitle", nil)
+                                    message:NSLocalizedString(@"purchaseAlertMessage", nil)
+                                   delegate:self
+                          cancelButtonTitle:NSLocalizedString(@"purchaseAlertButton", nil)
+                          otherButtonTitles:nil] show];
     } else {
         [self purchaseProductAtRow:(int)indexPath.row];
     }
@@ -441,7 +445,21 @@
 
 - (IBAction)restorePurchasesButtonTapped:(id)sender
 {
-    [[NIAUInAppPurchaseHelper sharedInstance] restoreCompletedTransactions];
+    // TODO: Start restore animation/overlay
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"restoreAlertTitle", nil)
+                                                                   message:NSLocalizedString(@"restoreAlertMessage", nil)
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction *defaultAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"restoreAlertButtonDefault", nil) style:UIAlertActionStyleDefault
+                                                          handler:^(UIAlertAction * action) {
+                                                              [[NIAUInAppPurchaseHelper sharedInstance] restoreCompletedTransactions];
+                                                          }];
+    
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"restoreAlertButtonCancel", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {}];
+    
+    [alert addAction:defaultAction];
+    [alert addAction:cancelAction];
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -449,7 +467,11 @@
     if ([self hasProductBeenPurchasedAtRow:(int)indexPath.row]) {
         if ([self isProductASubscriptionAtRow:(int)indexPath.row]) {
             // Subscription has been purchased, so do nothing
-            [[[UIAlertView alloc] initWithTitle:@"Already purchased!" message:@"Looks like you've already purchased this item!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+            [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"purchaseAlertTitle", nil)
+                                        message:NSLocalizedString(@"purchaseAlertMessage", nil)
+                                       delegate:self
+                              cancelButtonTitle:NSLocalizedString(@"purchaseAlertButton", nil)
+                              otherButtonTitles:nil] show];
         } else {
             // Magazine has been purchased, so go to that issue
             [self performSegueWithIdentifier:@"showTableOfContents" sender:self];
@@ -467,6 +489,20 @@
     
     NSLog(@"Starting purchase: %@...", product.productIdentifier);
     [[NIAUInAppPurchaseHelper sharedInstance] buyProduct:product];
+}
+
+#pragma mark -
+#pragma mark - SKPaymentTransactionObserver delegate methods
+
+- (void)paymentQueueRestoreCompletedTransactionsFinished:(SKPaymentQueue *)queue
+{
+    // TODO: Stop restore animation/overlay
+}
+
+- (void)paymentQueue:(SKPaymentQueue *)queue updatedTransactions:(NSArray<SKPaymentTransaction *> *)transactions
+{
+    // TODO: Handle any non-finished transactions?
+    DebugLog(@"UpdatedTransactions: %@", transactions);
 }
 
 #pragma mark -

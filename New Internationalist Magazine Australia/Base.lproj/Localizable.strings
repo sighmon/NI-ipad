@@ -21,3 +21,19 @@
 "scope_button_phone" = "On this device";
 
 "scope_button_web" = "Search all articles";
+
+/* Store view controller */
+
+"restoreAlertTitle" = "Restore purchases";
+
+"restoreAlertMessage" = "Would you like to restore your purchases? It shouldn't take too long, but will prompt you to enter the AppleID you used to purchase the products.";
+
+"restoreAlertButtonDefault" = "Yes please!";
+
+"restoreAlertButtonCancel" = "Cancel";
+
+"purchaseAlertTitle" = "Already purchased!";
+
+"purchaseAlertMessage" = "Looks like you've already purchased this item!";
+
+"purchaseAlertButton" = "OK";

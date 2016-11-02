@@ -17,7 +17,7 @@
 #import "GAIFields.h"
 #import "GAILogger.h"
 
-@interface NIAUStoreViewController : UITableViewController
+@interface NIAUStoreViewController : UITableViewController <SKPaymentTransactionObserver>
 
 @property (nonatomic, weak) IBOutlet UIActivityIndicatorView *tableViewLoadingIndicator;
 
