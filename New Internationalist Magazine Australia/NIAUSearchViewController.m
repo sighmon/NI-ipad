@@ -487,7 +487,11 @@ NSTimer *searchTimer;
     }
     else if ([segue.identifier isEqualToString:@"searchToArticleDetail"]) {
         NSIndexPath *selectedIndexPath = [self.tableView indexPathForCell:sender];
-        articleViewController.article = self.filteredIssueArticlesArray[selectedIndexPath.section][selectedIndexPath.row];
+        if (self.filteredIssueArticlesArray && [self.filteredIssueArticlesArray count] > 0 && [self.filteredIssueArticlesArray[selectedIndexPath.section] count] > 0) {
+            articleViewController.article = self.filteredIssueArticlesArray[selectedIndexPath.section][selectedIndexPath.row];
+        } else {
+            // No filtered articles for the selected issue
+        }
     }
     else {
         NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
