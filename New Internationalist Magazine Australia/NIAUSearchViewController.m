@@ -485,13 +485,9 @@ NSTimer *searchTimer;
             // Can't find that issue..
         }
     }
-    else if ([segue.identifier isEqualToString:@"searchToArticleDetail"]) {
+    else if (self.searchController.active && [segue.identifier isEqualToString:@"searchToArticleDetail"]) {
         NSIndexPath *selectedIndexPath = [self.tableView indexPathForCell:sender];
-        if (self.filteredIssueArticlesArray && [self.filteredIssueArticlesArray count] > 0 && [self.filteredIssueArticlesArray[selectedIndexPath.section] count] > 0) {
-            articleViewController.article = self.filteredIssueArticlesArray[selectedIndexPath.section][selectedIndexPath.row];
-        } else {
-            // No filtered articles for the selected issue
-        }
+        articleViewController.article = self.filteredIssueArticlesArray[selectedIndexPath.section][selectedIndexPath.row];
     }
     else {
         NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
