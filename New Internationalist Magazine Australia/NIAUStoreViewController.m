@@ -344,7 +344,7 @@
         
         if (autoRenewingMonths) {
             productTitle.text = [NSString stringWithFormat:@"%@ month auto-renewing subscription", autoRenewingMonths];
-            productDescription.text = [NSString stringWithFormat:@"A subscription to New Internationalist magazine that auto-renews every %@ months until you cancel it. This option includes a 1 month trial period so you can try before being billed, and if you continue you get an extra month free.", autoRenewingMonths];
+            productDescription.text = [NSString stringWithFormat:@"A subscription to New Internationalist magazine that auto-renews every %@ months until you cancel it (24-hours prior to the end of the current period). Payment will be charged to your iTunes Account at confirmation of this purchase. Subscriptions may be managed by you and auto-renewal may be turned off by going to your Account Settings after purchase. This option includes a 1 month trial period so you can try before being billed, and if you continue you get an extra month free. Our terms of use & privacy policy is linked from the home screen 'i'.", autoRenewingMonths];
         } else {
             productTitle.text = [product localizedTitle];
             productDescription.text = [product localizedDescription];
@@ -409,15 +409,15 @@
     
     UITableViewCell *cell = [self tableView:tableView cellForRowAtIndexPath:indexPath];
     
-    // It doesn't want to calculate correctly, so here's some magic
-    float magicMultiplyer = 1.2;
-    
     float cellHeight = [self calculateCellSize:cell inTableView:tableView].height;
     
-    if (cellHeight * magicMultiplyer < [cell frame].size.height) {
+    // It doesn't want to calculate correctly, so here's some magic
+    float magicHeight = (cellHeight * 1.2) + (pow(cellHeight,2) * 0.0003);     // Used to use *1.2 but doesn't work for long descriptions.
+    
+    if (magicHeight < [cell frame].size.height) {
         return [cell frame].size.height;
     } else {
-        return cellHeight * magicMultiplyer;
+        return magicHeight;
     }
 }
 
