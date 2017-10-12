@@ -49,7 +49,12 @@
     NSArray *categoryParts = @[];
     NSString *textString = self.category;
     categoryParts = [textString componentsSeparatedByString:@"/"];
-    self.title = [[categoryParts[[categoryParts count]-2] capitalizedString] stringByReplacingOccurrencesOfString:@"-" withString:@" "];
+    if ([categoryParts count] > 1) {
+        self.title = [[categoryParts[[categoryParts count]-2] capitalizedString] stringByReplacingOccurrencesOfString:@"-" withString:@" "];
+    } else {
+        // No slashes, new Drupal category type.
+        self.title = [categoryParts[0] capitalizedString];
+    }
     
     // Get all of the issues, and when that's done get all of the articles
     
