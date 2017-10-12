@@ -392,8 +392,13 @@ NSString *ArticleDidRefreshNotification = @"ArticleDidRefresh";
     NSArray *categoryParts = @[];
     NSString *textString = [category objectForKey:@"name"];
     categoryParts = [textString componentsSeparatedByString:@"/"];
-    
-    cell.categoryLabel.text = [[categoryParts[[categoryParts count]-2] capitalizedString] stringByReplacingOccurrencesOfString:@"-" withString:@" "];
+    // Handle no slashes
+    if ([categoryParts count] > 1) {
+        cell.categoryLabel.text = [[categoryParts[[categoryParts count]-2] capitalizedString] stringByReplacingOccurrencesOfString:@"-" withString:@" "];
+    } else {
+        // No slashes, new Drupal category type.
+        cell.categoryLabel.text = [categoryParts[0] capitalizedString];
+    }
     
     // Round the cell corners
     cell.layer.masksToBounds = YES;
@@ -421,7 +426,13 @@ NSString *ArticleDidRefreshNotification = @"ArticleDidRefresh";
     NSArray *categoryParts = @[];
     NSString *textString = [category objectForKey:@"name"];
     categoryParts = [textString componentsSeparatedByString:@"/"];
-    categoryLabel.text = [[categoryParts[[categoryParts count]-2] capitalizedString] stringByReplacingOccurrencesOfString:@"-" withString:@" "];
+    // Handle no slashes
+    if ([categoryParts count] > 1) {
+        categoryLabel.text = [[categoryParts[[categoryParts count]-2] capitalizedString] stringByReplacingOccurrencesOfString:@"-" withString:@" "];
+    } else {
+        // No slashes, new Drupal category type.
+        categoryLabel.text = [categoryParts[0] capitalizedString];
+    }
     
     return CGSizeMake([categoryLabel intrinsicContentSize].width + cellPadding, 20.);
 }

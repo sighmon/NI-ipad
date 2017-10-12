@@ -166,13 +166,28 @@
         NSArray *categoryParts = @[];
         NSString *textString = [self.categoriesArray[i] objectForKey:@"name"];
         categoryParts = [textString componentsSeparatedByString:@"/"];
-        NSString *sectionName = categoryParts[1];
+        
+        NSString *sectionName = @"";
+        // Handle no slashes from Drupal
+        if ([categoryParts count] > 1) {
+            sectionName = categoryParts[1];
+        } else {
+            // No slashes, new Drupal category type.
+            sectionName = @"miscellaneous";
+        }
+        
         if ([categoryParts containsObject:@"regions"]) {
             sectionName = [NSString stringWithFormat:@"countries"];
         }
         [category setObject:sectionName forKey:@"sectionName"];
         
-        [category setObject:[[categoryParts[[categoryParts count]-2] capitalizedString] stringByReplacingOccurrencesOfString:@"-" withString:@" "] forKey:@"displayName"];
+        if ([categoryParts count] > 1) {
+            [category setObject:[[categoryParts[[categoryParts count]-2] capitalizedString] stringByReplacingOccurrencesOfString:@"-" withString:@" "] forKey:@"displayName"];
+        } else {
+            // No slashes, new Drupal category type.
+            [category setObject:[[categoryParts[0] capitalizedString] stringByReplacingOccurrencesOfString:@"-" withString:@" "] forKey:@"displayName"];
+        }
+        
         
         if (self.sectionsArray.count > 0) {
             NSUInteger sectionIndex = [self.sectionsArray indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
@@ -261,7 +276,13 @@
     NSArray *categoryParts = @[];
     NSString *textString = [self.sectionsArray[indexPath.section][indexPath.row] objectForKey:@"name"];
     categoryParts = [textString componentsSeparatedByString:@"/"];
-    cell.textLabel.text = [[categoryParts[[categoryParts count]-2] capitalizedString] stringByReplacingOccurrencesOfString:@"-" withString:@" "];
+    if ([categoryParts count] > 1) {
+        cell.textLabel.text = [[categoryParts[[categoryParts count]-2] capitalizedString] stringByReplacingOccurrencesOfString:@"-" withString:@" "];
+    } else {
+        // No slashes, new Drupal category type.
+        cell.textLabel.text = [categoryParts[0] capitalizedString];
+    }
+    
     cell.textLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
     cell.detailTextLabel.text = textString;
     
