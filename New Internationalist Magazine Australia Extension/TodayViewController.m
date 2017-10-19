@@ -33,7 +33,7 @@ static CGFloat padding = 22.0;
     // Do any additional setup after loading the view from its nib.
     
     // This will remove extra separators from tableview
-    self.articleTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+//    self.articleTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     
     // Add the iOS 10 Show More ability
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"10.0")) {
@@ -145,18 +145,18 @@ static CGFloat padding = 22.0;
 - (CGFloat)calculateHeightForConfiguredSizingCell:(UITableViewCell *)sizingCell
 {
     // Auto-layout method didn't work. Boo hiss.
-//    [sizingCell setNeedsLayout];
-//    [sizingCell layoutIfNeeded];
-//    
-//    CGSize size = [sizingCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
+    [sizingCell setNeedsLayout];
+    [sizingCell layoutIfNeeded];
     
-    CGSize maxSize = CGSizeMake(sizingCell.textLabel.frame.size.width, MAXFLOAT);
+    CGSize size = [sizingCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
     
-    CGRect labelRect = [sizingCell.textLabel.text boundingRectWithSize:maxSize options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:sizingCell.textLabel.font} context:nil];
+//    CGSize maxSize = CGSizeMake(sizingCell.textLabel.frame.size.width, MAXFLOAT);
+//
+//    CGRect labelRect = [sizingCell.textLabel.text boundingRectWithSize:maxSize options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:sizingCell.textLabel.font} context:nil];
     
 //    NSLog(@"Label size %@", NSStringFromCGSize(labelRect.size));
     
-    return ceil(labelRect.size.height + padding);
+    return ceil(size.height);
 }
 
 - (void)configureCell: (UITableViewCell *)cell atIndexPath: (NSIndexPath *)indexPath
