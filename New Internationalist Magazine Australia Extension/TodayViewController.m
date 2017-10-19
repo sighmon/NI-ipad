@@ -150,19 +150,22 @@ static CGFloat padding = 22.0;
 
 - (CGFloat)calculateHeightForConfiguredSizingCell:(UITableViewCell *)sizingCell
 {
-    // Auto-layout method didn't work. Boo hiss.
+    // Auto-layout method doesn't seem to work. Boo hiss.
     [sizingCell setNeedsLayout];
     [sizingCell layoutIfNeeded];
-    
+
     CGSize size = [sizingCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
     
+    return ceil(size.height + padding);
+    
+    // TOFIX: This crashes in iOS11 :-/
 //    CGSize maxSize = CGSizeMake(sizingCell.textLabel.frame.size.width, MAXFLOAT);
 //
 //    CGRect labelRect = [sizingCell.textLabel.text boundingRectWithSize:maxSize options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:sizingCell.textLabel.font} context:nil];
-    
+//
 //    NSLog(@"Label size %@", NSStringFromCGSize(labelRect.size));
-    
-    return ceil(size.height);
+//
+//    return ceil(labelRect.size.height + padding);
 }
 
 - (void)configureCell: (UITableViewCell *)cell atIndexPath: (NSIndexPath *)indexPath
