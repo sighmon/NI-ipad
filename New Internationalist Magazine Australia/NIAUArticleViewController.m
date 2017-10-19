@@ -421,17 +421,20 @@ NSString *ArticleDidRefreshNotification = @"ArticleDidRefresh";
     
     UILabel *categoryLabel = [[UILabel alloc] init];
     categoryLabel.font = [UIFont boldSystemFontOfSize:10];
-    NSDictionary *category = self.article.categories[indexPath.row];
-    // Remove the slash and only take the last word
-    NSArray *categoryParts = @[];
-    NSString *textString = [category objectForKey:@"name"];
-    categoryParts = [textString componentsSeparatedByString:@"/"];
-    // Handle no slashes
-    if ([categoryParts count] > 1) {
-        categoryLabel.text = [[categoryParts[[categoryParts count]-2] capitalizedString] stringByReplacingOccurrencesOfString:@"-" withString:@" "];
-    } else {
-        // No slashes, new Drupal category type.
-        categoryLabel.text = [categoryParts[0] capitalizedString];
+    // Check if the article has any categories
+    if ([self.article.categories count] > 1) {
+        NSDictionary *category = self.article.categories[indexPath.row];
+        // Remove the slash and only take the last word
+        NSArray *categoryParts = @[];
+        NSString *textString = [category objectForKey:@"name"];
+        categoryParts = [textString componentsSeparatedByString:@"/"];
+        // Handle no slashes
+        if ([categoryParts count] > 1) {
+            categoryLabel.text = [[categoryParts[[categoryParts count]-2] capitalizedString] stringByReplacingOccurrencesOfString:@"-" withString:@" "];
+        } else {
+            // No slashes, new Drupal category type.
+            categoryLabel.text = [categoryParts[0] capitalizedString];
+        }
     }
     
     return CGSizeMake([categoryLabel intrinsicContentSize].width + cellPadding, 20.);
