@@ -578,7 +578,7 @@ NSString *ArticleDidRefreshNotification = @"ArticleDidRefresh";
 
 - (IBAction)shareActionTapped:(id)sender
 {
-    NSMutableArray *itemsToShare = [[NSMutableArray alloc] initWithArray:@[[NSString stringWithFormat:@"I'm reading '%@' from New Internationalist magazine.",self.article.title], self.article.getGuestPassURL]];
+    NSMutableArray *itemsToShare = [[NSMutableArray alloc] initWithArray:@[[NSString stringWithFormat:@"I'm reading '%@' from New Internationalist magazine.",self.article.title], self.article.getGuestPassURL.absoluteString]];
     
     // Check if the featured image exists
     if (self.featuredImage.image != nil) {
