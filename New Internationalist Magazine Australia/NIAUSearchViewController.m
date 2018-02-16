@@ -85,6 +85,12 @@ NSTimer *searchTimer;
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIContentSizeCategoryDidChangeNotification object:nil];
 }
 
+- (void)viewDidLayoutSubviews
+{
+    // TODO: fix the tableView search from tucking under the searchbar.
+    
+}
+
 - (void)sendGoogleAnalyticsStats
 {
     // Setup Google Analytics
@@ -225,7 +231,7 @@ NSTimer *searchTimer;
         // Load the title & teaser later
         teaser = self.webSearchArticlesArray[indexPath.row][@"teaser"];
         cell.textLabel.text = self.webSearchArticlesArray[indexPath.row][@"title"];
-    } else if (self.searchController.active) {
+    } else if (self.searchController.active && self.filteredIssueArticlesArray && [self.filteredIssueArticlesArray count] > 0) {
         article = self.filteredIssueArticlesArray[indexPath.section][indexPath.row];
         teaser = article.teaser;
         cell.textLabel.text = article.title;
@@ -265,7 +271,7 @@ NSTimer *searchTimer;
         // Load the title & teaser later
         teaser = self.webSearchArticlesArray[indexPath.row][@"teaser"];
         articleTitle = self.webSearchArticlesArray[indexPath.row][@"title"];
-    } else if (self.searchController.active) {
+    } else if (self.searchController.active && self.filteredIssueArticlesArray && [self.filteredIssueArticlesArray count] > 0) {
         article = self.filteredIssueArticlesArray[indexPath.section][indexPath.row];
         articleTitle = article.title;
         teaser = article.teaser;

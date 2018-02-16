@@ -303,7 +303,7 @@
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="Kai-bF-MhG">
-                                    <rect key="frame" x="169" y="6.6666666666666572" width="37" height="37"/>
+                                    <rect key="frame" x="169" y="6.6666666666666679" width="37" height="37"/>
                                     <color key="color" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </activityIndicatorView>
                             </subviews>
@@ -2755,7 +2755,7 @@ PgAAAAAAAAAAAAAAAAABQQE
     <inferredMetricsTieBreakers>
         <segue reference="fI5-Du-KTZ"/>
         <segue reference="nQ6-DH-CWR"/>
-        <segue reference="W9z-A8-KEC"/>
+        <segue reference="0rF-W7-D7Y"/>
         <segue reference="9C9-O3-5fi"/>
         <segue reference="v4V-Nv-yqh"/>
         <segue reference="W9L-kn-pvc"/>
