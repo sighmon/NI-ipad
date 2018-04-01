@@ -485,6 +485,7 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
     [opinionArticles addObjectsFromArray:[self articlesInCategory:@"steve-parry"]];
     [opinionArticles addObjectsFromArray:[self articlesInCategory:@"mark-engler"]];
     [opinionArticles addObjectsFromArray:[self articlesInCategory:@"kate-smurthwaite"]];
+    [opinionArticles addObjectsFromArray:[self articlesInCategory:@"omar-hamdi"]];
     return [[NSArray alloc] initWithArray:opinionArticles];
 }
 
@@ -503,6 +504,7 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
     [regularArticles removeObjectsInArray:[self articlesInCategory:@"columns/mark-engler"]];
     [regularArticles removeObjectsInArray:[self articlesInCategory:@"columns/steve-parry"]];
     [regularArticles removeObjectsInArray:[self articlesInCategory:@"columns/kate-smurthwaite"]];
+    [regularArticles removeObjectsInArray:[self articlesInCategory:@"columns/omar-hamdi"]];
     return [[NSArray alloc] initWithArray:regularArticles];
 }
 
