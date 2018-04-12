@@ -189,7 +189,7 @@ NSTimer *searchTimer;
     
     if (self.searchController.active && [self.searchController.searchBar selectedScopeButtonIndex] == 1) {
         return [NSString stringWithFormat:@"%lu Search results", (unsigned long)[self.webSearchArticlesArray count]];
-    } else if (self.searchController.active) {
+    } else if (self.searchController.active && self.filteredIssueArticlesArray && [self.filteredIssueArticlesArray count] > 0) {
         NIAUIssue *issue = [(NIAUArticle *)[[self.filteredIssueArticlesArray objectAtIndex:section] firstObject] issue];
         return [NSString stringWithFormat:@"%@ - %@", [issue name], [issue title]];
     } else {
