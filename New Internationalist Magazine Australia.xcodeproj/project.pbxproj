@@ -112,6 +112,7 @@
 		05D55E9A19745E2100C5B913 /* GTM-W4P6WH in Resources */ = {isa = PBXBuildFile; fileRef = 05D55E9819745E2100C5B913 /* GTM-W4P6WH */; };
 		05D55E9B19745E2100C5B913 /* GTM-W4P6WH.plist in Resources */ = {isa = PBXBuildFile; fileRef = 05D55E9919745E2100C5B913 /* GTM-W4P6WH.plist */; };
 		05E7839B19C3514E0003D34D /* 120.png in Resources */ = {isa = PBXBuildFile; fileRef = 055A8F071772C72F003D9407 /* 120.png */; };
+		05EE4556214E1AF500D2AEF8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 055A8EE0177290CF003D9407 /* Images.xcassets */; };
 		05F81FD61C1A840C006D6909 /* 167.png in Resources */ = {isa = PBXBuildFile; fileRef = 05F81FD51C1A840C006D6909 /* 167.png */; };
 		05F856CF1864C67E001D1A75 /* NIAUArticleCategoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 05F856CE1864C67E001D1A75 /* NIAUArticleCategoryCell.m */; };
 		52090A62178CF7D1002D5162 /* NIAUPublisher.m in Sources */ = {isa = PBXBuildFile; fileRef = 52090A61178CF7D1002D5162 /* NIAUPublisher.m */; };
@@ -885,6 +886,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				058E564819C7424800D6AF66 /* MainInterface.storyboard in Resources */,
+				05EE4556214E1AF500D2AEF8 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1264,7 +1266,6 @@
 			baseConfigurationReference = 7D51E84D703A7C929857AEAA /* Pods-New Internationalist Magazine Australia.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = "New Internationalist Magazine Australia/New Internationalist Magazine Australia.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -1291,7 +1292,6 @@
 			baseConfigurationReference = DDE11C9F7BC926836A017FB8 /* Pods-New Internationalist Magazine Australia.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = "New Internationalist Magazine Australia/New Internationalist Magazine Australia.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";

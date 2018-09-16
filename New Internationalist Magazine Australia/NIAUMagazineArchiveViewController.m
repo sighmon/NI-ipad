@@ -176,7 +176,8 @@ NSString *kCellID = @"magazineCellID";              // UICollectionViewCell stor
             columns = 3;
         }
     }
-    CGSize returnSize = CGSizeMake((size.width/columns)-2, size.width*1415/(1000*columns));
+    
+    CGSize returnSize = CGSizeMake((size.width/columns)-10, (size.width*1415/(1000*columns))-10);
 //    DebugLog(@"Calculated size: %f, %f", returnSize.width, returnSize.height);
     return returnSize;
 }
