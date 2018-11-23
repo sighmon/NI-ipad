@@ -789,16 +789,18 @@ NSString *ArticleDidRefreshNotification = @"ArticleDidRefresh";
 #pragma mark -
 #pragma mark Rotation handling
 
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
 {
-    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
-}
-
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
-{
-    // TODO: Fix the scrollview height for landscape. These calls don't do anything.
-//    [self updateWebViewHeight];
-//    [self updateScrollViewContentHeight];
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
+        // Code to prepare for transition
+        
+    } completion:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
+        // Handle change
+        // TODO: Fix the scrollview height for landscape. These calls don't do anything.
+        //    [self updateWebViewHeight];
+        //    [self updateScrollViewContentHeight];
+    }];
 }
 
 @end

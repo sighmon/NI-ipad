@@ -287,7 +287,7 @@ NSString *ImageDidSaveToCacheNotification = @"ImageDidSaveToCache";
         if ([imageId length]>0) {
             // TODO: keep track of article images here
             
-            NSArray *images = [dictionary objectForKey:@"images"];
+            NSArray *images = [self->dictionary objectForKey:@"images"];
             // catch missing!
             
             NSUInteger imageIndex = [images indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
@@ -307,14 +307,14 @@ NSString *ImageDidSaveToCacheNotification = @"ImageDidSaveToCache";
                     imageSource = [[self imageCacheURLForId:imageId] path];
                 }
                 
-                if (imageCaches == nil) {
-                    imageCaches = [[NSMutableDictionary alloc] init];
+                if (self->imageCaches == nil) {
+                    self->imageCaches = [[NSMutableDictionary alloc] init];
                 }
                 
                 // make entry in imageCaches dictionary if necessary
-                if (![imageCaches objectForKey:imageId]) {
+                if (![self->imageCaches objectForKey:imageId]) {
                     NIAUCache *imageCache = [self buildImageCacheFromDictionary:imageDictionary forSize:size];
-                    [imageCaches setObject:imageCache forKey:imageId];
+                    [self->imageCaches setObject:imageCache forKey:imageId];
                     
                     // If iPhone is 4S or below, don't do this in the background, not enough RAM to handle the multiple javascript updates.
                     if (IS_IPHONE() && IS_IPHONE4S_OR_LOWER()) {
@@ -1144,7 +1144,7 @@ NSString *ImageDidSaveToCacheNotification = @"ImageDidSaveToCache";
         self.requestingBody = TRUE;
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
             
-            id body = [bodyCache readWithOptions:nil];
+            id body = [self->bodyCache readWithOptions:nil];
 //            NSLog(@"requestBody. body==%@",body);
 
             if(body) {

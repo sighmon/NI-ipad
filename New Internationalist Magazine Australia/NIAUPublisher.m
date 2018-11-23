@@ -118,8 +118,8 @@ static NIAUPublisher *instance =nil;
     if(!requestingIssues) {
         requestingIssues = TRUE;
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
-            issues = [issuesCache readWithOptions:nil];
-            if(issues && [issues count]>0) {
+            self->issues = [self->issuesCache readWithOptions:nil];
+            if(self->issues && [self->issues count]>0) {
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [[NSNotificationCenter defaultCenter] postNotificationName:PublisherDidUpdateNotification object:self];
                 });
@@ -128,7 +128,7 @@ static NIAUPublisher *instance =nil;
                     [[NSNotificationCenter defaultCenter] postNotificationName:PublisherFailedUpdateNotification object:self];
                 });
             }
-            requestingIssues = FALSE;
+            self->requestingIssues = FALSE;
         });
     }
 }

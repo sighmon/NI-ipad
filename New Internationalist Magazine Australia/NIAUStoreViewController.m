@@ -46,8 +46,8 @@
     _products = @[];
     [[NIAUInAppPurchaseHelper sharedInstance] requestProductsWithCompletionHandler:^(BOOL success, NSArray *products) {
         if (success) {
-            _products = products;
-            _railsUserInfo = [self getRailsUserInfo];
+            self->_products = products;
+            self->_railsUserInfo = [self getRailsUserInfo];
             [self.tableViewLoadingIndicator stopAnimating];
             [self.tableView reloadData];
             
@@ -551,17 +551,24 @@
 #pragma mark -
 #pragma mark - Rotation
 
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
 {
-    DebugLog(@"TODO: Work out how to recalculate the cell height and then reload it.");
-    
-//    Not working!
-    
-//    for (int i = 0; i < self.tableView.indexPathsForVisibleRows.count; i++) {
-//        [self tableView:self.tableView heightForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
-//    }
-    
-//    [self.tableView reloadData];
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
+        // Code to prepare for transition
+        
+    } completion:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
+        // Handle change
+        DebugLog(@"TODO: Work out how to recalculate the cell height and then reload it.");
+        
+        //    TODO: Not working!
+        
+        //    for (int i = 0; i < self.tableView.indexPathsForVisibleRows.count; i++) {
+        //        [self tableView:self.tableView heightForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
+        //    }
+        
+        //    [self.tableView reloadData];
+    }];
 }
 
 #pragma mark - Dynamic Text

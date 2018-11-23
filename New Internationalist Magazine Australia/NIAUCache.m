@@ -83,7 +83,7 @@
         if(method.name == stopName) {
             *stop = YES;
         } else {
-            method.writeBlock(object,options,_state);
+            method.writeBlock(object,options,self->_state);
         }
     }];
 }

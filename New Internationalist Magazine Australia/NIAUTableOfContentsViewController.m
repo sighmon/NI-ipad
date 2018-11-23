@@ -888,15 +888,17 @@ static NSString *CellIdentifier = @"articleCell";
 #pragma mark -
 #pragma mark Rotation handling
 
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
 {
-    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
-}
-
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
-{
-    [self updateEditorsLetterTextViewHeightToContent];
-    [self.tableView reloadData];
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
+        // Code to prepare for transition
+        
+    } completion:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
+        // Handle change
+        [self updateEditorsLetterTextViewHeightToContent];
+        [self.tableView reloadData];
+    }];
 }
 
 @end

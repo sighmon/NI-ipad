@@ -244,10 +244,17 @@
     [self presentViewController:activityController animated:YES completion:nil];
 }
 
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
 {
-    [self updateWebViewHeight];
-    [self updateScrollViewContentHeight];
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
+        // Code to prepare for transition
+        
+    } completion:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
+        // Handle change
+        [self updateWebViewHeight];
+        [self updateScrollViewContentHeight];
+    }];
 }
 
 @end

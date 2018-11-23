@@ -638,7 +638,7 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
                            dispatch_async(dispatch_get_main_queue(), ^{
                                block(image);
                            });
-                           requestingCover = false;
+                           self->requestingCover = false;
                        });
     }
 }
@@ -685,10 +685,10 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
             
             // read from cache first and issue our first update
             
-            articles = [NIAUArticle articlesFromIssue:self];		
+            self->articles = [NIAUArticle articlesFromIssue:self];		
             
-            if ([articles count]>0) {
-                DebugLog(@"read #%d articles from issue #%@ cache",(int)[articles count], self.name);
+            if ([self->articles count]>0) {
+                DebugLog(@"read #%d articles from issue #%@ cache",(int)[self->articles count], self.name);
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [[NSNotificationCenter defaultCenter] postNotificationName:ArticlesDidUpdateNotification object:self];
                 });
@@ -697,7 +697,7 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
                 DebugLog(@"no articles found in cache");
                 [self downloadArticles];
             }
-            requestingArticles = FALSE;
+            self->requestingArticles = FALSE;
         });
     }
 }

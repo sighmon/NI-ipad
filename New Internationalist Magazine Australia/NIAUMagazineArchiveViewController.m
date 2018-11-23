@@ -205,24 +205,24 @@ NSString *kCellID = @"magazineCellID";              // UICollectionViewCell stor
 #pragma mark -
 #pragma mark - Rotation handling
 
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
 {
-    [self.collectionView performBatchUpdates:nil completion:nil];
-    
-    // TODO: get this working for the rotation crash bug that occurs when new issues are downloaded
-    // Tried this, doesn't work
-//    [self.collectionView performBatchUpdates:^{
-//        [self.collectionView reloadData];
-//    } completion:^(BOOL finished) {
-//        
-//    }];
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
+        // Code to prepare for transition
+        
+    } completion:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
+        // Handle change
+        [self.collectionView performBatchUpdates:nil completion:nil];
+        
+        // TODO: get this working for the rotation crash bug that occurs when new issues are downloaded
+        // Tried this, doesn't work
+        //    [self.collectionView performBatchUpdates:^{
+        //        [self.collectionView reloadData];
+        //    } completion:^(BOOL finished) {
+        //
+        //    }];
+    }];
 }
-
-//- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
-//{
-//    ((UICollectionViewFlowLayout *)self.collectionViewLayout).itemSize = [self calculateCellSizeForScreenSize:self.view.frame.size];
-//    
-//    [self.collectionViewLayout invalidateLayout];
-//}
 
 @end
