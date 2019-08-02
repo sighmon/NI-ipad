@@ -254,6 +254,9 @@ NSString *ImageDidSaveToCacheNotification = @"ImageDidSaveToCache";
         } else if([options containsObject:@"centre"]) {
             cssClass = @"all-article-images article-image-cartoon article-image-centre";
             imageWidth = @"300";
+        } else if([options containsObject:@"half"]) {
+            cssClass = @"all-article-images article-image-half";
+            imageWidth = @"472";
         }
         
         if ([options containsObject:@"ns"]) {
