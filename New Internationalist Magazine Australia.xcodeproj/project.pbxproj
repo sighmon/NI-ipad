@@ -776,7 +776,7 @@
 			};
 			buildConfigurationList = 055A8EBD177290CE003D9407 /* Build configuration list for PBXProject "New Internationalist Magazine Australia" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
@@ -922,7 +922,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-New Internationalist Magazine Australia/Pods-New Internationalist Magazine Australia-resources.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-New Internationalist Magazine Australia/Pods-New Internationalist Magazine Australia-resources.sh",
 				"${PODS_ROOT}/SAMKeychain/Support/SAMKeychain.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
@@ -931,7 +931,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-New Internationalist Magazine Australia/Pods-New Internationalist Magazine Australia-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-New Internationalist Magazine Australia/Pods-New Internationalist Magazine Australia-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		4A7BFAAA08F054513A1F0C98 /* [CP] Check Pods Manifest.lock */ = {
