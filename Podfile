@@ -1,4 +1,4 @@
-platform :ios, '7.0'
+platform :ios, '8.0'
 
 target 'New Internationalist Magazine Australia' do
     pod 'SAMKeychain'#, :git => 'git@github.com:soffes/sskeychain.git'
