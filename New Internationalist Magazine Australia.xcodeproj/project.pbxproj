@@ -109,9 +109,6 @@
 		05C29EFE188736B1004FC28D /* new-issue.caf in Resources */ = {isa = PBXBuildFile; fileRef = 05C29EFD188736B1004FC28D /* new-issue.caf */; };
 		05CAF9E118E9FBC0000BE0BF /* loading_image.gif in Resources */ = {isa = PBXBuildFile; fileRef = 05CAF9DF18E9FBC0000BE0BF /* loading_image.gif */; };
 		05CAF9E218E9FBC0000BE0BF /* loading_image@2x.gif in Resources */ = {isa = PBXBuildFile; fileRef = 05CAF9E018E9FBC0000BE0BF /* loading_image@2x.gif */; };
-		05D55E9A19745E2100C5B913 /* GTM-W4P6WH in Resources */ = {isa = PBXBuildFile; fileRef = 05D55E9819745E2100C5B913 /* GTM-W4P6WH */; };
-		05D55E9B19745E2100C5B913 /* GTM-W4P6WH.plist in Resources */ = {isa = PBXBuildFile; fileRef = 05D55E9919745E2100C5B913 /* GTM-W4P6WH.plist */; };
-		05D810EA22F42506009B0F57 /* container in Resources */ = {isa = PBXBuildFile; fileRef = 05D810E922F42505009B0F57 /* container */; };
 		05E7839B19C3514E0003D34D /* 120.png in Resources */ = {isa = PBXBuildFile; fileRef = 055A8F071772C72F003D9407 /* 120.png */; };
 		05EE4556214E1AF500D2AEF8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 055A8EE0177290CF003D9407 /* Images.xcassets */; };
 		05F81FD61C1A840C006D6909 /* 167.png in Resources */ = {isa = PBXBuildFile; fileRef = 05F81FD51C1A840C006D6909 /* 167.png */; };
@@ -311,9 +308,6 @@
 		05C9583A187DF9DE00FD262F /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		05CAF9DF18E9FBC0000BE0BF /* loading_image.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = loading_image.gif; sourceTree = "<group>"; };
 		05CAF9E018E9FBC0000BE0BF /* loading_image@2x.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "loading_image@2x.gif"; sourceTree = "<group>"; };
-		05D55E9819745E2100C5B913 /* GTM-W4P6WH */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GTM-W4P6WH"; sourceTree = "<group>"; };
-		05D55E9919745E2100C5B913 /* GTM-W4P6WH.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GTM-W4P6WH.plist"; sourceTree = "<group>"; };
-		05D810E922F42505009B0F57 /* container */ = {isa = PBXFileReference; lastKnownFileType = folder; path = container; sourceTree = SOURCE_ROOT; };
 		05EF22F218E1E7B70017244C /* libz.1.2.5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.5.dylib; path = usr/lib/libz.1.2.5.dylib; sourceTree = SDKROOT; };
 		05F81FD51C1A840C006D6909 /* 167.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 167.png; sourceTree = "<group>"; };
 		05F856CD1864C67E001D1A75 /* NIAUArticleCategoryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NIAUArticleCategoryCell.h; sourceTree = "<group>"; };
@@ -539,10 +533,7 @@
 				05F856CE1864C67E001D1A75 /* NIAUArticleCategoryCell.m */,
 				055A8EE0177290CF003D9407 /* Images.xcassets */,
 				52090A65178D4291002D5162 /* local.h */,
-				05D55E9819745E2100C5B913 /* GTM-W4P6WH */,
-				05D55E9919745E2100C5B913 /* GTM-W4P6WH.plist */,
 				05FE30EE22F42C0900364816 /* GoogleService-Info.plist */,
-				05D810E922F42505009B0F57 /* container */,
 				055A8ECC177290CE003D9407 /* Supporting Files */,
 				0571759118C64A370075A604 /* Settings.bundle */,
 			);
@@ -816,10 +807,8 @@
 				05B0982F19BFD88C0072A88C /* 180.png in Resources */,
 				0528EC3C17853C1F000175AB /* default_article_image.png in Resources */,
 				05C29EFE188736B1004FC28D /* new-issue.caf in Resources */,
-				05D810EA22F42506009B0F57 /* container in Resources */,
 				05BC3CEC18BE6EFC00769F81 /* new-internationalist-logo@2x.png in Resources */,
 				051DD29F18F5F2A8000A1CEA /* ni-logo-grey@2x.png in Resources */,
-				05D55E9B19745E2100C5B913 /* GTM-W4P6WH.plist in Resources */,
 				052A850417C5E13900D36E6C /* 76.png in Resources */,
 				052A850117C5E13900D36E6C /* 57.png in Resources */,
 				052BBF8817EFF31D00B12071 /* cover-icon@2x.png in Resources */,
@@ -871,7 +860,6 @@
 				0567082917B1D51400A87818 /* default_article_image_table_view@2x.png in Resources */,
 				055A8ED0177290CE003D9407 /* InfoPlist.strings in Resources */,
 				052A84FA17C5E12D00D36E6C /* iPad-portrait.png in Resources */,
-				05D55E9A19745E2100C5B913 /* GTM-W4P6WH in Resources */,
 				05BC3CEB18BE6EFC00769F81 /* new-internationalist-logo.png in Resources */,
 				05B0983119BFD8B20072A88C /* 87.png in Resources */,
 				052A84F817C5E12700D36E6C /* iPad-landscape.png in Resources */,
