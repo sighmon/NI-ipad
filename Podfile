@@ -3,7 +3,7 @@ platform :ios, '7.0'
 target 'New Internationalist Magazine Australia' do
     pod 'SAMKeychain'#, :git => 'git@github.com:soffes/sskeychain.git'
     pod 'GoogleAnalytics'
-    pod 'GoogleTagManager', '~> 3.0'
+    pod 'Firebase/Analytics'
     pod 'SSZipArchive', '0.3.2'
     pod 'Fabric'
     pod 'Crashlytics'

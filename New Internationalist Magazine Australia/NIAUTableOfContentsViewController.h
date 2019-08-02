@@ -21,9 +21,7 @@
 #import "GAIDictionaryBuilder.h"
 #import "GAIFields.h"
 #import "GAILogger.h"
-
-#import "TAGDataLayer.h"
-#import "TAGManager.h"
+@import Firebase;
 
 @interface NIAUTableOfContentsViewController : UIViewController <UIScrollViewDelegate, UITextViewDelegate, NSURLConnectionDownloadDelegate, UIGestureRecognizerDelegate>
 

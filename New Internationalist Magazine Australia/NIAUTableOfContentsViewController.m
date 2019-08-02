@@ -132,13 +132,12 @@ static NSString *CellIdentifier = @"articleCell";
     [[GAI sharedInstance].defaultTracker
      send:[[GAIDictionaryBuilder createScreenView] build]];
     
-    // Google Tag Manager send
-    // The container should have already been opened, otherwise events pushed to
-    // the data layer will not fire tags in that container.
-    TAGDataLayer *dataLayer = [TAGManager instance].dataLayer;
-    
-    [dataLayer push:@{@"event": @"openScreen", @"screenName": screenName}];
-    DebugLog(@"Google Tag pushed: %@", screenName);
+    // Firebase send
+    [FIRAnalytics logEventWithName:@"openScreen"
+                        parameters:@{
+                                     @"screenName": screenName
+                                     }];
+    DebugLog(@"Firebase pushed: %@", screenName);
 }
 
 -(void)publisherReady:(NSNotification *)not
