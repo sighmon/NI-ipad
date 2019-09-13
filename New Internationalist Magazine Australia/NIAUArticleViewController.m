@@ -430,7 +430,7 @@ NSString *ArticleDidRefreshNotification = @"ArticleDidRefresh";
     UILabel *categoryLabel = [[UILabel alloc] init];
     categoryLabel.font = [UIFont boldSystemFontOfSize:10];
     // Check if the article has any categories
-    if ([self.article.categories count] > 1) {
+    if ([self.article.categories count] > 0) {
         NSDictionary *category = self.article.categories[indexPath.row];
         // Remove the slash and only take the last word
         NSArray *categoryParts = @[];
