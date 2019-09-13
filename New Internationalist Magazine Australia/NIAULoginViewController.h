@@ -16,6 +16,7 @@
 #import "GAIDictionaryBuilder.h"
 #import "GAIFields.h"
 #import "GAILogger.h"
+@import Firebase;
 
 extern NSString *LoginSuccessfulNotification;
 extern NSString *LoginUnsuccessfulNotification;

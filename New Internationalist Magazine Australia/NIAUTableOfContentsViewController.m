@@ -135,6 +135,7 @@ static NSString *CellIdentifier = @"articleCell";
     // Firebase send
     [FIRAnalytics logEventWithName:@"openScreen"
                         parameters:@{
+                                     @"name": screenName,
                                      @"screenName": screenName
                                      }];
     DebugLog(@"Firebase pushed: %@", screenName);

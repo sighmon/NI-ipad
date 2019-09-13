@@ -19,6 +19,7 @@
 #import "GAIDictionaryBuilder.h"
 #import "GAIFields.h"
 #import "GAILogger.h"
+@import Firebase;
 
 extern NSString *ArticleDidRefreshNotification;
 

@@ -70,13 +70,23 @@
 
 - (void)sendGoogleAnalyticsStats
 {
+    NSString *screenName = @"Image zoom";
+    
     // Setup Google Analytics
     [[GAI sharedInstance].defaultTracker set:kGAIScreenName
-                                       value:@"Image zoom"];
+                                       value:screenName];
     
     // Send the screen view.
     [[GAI sharedInstance].defaultTracker
      send:[[GAIDictionaryBuilder createScreenView] build]];
+    
+    // Firebase send
+    [FIRAnalytics logEventWithName:@"openScreen"
+                        parameters:@{
+                                     @"name": screenName,
+                                     @"screenName": screenName
+                                     }];
+    DebugLog(@"Firebase pushed: %@", screenName);
 }
 
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView

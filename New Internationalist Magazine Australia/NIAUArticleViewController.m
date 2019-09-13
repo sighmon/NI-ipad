@@ -123,13 +123,21 @@ NSString *ArticleDidRefreshNotification = @"ArticleDidRefresh";
 
 - (void)sendGoogleAnalyticsStats
 {
+    NSString *analyticsString = [NSString stringWithFormat:@"%@ (%@)", self.article.title, self.article.issue.name];
     // Setup Google Analytics
     [[GAI sharedInstance].defaultTracker set:kGAIScreenName
-                                       value:[NSString stringWithFormat:@"%@ (%@)", self.article.title, self.article.issue.name]];
+                                       value:analyticsString];
     
     // Send the screen view.
     [[GAI sharedInstance].defaultTracker
      send:[[GAIDictionaryBuilder createScreenView] build]];
+    
+    // Post to Firebase
+    [FIRAnalytics logEventWithName:@"openScreen"
+                        parameters:@{
+                                     @"name": analyticsString,
+                                     @"screenName": analyticsString
+                                     }];
 }
 
 - (void)addArticleToRecentlyReadArticles

@@ -85,13 +85,23 @@
 
 - (void)sendGoogleAnalyticsStats
 {
+    NSString *screenName = [NSString stringWithFormat:@"Category - %@",self.title];
+    
     // Setup Google Analytics
     [[GAI sharedInstance].defaultTracker set:kGAIScreenName
-                                       value:[NSString stringWithFormat:@"Category - %@",self.title]];
+                                       value:screenName];
     
     // Send the screen view.
     [[GAI sharedInstance].defaultTracker
      send:[[GAIDictionaryBuilder createScreenView] build]];
+    
+    // Firebase send
+    [FIRAnalytics logEventWithName:@"openScreen"
+                        parameters:@{
+                                     @"name": screenName,
+                                     @"screenName": screenName
+                                     }];
+    DebugLog(@"Firebase pushed: %@", screenName);
 }
 
 - (void)loadIssues

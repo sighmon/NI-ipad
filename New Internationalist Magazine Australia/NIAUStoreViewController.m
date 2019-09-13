@@ -227,13 +227,23 @@
 
 - (void)sendGoogleAnalyticsStats
 {
+    NSString *screenName = @"Subscribe";
+    
     // Setup Google Analytics
     [[GAI sharedInstance].defaultTracker set:kGAIScreenName
-                                       value:@"Subscribe"];
+                                       value:screenName];
     
     // Send the screen view.
     [[GAI sharedInstance].defaultTracker
      send:[[GAIDictionaryBuilder createScreenView] build]];
+    
+    // Firebase send
+    [FIRAnalytics logEventWithName:@"openScreen"
+                        parameters:@{
+                                     @"name": screenName,
+                                     @"screenName": screenName
+                                     }];
+    DebugLog(@"Firebase pushed: %@", screenName);
 }
 
 - (void)didReceiveMemoryWarning

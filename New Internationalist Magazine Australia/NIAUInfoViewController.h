@@ -16,6 +16,7 @@
 #import "GAIDictionaryBuilder.h"
 #import "GAIFields.h"
 #import "GAILogger.h"
+@import Firebase;
 
 @interface NIAUInfoViewController : UIViewController <UITextFieldDelegate, UIWebViewDelegate, UIGestureRecognizerDelegate>
 

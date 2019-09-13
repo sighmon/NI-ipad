@@ -58,6 +58,14 @@ NSString *kCellID = @"magazineCellID";              // UICollectionViewCell stor
     // Send the screen view.
     [[GAI sharedInstance].defaultTracker
      send:[[GAIDictionaryBuilder createScreenView] build]];
+    
+    // Firebase send
+    [FIRAnalytics logEventWithName:@"openScreen"
+                        parameters:@{
+                                     @"name": self.title,
+                                     @"screenName": self.title
+                                     }];
+    DebugLog(@"Firebase pushed: %@", self.title);
 }
 
 // doublehandling from NIAUViewController...

@@ -17,6 +17,7 @@
 #import "GAIDictionaryBuilder.h"
 #import "GAIFields.h"
 #import "GAILogger.h"
+@import Firebase;
 
 @interface NIAUSearchViewController : UITableViewController <UISearchBarDelegate, UISearchResultsUpdating>
 
