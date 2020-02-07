@@ -8,10 +8,12 @@
 
 #import "NIAUMagazineArchiveViewController.h"
 #import "NIAUCell.h"
+#import "NIAUCollectionReusableView.h"
 #import "NIAUTableOfContentsViewController.h"
 #import "NIAUPublisher.h"
 
 NSString *kCellID = @"magazineCellID";              // UICollectionViewCell storyboard id
+NSString *kHeaderCellID = @"sectionYearID";
 
 @interface NIAUMagazineArchiveViewController ()
 
@@ -166,6 +168,19 @@ NSString *kCellID = @"magazineCellID";              // UICollectionViewCell stor
     return cell;
 }
 
+- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
+{
+    NIAUCollectionReusableView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:
+                                         UICollectionElementKindSectionHeader withReuseIdentifier:kHeaderCellID forIndexPath:indexPath];
+    NSString *year = @"";
+    for (id key in self.issueYears[indexPath.section]) {
+        year = key;
+    }
+    headerView.year.text = year;
+
+    return headerView;
+}
+
 - (void)collectionView:(UICollectionView *)collectionView willDisplayCell:(NIAUCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath
 {
     // iOS 13 calls willDisplayCell, so update image here now
@@ -242,8 +257,14 @@ NSString *kCellID = @"magazineCellID";              // UICollectionViewCell stor
     {
         NSIndexPath *selectedIndexPath = [[self.collectionView indexPathsForSelectedItems] objectAtIndex:0];
         
+        NSNumber *issueIndex = 0;
+        NSDictionary *year = self.issueYears[selectedIndexPath.section];
+        for (id key in year) {
+            issueIndex = [year objectForKey:key][selectedIndexPath.row];
+        }
+        
         NIAUTableOfContentsViewController *tableOfContentsViewController = [segue destinationViewController];
-        tableOfContentsViewController.issue = [[NIAUPublisher getInstance] issueAtIndex:selectedIndexPath.row];
+        tableOfContentsViewController.issue = [[NIAUPublisher getInstance] issueAtIndex:[issueIndex intValue]];
     }
     
 }

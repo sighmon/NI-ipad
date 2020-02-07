@@ -88,6 +88,7 @@
 		0567082917B1D51400A87818 /* default_article_image_table_view@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0567082717B1D50A00A87818 /* default_article_image_table_view@2x.png */; };
 		0571759018C63C640075A604 /* about.html in Resources */ = {isa = PBXBuildFile; fileRef = 0571758F18C63C640075A604 /* about.html */; };
 		0571759218C64A370075A604 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0571759118C64A370075A604 /* Settings.bundle */; };
+		0573B8B823ED07A100E2117A /* NIAUCollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0573B8B723ED07A100E2117A /* NIAUCollectionReusableView.m */; };
 		0577E07617FBED0400A52A8E /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0577E07517FBED0400A52A8E /* StoreKit.framework */; };
 		0577E07917FBF2B400A52A8E /* NIAUInAppPurchaseHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 0577E07817FBF2B400A52A8E /* NIAUInAppPurchaseHelper.m */; };
 		058E564019C7424800D6AF66 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 058E563F19C7424800D6AF66 /* NotificationCenter.framework */; };
@@ -271,6 +272,8 @@
 		0567082717B1D50A00A87818 /* default_article_image_table_view@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "default_article_image_table_view@2x.png"; sourceTree = "<group>"; };
 		0571758F18C63C640075A604 /* about.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = about.html; sourceTree = "<group>"; };
 		0571759118C64A370075A604 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		0573B8B623ED07A100E2117A /* NIAUCollectionReusableView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NIAUCollectionReusableView.h; sourceTree = "<group>"; };
+		0573B8B723ED07A100E2117A /* NIAUCollectionReusableView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NIAUCollectionReusableView.m; sourceTree = "<group>"; };
 		0577E07517FBED0400A52A8E /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		0577E07717FBF2B400A52A8E /* NIAUInAppPurchaseHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NIAUInAppPurchaseHelper.h; sourceTree = "<group>"; };
 		0577E07817FBF2B400A52A8E /* NIAUInAppPurchaseHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NIAUInAppPurchaseHelper.m; sourceTree = "<group>"; };
@@ -529,6 +532,8 @@
 				05594CD518B80BC000536D4D /* NIAUInfoViewController.m */,
 				05BD7F141779671900820EF3 /* NIAUCell.h */,
 				05BD7F151779671900820EF3 /* NIAUCell.m */,
+				0573B8B623ED07A100E2117A /* NIAUCollectionReusableView.h */,
+				0573B8B723ED07A100E2117A /* NIAUCollectionReusableView.m */,
 				05F856CD1864C67E001D1A75 /* NIAUArticleCategoryCell.h */,
 				05F856CE1864C67E001D1A75 /* NIAUArticleCategoryCell.m */,
 				055A8EE0177290CF003D9407 /* Images.xcassets */,
@@ -979,6 +984,7 @@
 				52CD5EEC17D8A6DC0038A70C /* NIAUCacheMethod.m in Sources */,
 				05BB6B43180E1802000B2FD3 /* NIAUSearchViewController.m in Sources */,
 				052167E4177BD6DF00A4A81A /* NIAUArticle.m in Sources */,
+				0573B8B823ED07A100E2117A /* NIAUCollectionReusableView.m in Sources */,
 				52090A62178CF7D1002D5162 /* NIAUPublisher.m in Sources */,
 				055A8EDF177290CF003D9407 /* NIAUViewController.m in Sources */,
 				52CD5EE617D896240038A70C /* NIAUCache.m in Sources */,
