@@ -18,4 +18,6 @@
 
 @interface NIAUMagazineArchiveViewController : UICollectionViewController
 
+@property (nonatomic, strong) NSMutableArray *issueYears;
+
 @end

@@ -33,13 +33,23 @@ NSString *kCellID = @"magazineCellID";              // UICollectionViewCell stor
     return self;
 }
 
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        // Initialize the array of issues
+        self.issueYears = [[NSMutableArray alloc] init];
+    }
+    return self;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
     // TODO: this second request is causing troubles
-    if([[NIAUPublisher getInstance] isReady]) {
+    if ([[NIAUPublisher getInstance] isReady]) {
         [self showIssues];
     } else {
         [self loadIssues];
@@ -76,13 +86,41 @@ NSString *kCellID = @"magazineCellID";              // UICollectionViewCell stor
 }
 
 -(void)publisherReady:(NSNotification *)not {
-    // might recieve this more than once
-    //[[NSNotificationCenter defaultCenter] removeObserver:self name:PublisherDidUpdateNotification object:[NIAUPublisher getInstance]];
-    //[[NSNotificationCenter defaultCenter] removeObserver:self name:PublisherFailedUpdateNotification object:[NIAUPublisher getInstance]];
+    // Update the view
     [self showIssues];
 }
 
 -(void)showIssues {
+    // Build issueYears array up
+    for (int i = 0; i < [[NIAUPublisher getInstance] numberOfIssues]; i++) {
+        NIAUIssue *issue = [[NIAUPublisher getInstance] issueAtIndex:i];
+        NSDateComponents *components = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:issue.publication];
+        NSString *thisIssueYear = [[NSNumber numberWithLong: components.year] stringValue];
+        if ([self.issueYears count] > 0) {
+            BOOL keyFound = FALSE;
+            for (NSDictionary *year in self.issueYears) {
+                for (id key in year) {
+                    if (key == thisIssueYear) {
+                        [[year objectForKey:key] addObject:[NSNumber numberWithInt:i]];
+                        keyFound = TRUE;
+                    }
+                }
+            }
+            if (!keyFound) {
+                NSMutableDictionary *thisYearDict = [[NSMutableDictionary alloc] init];
+                NSMutableArray *issueIndex = [[NSMutableArray alloc] init];
+                [issueIndex addObject:[NSNumber numberWithInt:i]];
+                [thisYearDict setValue:issueIndex forKey:thisIssueYear];
+                [self.issueYears addObject:thisYearDict];
+            }
+        } else {
+            NSMutableDictionary *thisYearDict = [[NSMutableDictionary alloc] init];
+            NSMutableArray *issueIndex = [[NSMutableArray alloc] init];
+            [issueIndex addObject:[NSNumber numberWithInt:i]];
+            [thisYearDict setValue:issueIndex forKey:thisIssueYear];
+            [self.issueYears addObject:thisYearDict];
+        }
+    }
     [self.collectionView reloadData];
 }
 
@@ -106,7 +144,17 @@ NSString *kCellID = @"magazineCellID";              // UICollectionViewCell stor
 
 - (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section
 {
-    return [[NIAUPublisher getInstance] numberOfIssues];
+    NSInteger issuesInYear = 0;
+    NSDictionary *year = self.issueYears[section];
+    for (id key in year) {
+        issuesInYear = [[year objectForKey:key] count];
+    }
+    return issuesInYear;
+}
+
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
+{
+    return [self.issueYears count];
 }
 
 // AHA: UICollectionViewController implements UICollectionViewDataSource where this method is defined.
@@ -160,7 +208,13 @@ NSString *kCellID = @"magazineCellID";              // UICollectionViewCell stor
     cell.image.image = [UIImage imageNamed:@"ni-logo-grey.png"];
     [cell.coverLoadingIndicator startAnimating];
 
-    [[[NIAUPublisher getInstance] issueAtIndex:indexPath.row] getCoverThumbWithSize:size andCompletionBlock:^(UIImage *img) {
+    NSNumber *issueIndex = 0;
+    NSDictionary *year = self.issueYears[indexPath.section];
+    for (id key in year) {
+        issueIndex = [year objectForKey:key][indexPath.row];
+    }
+
+    [[[NIAUPublisher getInstance] issueAtIndex:[issueIndex intValue]] getCoverThumbWithSize:size andCompletionBlock:^(UIImage *img) {
         dispatch_async(dispatch_get_main_queue(), ^{
             // Is cell is still in view
             NIAUCell *updateCell = (id)[self.collectionView cellForItemAtIndexPath:indexPath];
