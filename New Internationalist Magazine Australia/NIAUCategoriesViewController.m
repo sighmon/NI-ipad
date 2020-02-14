@@ -230,12 +230,13 @@
         }];
     }
     
-    // Stop loading indicator & remove it's UIView
-    [self.tableViewLoadingIndicator stopAnimating];
-    [self.loadingIndicatorView removeFromSuperview];
-    self.tableView.tableHeaderView = nil;
-    
-    [self showCategories];
+    // Stop loading indicator & remove its UIView
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.tableViewLoadingIndicator stopAnimating];
+        [self.loadingIndicatorView removeFromSuperview];
+        self.tableView.tableHeaderView = nil;
+        [self showCategories];
+    });
 }
 
 - (void)showCategories

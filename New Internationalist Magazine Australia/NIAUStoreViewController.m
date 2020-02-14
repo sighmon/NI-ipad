@@ -48,12 +48,13 @@
         if (success) {
             self->_products = products;
             self->_railsUserInfo = [self getRailsUserInfo];
-            [self.tableViewLoadingIndicator stopAnimating];
-            [self.tableView reloadData];
-            
-            self.subscriptionExpiryDateLabel.text = @"(Or purchase an individual issue)";
-            // Get expiry date if you have a subscription.
-            [self updateExpiryDate];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.tableViewLoadingIndicator stopAnimating];
+                [self.tableView reloadData];
+                self.subscriptionExpiryDateLabel.text = @"(Or purchase an individual issue)";
+                // Get expiry date if you have a subscription.
+                [self updateExpiryDate];
+            });
         }
     }];
     

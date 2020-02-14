@@ -561,9 +561,11 @@ NSString *ArticleDidRefreshNotification = @"ArticleDidRefresh";
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
-    [self.webViewLoadingIndicator stopAnimating];
-    [self ensureScrollsToTop: webView];
-    [self updateWebViewHeight];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.webViewLoadingIndicator stopAnimating];
+        [self ensureScrollsToTop: webView];
+        [self updateWebViewHeight];
+    });
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
