@@ -144,34 +144,42 @@ NSString *ArticleDidRefreshNotification = @"ArticleDidRefresh";
 {
     NSUserDefaults *userDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.au.com.newint.New-Internationalist-Magazine-Australia"];
     NSMutableArray *recentlyReadArticles = [[NSMutableArray alloc] initWithArray:[userDefaults objectForKey:@"recentlyReadArticles"]];
-    
+
     NSMutableArray *reversedRecentlyReadArticles = [[NSMutableArray alloc] initWithArray:[[recentlyReadArticles reverseObjectEnumerator] allObjects]];
-    
+
+    // Create a dictionary with the title, railsID, issueRailsID and dateRead.
+    NSMutableDictionary *articleToAdd = [[NSMutableDictionary alloc] init];
+    [articleToAdd setObject:self.article.title forKey:@"title"];
+    [articleToAdd setObject:self.article.railsID forKey:@"railsID"];
+    [articleToAdd setObject:self.article.issue.railsID forKey:@"issueRailsID"];
+    [articleToAdd setObject:[NSDate date] forKey:@"dateRead"];
+
     // Check to see if it's in the list already
     NSArray *filtered = [reversedRecentlyReadArticles filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"title = %@", self.article.title]];
-    if ([filtered count] < 1) {
-        // Create a dictionary with the title, railsID and issueRailsID.
-        NSMutableDictionary *articleToAdd = [[NSMutableDictionary alloc] init];
-        [articleToAdd setObject:self.article.title forKey:@"title"];
-        [articleToAdd setObject:self.article.railsID forKey:@"railsID"];
-        [articleToAdd setObject:self.article.issue.railsID forKey:@"issueRailsID"];
-        
-        // Add it to the array.
-        [reversedRecentlyReadArticles addObject:articleToAdd];
-        
-        // If the list is bigger than 5, remove the first.
-        if (reversedRecentlyReadArticles.count > 5) {
-            [reversedRecentlyReadArticles removeObjectAtIndex:0];
+    if ([filtered count] > 0) {
+        // Remove the duplicate(s)
+        for (id article in filtered) {
+            DebugLog(@"Removing article: %@", article);
+            [reversedRecentlyReadArticles removeObject:article];
         }
-        
-        // Reverse the order once again.
-        [recentlyReadArticles removeAllObjects];
-        [recentlyReadArticles addObjectsFromArray:[[reversedRecentlyReadArticles reverseObjectEnumerator] allObjects]];
-        
-        // Sync the articles back again.
-        [userDefaults setObject:recentlyReadArticles forKey:@"recentlyReadArticles"];
-        [userDefaults synchronize];
     }
+    // Add the article & sync
+    DebugLog(@"Adding article: %@", articleToAdd);
+    [reversedRecentlyReadArticles addObject:articleToAdd];
+
+    // If the list is bigger than 20, remove the first.
+    if (reversedRecentlyReadArticles.count > 20) {
+        [reversedRecentlyReadArticles removeObjectAtIndex:0];
+    }
+
+    // Reverse the order once again.
+    [recentlyReadArticles removeAllObjects];
+    [recentlyReadArticles addObjectsFromArray:[[reversedRecentlyReadArticles reverseObjectEnumerator] allObjects]];
+    DebugLog(@"Recently read articles after addition: %@", recentlyReadArticles);
+
+    // Sync the articles back again.
+    [userDefaults setObject:recentlyReadArticles forKey:@"recentlyReadArticles"];
+    [userDefaults synchronize];
 }
 
 - (void)articleBodyLoaded:(NSNotification *)notification
