@@ -119,10 +119,11 @@
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="lWF-Lj-RAk">
                                 <rect key="frame" x="178" y="214" width="20" height="20"/>
                             </activityIndicatorView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="contactAdd" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="btc-gk-t0b">
-                                <rect key="frame" x="15.999999999999998" y="646.33333333333337" width="24.333333333333329" height="23.666666666666629"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="btc-gk-t0b">
+                                <rect key="frame" x="16" y="648" width="22" height="22"/>
+                                <state key="normal" image="book" catalog="system"/>
                                 <connections>
-                                    <segue destination="Q1p-Nz-AKi" kind="push" id="h4X-1o-wFP"/>
+                                    <segue destination="Q1p-Nz-AKi" kind="modal" id="h4X-1o-wFP"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -375,7 +376,7 @@
             <objects>
                 <tableViewController storyboardIdentifier="category" id="ZjM-Y0-4yQ" customClass="NIAUCategoryViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="88" sectionHeaderHeight="22" sectionFooterHeight="22" id="sWr-fi-5Z0">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="758"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <inset key="separatorInset" minX="58" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -468,7 +469,7 @@
             <objects>
                 <tableViewController title="Recently read articles" id="Q1p-Nz-AKi" customClass="NIAURecentlyReadTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="RLa-ql-v86">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="758"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <prototypes>
@@ -496,7 +497,7 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="T5k-23-5nF" kind="push" identifier="recentlyReadToArticle" id="7UG-Ep-dSK"/>
+                                    <segue destination="T5k-23-5nF" kind="modal" identifier="recentlyReadToArticle" id="7UG-Ep-dSK"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -1088,11 +1089,11 @@
                         <viewControllerLayoutGuide type="bottom" id="iNJ-Cb-6jp"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="cfR-Hk-vGr">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="758"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <scrollView autoresizesSubviews="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ftA-uH-mfj">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="758"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="PAM-Qv-IM5">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="135"/>
@@ -1437,6 +1438,7 @@
     <resources>
         <image name="UIWebViewBack.png" width="12" height="21"/>
         <image name="UIWebViewNext.png" width="12" height="21"/>
+        <image name="book" catalog="system" width="64" height="50"/>
         <image name="imageView:8yQ-69-2Yi:image" width="200" height="98">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGBwpYJHZlcnNpb25ZJGFyY2hpdmVyVCR0b3BYJG9iamVjdHMSAAGGoF8QD05T

@@ -33,6 +33,13 @@
     self.recentlyReadArticles = [userDefaults objectForKey:@"recentlyReadArticles"];
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    NSUserDefaults *userDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.au.com.newint.New-Internationalist-Magazine-Australia"];
+    self.recentlyReadArticles = [userDefaults objectForKey:@"recentlyReadArticles"];
+    [self.tableView reloadData];
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -110,6 +117,7 @@
     NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
     NSDictionary *articleRead = [self.recentlyReadArticles objectAtIndex:selectedIndexPath.row];
     NIAUIssue *issue = [[NIAUPublisher getInstance] issueWithRailsID:[articleRead objectForKey:@"issueRailsID"]];
+    [issue forceDownloadArticles];
     NIAUArticle *article = [issue articleWithRailsID:[articleRead objectForKey:@"railsID"]];
     articleViewController.article = article;
 }
