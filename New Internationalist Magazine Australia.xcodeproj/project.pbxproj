@@ -54,7 +54,6 @@
 		052D3A8B187DEED200377021 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 052D3A8A187DEED200377021 /* AudioToolbox.framework */; };
 		052D3A8D187DEEDC00377021 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 052D3A8C187DEEDC00377021 /* CFNetwork.framework */; };
 		052D3A8F187DEEE900377021 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 052D3A8E187DEEE900377021 /* CoreLocation.framework */; };
-		052D3A93187DEF0400377021 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 052D3A92187DEF0400377021 /* MobileCoreServices.framework */; };
 		052D3A95187DEF0D00377021 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 052D3A94187DEF0D00377021 /* QuartzCore.framework */; };
 		052D3A97187DEF1A00377021 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 052D3A96187DEF1A00377021 /* Security.framework */; };
 		052D3A99187DEF2600377021 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 052D3A98187DEF2600377021 /* SystemConfiguration.framework */; };
@@ -91,6 +90,7 @@
 		0573B8B823ED07A100E2117A /* NIAUCollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0573B8B723ED07A100E2117A /* NIAUCollectionReusableView.m */; };
 		0577E07617FBED0400A52A8E /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0577E07517FBED0400A52A8E /* StoreKit.framework */; };
 		0577E07917FBF2B400A52A8E /* NIAUInAppPurchaseHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 0577E07817FBF2B400A52A8E /* NIAUInAppPurchaseHelper.m */; };
+		057F31A92436EF1100E04E48 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 057F31A82436EF1100E04E48 /* CoreServices.framework */; };
 		058E564019C7424800D6AF66 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 058E563F19C7424800D6AF66 /* NotificationCenter.framework */; };
 		058E564619C7424800D6AF66 /* TodayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 058E564519C7424800D6AF66 /* TodayViewController.m */; };
 		058E564819C7424800D6AF66 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 058E564719C7424800D6AF66 /* MainInterface.storyboard */; };
@@ -277,6 +277,7 @@
 		0577E07517FBED0400A52A8E /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		0577E07717FBF2B400A52A8E /* NIAUInAppPurchaseHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NIAUInAppPurchaseHelper.h; sourceTree = "<group>"; };
 		0577E07817FBF2B400A52A8E /* NIAUInAppPurchaseHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NIAUInAppPurchaseHelper.m; sourceTree = "<group>"; };
+		057F31A82436EF1100E04E48 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
 		058E563E19C7424800D6AF66 /* New Internationalist Magazine Australia Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "New Internationalist Magazine Australia Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		058E563F19C7424800D6AF66 /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
 		058E564319C7424800D6AF66 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -349,7 +350,6 @@
 				052D3A99187DEF2600377021 /* SystemConfiguration.framework in Frameworks */,
 				052D3A97187DEF1A00377021 /* Security.framework in Frameworks */,
 				052D3A95187DEF0D00377021 /* QuartzCore.framework in Frameworks */,
-				052D3A93187DEF0400377021 /* MobileCoreServices.framework in Frameworks */,
 				052D3A8F187DEEE900377021 /* CoreLocation.framework in Frameworks */,
 				052D3A8D187DEEDC00377021 /* CFNetwork.framework in Frameworks */,
 				052D3A8B187DEED200377021 /* AudioToolbox.framework in Frameworks */,
@@ -359,6 +359,7 @@
 				055A8ECA177290CE003D9407 /* UIKit.framework in Frameworks */,
 				055A8EC6177290CE003D9407 /* Foundation.framework in Frameworks */,
 				0539DE961B857A7700B5772A /* Fabric.framework in Frameworks */,
+				057F31A92436EF1100E04E48 /* CoreServices.framework in Frameworks */,
 				B6B35A0827A8C2B32924F39A /* libPods-New Internationalist Magazine Australia.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -453,6 +454,7 @@
 		055A8EC4177290CE003D9407 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				057F31A82436EF1100E04E48 /* CoreServices.framework */,
 				0539DE951B857A7700B5772A /* Fabric.framework */,
 				051877CF18FD9B9200DCFA24 /* Crashlytics.framework */,
 				05EF22F218E1E7B70017244C /* libz.1.2.5.dylib */,
