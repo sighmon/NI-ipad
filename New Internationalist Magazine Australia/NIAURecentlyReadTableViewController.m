@@ -62,10 +62,14 @@
     cell.textLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
 
     NSDate *dateRead = [article objectForKey:@"dateRead"];
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"EEEE h:mma, d MMMM, yyyy"];
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"Read: %@", [dateFormatter stringFromDate:dateRead]];
-    cell.detailTextLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
+    if (dateRead) {
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"EEEE h:mma, d MMMM, yyyy"];
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"Read: %@", [dateFormatter stringFromDate:dateRead]];
+        cell.detailTextLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
+    } else {
+        cell.detailTextLabel.text = @"Read: previously...";
+    }
     
     return cell;
 }
@@ -73,6 +77,11 @@
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
     return @"Recently read articles";
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 /*

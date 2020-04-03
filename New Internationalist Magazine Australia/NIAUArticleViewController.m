@@ -705,6 +705,8 @@ NSString *ArticleDidRefreshNotification = @"ArticleDidRefresh";
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
+    // TODO: Convert segue into Modal if it's coming from a Modal (Recently Read Articles)
+
     if ([[segue identifier] isEqualToString:@"showImageZoom"]) {
         // Load the large version of the image to be zoomed.
         NIAUImageZoomViewController *imageZoomViewController = [segue destinationViewController];
