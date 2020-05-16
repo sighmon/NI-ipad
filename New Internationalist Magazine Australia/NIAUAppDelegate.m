@@ -274,11 +274,19 @@ const char NotificationKey;
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
-    //  Save your token in userSettings so you can see it for debugging if need be.
+    // Save your token in userSettings so you can see it for debugging if need be.
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults setObject:deviceToken forKey:@"deviceToken"];
     
+    // Parse deviceToken for iOS13+
+    NSString *parsedDeviceToken = [NSString stringWithFormat:@"%@", deviceToken];
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"13.0")) {
+        parsedDeviceToken = [self hexadecimalStringFromData:deviceToken];
+        [userDefaults setObject:parsedDeviceToken forKey:@"deviceToken"];
+    }
+
     DebugLog(@"Push notification deviceToken: %@", deviceToken);
+    DebugLog(@"Push notification parsedDeviceToken: %@", parsedDeviceToken);
     
     // Push the deviceToken to our NI server for push notifications
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
@@ -292,7 +300,7 @@ const char NotificationKey;
     [request setURL:[NSURL URLWithString:[NSString stringWithFormat:@"push_registrations"] relativeToURL:[NSURL URLWithString:siteURLString]]];
     [request setHTTPMethod:@"POST"];
     [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
-    NSData *postData = [[NSString stringWithFormat:@"token=%@&device=%@", deviceToken, @"ios"] dataUsingEncoding:NSUTF8StringEncoding];
+    NSData *postData = [[NSString stringWithFormat:@"token=%@&device=%@", parsedDeviceToken, @"ios"] dataUsingEncoding:NSUTF8StringEncoding];
     NSString *postLength = [NSString stringWithFormat:@"%d", (int)[postData length]];
     [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
     [request setHTTPBody:postData];
@@ -431,6 +439,22 @@ const char NotificationKey;
     } else {
         NSLog(@"No userInfo: %@", userInfo);
     }
+}
+
+- (NSString *)hexadecimalStringFromData:(NSData *)data
+{
+    // To return a hex string from the iOS13+ PushRegistrations deviceToken
+    NSUInteger dataLength = data.length;
+    if (dataLength == 0) {
+        return nil;
+    }
+
+    const unsigned char *dataBuffer = (const unsigned char *)data.bytes;
+    NSMutableString *hexString  = [NSMutableString stringWithCapacity:(dataLength * 2)];
+    for (int i = 0; i < dataLength; ++i) {
+        [hexString appendFormat:@"%02x", dataBuffer[i]];
+    }
+    return [hexString copy];
 }
 
 #pragma mark AlertView delegate
