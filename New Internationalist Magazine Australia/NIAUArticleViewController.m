@@ -695,13 +695,8 @@ NSString *ArticleDidRefreshNotification = @"ArticleDidRefresh";
             return NO;
         }
     } else if ([identifier isEqualToString:@"articleToPreviousArticle"]) {
-//        if ([self.article previousArticle]) {
-//            return YES;
-//        } else {
-//            DebugLog(@"First article!");
-//            return NO;
-//        }
-//        DebugLog(@"Disabled previous segue, navigation seems wrong.");
+        // Remove the current view and go back
+        [self.navigationController popViewControllerAnimated:YES];
         return NO;
     } else {
         return YES;
