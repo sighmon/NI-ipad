@@ -266,7 +266,7 @@ static void ReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkReach
 		/*
          ... but WWAN connections are OK if the calling application is using the CFNetwork APIs.
          */
-		returnValue = ReachableViaWWAN;
+        returnValue = ReachableViaWWAN ? YES : NO;
 	}
     
 	return returnValue;
