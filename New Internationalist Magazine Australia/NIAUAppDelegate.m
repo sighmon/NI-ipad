@@ -161,6 +161,11 @@ const char NotificationKey;
 
 #pragma mark - URL open handling
 
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
+    // For iOS 13 devices
+    return [self application:app handleOpenURL:url];
+}
+
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
 {
     // Launched from a link newint://issues/id/articles/id
