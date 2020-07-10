@@ -542,17 +542,21 @@ static NSString *CellIdentifier = @"articleCell";
 #pragma mark Refresh delegate
 
 -(void)handleRefresh:(UIRefreshControl *)refresh {
-    // set cache object for this issue to nil and refresh
-    [self.cellDictionary removeAllObjects];
-    [[NIAUPublisher getInstance] forceDownloadIssues];
-    self.issue = [[NIAUPublisher getInstance] issueWithName:self.issue.name];
-    [self.issue forceDownloadArticles];
-    // Reset the sortedCategories cache
-    self.sortedCategories = [self.issue getCategoriesSortedStartingAt:@"net"];
-    // Reset the sortedArticles cache
-    [self.issue getArticlesSortedStartingAt:@"net"];
-    [self.tableView reloadData];
-    [refresh endRefreshing];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        // set cache object for this issue to nil and refresh
+        [self.cellDictionary removeAllObjects];
+        [[NIAUPublisher getInstance] forceDownloadIssues];
+        self.issue = [[NIAUPublisher getInstance] issueWithName:self.issue.name];
+        [self.issue forceDownloadArticles];
+        // Reset the sortedCategories cache
+        self.sortedCategories = [self.issue getCategoriesSortedStartingAt:@"net"];
+        // Reset the sortedArticles cache
+        [self.issue getArticlesSortedStartingAt:@"net"];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.tableView reloadData];
+            [refresh endRefreshing];
+        });
+    });
 }
 
 -(void)refreshFromArticle:(NSNotification *)notification

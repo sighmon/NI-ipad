@@ -51,6 +51,9 @@ NSString *ArticleDidRefreshNotification = @"ArticleDidRefresh";
     // Add observer for the user changing the text size
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(preferredContentSizeChanged:) name:UIContentSizeCategoryDidChangeNotification object:nil];
     
+    // Add observer for the article refresh
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(articleBodyLoaded:) name:ArticleDidRefreshNotification object:nil];
+
     // Doing the requestBody call in viewWillAppear so that it loads after logging in to Rails too.
 //    [self.article requestBody];
     
@@ -512,15 +515,19 @@ NSString *ArticleDidRefreshNotification = @"ArticleDidRefresh";
 #pragma mark Refresh delegate
 
 -(void)handleRefresh:(UIRefreshControl *)refresh {
-    [self.article clearCache];
-    NIAUIssue *issue = [self.article issue];
-    [issue forceDownloadArticles];
-    [issue getCategoriesSortedStartingAt:@"net"];
-    [issue getArticlesSortedStartingAt:@"net"];
-    // Send notification for TableViewController to refresh
-    NSDictionary *info = [NSDictionary dictionaryWithObject:refresh forKey:@"refresh"];
-    [[NSNotificationCenter defaultCenter] postNotificationName:ArticleDidRefreshNotification object:nil userInfo:info];
-    [refresh endRefreshing];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [self.article clearCache];
+        NIAUIssue *issue = [self.article issue];
+        [issue forceDownloadArticles];
+        [issue getCategoriesSortedStartingAt:@"net"];
+        [issue getArticlesSortedStartingAt:@"net"];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            // Send notification for TableViewController to refresh
+            NSDictionary *info = [NSDictionary dictionaryWithObject:refresh forKey:@"refresh"];
+            [[NSNotificationCenter defaultCenter] postNotificationName:ArticleDidRefreshNotification object:nil userInfo:info];
+            [refresh endRefreshing];
+        });
+    });
 }
 
 #pragma mark -
