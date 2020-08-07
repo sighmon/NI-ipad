@@ -103,6 +103,9 @@ NSString *ArticleDidRefreshNotification = @"ArticleDidRefresh";
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    // Set the margin for the title, teaser, date, and categories to match the CSS
+    [self updateTitleViewWidth];
+
     if (self.isArticleBodyLoaded) {
         // Don't need to load again
     } else {
@@ -388,6 +391,18 @@ NSString *ArticleDidRefreshNotification = @"ArticleDidRefresh";
 - (void)updateCategoryCollectionViewHeight
 {
     [self.categoryCollectionViewHeightConstraint setConstant:[self.categoryCollectionView.collectionViewLayout collectionViewContentSize].height];
+}
+
+- (void)updateTitleViewWidth
+{
+    // Set the margin for the title, teaser, date, and categories to match the CSS
+    if (self.view.frame.size.width >= 569) {
+        // css margin is 15% of screen width
+        float cssMargin = 15;
+        float screenWidth = self.view.frame.size.width;
+        float titleViewWidth = screenWidth * ((100 - (cssMargin * 2)) / 100);
+        self.titleViewWidthConstraint.constant = titleViewWidth;
+    }
 }
 
 #pragma mark -
@@ -814,6 +829,8 @@ NSString *ArticleDidRefreshNotification = @"ArticleDidRefresh";
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
         // Code to prepare for transition
+        // Set the margin for the title, teaser, date, and categories to match the CSS
+        [self updateTitleViewWidth];
         
     } completion:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
         // Handle change

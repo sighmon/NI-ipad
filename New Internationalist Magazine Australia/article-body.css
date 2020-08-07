@@ -552,7 +552,8 @@ ul.ui-autocomplete li a:active {
         /* margin: 0 25px 0 25px; */
     }
     p, h1, h2, h3, h4, h5, h6, dl, ol, ul, form {
-        margin: 0 80px 0 80px;
+        /* Note: if you change this margin width, also change cssMargin in the NIAUArticleViewController */
+        margin: 0 15vw 0 15vw;
     }
     ol li *, ul li * {
         margin: inherit;
@@ -587,8 +588,11 @@ ul.ui-autocomplete li a:active {
     }
     .article-image-full .new-image-credit,
     .article-image-full .new-image-caption {
-        margin-left: 80px;
-        margin-right: 80px;
+        margin-left: 15vw;
+        margin-right: 15vw;
+    }
+    blockquote.pull-right p, blockquote.pull-left p, blockquote.pull- p {
+        margin-left: 1em;
     }
     .new-image-credit,
     .new-image-caption {

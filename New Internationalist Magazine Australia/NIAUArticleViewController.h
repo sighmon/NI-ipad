@@ -36,6 +36,7 @@ extern NSString *ArticleDidRefreshNotification;
 @property (nonatomic, strong) IBOutlet UIImageView *featuredImage;
 
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *titleViewWidthConstraint;
 @property (weak, nonatomic) IBOutlet UILabel *teaserLabel;
 @property (weak, nonatomic) IBOutlet UIButton *dateButton;
 @property (weak, nonatomic) IBOutlet UILabel *authorLabel;
