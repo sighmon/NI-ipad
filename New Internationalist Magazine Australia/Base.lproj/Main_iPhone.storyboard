@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES" initialViewController="eQs-ol-VW7">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES" initialViewController="eQs-ol-VW7">
     <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -1049,13 +1049,13 @@
                                         </connections>
                                     </imageView>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Article title" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="fuM-gI-7Bu">
-                                        <rect key="frame" x="20" y="157" width="335" height="20.333333333333343"/>
+                                        <rect key="frame" x="20" y="157" width="351" height="20.333333333333343"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Article teaser" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="ulX-QY-4Wv">
-                                        <rect key="frame" x="20" y="189.33333333333334" width="335" height="18"/>
+                                        <rect key="frame" x="20" y="189.33333333333334" width="351" height="18"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -1122,7 +1122,7 @@
                                         <color key="color" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </activityIndicatorView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TJY-6T-xou">
-                                        <rect key="frame" x="20" y="210.33333333333334" width="335" height="28"/>
+                                        <rect key="frame" x="20" y="210.33333333333334" width="351" height="28"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                         <state key="normal" title="Article date">
                                             <color key="titleColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1136,25 +1136,25 @@
                                 <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstItem="ulX-QY-4Wv" firstAttribute="top" secondItem="fuM-gI-7Bu" secondAttribute="bottom" constant="12" id="3Ck-sT-KiC"/>
-                                    <constraint firstAttribute="trailing" secondItem="fuM-gI-7Bu" secondAttribute="trailing" constant="20" symbolic="YES" id="3rS-tL-ofa"/>
+                                    <constraint firstAttribute="trailing" secondItem="fuM-gI-7Bu" secondAttribute="trailingMargin" constant="12" id="3rS-tL-ofa"/>
                                     <constraint firstItem="PAM-Qv-IM5" firstAttribute="top" secondItem="ftA-uH-mfj" secondAttribute="top" id="8sk-8V-xJQ"/>
                                     <constraint firstItem="PoX-gg-8cE" firstAttribute="bottom" secondItem="ftA-uH-mfj" secondAttribute="bottom" id="G1B-GT-nfP"/>
                                     <constraint firstItem="PAM-Qv-IM5" firstAttribute="leading" secondItem="ftA-uH-mfj" secondAttribute="leading" id="JcH-Gi-QUd"/>
                                     <constraint firstItem="PoX-gg-8cE" firstAttribute="top" secondItem="6Sc-4I-h9J" secondAttribute="bottom" constant="8" id="KSS-2u-GPd"/>
-                                    <constraint firstAttribute="trailing" secondItem="6Sc-4I-h9J" secondAttribute="trailing" id="OYV-ft-hHR"/>
-                                    <constraint firstAttribute="trailing" secondItem="TJY-6T-xou" secondAttribute="trailing" constant="20" id="PSy-Pn-qKr"/>
-                                    <constraint firstItem="ulX-QY-4Wv" firstAttribute="leading" secondItem="ftA-uH-mfj" secondAttribute="leading" constant="20" symbolic="YES" id="PZ4-LY-w6Z"/>
+                                    <constraint firstAttribute="trailing" secondItem="6Sc-4I-h9J" secondAttribute="trailingMargin" constant="8" id="OYV-ft-hHR"/>
+                                    <constraint firstAttribute="trailing" secondItem="TJY-6T-xou" secondAttribute="trailingMargin" constant="12" id="PSy-Pn-qKr"/>
+                                    <constraint firstItem="ulX-QY-4Wv" firstAttribute="leading" secondItem="ftA-uH-mfj" secondAttribute="leadingMargin" constant="12" id="PZ4-LY-w6Z"/>
                                     <constraint firstItem="6Sc-4I-h9J" firstAttribute="top" secondItem="TJY-6T-xou" secondAttribute="bottom" constant="5" id="QPn-Ry-1EM"/>
-                                    <constraint firstItem="6Sc-4I-h9J" firstAttribute="leading" secondItem="ftA-uH-mfj" secondAttribute="leading" id="Vn9-NW-HUv"/>
+                                    <constraint firstItem="6Sc-4I-h9J" firstAttribute="leading" secondItem="ftA-uH-mfj" secondAttribute="leadingMargin" constant="-8" id="Vn9-NW-HUv"/>
                                     <constraint firstItem="PoX-gg-8cE" firstAttribute="leading" secondItem="ftA-uH-mfj" secondAttribute="leading" id="YyS-cI-Zqm"/>
                                     <constraint firstAttribute="centerX" secondItem="aWi-L9-HiD" secondAttribute="centerX" id="g60-BW-mWw"/>
                                     <constraint firstItem="TJY-6T-xou" firstAttribute="top" secondItem="ulX-QY-4Wv" secondAttribute="bottom" constant="3" id="h7P-s7-rkb"/>
-                                    <constraint firstItem="fuM-gI-7Bu" firstAttribute="leading" secondItem="ftA-uH-mfj" secondAttribute="leading" constant="20" symbolic="YES" id="h7W-aA-u6j"/>
+                                    <constraint firstItem="fuM-gI-7Bu" firstAttribute="leading" secondItem="ftA-uH-mfj" secondAttribute="leadingMargin" constant="12" id="h7W-aA-u6j"/>
                                     <constraint firstItem="PAM-Qv-IM5" firstAttribute="trailing" secondItem="ftA-uH-mfj" secondAttribute="trailing" id="k68-sx-VHl"/>
-                                    <constraint firstItem="TJY-6T-xou" firstAttribute="leading" secondItem="ftA-uH-mfj" secondAttribute="leading" constant="20" id="l2z-rW-tvF"/>
+                                    <constraint firstItem="TJY-6T-xou" firstAttribute="leading" secondItem="ftA-uH-mfj" secondAttribute="leadingMargin" constant="12" id="l2z-rW-tvF"/>
                                     <constraint firstItem="PoX-gg-8cE" firstAttribute="trailing" secondItem="ftA-uH-mfj" secondAttribute="trailing" id="mCw-oi-6nn"/>
                                     <constraint firstItem="fuM-gI-7Bu" firstAttribute="top" secondItem="PAM-Qv-IM5" secondAttribute="bottom" constant="22" id="nce-JX-yH3"/>
-                                    <constraint firstAttribute="trailing" secondItem="ulX-QY-4Wv" secondAttribute="trailing" constant="20" symbolic="YES" id="qwM-Wm-Pd8"/>
+                                    <constraint firstAttribute="trailing" secondItem="ulX-QY-4Wv" secondAttribute="trailingMargin" constant="12" id="qwM-Wm-Pd8"/>
                                     <constraint firstItem="aWi-L9-HiD" firstAttribute="top" secondItem="PoX-gg-8cE" secondAttribute="top" constant="15" id="r4w-Mp-YCd"/>
                                     <constraint firstItem="PAM-Qv-IM5" firstAttribute="width" secondItem="ftA-uH-mfj" secondAttribute="width" id="t4a-6H-DJF"/>
                                 </constraints>
@@ -1378,6 +1378,16 @@
             <point key="canvasLocation" x="2870.289855072464" y="22.767857142857142"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="fI5-Du-KTZ"/>
+        <segue reference="lhr-aW-Muh"/>
+        <segue reference="0rF-W7-D7Y"/>
+        <segue reference="Q4o-ys-N5E"/>
+        <segue reference="qUJ-ry-144"/>
+        <segue reference="jkZ-Dh-FHT"/>
+        <segue reference="2MC-OH-cwI"/>
+    </inferredMetricsTieBreakers>
+    <color key="tintColor" red="0.18257993459999999" green="0.1981646121" blue="0.21857401730000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
     <resources>
         <image name="UIWebViewBack.png" width="12" height="21"/>
         <image name="UIWebViewNext.png" width="12" height="21"/>
@@ -2762,14 +2772,4 @@ QQcAAUEPAAAAAAAABAEAAAAAAAAAPwAAAAAAAAAAAAAAAAABQRI
         </image>
         <image name="new-internationalist-logo.png" width="177" height="52.5"/>
     </resources>
-    <inferredMetricsTieBreakers>
-        <segue reference="fI5-Du-KTZ"/>
-        <segue reference="lhr-aW-Muh"/>
-        <segue reference="0rF-W7-D7Y"/>
-        <segue reference="Q4o-ys-N5E"/>
-        <segue reference="qUJ-ry-144"/>
-        <segue reference="jkZ-Dh-FHT"/>
-        <segue reference="2MC-OH-cwI"/>
-    </inferredMetricsTieBreakers>
-    <color key="tintColor" red="0.18257993459999999" green="0.1981646121" blue="0.21857401730000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>

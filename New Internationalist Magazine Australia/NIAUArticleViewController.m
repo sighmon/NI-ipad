@@ -107,7 +107,12 @@ NSString *ArticleDidRefreshNotification = @"ArticleDidRefresh";
     [self updateTitleViewWidth];
 
     if (self.isArticleBodyLoaded) {
-        // Don't need to load again
+        NSString *articleBody = [self.bodyWebView stringByEvaluatingJavaScriptFromString:@"document.documentElement.outerHTML"];
+        BOOL hasBody = [articleBody containsString:@"<div class=\"article-body\">"];
+        if (!hasBody) {
+            // Article needs reloading - user may have just logged in
+            [self.article requestBody];
+        }
     } else {
         [self.article requestBody];
     }
@@ -829,14 +834,16 @@ NSString *ArticleDidRefreshNotification = @"ArticleDidRefresh";
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
         // Code to prepare for transition
+        
         // Set the margin for the title, teaser, date, and categories to match the CSS
         [self updateTitleViewWidth];
         
+        // Update WebView height
+        [self updateWebViewHeight];
+        [self updateScrollViewContentHeight];
+        
     } completion:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
         // Handle change
-        // TODO: Fix the scrollview height for landscape. These calls don't do anything.
-        //    [self updateWebViewHeight];
-        //    [self updateScrollViewContentHeight];
     }];
 }
 
