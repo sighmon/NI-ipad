@@ -273,17 +273,19 @@ h6 {
 }
 blockquote.pull-right,
 blockquote.pull-left,
-blockquote.pull- {
+blockquote.pull-,
+blockquote.pull-center {
     border-right-style: none;
     border-left-style: none;
-    color: #f00d16;
+    color: rgb(100,100,100);
     width: 40%;
     float: right;
     text-align: right;
 }
 blockquote.pull-right p,
 blockquote.pull-left p,
-blockquote.pull- p {
+blockquote.pull- p,
+blockquote.pull-center p {
     margin-bottom: 0;
     font-weight: bold;
     font-size: 1.02em;
@@ -301,11 +303,22 @@ blockquote.pull-left {
 }
 blockquote.block-quote {
     font-size: 1em;
-    color: #555555;
+    color: rgb(100,100,100);
 }
 blockquote > .attribution {
     font-size: 0.9em;
-    color: #777777;
+    color: rgb(100,100,100);
+}
+blockquote footer {
+    text-align: center;
+    margin-top: 1em;
+    color: $gray-light;
+}
+blockquote.pull-center {
+    width: inherit;
+    margin: 1em 2em;
+    text-align: center;
+    padding: 0px;
 }
 .footnotes {
     padding: 1em;
