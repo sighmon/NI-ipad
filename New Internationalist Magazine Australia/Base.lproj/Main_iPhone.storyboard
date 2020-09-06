@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES" initialViewController="eQs-ol-VW7">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES" initialViewController="eQs-ol-VW7">
     <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -51,7 +51,7 @@
                                     <constraint firstAttribute="height" constant="38" id="CU9-Gc-9xR"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="21"/>
-                                <state key="normal" title="Subscribe"/>
+                                <state key="normal" title="Shop/Subscribe"/>
                                 <connections>
                                     <action selector="subscribeButtonTapped:" destination="x5A-6p-PRh" eventType="touchUpInside" id="V78-tf-Alq"/>
                                     <segue destination="qrh-8f-IqL" kind="push" identifier="subscribeButtonToStoreView" id="qUJ-ry-144"/>
@@ -1381,8 +1381,8 @@
     <inferredMetricsTieBreakers>
         <segue reference="fI5-Du-KTZ"/>
         <segue reference="lhr-aW-Muh"/>
-        <segue reference="0rF-W7-D7Y"/>
-        <segue reference="Q4o-ys-N5E"/>
+        <segue reference="v7S-KP-l8O"/>
+        <segue reference="fFr-gL-mDW"/>
         <segue reference="qUJ-ry-144"/>
         <segue reference="jkZ-Dh-FHT"/>
         <segue reference="2MC-OH-cwI"/>

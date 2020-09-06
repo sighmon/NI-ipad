@@ -374,7 +374,7 @@
 {
     if (self.isUserASubscriber) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            [self.subscribeButton setTitle:@"Thanks for subscribing" forState:UIControlStateNormal];
+            [self.subscribeButton setTitle:@"Shop" forState:UIControlStateNormal];
             [self.subscribeButton setNeedsLayout];
             [self.subscribeButton layoutIfNeeded];
             DebugLog(@"Subscription button disabled.");
@@ -383,7 +383,7 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             self.subscribeButton.enabled = NO;
             self.subscribeButton.enabled = YES;
-            [self.subscribeButton setTitle:@"Subscribe" forState:UIControlStateNormal];
+            [self.subscribeButton setTitle:@"Shop/Subscribe" forState:UIControlStateNormal];
             [self.subscribeButton setNeedsLayout];
             [self.subscribeButton layoutIfNeeded];
             DebugLog(@"Subscription button enabled.");
