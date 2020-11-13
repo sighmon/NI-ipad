@@ -107,6 +107,8 @@ NSString *ArticleDidRefreshNotification = @"ArticleDidRefresh";
     [self updateTitleViewWidth];
 
     if (self.isArticleBodyLoaded) {
+        [self.bodyWebView scalesPageToFit];
+        [self.bodyWebView autoresizesSubviews];
         NSString *articleBody = [self.bodyWebView stringByEvaluatingJavaScriptFromString:@"document.documentElement.outerHTML"];
         BOOL hasBody = [articleBody containsString:@"<div class=\"article-body\">"];
         if (!hasBody) {
@@ -236,9 +238,11 @@ NSString *ArticleDidRefreshNotification = @"ArticleDidRefresh";
     // TODO: Work out why this is causing memory warnings. Possibly 10mb javascript limit?
     [self.bodyWebView stringByEvaluatingJavaScriptFromString:javascriptString];
     
-    // TODO: these calls don't do anything.
-//    [self updateWebViewHeight];
-//    [self updateScrollViewContentHeight];
+    // Update view size
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self updateWebViewHeight];
+        [self updateScrollViewContentHeight];
+    });
 }
 
 #pragma mark - Dynamic Text
@@ -384,7 +388,7 @@ NSString *ArticleDidRefreshNotification = @"ArticleDidRefresh";
     self.bodyWebView.frame = frame;
     
     // Update the constraints.
-    CGFloat contentHeight = self.bodyWebView.frame.size.height + 20;
+    CGFloat contentHeight = self.bodyWebView.frame.size.height + 20 + (self.article.images.count * 1000);
     
     self.bodyWebViewHeightConstraint.constant = contentHeight;
     [self.bodyWebView setNeedsUpdateConstraints];
@@ -839,8 +843,10 @@ NSString *ArticleDidRefreshNotification = @"ArticleDidRefresh";
         [self updateTitleViewWidth];
         
         // Update WebView height
-        [self updateWebViewHeight];
-        [self updateScrollViewContentHeight];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self updateWebViewHeight];
+            [self updateScrollViewContentHeight];
+        });
         
     } completion:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
         // Handle change
