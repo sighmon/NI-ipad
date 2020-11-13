@@ -388,7 +388,8 @@ NSString *ArticleDidRefreshNotification = @"ArticleDidRefresh";
     self.bodyWebView.frame = frame;
     
     // Update the constraints.
-    CGFloat contentHeight = self.bodyWebView.frame.size.height + 20 + (self.article.images.count * 1000);
+    CGFloat roughHeightOfAllImages = self.article.images.count * 1000;  // iOS 14 broke the image height calculation for UIWebView
+    CGFloat contentHeight = self.bodyWebView.frame.size.height + 20 + roughHeightOfAllImages;
     
     self.bodyWebViewHeightConstraint.constant = contentHeight;
     [self.bodyWebView setNeedsUpdateConstraints];
