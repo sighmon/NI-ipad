@@ -48,7 +48,6 @@ NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurcha
     _productsRequest = [[SKProductsRequest alloc] initWithProductIdentifiers:_productIdentifiers];
     _productsRequest.delegate = self;
     [_productsRequest start];
-    
 }
 
 + (NIAUInAppPurchaseHelper *)sharedInstance {
@@ -111,6 +110,12 @@ NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurcha
                 break;
         }
     };
+}
+
+- (BOOL)paymentQueue:(SKPaymentQueue *)queue shouldAddStorePayment:(SKPayment *)payment forProduct:(SKProduct *)product {
+    // Enables in-app purchases to be purchased from the App Store
+    // Also allows in-app purchases to be promoted in the App Store
+    return true;
 }
 
 - (void)completeTransaction:(SKPaymentTransaction *)transaction {
