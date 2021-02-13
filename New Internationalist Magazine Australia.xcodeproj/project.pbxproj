@@ -1223,7 +1223,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "New Internationalist Magazine Australia/New Internationalist Magazine Australia-Prefix.pch";
 				INFOPLIST_FILE = "New Internationalist Magazine Australia/New Internationalist Magazine Australia-Info.plist";
-				MARKETING_VERSION = 1.5.21;
+				MARKETING_VERSION = 1.5.22;
 				PRODUCT_BUNDLE_IDENTIFIER = "au.com.newint.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -1251,7 +1251,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "New Internationalist Magazine Australia/New Internationalist Magazine Australia-Prefix.pch";
 				INFOPLIST_FILE = "New Internationalist Magazine Australia/New Internationalist Magazine Australia-Info.plist";
-				MARKETING_VERSION = 1.5.21;
+				MARKETING_VERSION = 1.5.22;
 				PRODUCT_BUNDLE_IDENTIFIER = "au.com.newint.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -1323,7 +1323,7 @@
 				INFOPLIST_FILE = "New Internationalist Magazine Australia Extension/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				MARKETING_VERSION = 1.5.21;
+				MARKETING_VERSION = 1.5.22;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "au.com.newint.New-Internationalist-Magazine-Australia.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1350,7 +1350,7 @@
 				INFOPLIST_FILE = "New Internationalist Magazine Australia Extension/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				MARKETING_VERSION = 1.5.21;
+				MARKETING_VERSION = 1.5.22;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = "au.com.newint.New-Internationalist-Magazine-Australia.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
