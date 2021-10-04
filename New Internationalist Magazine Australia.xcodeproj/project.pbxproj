@@ -10,7 +10,6 @@
 		0500251E1BA672B70096A46C /* Launch_Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0500251D1BA672B70096A46C /* Launch_Screen.storyboard */; };
 		0507DB6A177AA0F60099540D /* NIAUTableOfContentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0507DB69177AA0F60099540D /* NIAUTableOfContentsViewController.m */; };
 		0511F13B17BB1E25004B5A72 /* article-body.css in Resources */ = {isa = PBXBuildFile; fileRef = 0511F13A17BB1E24004B5A72 /* article-body.css */; };
-		051877D018FD9B9200DCFA24 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 051877CF18FD9B9200DCFA24 /* Crashlytics.framework */; };
 		051A72B1177950D600BDD346 /* default_cover.png in Resources */ = {isa = PBXBuildFile; fileRef = 051A72AF177950D600BDD346 /* default_cover.png */; };
 		051A72B2177950D600BDD346 /* default_cover@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 051A72B0177950D600BDD346 /* default_cover@2x.png */; };
 		051AF559184ECE7D00A91A8C /* NIAUCategoriesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 051AF558184ECE7D00A91A8C /* NIAUCategoriesViewController.m */; };
@@ -62,7 +61,6 @@
 		052E32B318E1F74300A1906E /* bootstrap.css in Resources */ = {isa = PBXBuildFile; fileRef = 052E32B218E1F74300A1906E /* bootstrap.css */; };
 		052E32B518E1FBAC00A1906E /* fontawesome-webfont.woff in Resources */ = {isa = PBXBuildFile; fileRef = 052E32B418E1FBAC00A1906E /* fontawesome-webfont.woff */; };
 		053878261777D767001E60F6 /* NIAUIssue.m in Sources */ = {isa = PBXBuildFile; fileRef = 053878251777D767001E60F6 /* NIAUIssue.m */; };
-		0539DE961B857A7700B5772A /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0539DE951B857A7700B5772A /* Fabric.framework */; };
 		053EB8FF1A0035F500058669 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 053EB9011A0035F500058669 /* Localizable.strings */; };
 		05424C361803AD0400399194 /* NIAUStoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05424C351803AD0400399194 /* NIAUStoreViewController.m */; };
 		05424C391803BD7000399194 /* NIAULoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05424C381803BD7000399194 /* NIAULoginViewController.m */; };
@@ -174,7 +172,6 @@
 		050C3C2F1A1E566900B4CA3D /* en-CA */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-CA"; path = "en-CA.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		050C3C301A1E566900B4CA3D /* en-CA */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-CA"; path = "en-CA.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		0511F13A17BB1E24004B5A72 /* article-body.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = "article-body.css"; sourceTree = "<group>"; };
-		051877CF18FD9B9200DCFA24 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		051A72AF177950D600BDD346 /* default_cover.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = default_cover.png; sourceTree = "<group>"; };
 		051A72B0177950D600BDD346 /* default_cover@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "default_cover@2x.png"; sourceTree = "<group>"; };
 		051AF557184ECE7D00A91A8C /* NIAUCategoriesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NIAUCategoriesViewController.h; sourceTree = "<group>"; };
@@ -212,7 +209,6 @@
 		052E32B418E1FBAC00A1906E /* fontawesome-webfont.woff */ = {isa = PBXFileReference; lastKnownFileType = file; path = "fontawesome-webfont.woff"; sourceTree = "<group>"; };
 		053878241777D767001E60F6 /* NIAUIssue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NIAUIssue.h; sourceTree = "<group>"; };
 		053878251777D767001E60F6 /* NIAUIssue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NIAUIssue.m; sourceTree = "<group>"; };
-		0539DE951B857A7700B5772A /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
 		053EB8F11A002ABC00058669 /* en-GB */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-GB"; path = "en-GB.lproj/Main_iPhone.strings"; sourceTree = "<group>"; };
 		053EB8F21A002ABC00058669 /* en-GB */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-GB"; path = "en-GB.lproj/Main_iPad.strings"; sourceTree = "<group>"; };
 		053EB8F31A002ABC00058669 /* en-GB */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-GB"; path = "en-GB.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
@@ -355,10 +351,8 @@
 				052D3A8B187DEED200377021 /* AudioToolbox.framework in Frameworks */,
 				0577E07617FBED0400A52A8E /* StoreKit.framework in Frameworks */,
 				055A8EC8177290CE003D9407 /* CoreGraphics.framework in Frameworks */,
-				051877D018FD9B9200DCFA24 /* Crashlytics.framework in Frameworks */,
 				055A8ECA177290CE003D9407 /* UIKit.framework in Frameworks */,
 				055A8EC6177290CE003D9407 /* Foundation.framework in Frameworks */,
-				0539DE961B857A7700B5772A /* Fabric.framework in Frameworks */,
 				057F31A92436EF1100E04E48 /* CoreServices.framework in Frameworks */,
 				B6B35A0827A8C2B32924F39A /* libPods-New Internationalist Magazine Australia.a in Frameworks */,
 			);
@@ -455,8 +449,6 @@
 			isa = PBXGroup;
 			children = (
 				057F31A82436EF1100E04E48 /* CoreServices.framework */,
-				0539DE951B857A7700B5772A /* Fabric.framework */,
-				051877CF18FD9B9200DCFA24 /* Crashlytics.framework */,
 				05EF22F218E1E7B70017244C /* libz.1.2.5.dylib */,
 				05C9583A187DF9DE00FD262F /* Accounts.framework */,
 				05C95838187DF8EF00FD262F /* Social.framework */,
@@ -691,6 +683,7 @@
 				0556DFA21911832800A8D775 /* ShellScript */,
 				058E565119C7424800D6AF66 /* Embed App Extensions */,
 				3979D0CF8F1C667EE80595D1 /* [CP] Copy Pods Resources */,
+				050A1D86270ADFD100FB6C7B /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -892,6 +885,25 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		050A1D86270ADFD100FB6C7B /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}",
+				"$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PODS_ROOT}/FirebaseCrashlytics/run\"\n";
+		};
 		0556DFA21911832800A8D775 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1211,7 +1223,7 @@
 				CODE_SIGN_ENTITLEMENTS = "New Internationalist Magazine Australia/New Internationalist Magazine Australia.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 107;
+				CURRENT_PROJECT_VERSION = 108;
 				DEVELOPMENT_TEAM = CUMP7ABFVY;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1223,7 +1235,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "New Internationalist Magazine Australia/New Internationalist Magazine Australia-Prefix.pch";
 				INFOPLIST_FILE = "New Internationalist Magazine Australia/New Internationalist Magazine Australia-Info.plist";
-				MARKETING_VERSION = 1.5.22;
+				MARKETING_VERSION = 1.5.23;
 				PRODUCT_BUNDLE_IDENTIFIER = "au.com.newint.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -1239,7 +1251,7 @@
 				CODE_SIGN_ENTITLEMENTS = "New Internationalist Magazine Australia/New Internationalist Magazine Australia.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 107;
+				CURRENT_PROJECT_VERSION = 108;
 				DEVELOPMENT_TEAM = CUMP7ABFVY;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1251,7 +1263,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "New Internationalist Magazine Australia/New Internationalist Magazine Australia-Prefix.pch";
 				INFOPLIST_FILE = "New Internationalist Magazine Australia/New Internationalist Magazine Australia-Info.plist";
-				MARKETING_VERSION = 1.5.22;
+				MARKETING_VERSION = 1.5.23;
 				PRODUCT_BUNDLE_IDENTIFIER = "au.com.newint.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -1308,7 +1320,7 @@
 				CODE_SIGN_ENTITLEMENTS = "New Internationalist Magazine Australia Extension/New Internationalist Magazine Australia Extension.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 107;
+				CURRENT_PROJECT_VERSION = 108;
 				DEVELOPMENT_TEAM = CUMP7ABFVY;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = NO;
@@ -1323,7 +1335,7 @@
 				INFOPLIST_FILE = "New Internationalist Magazine Australia Extension/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				MARKETING_VERSION = 1.5.22;
+				MARKETING_VERSION = 1.5.23;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "au.com.newint.New-Internationalist-Magazine-Australia.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1339,7 +1351,7 @@
 				CODE_SIGN_ENTITLEMENTS = "New Internationalist Magazine Australia Extension/New Internationalist Magazine Australia Extension.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 107;
+				CURRENT_PROJECT_VERSION = 108;
 				DEVELOPMENT_TEAM = CUMP7ABFVY;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = NO;
@@ -1350,7 +1362,7 @@
 				INFOPLIST_FILE = "New Internationalist Magazine Australia Extension/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				MARKETING_VERSION = 1.5.22;
+				MARKETING_VERSION = 1.5.23;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = "au.com.newint.New-Internationalist-Magazine-Australia.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";

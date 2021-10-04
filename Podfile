@@ -5,8 +5,7 @@ target 'New Internationalist Magazine Australia' do
     pod 'GoogleAnalytics'
     pod 'Firebase/Analytics'
     pod 'SSZipArchive', '0.3.2'
-    pod 'Fabric'
-    pod 'Crashlytics'
+    pod 'Firebase/Crashlytics'
 end
 
 target 'New Internationalist Magazine AustraliaTests' do

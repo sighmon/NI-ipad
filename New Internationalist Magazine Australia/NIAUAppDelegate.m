@@ -27,7 +27,7 @@ const char NotificationKey;
 #import "GAIFields.h"
 #import "GAILogger.h"
 
-#import <Crashlytics/Crashlytics.h>
+#import "FirebaseCrashlytics.h"
 
 @interface NIAUAppDelegate ()
 @end
@@ -140,7 +140,7 @@ const char NotificationKey;
     // Crashlytics - only load if user hasn't opted out of analytics
     if ([standardUserDefaults boolForKey:@"googleAnalytics"] == 1) {
         // Okay to load Crashlytics
-        [Crashlytics startWithAPIKey:CRASHLYTICS_API_KEY];
+        [FIRCrashlytics crashlytics];
     }
     
     // Update sharedUserDefaults
