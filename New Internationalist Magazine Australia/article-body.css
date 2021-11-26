@@ -1,8 +1,8 @@
 /* CSS for the body of the Articles */
 
 body {
-    font-family: "Helvetica Neue";
-    margin: 0;
+    font-family: -apple-system;
+    margin: 2rem 0 0 0;
     -webkit-text-size-adjust: none;
     padding: 0;
 }
@@ -54,22 +54,22 @@ h1, h2, h3 {
     line-height: 1.1em; /* 40px; */
 }
 h1 {
-    font-size: 1.6em; /* 35.75px; */
+    font-size: 1.7em; /* 35.75px; */
 }
 h2 {
-    font-size: 1.5em; /* 29.25px; */
+    font-size: 1.6em; /* 29.25px; */
 }
 h3 {
-    font-size: 1.4em; /* 22.75px; */
+    font-size: 1.5em; /* 22.75px; */
 }
 h4 {
-    font-size: 1.3em; /* 16.25px; */
+    font-size: 1.4em; /* 16.25px; */
 }
 h5 {
-    font-size: 1.2em; /* 13px; */
+    font-size: 1.3em; /* 13px; */
 }
 h6 {
-    font-size: 1.1em; /* 11.049999999999999px; */
+    font-size: 1.2em; /* 11.049999999999999px; */
 }
 
 
@@ -170,8 +170,8 @@ h6 {
     border-radius: 5px;
 }
 .article-body {
-    font-size: 0.95em;
-    line-height: 1.6em;
+    font-size: 1em;
+    line-height: 1.7em;
 }
 .article-body p {
     margin-bottom: 1em;
@@ -287,8 +287,11 @@ blockquote.pull-left p,
 blockquote.pull- p,
 blockquote.pull-center p {
     margin-bottom: 0;
-    font-weight: bold;
-    font-size: 1.02em;
+    font-size: 1.5em;
+    font-weight: 500;
+    line-height: 1.2em;
+    text-align: center;
+    color: black;
 }
 blockquote.pull-right,
 blockquote.pull- {
@@ -335,6 +338,49 @@ blockquote.pull-center {
     margin: 1.5em 0 1.5em 0;
     border-radius: 0px;
 }
+.conversation {
+    text-align: center;
+}
+.conversation h2 {
+    font-size: 4em;
+}
+.conversation p {
+    margin: 0 10vw 2em 10vw;
+}
+.box.letters {
+    @include yellow;
+    border-width: 0.7em;
+    border-style: dashed;
+    border-color: $gray-darker;
+}
+.box.letters .author-note {
+    color: inherit;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+.box.debate {
+    text-align: center;
+    margin: 2em -4em 2em -4em;
+}
+.box.debate h4 {
+    font-size: 3em;
+}
+.box h2 {
+    font-size: 2.5em;
+}
+.box h3 {
+    font-size: 2em;
+    margin-bottom: 1em;
+}
+.box p + h3 {
+    margin-top: 2em;
+    margin-bottom: 1em;
+}
+.box h4 {
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 1.1em;
+}
 .factbox {
     background-color: #e4e1df;
     padding: 1em 0;
@@ -367,7 +413,6 @@ blockquote.pull-center {
 .dl-horizontal dt {
     float: left;
     margin-right: 10px;
-    margin-top: 0.5em;
 }
 .dl-horizontal dd {
     margin-top: 0.5em;
@@ -447,6 +492,36 @@ ul.ui-autocomplete li a:active {
     margin-bottom: 20px;
 }
 
+.mixed-media-books h3, .mixed-media-books img {
+    text-align: center;
+}
+
+.mixed-media-books h4, .mixed-media-books h5 {
+    font-weight: normal;
+    font-style: italic;
+    font-size: 1.2em;
+    line-height: 1.7em;
+    text-align: center;
+}
+
+.mixed-media-books .col-sm-6 {
+    padding: 0 2em;
+}
+
+.mixed-media-books .article-image-full {
+    margin: 0;
+}
+
+.dl-horizontal dd:before, .dl-horizontal dd:after {
+    display: table;
+    content: " ";
+}
+
+.at-a-glance .dl-horizontal,
+.star-ratings .dl-horizontal {
+    margin-top: 2em;
+}
+
 
 /***********************/
 /* iPhone size styling */
@@ -516,6 +591,12 @@ ul.ui-autocomplete li a:active {
     }
     .article-image-float-none img {
         border-radius: 0 2px 2px 0;
+    }
+    blockquote.pull-right p,
+    blockquote.pull-left p,
+    blockquote.pull- p,
+    blockquote.pull-center p {
+        font-size: 1.3em;
     }
 }
 
@@ -615,9 +696,28 @@ ul.ui-autocomplete li a:active {
     .article-image {
         margin-left: 2em;
     }
-    
     .article-image-float-none {
         float: left;
         margin: 1em 1em 1em 0px;
+    }
+    .mixed-media-books {
+        margin: 3rem 15vw 3rem 15vw;
+    }
+    .mixed-media-books h3,
+    .mixed-media-books h4,
+    .mixed-media-books h5,
+    .mixed-media-books p {
+        margin: 0px;
+    }
+    .dl-horizontal dt {
+        float: left;
+        width: 9em;
+        clear: left;
+        text-align: right;
+        white-space: nowrap;
+        margin-right: 0.625em;
+    }
+    .dl-horizontal dd {
+        margin-left: 10em;
     }
 }
