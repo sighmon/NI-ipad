@@ -1223,7 +1223,7 @@
 				CODE_SIGN_ENTITLEMENTS = "New Internationalist Magazine Australia/New Internationalist Magazine Australia.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 109;
+				CURRENT_PROJECT_VERSION = 110;
 				DEVELOPMENT_TEAM = CUMP7ABFVY;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1251,7 +1251,7 @@
 				CODE_SIGN_ENTITLEMENTS = "New Internationalist Magazine Australia/New Internationalist Magazine Australia.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 109;
+				CURRENT_PROJECT_VERSION = 110;
 				DEVELOPMENT_TEAM = CUMP7ABFVY;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1320,7 +1320,7 @@
 				CODE_SIGN_ENTITLEMENTS = "New Internationalist Magazine Australia Extension/New Internationalist Magazine Australia Extension.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 109;
+				CURRENT_PROJECT_VERSION = 110;
 				DEVELOPMENT_TEAM = CUMP7ABFVY;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = NO;
@@ -1351,7 +1351,7 @@
 				CODE_SIGN_ENTITLEMENTS = "New Internationalist Magazine Australia Extension/New Internationalist Magazine Australia Extension.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 109;
+				CURRENT_PROJECT_VERSION = 110;
 				DEVELOPMENT_TEAM = CUMP7ABFVY;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = NO;
