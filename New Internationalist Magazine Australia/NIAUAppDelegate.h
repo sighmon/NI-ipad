@@ -11,7 +11,7 @@
 
 extern const char NotificationKey;
 
-@interface NIAUAppDelegate : UIResponder <UIApplicationDelegate, NSURLConnectionDownloadDelegate, NSURLConnectionDelegate>
+@interface NIAUAppDelegate : UIResponder <UIApplicationDelegate, NSURLConnectionDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 

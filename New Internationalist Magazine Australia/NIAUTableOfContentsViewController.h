@@ -23,7 +23,7 @@
 #import "GAILogger.h"
 @import Firebase;
 
-@interface NIAUTableOfContentsViewController : UIViewController <UIScrollViewDelegate, UITextViewDelegate, NSURLConnectionDownloadDelegate, UIGestureRecognizerDelegate>
+@interface NIAUTableOfContentsViewController : UIViewController <UIScrollViewDelegate, UITextViewDelegate, UIGestureRecognizerDelegate>
 
 @property (nonatomic, strong) NIAUIssue *issue;
 

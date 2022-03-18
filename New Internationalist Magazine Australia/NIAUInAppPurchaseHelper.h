@@ -54,7 +54,7 @@ UIKIT_EXTERN NSString *const IAPHelperProductPurchasedNotification;
 
 -(void)checkReceipt;
 
-- (void)unzipAndMoveFilesForConnection:(NSURLConnection *)connection toDestinationURL:(NSURL *)destinationURL;
+- (void)unzipAndMoveFilesForIssue:(NKIssue *)issue toDestinationURL:(NSURL *)destinationURL;
 - (NSString *)requestZipURLforRailsID: (NSString *)railsID;
 
 @end

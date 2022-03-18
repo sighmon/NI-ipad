@@ -124,23 +124,25 @@
 
 - (void)loadLatestMagazineCover
 {
-    [self.coverLoadingIndicator startAnimating];
-    [self.issue getCoverWithCompletionBlock:^(UIImage *img) {
-        [self.coverLoadingIndicator stopAnimating];
-        [self.cover setContentMode:UIViewContentModeScaleAspectFit];
-        [self.cover setAlpha:0.0];
-        [self.cover layoutIfNeeded];
-        [self.cover setImage:[NIAUHelper imageWithRoundedCornersSize:10. usingImage:img]];
-        [self.issueBanner setAlpha:0.0];
-        [self updateNewIssueBanner];
-        [NIAUHelper addShadowToImageView:self.cover withRadius:10. andOffset:CGSizeMake(0, 5) andOpacity:0.5];
-        [UIView animateWithDuration:0.5 animations:^{
-            [self.cover setAlpha:1.0];
-            [self.issueBanner setAlpha:1.0];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.coverLoadingIndicator startAnimating];
+        [self.issue getCoverWithCompletionBlock:^(UIImage *img) {
+            [self.coverLoadingIndicator stopAnimating];
+            [self.cover setContentMode:UIViewContentModeScaleAspectFit];
+            [self.cover setAlpha:0.0];
+            [self.cover layoutIfNeeded];
+            [self.cover setImage:[NIAUHelper imageWithRoundedCornersSize:10. usingImage:img]];
+            [self.issueBanner setAlpha:0.0];
+            [self updateNewIssueBanner];
+            [NIAUHelper addShadowToImageView:self.cover withRadius:10. andOffset:CGSizeMake(0, 5) andOpacity:0.5];
+            [UIView animateWithDuration:0.5 animations:^{
+                [self.cover setAlpha:1.0];
+                [self.issueBanner setAlpha:1.0];
+            }];
+            // update the NewsStand icon
+            [self updateNewsStandMagazineCover:img];
         }];
-        // update the NewsStand icon
-        [self updateNewsStandMagazineCover:img];
-    }];
+    });
 }
 
 - (void)updateNewsStandMagazineCover: (UIImage *)cover

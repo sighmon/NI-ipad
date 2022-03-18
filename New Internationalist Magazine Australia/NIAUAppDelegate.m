@@ -430,9 +430,25 @@ const char NotificationKey;
                 NKIssue *newNKIssue = [[NKLibrary sharedLibrary] issueWithName:newIssue.name];
                 if (newNKIssue) {
                     NSURL *downloadURL = [NSURL URLWithString:zipURL];
-                    NSURLRequest *req = [NSURLRequest requestWithURL:downloadURL];
-                    NKAssetDownload *assetDownload = [newNKIssue addAssetWithRequest:req];
-                    [assetDownload downloadWithDelegate:self];
+                    NSURLRequest *request = [NSURLRequest requestWithURL:downloadURL];
+                    NSURLSession *session = [NSURLSession sharedSession];
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+                    });
+                    [[session downloadTaskWithRequest:request completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+                        if (error) {
+                            DebugLog(@"Download error: %@", error);
+                            dispatch_async(dispatch_get_main_queue(), ^{
+                                [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+                            });
+                        }
+                        DebugLog(@"Download succeeded: %@", newIssue.name);
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+                        });
+
+                        [[NIAUInAppPurchaseHelper sharedInstance] unzipAndMoveFilesForIssue:newNKIssue toDestinationURL:location];
+                    }] resume];
                 }
             } else {
                 NSLog(@"New Issue couldn't be created from userInfo: %@", userInfo);
@@ -489,13 +505,6 @@ const char NotificationKey;
 }
 
 #pragma mark - Download delegate
-
-- (void)connectionDidFinishDownloading:(NSURLConnection *)connection destinationURL:(NSURL *)destinationURL
-{
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-    
-    [[NIAUInAppPurchaseHelper sharedInstance] unzipAndMoveFilesForConnection:connection toDestinationURL:destinationURL];
-}
 
 - (void)connectionDidResumeDownloading:(NSURLConnection *)connection totalBytesWritten:(long long)totalBytesWritten expectedTotalBytes:(long long)expectedTotalBytes
 {

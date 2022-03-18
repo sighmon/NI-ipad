@@ -845,9 +845,29 @@ static NSString *CellIdentifier = @"articleCell";
             NKIssue *newNKIssue = [[NKLibrary sharedLibrary] issueWithName:self.issue.name];
             if(newNKIssue) {
                 NSURL *downloadURL = [NSURL URLWithString:zipURL];
-                NSURLRequest *req = [NSURLRequest requestWithURL:downloadURL];
-                NKAssetDownload *assetDownload = [newNKIssue addAssetWithRequest:req];
-                [assetDownload downloadWithDelegate:self];
+                NSURLRequest *request = [NSURLRequest requestWithURL:downloadURL];
+                NSURLSession *session = [NSURLSession sharedSession];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+                    [self.progressView setHidden:NO];
+                    [self.progressView setProgress:1.0 animated:true];
+                });
+                [[session downloadTaskWithRequest:request completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+                    if (error) {
+                        DebugLog(@"Download error: %@", error);
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+                            [self.progressView setHidden:YES];
+                        });
+                    }
+                    DebugLog(@"Download succeeded: %@", self.issue.name);
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+                        [self.progressView setHidden:YES];
+                    });
+
+                    [[NIAUInAppPurchaseHelper sharedInstance] unzipAndMoveFilesForIssue:newNKIssue toDestinationURL:location];
+                }] resume];
             }
         } else {
             NSLog(@"No zipURL, so aborting.");
@@ -856,37 +876,6 @@ static NSString *CellIdentifier = @"articleCell";
             [self.alertView show];
         }
     }
-}
-
-#pragma mark - Download delegate
-
-- (void)connectionDidFinishDownloading:(NSURLConnection *)connection destinationURL:(NSURL *)destinationURL
-{
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-    [self.progressView setHidden:YES];
-    
-    [[NIAUInAppPurchaseHelper sharedInstance] unzipAndMoveFilesForConnection:connection toDestinationURL:destinationURL];
-}
-
-- (void)connectionDidResumeDownloading:(NSURLConnection *)connection totalBytesWritten:(long long)totalBytesWritten expectedTotalBytes:(long long)expectedTotalBytes
-{
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-    [self.progressView setHidden:NO];
-    [self.progressView setProgress:totalBytesWritten/kExpectedTotalBytesFromS3 animated:YES];
-}
-
-- (void)connection:(NSURLConnection *)connection didWriteData:(long long)bytesWritten totalBytesWritten:(long long)totalBytesWritten expectedTotalBytes:(long long)expectedTotalBytes
-{
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-    [self.progressView setHidden:NO];
-    float bytesProgress = totalBytesWritten/kExpectedTotalBytesFromS3;
-    [self.progressView setProgress:bytesProgress animated:YES];
-}
-
-- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
-{
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-    [self.progressView setHidden:YES];
 }
 
 #pragma mark -

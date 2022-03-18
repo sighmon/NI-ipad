@@ -389,15 +389,12 @@ NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurcha
 
 #pragma mark - Zip and move
 
-- (void)unzipAndMoveFilesForConnection:(NSURLConnection *)connection toDestinationURL:(NSURL *)destinationURL
+- (void)unzipAndMoveFilesForIssue:(NKIssue *)issue toDestinationURL:(NSURL *)destinationURL
 {
-    NKAssetDownload *download = connection.newsstandAssetDownload;
-    NKIssue *nkIssue = download.issue;
-    
     // Unzip the downloaded file
     BOOL zipSuccess = NO;
     //    NSString *zipPath = [[NIAUPublisher getInstance] downloadPathForIssue:nkIssue];
-    NSString *contentPath = [[[nkIssue contentURL] path] stringByAppendingString:@"/"];
+    NSString *contentPath = [[[issue contentURL] path] stringByAppendingString:@"/"];
     NSString *zipPath = [destinationURL path];
     NSString *unZippedPath = [[[destinationURL path] stringByDeletingLastPathComponent] stringByAppendingString:@"/temp/"];
     NSError *zipError;
@@ -465,11 +462,18 @@ NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurcha
         // Force a refresh
         [[NIAUPublisher getInstance] forceDownloadIssues];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshViewNotification" object:nil];
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Download complete" message:@"The latest issue of New Internationalist has been downloaded and is ready to read." delegate:self cancelButtonTitle:@"Thanks!" otherButtonTitles:nil];
-        [alert show];
-        alert.delegate = nil;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Download complete" message:@"The latest issue of New Internationalist has been downloaded and is ready to read." delegate:self cancelButtonTitle:@"Thanks!" otherButtonTitles:nil];
+            [alert show];
+            alert.delegate = nil;
+        });
     } else {
         NSLog(@"ERROR: Nothing was moved, so either the user already had the entire issue in cache, or something went wrong.");
+        dispatch_async(dispatch_get_main_queue(), ^{
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Download complete" message:@"You already have this issue downloaded on your device." delegate:self cancelButtonTitle:@"Thanks!" otherButtonTitles:nil];
+            [alert show];
+            alert.delegate = nil;
+        });
     }
 }
 
