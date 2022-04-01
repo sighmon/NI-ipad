@@ -33,6 +33,7 @@
 @property (nonatomic, weak) IBOutlet UIBarButtonItem *browserRefresh;
 @property (nonatomic, weak) IBOutlet UIBarButtonItem *browserShare;
 @property (nonatomic, weak) IBOutlet UIBarButtonItem *browserURL;
+@property (nonatomic, weak) IBOutlet UIBarButtonItem *browserOpenInSafari;
 @property (nonatomic, weak) IBOutlet UIProgressView *progressView;
 
 @end

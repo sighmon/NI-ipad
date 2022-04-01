@@ -407,14 +407,14 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="32" id="pLI-g5-XM1">
-                                            <rect key="frame" x="20" y="12.5" width="30" height="17"/>
+                                            <rect key="frame" x="20" y="8" width="35" height="20.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="50" id="XJC-wC-CwL">
-                                            <rect key="frame" x="20" y="32" width="44" height="14.5"/>
+                                            <rect key="frame" x="20" y="31.5" width="53" height="18"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                             <color key="textColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1294,6 +1294,13 @@
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem width="42" style="plain" systemItem="fixedSpace" id="L2p-6R-e3G"/>
+                                    <barButtonItem title="Item" image="safari" catalog="system" style="plain" id="lCO-Qs-33U">
+                                        <color key="tintColor" red="0.29803921570000003" green="0.64705882349999999" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <connections>
+                                            <action selector="openInSafariTapped:" destination="Mze-ob-E7u" id="QXM-K2-7Kf"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem width="42" style="plain" systemItem="fixedSpace" id="OMB-cW-NcS"/>
                                     <barButtonItem systemItem="action" id="usd-Of-4oa">
                                         <color key="tintColor" red="0.29803921570000003" green="0.64705882349999999" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <connections>
@@ -1332,6 +1339,7 @@
                     <connections>
                         <outlet property="browserBack" destination="54m-KT-UlB" id="KvV-NM-Tbq"/>
                         <outlet property="browserForward" destination="XIa-AT-Inh" id="9kL-5D-n05"/>
+                        <outlet property="browserOpenInSafari" destination="lCO-Qs-33U" id="US6-ir-EnM"/>
                         <outlet property="browserRefresh" destination="rmM-pQ-j6P" id="DtR-a3-jpk"/>
                         <outlet property="browserShare" destination="usd-Of-4oa" id="iwn-Ql-93T"/>
                         <outlet property="browserURL" destination="ws9-UA-Atw" id="7YH-2B-bdN"/>
@@ -1438,6 +1446,7 @@
         <image name="UIWebViewNext.png" width="12" height="21"/>
         <image name="new-internationalist-logo.png" width="177" height="52.5"/>
         <image name="ni-logo-grey.png" width="200" height="98.5"/>
+        <image name="safari" catalog="system" width="128" height="121"/>
         <systemColor name="systemGrayColor">
             <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

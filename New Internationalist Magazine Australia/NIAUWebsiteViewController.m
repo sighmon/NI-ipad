@@ -94,6 +94,12 @@
     [self.webView reload];
 }
 
+- (IBAction)openInSafariTapped:(id)sender
+{
+    // Open this link in Safari
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[self.linkToLoad.URL absoluteString]]];
+}
+
 - (IBAction)shareButtonTapped:(id)sender
 {
     // Pop share modal
