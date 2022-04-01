@@ -368,7 +368,7 @@ static NSString *CellIdentifier = @"articleCell";
 
     __block UIImageView *articleImageView = (UIImageView *)[cell viewWithTag:100];
     NIAUArticle *article = [self.sortedCategories[indexPath.section] objectForKey:@"articles"][indexPath.row];
-    CGSize thumbSize = CGSizeMake(20,cell.frame.size.height);
+    CGSize thumbSize = CGSizeMake(120,cell.frame.size.height);
     if (self.tableView.dragging == NO && self.tableView.decelerating == NO) {
         if (articleImageView.image == nil) {
             [article getFeaturedImageThumbWithSize:thumbSize andCompletionBlock:^(UIImage *thumb) {

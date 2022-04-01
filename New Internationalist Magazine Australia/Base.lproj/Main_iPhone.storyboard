@@ -270,14 +270,14 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="32" id="iJc-EY-7gW">
-                                            <rect key="frame" x="16" y="12.666666666666664" width="30" height="17"/>
+                                            <rect key="frame" x="16" y="7.9999999999999982" width="35" height="20.333333333333332"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="50" id="Gf2-61-p1V">
-                                            <rect key="frame" x="15.999999999999996" y="31.999999999999996" width="43.666666666666664" height="14.333333333333334"/>
+                                            <rect key="frame" x="15.999999999999996" y="31.333333333333329" width="52.666666666666664" height="18"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                             <color key="textColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -937,19 +937,19 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" tag="100" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="yTC-Ai-12J">
-                                                    <rect key="frame" x="0.0" y="0.0" width="20" height="73"/>
+                                                    <rect key="frame" x="0.0" y="1" width="60" height="71"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="20" id="qmc-4C-dDt"/>
+                                                        <constraint firstAttribute="width" constant="60" id="qmc-4C-dDt"/>
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="101" contentMode="left" verticalHuggingPriority="251" text="Title" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="239" translatesAutoresizingMaskIntoConstraints="NO" id="zJ7-fz-whU">
-                                                    <rect key="frame" x="28" y="8" width="302.33333333333331" height="17"/>
+                                                    <rect key="frame" x="68" y="8" width="262.33333333333331" height="17"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="102" contentMode="left" verticalCompressionResistancePriority="751" text="Subtitle" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="239" translatesAutoresizingMaskIntoConstraints="NO" id="Wrz-D5-5j8">
-                                                    <rect key="frame" x="28" y="33" width="302.33333333333331" height="32"/>
+                                                    <rect key="frame" x="68" y="33" width="262.33333333333331" height="32"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -962,13 +962,13 @@
                                                 <constraint firstAttribute="bottom" secondItem="Wrz-D5-5j8" secondAttribute="bottom" constant="8" id="PAe-6s-hLl"/>
                                                 <constraint firstItem="Wrz-D5-5j8" firstAttribute="top" secondItem="zJ7-fz-whU" secondAttribute="bottom" constant="8" id="PnE-yG-CBE"/>
                                                 <constraint firstAttribute="trailing" secondItem="Wrz-D5-5j8" secondAttribute="trailing" constant="20" symbolic="YES" id="RQ8-yF-Xfp"/>
-                                                <constraint firstAttribute="bottom" secondItem="yTC-Ai-12J" secondAttribute="bottom" id="dbp-rj-ODP"/>
+                                                <constraint firstAttribute="bottom" secondItem="yTC-Ai-12J" secondAttribute="bottom" constant="1" id="dbp-rj-ODP"/>
                                                 <constraint firstItem="zJ7-fz-whU" firstAttribute="leading" secondItem="yTC-Ai-12J" secondAttribute="trailing" constant="8" symbolic="YES" id="obN-YZ-Jft"/>
                                                 <constraint firstItem="Wrz-D5-5j8" firstAttribute="leading" secondItem="yTC-Ai-12J" secondAttribute="trailing" constant="8" symbolic="YES" id="p36-ei-36T"/>
-                                                <constraint firstItem="yTC-Ai-12J" firstAttribute="top" secondItem="DHD-CO-mrV" secondAttribute="top" id="pHv-wp-leT"/>
+                                                <constraint firstItem="yTC-Ai-12J" firstAttribute="top" secondItem="DHD-CO-mrV" secondAttribute="top" constant="1" id="pHv-wp-leT"/>
                                             </constraints>
                                         </tableViewCellContentView>
-                                        <inset key="separatorInset" minX="21" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                        <inset key="separatorInset" minX="61" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <connections>
                                             <segue destination="T5k-23-5nF" kind="push" identifier="tappedArticle" id="W9z-A8-KEC"/>
                                         </connections>
@@ -1389,11 +1389,11 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="fI5-Du-KTZ"/>
-        <segue reference="nQ6-DH-CWR"/>
-        <segue reference="0rF-W7-D7Y"/>
-        <segue reference="fFr-gL-mDW"/>
-        <segue reference="qUJ-ry-144"/>
-        <segue reference="jkZ-Dh-FHT"/>
+        <segue reference="lhr-aW-Muh"/>
+        <segue reference="W9z-A8-KEC"/>
+        <segue reference="7YI-lD-b3J"/>
+        <segue reference="v4V-Nv-yqh"/>
+        <segue reference="W9L-kn-pvc"/>
         <segue reference="2MC-OH-cwI"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.18257993459999999" green="0.1981646121" blue="0.21857401730000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

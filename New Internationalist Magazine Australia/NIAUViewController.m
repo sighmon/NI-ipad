@@ -211,7 +211,9 @@
     [self loadLatestMagazineCover];
     
     // Update the view
-    [self.view setNeedsDisplay];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.view setNeedsDisplay];
+    });
 }
 
 -(void)showIssues {
