@@ -240,7 +240,7 @@
 - (IBAction)feedbackButtonTapped:(id)sender
 {
     // Prepare email;
-    NSMutableArray *itemsToShare = [[NSMutableArray alloc] initWithArray:@[[NSString stringWithFormat:@"I'm using the @ni_australia app version %@ (%@), and my feedback/suggestions are:",self.version, self.build]]];
+    NSMutableArray *itemsToShare = [[NSMutableArray alloc] initWithArray:@[[NSString stringWithFormat:@"I'm using the @newint_au app version %@ (%@), and my feedback/suggestions are:",self.version, self.build]]];
     
     UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:itemsToShare applicationActivities:nil];
     [activityController setValue:[NSString stringWithFormat:@"NI App feedback - %@ (%@)", self.version, self.build] forKey:@"subject"];
