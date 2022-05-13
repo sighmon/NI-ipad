@@ -175,7 +175,9 @@
         } else {
             // A web link was tapped
             // Segue to NIAUWebsiteViewController so users don't leave the app.
-            [self performSegueWithIdentifier:@"infoToWebsite" sender:request];
+            dispatch_async(dispatch_get_main_queue(), ^(){
+                [self performSegueWithIdentifier:@"infoToWebsite" sender:request];
+            });
             return NO;
         }
     } else {

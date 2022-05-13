@@ -319,11 +319,17 @@ NSString *ArticleDidRefreshNotification = @"ArticleDidRefresh";
         DebugLog(@"Article doesn't have a teaser");
         self.teaserLabel.text = nil;
     } else {
-        self.teaserLabel.attributedText = [[NSAttributedString alloc] initWithData:[teaserHTML dataUsingEncoding:NSUTF8StringEncoding]
-                                                                           options:@{NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType,
-                                                                                     NSCharacterEncodingDocumentAttribute: [NSNumber numberWithInt:NSUTF8StringEncoding]}
-                                                                documentAttributes:nil
-                                                                             error:nil];
+        NSData *teaserData = [teaserHTML dataUsingEncoding:NSUTF8StringEncoding];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            NSAttributedString *teaserAttributedText = [[NSAttributedString alloc] initWithData:teaserData
+                                                                                        options:@{NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType,
+                                                                                                  NSCharacterEncodingDocumentAttribute: [NSNumber numberWithInt:NSUTF8StringEncoding]}
+                                                                             documentAttributes:nil
+                                                                                          error:nil];
+            dispatch_async(dispatch_get_main_queue(), ^(void) {
+                self.teaserLabel.attributedText = teaserAttributedText;
+            });
+        });
     }
     
     // Autolayout magic to set it to the right width
@@ -565,15 +571,21 @@ NSString *ArticleDidRefreshNotification = @"ArticleDidRefresh";
         if ([[[request.URL lastPathComponent] pathExtension] isEqualToString:@"jpg"] || [[[request.URL lastPathComponent] pathExtension] isEqualToString:@"png"]|| [[[request.URL lastPathComponent] pathExtension] isEqualToString:@"jpeg"]) {
             // An image was tapped
             // Request URL includes Newsstand, so we assume it's an image clicked within an article.
-            [self performSegueWithIdentifier:@"showImageZoom" sender:request.URL];
+            dispatch_async(dispatch_get_main_queue(), ^(){
+                [self performSegueWithIdentifier:@"showImageZoom" sender:request.URL];
+            });
             return NO;
         } else if ([NIAUHelper validArticleInURL:request.URL]) {
             // It's an internal article link, segue to that article.
-            [self segueToArticleInURL:request.URL];
+            dispatch_async(dispatch_get_main_queue(), ^(){
+                [self segueToArticleInURL:request.URL];
+            });
             return NO;
         } else if ([NIAUHelper validIssueInURL:request.URL]) {
             // It's an internal issue link, segue to that issue.
-            [self segueToIssueInURL:request.URL];
+            dispatch_async(dispatch_get_main_queue(), ^(){
+                [self segueToIssueInURL:request.URL];
+            });
             return NO;
         } else if (!([[request.URL absoluteString] rangeOfString:@"#"].location == NSNotFound)) {
             // Link is an internal link so just keep loading.
@@ -585,7 +597,9 @@ NSString *ArticleDidRefreshNotification = @"ArticleDidRefresh";
         } else {
             // A web link was tapped
             // Segue to NIAUWebsiteViewController so users don't leave the app.
-            [self performSegueWithIdentifier:@"webLinkTapped" sender:request];
+            dispatch_async(dispatch_get_main_queue(), ^(){
+                [self performSegueWithIdentifier:@"webLinkTapped" sender:request];
+            });
             return NO;
         }
     } else {
@@ -675,10 +689,14 @@ NSString *ArticleDidRefreshNotification = @"ArticleDidRefresh";
     
     // TODO: Fix this test, it's a little brittle...
     if (recognizer.view.frame.size.height > 130) {
-        [self performSegueWithIdentifier:@"showImageZoom" sender:recognizer.view];
+        dispatch_async(dispatch_get_main_queue(), ^(){
+            [self performSegueWithIdentifier:@"showImageZoom" sender:recognizer.view];
+        });
     } else {
         // Doesn't have a featured image, so segue to the category tapped
-        [self performSegueWithIdentifier:@"articleToCategory" sender:self];
+        dispatch_async(dispatch_get_main_queue(), ^(){
+            [self performSegueWithIdentifier:@"articleToCategory" sender:self];
+        });
     }
     
 }
@@ -794,15 +812,13 @@ NSString *ArticleDidRefreshNotification = @"ArticleDidRefresh";
     }];
     if (issueIndexPath != NSNotFound) {
         NIAUIssue *issueToLoad = [arrayOfIssues objectAtIndex:issueIndexPath];
-        [issueToLoad forceDownloadArticles];
-        issueViewController.issue = issueToLoad;
-        
-        NIAUArticle *articleToLoad = [issueToLoad articleWithRailsID:articleID];
+        NIAUArticle *articleToLoad = [NIAUArticle articleFromCacheWithIssue:issueToLoad andId:articleID];
         if (articleToLoad) {
             articleViewController.article = articleToLoad;
             [self.navigationController pushViewController:articleViewController animated:YES];
         } else {
             // Can't find the article, so let's just push the issue.
+            issueViewController.issue = issueToLoad;
             [self.navigationController pushViewController:issueViewController animated:YES];
         }
     } else {

@@ -485,7 +485,9 @@
                               otherButtonTitles:nil] show];
         } else {
             // Magazine has been purchased, so go to that issue
-            [self performSegueWithIdentifier:@"showTableOfContents" sender:self];
+            dispatch_async(dispatch_get_main_queue(), ^(){
+                [self performSegueWithIdentifier:@"showTableOfContents" sender:self];
+            });
         }
         
     } else {

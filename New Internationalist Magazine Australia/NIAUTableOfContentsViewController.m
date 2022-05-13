@@ -586,12 +586,12 @@ static NSString *CellIdentifier = @"articleCell";
         }];
         if (issueIndexPath != NSNotFound) {
             NIAUIssue *issueToLoad = [arrayOfIssues objectAtIndex:issueIndexPath];
-            [issueToLoad forceDownloadArticles];
-            
-            NIAUArticle *articleToLoad = [issueToLoad articleWithRailsID:articleID];
+            NIAUArticle *articleToLoad = [NIAUArticle articleFromCacheWithIssue:issueToLoad andId:articleID];
             if (articleToLoad) {
                 // Segue to that article
-                [self performSegueWithIdentifier:@"tappedArticle" sender:articleToLoad];
+                dispatch_async(dispatch_get_main_queue(), ^(){
+                    [self performSegueWithIdentifier:@"tappedArticle" sender:articleToLoad];
+                });
             } else {
                 // Can't find the article, pop up a UIAlertView?
                 self.alertView = [[UIAlertView alloc] initWithTitle:@"Bad link, sorry!" message:@"It looks like we can't find that article, sorry!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
@@ -633,7 +633,9 @@ static NSString *CellIdentifier = @"articleCell";
         return NO;
     } else {
         // Segue to NIAUWebsiteViewController so users don't leave the app.
-        [self performSegueWithIdentifier:@"webLinkTappedFromContents" sender:URL];
+        dispatch_async(dispatch_get_main_queue(), ^(){
+            [self performSegueWithIdentifier:@"webLinkTappedFromContents" sender:URL];
+        });
         
         // Return NO so that the UITextView doesn't load the URL. :-)
         return NO;
@@ -725,7 +727,9 @@ static NSString *CellIdentifier = @"articleCell";
 - (void)handleSingleTap:(UITapGestureRecognizer *)gestureRecognizer
 {
     // Handle image being tapped
-    [self performSegueWithIdentifier:@"showImageZoom" sender:gestureRecognizer.view];
+    dispatch_async(dispatch_get_main_queue(), ^(){
+        [self performSegueWithIdentifier:@"showImageZoom" sender:gestureRecognizer.view];
+    });
 }
 
 - (void)handleDoubleTap:(UITapGestureRecognizer *)gestureRecognizer
@@ -756,7 +760,9 @@ static NSString *CellIdentifier = @"articleCell";
 - (IBAction)handleEditorSingleTap:(UITapGestureRecognizer *)recognizer
 {
     // Handle image being tapped
-    [self performSegueWithIdentifier:@"showImageZoom" sender:recognizer.view];
+    dispatch_async(dispatch_get_main_queue(), ^(){
+        [self performSegueWithIdentifier:@"showImageZoom" sender:recognizer.view];
+    });
 }
 
 - (void)didReceiveMemoryWarning

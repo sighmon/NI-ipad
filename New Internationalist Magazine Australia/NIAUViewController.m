@@ -442,7 +442,9 @@
 - (IBAction)coverTapped:(UITapGestureRecognizer *)recognizer
 {
 //    DebugLog(@"Cover tapped!");
-    [self performSegueWithIdentifier:@"homeCoverToContentsView" sender:self];
+    dispatch_async(dispatch_get_main_queue(), ^(){
+        [self performSegueWithIdentifier:@"homeCoverToContentsView" sender:self];
+    });
 }
 
 - (IBAction)magazineArchiveButtonTapped:(id)sender
