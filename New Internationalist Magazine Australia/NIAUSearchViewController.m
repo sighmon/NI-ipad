@@ -490,8 +490,7 @@ NSTimer *searchTimer;
         }];
         if (issueIndexPath != NSNotFound) {
             NIAUIssue *issue = [arrayOfIssues objectAtIndex:issueIndexPath];
-            [issue forceDownloadArticles];
-            NIAUArticle *articleToLoad = [issue articleWithRailsID:articleID];
+            NIAUArticle *articleToLoad = [NIAUArticle articleFromCacheWithIssue:issue andId:articleID];
             if (articleToLoad) {
                 articleViewController.article = articleToLoad;
             } else {
