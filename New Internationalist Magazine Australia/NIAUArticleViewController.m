@@ -642,7 +642,14 @@ NSString *ArticleDidRefreshNotification = @"ArticleDidRefresh";
 
 - (IBAction)shareActionTapped:(id)sender
 {
-    NSMutableArray *itemsToShare = [[NSMutableArray alloc] initWithArray:@[[NSString stringWithFormat:@"I'm reading '%@' from New Internationalist magazine.",self.article.title], self.article.getGuestPassURL.absoluteString]];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"GMT"]];
+    [dateFormatter setDateFormat:@"MMMM yyyy"];
+    NSString *articleDate = [NSString stringWithFormat: @"%@", [dateFormatter stringFromDate:WITH_DEFAULT(self.article.publication, self.article.issue.publication)]];
+
+    NSMutableArray *itemsToShare = [[NSMutableArray alloc] initWithArray:@[
+        [NSString stringWithFormat:@"%@ - %@ New Internationalist magazine %@.", self.article.title, [NIAUHelper stringByStrippingHTML:self.article.teaser], articleDate], self.article.getGuestPassURL.absoluteString]
+    ];
     
     // Check if the featured image exists
     if (self.featuredImage.image != nil) {

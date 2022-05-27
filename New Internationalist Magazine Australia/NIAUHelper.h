@@ -31,6 +31,7 @@
 + (BOOL)validCategoriesInURL:(NSURL *)url;
 
 + (NSString *)URLEncodedString:(NSString *)string;
++ (NSString *)stringByStrippingHTML:(NSString *)string;
 
 + (void)updateSharedUserDefaults;
 

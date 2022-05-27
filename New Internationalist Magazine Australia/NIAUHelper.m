@@ -271,6 +271,13 @@ NSString *kAlertTitle = @"Did you know?";
     }
 }
 
++ (NSString *)stringByStrippingHTML:(NSString *)string {
+  NSRange range;
+  while ((range = [string rangeOfString:@"<[^>]+>" options:NSRegularExpressionSearch]).location != NSNotFound)
+      string = [string stringByReplacingCharactersInRange:range withString:@""];
+  return string;
+}
+
 + (void)updateSharedUserDefaults
 {
     NSUserDefaults *groupUserDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.au.com.newint.New-Internationalist-Magazine-Australia"];

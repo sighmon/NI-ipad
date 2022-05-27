@@ -703,8 +703,13 @@ static NSString *CellIdentifier = @"articleCell";
     } else {
         coverToShare = [UIImage imageNamed:@"default_cover@2x.png"];
     }
-    
-    NSArray *itemsToShare = @[[NSString stringWithFormat:@"I'm reading '%@' - New Internationalist magazine",self.issue.title], coverToShare, self.issue.getWebURL];
+
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"GMT"]];
+    [dateFormatter setDateFormat:@"MMMM yyyy"];
+    NSString *issueDate = [NSString stringWithFormat: @"%@", [dateFormatter stringFromDate: self.issue.publication]];
+
+    NSArray *itemsToShare = @[[NSString stringWithFormat:@"%@ - New Internationalist magazine %@", self.issue.title, issueDate], coverToShare, self.issue.getWebURL];
     
     UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:itemsToShare applicationActivities:nil];
     [activityController setValue:[NSString stringWithFormat:@"%@ - New Internationalist magazine %@", self.issue.title, self.issue.name] forKey:@"subject"];
