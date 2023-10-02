@@ -935,7 +935,7 @@ NSString *ImageDidSaveToCacheNotification = @"ImageDidSaveToCache";
 // Q: is providing all of these class methods evil?
 // alternate solution could be to create a skeleton issue then call -bodyURL
 +(NSURL *) cacheURLWithIssue:(NIAUIssue *)issue andId:(NSNumber *)index {
-    return [NSURL URLWithString:[NSString stringWithFormat:@"%@/", index] relativeToURL:issue.nkIssue.contentURL];
+    return [NSURL URLWithString:[NSString stringWithFormat:@"%@/", index] relativeToURL:issue.contentURL];
 }
 
 -(NSURL *) cacheURL {
@@ -976,7 +976,7 @@ NSString *ImageDidSaveToCacheNotification = @"ImageDidSaveToCache";
     NSMutableArray *articles = [NSMutableArray array];
     NSArray *keys = @[NSURLIsDirectoryKey,NSURLNameKey];
     NSError *error;
-    for (NSURL *url in [[NSFileManager defaultManager] contentsOfDirectoryAtURL:_issue.nkIssue.contentURL includingPropertiesForKeys:keys options:0 error:&error]) {
+    for (NSURL *url in [[NSFileManager defaultManager] contentsOfDirectoryAtURL:_issue.contentURL includingPropertiesForKeys:keys options:0 error:&error]) {
         NSDictionary *properties = [url resourceValuesForKeys:keys error:&error];
         if ([[properties objectForKey:NSURLIsDirectoryKey] boolValue]==YES) {
             NIAUArticle *articleToAdd = [self articleFromCacheWithIssue:_issue andId:[nf numberFromString:[properties objectForKey:NSURLNameKey]]];

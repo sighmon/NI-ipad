@@ -193,7 +193,7 @@ const char NotificationKey;
         NSNumber *articleID = [NSNumber numberWithInt:(int)[articleIDFromURL integerValue]];
         NSString *issueIDFromURL = [[url pathComponents] objectAtIndex:1];
         NSNumber *issueID = [NSNumber numberWithInt:(int)[issueIDFromURL integerValue]];
-        NSArray *arrayOfIssues = [NIAUIssue issuesFromNKLibrary];
+        NSArray *arrayOfIssues = [NIAUIssue issuesFromFilesystem];
         NSUInteger issueIndexPath = [arrayOfIssues indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
             return ([[obj railsID] isEqualToNumber:issueID]);
         }];
@@ -226,7 +226,7 @@ const char NotificationKey;
         NIAUTableOfContentsViewController *issueViewController = [storyboard instantiateViewControllerWithIdentifier:@"issue"];
         NSString *issueIDFromURL = [[url pathComponents] objectAtIndex:1];
         NSNumber *issueID = [NSNumber numberWithInt:(int)[issueIDFromURL integerValue]];
-        NSArray *arrayOfIssues = [NIAUIssue issuesFromNKLibrary];
+        NSArray *arrayOfIssues = [NIAUIssue issuesFromFilesystem];
         NSUInteger issueIndexPath = [arrayOfIssues indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
             return ([[obj railsID] isEqualToNumber:issueID]);
         }];
@@ -427,29 +427,26 @@ const char NotificationKey;
             
             if (newIssue) {
                 // schedule for issue downloading in background
-                NKIssue *newNKIssue = [[NKLibrary sharedLibrary] issueWithName:newIssue.name];
-                if (newNKIssue) {
-                    NSURL *downloadURL = [NSURL URLWithString:zipURL];
-                    NSURLRequest *request = [NSURLRequest requestWithURL:downloadURL];
-                    NSURLSession *session = [NSURLSession sharedSession];
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-                    });
-                    [[session downloadTaskWithRequest:request completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-                        if (error) {
-                            DebugLog(@"Download error: %@", error);
-                            dispatch_async(dispatch_get_main_queue(), ^{
-                                [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-                            });
-                        }
-                        DebugLog(@"Download succeeded: %@", newIssue.name);
+                NSURL *downloadURL = [NSURL URLWithString:zipURL];
+                NSURLRequest *request = [NSURLRequest requestWithURL:downloadURL];
+                NSURLSession *session = [NSURLSession sharedSession];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+                });
+                [[session downloadTaskWithRequest:request completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+                    if (error) {
+                        DebugLog(@"Download error: %@", error);
                         dispatch_async(dispatch_get_main_queue(), ^{
                             [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
                         });
+                    }
+                    DebugLog(@"Download succeeded: %@", newIssue.name);
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+                    });
 
-                        [[NIAUInAppPurchaseHelper sharedInstance] unzipAndMoveFilesForIssue:newNKIssue toDestinationURL:location];
-                    }] resume];
-                }
+                    [[NIAUInAppPurchaseHelper sharedInstance] unzipAndMoveFilesForIssue: newIssue.railsID toDestinationURL:location];
+                }] resume];
             } else {
                 NSLog(@"New Issue couldn't be created from userInfo: %@", userInfo);
             }

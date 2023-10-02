@@ -54,17 +54,25 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
 {
     NSString *coverFileName = [[self coverURL] lastPathComponent];
     // local URL to where the cover is/would be stored
-    return [NSURL URLWithString:coverFileName relativeToURL:[self.nkIssue contentURL]];
+    return [NSURL URLWithString:coverFileName relativeToURL: self.contentURL];
+}
+
+- (NSURL *)contentURL
+{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    NSString *issuePath = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@/", [self.railsID stringValue]]];
+    return [NSURL fileURLWithPath:issuePath isDirectory:YES];
 }
 
 - (NSURL *)categoriesSortedURL
 {
-    return [NSURL URLWithString:@"categoriesSorted.plist" relativeToURL:[self.nkIssue contentURL]];
+    return [NSURL URLWithString:@"categoriesSorted.plist" relativeToURL: self.contentURL];
 }
 
 - (NSURL *)articlesSortedURL
 {
-    return [NSURL URLWithString:@"articlesSorted.plist" relativeToURL:[self.nkIssue contentURL]];
+    return [NSURL URLWithString:@"articlesSorted.plist" relativeToURL: self.contentURL];
 }
 
 - (NSURL *)coverCacheURLForSize:(CGSize)size
@@ -72,7 +80,7 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
     NSString *coverFileName = [[self coverURL] lastPathComponent];
     // local URL to where the cover is/would be stored
     NSString *coverCacheFileName = [coverFileName stringByAppendingPathExtension:[NSString stringWithFormat:@"thumb%dx%d.%@",(int)size.width,(int)size.height,[coverFileName pathExtension]]];
-    return [NSURL URLWithString:coverCacheFileName relativeToURL:[self.nkIssue contentURL]];
+    return [NSURL URLWithString:coverCacheFileName relativeToURL: self.contentURL];
 }
 
 -(UIImage *)attemptToGetCoverThumbFromMemoryForSize:(CGSize)size {
@@ -284,8 +292,6 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
 -(NIAUIssue *)initWithDictionary:(NSDictionary *)dict {
     if (self = [self init]) {
         dictionary = dict;
-        
-        [self addToNewsstand];
         [self writeToCache];
     }
     return self;
@@ -294,8 +300,6 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
 -(NIAUIssue *)initWithUserInfo:(NSDictionary *)dict {
     if (self = [self init]) {
         dictionary = dict;
-        
-        [self addToNewsstand];
     }
     return self;
 }
@@ -325,68 +329,26 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
     }
 }
 
-//build from NKIssue object (read from cache)
-// called when building from cache
-
--(NIAUIssue *)initWithNKIssue:(NKIssue *)issue {
-    if (self = [self init]) {
-        NSError *error;
-        // local json URL
-        NSURL *jsonURL = [NSURL URLWithString:@"issue.json" relativeToURL:[issue contentURL]];
-        NSData *data = [NSData dataWithContentsOfURL:jsonURL];
-        
-        if (data) {
-            dictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-            return self;
-        } else {
-            return nil;
-        }
-    }
-    return self;
-}
-
-+(NIAUIssue *)issueWithNKIssue:(NKIssue *)issue {
-    return [[NIAUIssue alloc] initWithNKIssue:issue];
-}
-
-+(NSArray *)issuesFromNKLibrary {
-    NKLibrary *nkLibrary = [NKLibrary sharedLibrary];
-    // Q: since we know the size at creation can this be a normal NSArray?
-    NSMutableArray *tmpIssues = [NSMutableArray arrayWithCapacity:[[nkLibrary issues] count]];
-    [[nkLibrary issues] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        NKIssue *nkIssue = (NKIssue *)obj;
-        NIAUIssue *issue = [NIAUIssue issueWithNKIssue:nkIssue];
-        if (issue) {
-            [tmpIssues addObject:issue];
-        }
-        
-    }];
-    return tmpIssues;
-}
-
-
--(NKIssue *)nkIssue {
-    return [[NKLibrary sharedLibrary] issueWithName:self.name];
-}
-
--(void)addToNewsstand {
-    if(!self.nkIssue) {
-        if (self.name && self.publication) {
-            [[NKLibrary sharedLibrary] addIssueWithName:self.name date:self.publication];
-        } else {
-            // CRASH: Crashlytics issue #23 - low disk space, low ram?
-            NSLog(@"ERROR: Trying to add issue to library with name '%@' and date '%@' failed.", self.name, self.publication);
-        }
-    }
-}
-
 -(void)writeToCache {
     // write the relevant issue metadata into cache directory
-    NSURL *jsonURL = [NSURL URLWithString:@"issue.json" relativeToURL:[[self nkIssue] contentURL]];
-    
+    NSURL *jsonURL = [NSURL URLWithString:@"issue.json" relativeToURL:self.contentURL];
+
     // To avoid crashlytics #29, check if the nkIssue hasn't been created yet for some reason.
     if (jsonURL) {
         DebugLog(@"%@",[jsonURL absoluteString]);
+
+        // Check and create directory if it doesn't exist
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        NSString *directoryPath = [[jsonURL URLByDeletingLastPathComponent] path];
+        if (![fileManager fileExistsAtPath:directoryPath]) {
+            NSError *directoryCreationError = nil;
+            [fileManager createDirectoryAtPath:directoryPath withIntermediateDirectories:YES attributes:nil error:&directoryCreationError];
+            if (directoryCreationError) {
+                DebugLog(@"Error creating directory: %@", directoryCreationError.localizedDescription);
+                return;
+            }
+        }
+
         NSOutputStream *os = [NSOutputStream outputStreamWithURL:jsonURL append:FALSE];
         [os open];
         NSError *error;
@@ -396,7 +358,7 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
             // Wait until the filesystem is ready or timeout after 2 seconds
         }
         if (![os hasSpaceAvailable] || [NSJSONSerialization writeJSONObject:dictionary toStream:os options:0 error:&error]<=0) {
-            DebugLog(@"Error writing JSON file");
+            DebugLog(@"Error writing JSON file: %@", error.localizedDescription);
         }
         [os close];
     } else {
@@ -650,7 +612,7 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
     NSURL *photoURL = [NSURL URLWithString:url relativeToURL:[NSURL URLWithString:SITE_URL]];
     NSString *coverFileName = [photoURL lastPathComponent];
     // local URL to where the cover is/would be stored
-    NSURL *photoCacheURL = [NSURL URLWithString:coverFileName relativeToURL:[self.nkIssue contentURL]];
+    NSURL *photoCacheURL = [NSURL URLWithString:coverFileName relativeToURL: self.contentURL];
     DebugLog(@"trying to read cached editor's image from %@",photoCacheURL);
     UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:photoCacheURL]];
     
@@ -763,5 +725,61 @@ NSString *ArticlesFailedUpdateNotification = @"ArticlesFailedUpdate";
         DebugLog(@"ERROR CLEARING ISSUE CACHE: NSArray articles is empty.");
     }
 }
+
++(NSArray<NIAUIssue *> *)issuesFromFilesystem
+{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSError *error = nil;
+    NSArray *directoryContents = [fileManager contentsOfDirectoryAtPath:documentsDirectory error:&error];
+
+    if (error) {
+        NSLog(@"Error reading directory contents: %@", [error localizedDescription]);
+        return nil;
+    }
+
+    NSMutableArray<NIAUIssue *> *issues = [NSMutableArray array];
+    for (NSString *subdirectory in directoryContents) {
+        BOOL isDir;
+        NSString *subdirectoryPath = [documentsDirectory stringByAppendingPathComponent:subdirectory];
+        if ([fileManager fileExistsAtPath:subdirectoryPath isDirectory:&isDir] && isDir) {
+            NSNumber *railsID = @([subdirectory integerValue]);
+            if (railsID.integerValue > 0) {  // Assuming railsID is an integer and subdirectory names are valid integers
+                NSString *jsonURL = [subdirectoryPath stringByAppendingPathComponent:@"issue.json"];
+
+                // Load the JSON data from the file
+                NSError *error = nil;
+                NSData *jsonData = [NSData dataWithContentsOfFile:jsonURL options:NSDataReadingMappedIfSafe error:&error];
+                if (error) {
+                    NSLog(@"Error reading JSON file: %@", error.localizedDescription);
+                    return nil;
+                }
+
+                // Deserialize the JSON data into a dictionary
+                NSDictionary *jsonDict = [NSJSONSerialization JSONObjectWithData:jsonData options:kNilOptions error:&error];
+                if (error) {
+                    NSLog(@"Error deserializing JSON data: %@", error.localizedDescription);
+                    return nil;
+                }
+
+                // Create and return a NIAUIssue instance using the dictionary
+                NIAUIssue *issue = [NIAUIssue issueWithDictionary:jsonDict];
+                [issues addObject:issue];
+            }
+        }
+    }
+
+    // Sorted by issue number
+    NSArray *sortedIssues = [issues sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        NSDate *date1 = [obj1 publication];
+        NSDate *date2 = [obj2 publication];
+        return [date2 compare:date1];
+    }];
+
+    return sortedIssues;
+}
+
 
 @end

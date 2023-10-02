@@ -389,11 +389,11 @@ NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurcha
 
 #pragma mark - Zip and move
 
-- (void)unzipAndMoveFilesForIssue:(NKIssue *)issue toDestinationURL:(NSURL *)destinationURL
+- (void)unzipAndMoveFilesForIssue:(NSNumber *)railsID toDestinationURL:(NSURL *)destinationURL
 {
     // Unzip the downloaded file
     BOOL zipSuccess = NO;
-    //    NSString *zipPath = [[NIAUPublisher getInstance] downloadPathForIssue:nkIssue];
+    NIAUIssue *issue = [[NIAUPublisher getInstance] issueWithRailsID: railsID];
     NSString *contentPath = [[[issue contentURL] path] stringByAppendingString:@"/"];
     NSString *zipPath = [destinationURL path];
     NSString *unZippedPath = [[[destinationURL path] stringByDeletingLastPathComponent] stringByAppendingString:@"/temp/"];

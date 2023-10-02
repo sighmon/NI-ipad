@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <NewsstandKit/NewsstandKit.h>
 #import "NIAUIssue.h"
 
 extern  NSString *PublisherDidUpdateNotification;
@@ -29,7 +28,5 @@ extern  NSString *PublisherFailedUpdateNotification;
 -(NIAUIssue *)issueWithName:(NSString *)name;
 -(NIAUIssue *)issueWithRailsID:(NSNumber *)railsID;
 -(NIAUIssue *)lastIssue;
-
--(NSString *)downloadPathForIssue:(NKIssue *)nkIssue;
 
 @end

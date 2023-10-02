@@ -580,7 +580,7 @@ static NSString *CellIdentifier = @"articleCell";
         NSNumber *articleID = [NSNumber numberWithInt:(int)[articleIDFromURL integerValue]];
         NSString *issueIDFromURL = [[URL pathComponents] objectAtIndex:2];
         NSNumber *issueID = [NSNumber numberWithInt:(int)[issueIDFromURL integerValue]];
-        NSArray *arrayOfIssues = [NIAUIssue issuesFromNKLibrary];
+        NSArray *arrayOfIssues = [NIAUIssue issuesFromFilesystem];
         NSUInteger issueIndexPath = [arrayOfIssues indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
             return ([[obj railsID] isEqualToNumber:issueID]);
         }];
@@ -614,7 +614,7 @@ static NSString *CellIdentifier = @"articleCell";
         
         NSString *issueIDFromURL = [[URL pathComponents] objectAtIndex:2];
         NSNumber *issueID = [NSNumber numberWithInt:(int)[issueIDFromURL integerValue]];
-        NSArray *arrayOfIssues = [NIAUIssue issuesFromNKLibrary];
+        NSArray *arrayOfIssues = [NIAUIssue issuesFromFilesystem];
         NSUInteger issueIndexPath = [arrayOfIssues indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
             return ([[obj railsID] isEqualToNumber:issueID]);
         }];
@@ -853,8 +853,7 @@ static NSString *CellIdentifier = @"articleCell";
         
         if (zipURL) {
             // schedule for issue downloading in background
-            NKIssue *newNKIssue = [[NKLibrary sharedLibrary] issueWithName:self.issue.name];
-            if(newNKIssue) {
+            if(self.issue) {
                 NSURL *downloadURL = [NSURL URLWithString:zipURL];
                 NSURLRequest *request = [NSURLRequest requestWithURL:downloadURL];
                 NSURLSession *session = [NSURLSession sharedSession];
@@ -877,7 +876,7 @@ static NSString *CellIdentifier = @"articleCell";
                         [self.progressView setHidden:YES];
                     });
 
-                    [[NIAUInAppPurchaseHelper sharedInstance] unzipAndMoveFilesForIssue:newNKIssue toDestinationURL:location];
+                    [[NIAUInAppPurchaseHelper sharedInstance] unzipAndMoveFilesForIssue: self.issue.railsID toDestinationURL:location];
                 }] resume];
             }
         } else {

@@ -813,7 +813,7 @@ NSString *ArticleDidRefreshNotification = @"ArticleDidRefresh";
     NSNumber *articleID = [NSNumber numberWithInt:(int)[articleIDFromURL integerValue]];
     NSString *issueIDFromURL = [[url pathComponents] objectAtIndex:2];
     NSNumber *issueID = [NSNumber numberWithInt:(int)[issueIDFromURL integerValue]];
-    NSArray *arrayOfIssues = [NIAUIssue issuesFromNKLibrary];
+    NSArray *arrayOfIssues = [NIAUIssue issuesFromFilesystem];
     NSUInteger issueIndexPath = [arrayOfIssues indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
         return ([[obj railsID] isEqualToNumber:issueID]);
     }];
@@ -841,7 +841,7 @@ NSString *ArticleDidRefreshNotification = @"ArticleDidRefresh";
     
     NSString *issueIDFromURL = [[url pathComponents] objectAtIndex:2];
     NSNumber *issueID = [NSNumber numberWithInt:(int)[issueIDFromURL integerValue]];
-    NSArray *arrayOfIssues = [NIAUIssue issuesFromNKLibrary];
+    NSArray *arrayOfIssues = [NIAUIssue issuesFromFilesystem];
     NSUInteger issueIndexPath = [arrayOfIssues indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
         return ([[obj railsID] isEqualToNumber:issueID]);
     }];

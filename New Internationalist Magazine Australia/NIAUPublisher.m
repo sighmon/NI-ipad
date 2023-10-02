@@ -7,7 +7,6 @@
 //
 
 #import "NIAUPublisher.h"
-#import <NewsstandKit/NewsstandKit.h>
 #import "NSData+Cookieless.h"
 #import "local.h"
 
@@ -60,7 +59,7 @@ static NIAUPublisher *instance =nil;
         state[@"issues"] = object;
     }]];
     [cache addMethod:[[NIAUCacheMethod alloc] initMethod:@"disk"withReadBlock:^id(id options, id state) {
-        NSArray *issues = [NIAUIssue issuesFromNKLibrary];
+        NSArray *issues = [NIAUIssue issuesFromFilesystem];
         if (issues && [issues count]>0) {
             return issues;
         } else {
@@ -101,7 +100,7 @@ static NIAUPublisher *instance =nil;
                 }];
                 
                 // re-read issues
-                return [NIAUIssue issuesFromNKLibrary];
+                return [NIAUIssue issuesFromFilesystem];
             } else {
                 return nil;
             }
@@ -189,10 +188,6 @@ static NIAUPublisher *instance =nil;
 {
     // Last issue in the issues.json list, not the latest
     return [issues lastObject];
-}
-
--(NSString *)downloadPathForIssue:(NKIssue *)nkIssue {
-    return [nkIssue.contentURL path];
 }
 
 @end

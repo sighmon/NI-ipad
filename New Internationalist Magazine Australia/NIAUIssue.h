@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <NewsstandKit/NewsstandKit.h>
 #import "NIAUArticle.h"
 #import "NSData+Cookieless.h"
 #import "local.h"
@@ -54,11 +53,13 @@ extern NSString *ArticlesFailedUpdateNotification;
 -(NSArray *)getArticlesSorted;
 -(NSArray *)getArticlesSortedStartingAt:(NSString *)startingAt;
 
-+(NSArray *)issuesFromNKLibrary;
++(NSArray *)issuesFromFilesystem;
 +(NIAUIssue *)issueWithDictionary:(NSDictionary *)dict;
 +(NIAUIssue *)issueWithUserInfo:(NSDictionary *)dict;
 
 -(NSURL *)coverCacheURL;
+
+-(NSURL *)contentURL;
 
 -(void)getCoverWithCompletionBlock:(void(^)(UIImage *img))block;
 
@@ -67,8 +68,6 @@ extern NSString *ArticlesFailedUpdateNotification;
 -(UIImage *)attemptToGetCoverThumbFromMemoryForSize:(CGSize)size;
 
 -(void)getEditorsImageWithCompletionBlock:(void(^)(UIImage *img))block;
-
--(NKIssue *)nkIssue;
 
 -(void)requestArticles;
 -(void)forceDownloadArticles;

@@ -484,7 +484,7 @@ NSTimer *searchTimer;
         NSNumber *articleID = [NSNumber numberWithInt:(int)[articleIDFromURL integerValue]];
         NSString *issueIDFromURL = self.webSearchArticlesArray[selectedIndexPath.row][@"issue_id"];
         NSNumber *issueID = [NSNumber numberWithInt:(int)[issueIDFromURL integerValue]];
-        NSArray *arrayOfIssues = [NIAUIssue issuesFromNKLibrary];
+        NSArray *arrayOfIssues = [NIAUIssue issuesFromFilesystem];
         NSUInteger issueIndexPath = [arrayOfIssues indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
             return ([[obj railsID] isEqualToNumber:issueID]);
         }];
