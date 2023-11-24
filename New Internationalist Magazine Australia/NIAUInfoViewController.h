@@ -30,6 +30,7 @@
 @property (nonatomic, weak) IBOutlet UISwitch *analyticsSwitch;
 @property (nonatomic, weak) IBOutlet UISwitch *helpSwitch;
 @property (nonatomic, weak) IBOutlet UILabel *aboutLabel;
+@property (nonatomic, weak) IBOutlet UIButton *deleteCacheButton;
 
 - (IBAction)switchChanged: (id)sender;
 

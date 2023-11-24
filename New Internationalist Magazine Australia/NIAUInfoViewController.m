@@ -256,6 +256,29 @@
     [self presentViewController:activityController animated:YES completion:nil];
 }
 
+- (IBAction)deleteCacheButtonTapped:(id)sender
+{
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    NSArray *directoryContents = [fileManager contentsOfDirectoryAtPath:documentsDirectory error:nil];
+
+    for (NSString *path in directoryContents) {
+        NSString *fullPath = [documentsDirectory stringByAppendingPathComponent:path];
+        [fileManager removeItemAtPath:fullPath error:nil];
+        DebugLog(@"Deleted item: %@", fullPath);
+    }
+
+    // Show an alert when done
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Complete"
+                                                    message:@"All magazine data has been deleted from your device."
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil];
+    [alertView show];
+    alertView.delegate = nil;
+}
+
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
 {
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];

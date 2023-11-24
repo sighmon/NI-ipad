@@ -20,7 +20,7 @@
 			<key>Type</key>
 			<string>PSToggleSwitchSpecifier</string>
 		</dict>
-        <dict>
+		<dict>
 			<key>Title</key>
 			<string>Help</string>
 			<key>Type</key>
@@ -36,7 +36,7 @@
 			<key>Type</key>
 			<string>PSToggleSwitchSpecifier</string>
 		</dict>
-        <dict>
+		<dict>
 			<key>Title</key>
 			<string>Quality</string>
 			<key>Type</key>
