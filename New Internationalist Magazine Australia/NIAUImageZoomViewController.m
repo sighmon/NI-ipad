@@ -44,7 +44,7 @@
     
     [singleTap requireGestureRecognizerToFail:doubleTap];
     
-    float minimumScale = [self.scrollView frame].size.width  / self.image.image.size.width; //[self.image frame].size.width;
+    float minimumScale = [self getFrameWidth] / self.image.image.size.width; //[self.image frame].size.width;
     [self.scrollView setBackgroundColor:[UIColor whiteColor]];
     self.scrollView.contentSize = self.image.image.size;
     self.scrollView.delegate = self;
@@ -180,8 +180,8 @@
     // the zoom rect is in the content view's coordinates.
     //    At a zoom scale of 1.0, it would be the size of the imageScrollView's bounds.
     //    As the zoom scale decreases, so more content is visible, the size of the rect grows.
-    zoomRect.size.height = [self.scrollView frame].size.height / scale;
-    zoomRect.size.width  = [self.scrollView frame].size.width  / scale;
+    zoomRect.size.height = [self getFrameHeight] / scale;
+    zoomRect.size.width  = [self getFrameWidth]  / scale;
     
     // choose an origin so as to get the right center.
     zoomRect.origin.x    = center.x - (zoomRect.size.width  / 2.0);
@@ -193,19 +193,37 @@
 - (float)calculateScale
 {
     if ([self isViewRatioGreaterThanImageRatio]) {
-        return [self.scrollView frame].size.height / self.image.image.size.height;
+        return [self getFrameHeight] / self.image.image.size.height;
     } else {
-        return [self.scrollView frame].size.width  / self.image.image.size.width;
+        return [self getFrameWidth]  / self.image.image.size.width;
     }
 }
 
 - (float)calculateFullScreenScale
 {
     if ([self isViewRatioGreaterThanImageRatio]) {
-        return [self.scrollView frame].size.width / self.image.image.size.width;
+        return [self getFrameWidth] / self.image.image.size.width;
     } else {
-        return [self.scrollView frame].size.height / self.image.image.size.height;
+        return [self getFrameHeight] / self.image.image.size.height;
     }
+}
+
+- (float)getFrameHeight
+{
+    float frameHeight = [self.scrollView frame].size.height;
+    if (IS_IPHONE()) {
+        frameHeight *= 2.0;
+    }
+    return frameHeight;
+}
+
+- (float)getFrameWidth
+{
+    float frameWidth = [self.scrollView frame].size.width;
+    if (IS_IPHONE()) {
+        frameWidth *= 2.0;
+    }
+    return frameWidth;
 }
 
 - (BOOL)isViewRatioGreaterThanImageRatio
