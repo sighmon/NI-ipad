@@ -70,8 +70,11 @@ NSTimer *searchTimer;
     self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
     self.searchController.searchResultsUpdater = self;
     self.searchController.dimsBackgroundDuringPresentation = NO;
+    self.searchController.hidesNavigationBarDuringPresentation = NO;
     self.searchController.searchBar.scopeButtonTitles = @[NSLocalizedString(@"scope_button_phone", nil),
                                                           NSLocalizedString(@"scope_button_web", nil)];
+    self.searchController.searchBar.showsScopeBar = YES;
+    [self.searchController.searchBar sizeToFit];
     self.searchController.searchBar.delegate = self;
     self.tableView.tableHeaderView = self.searchController.searchBar;
     self.definesPresentationContext = YES;

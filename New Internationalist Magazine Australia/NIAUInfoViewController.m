@@ -100,13 +100,22 @@
 
 - (void)updateScrollViewContentHeight
 {
+    // Make sure Auto Layout has produced final frames
+    [self.view layoutIfNeeded];
+
     CGRect contentRect = CGRectZero;
     for (UIView *view in self.scrollView.subviews) {
-        contentRect = CGRectUnion(contentRect, view.frame);
+        if (!view.hidden && view.alpha > 0.0) {
+            contentRect = CGRectUnion(contentRect, view.frame);
+        }
     }
-    self.scrollView.contentSize = contentRect.size;
-    [self.scrollView setNeedsLayout];
-    DebugLog(@"Scrollview height: %f",self.scrollView.contentSize.height);
+
+    // Add a little breathing room at the bottom
+    CGFloat bottomPadding = 16.0;
+    CGSize contentSize = CGSizeMake(CGRectGetWidth(self.scrollView.bounds),
+                                    CGRectGetMaxY(contentRect) + bottomPadding);
+
+    self.scrollView.contentSize = contentSize;
 }
 
 - (void)sendGoogleAnalyticsStats
@@ -194,9 +203,26 @@
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
     [UIView animateWithDuration:0.5 animations:^{
-        [webView setAlpha:1.0];
+        webView.alpha = 1.0;
     }];
-    [self updateWebViewHeight];
+
+    // Ensure constraints have been applied before measuring
+    [self.view layoutIfNeeded];
+
+    // Measure using the webview's scrollView content size
+    CGFloat targetWidth = CGRectGetWidth(self.aboutWebView.bounds);
+    // Force the web page to layout to that width
+    self.aboutWebView.frame = CGRectMake(self.aboutWebView.frame.origin.x,
+                                         self.aboutWebView.frame.origin.y,
+                                         targetWidth,
+                                         1.0);
+
+    CGFloat contentHeight = self.aboutWebView.scrollView.contentSize.height;
+    self.aboutWebViewHightConstraint.constant = contentHeight;
+
+    [self.view setNeedsLayout];
+    [self.view layoutIfNeeded];
+
     [self updateScrollViewContentHeight];
 }
 

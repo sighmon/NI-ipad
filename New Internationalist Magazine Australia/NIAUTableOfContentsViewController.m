@@ -488,6 +488,19 @@ static NSString *CellIdentifier = @"articleCell";
                                                                                                NSCharacterEncodingDocumentAttribute: [NSNumber numberWithInt:NSUTF8StringEncoding]}
                                                                           documentAttributes:nil
                                                                                        error:nil];
+        // Fix left indent for iOS26
+        NSMutableAttributedString *attributedTextCopy = [self.editorsLetterTextView.attributedText mutableCopy];
+        [attributedTextCopy enumerateAttribute:NSParagraphStyleAttributeName
+                         inRange:NSMakeRange(0, attributedTextCopy.length)
+                         options:0
+                      usingBlock:^(NSParagraphStyle *paragraphStyle, NSRange range, BOOL *stop) {
+            NSMutableParagraphStyle *mutableParagraphStyle = paragraphStyle ? [paragraphStyle mutableCopy] : [NSMutableParagraphStyle new];
+            mutableParagraphStyle.firstLineHeadIndent = mutableParagraphStyle.headIndent;
+
+            [attributedTextCopy addAttribute:NSParagraphStyleAttributeName value:mutableParagraphStyle range:range];
+        }];
+
+        self.editorsLetterTextView.attributedText = attributedTextCopy;
         DebugLog(@"\nScrollView height: %f \neditorsLetter height: %f",self.scrollView.contentSize.height, self.editorsLetterTextView.attributedText.size.height);
         //    [self.tableView layoutIfNeeded];
         //    [self.editorsLetterTextView setNeedsLayout];

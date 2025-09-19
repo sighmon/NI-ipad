@@ -1223,7 +1223,7 @@
 				CODE_SIGN_ENTITLEMENTS = "New Internationalist Magazine Australia/New Internationalist Magazine Australia.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 121;
+				CURRENT_PROJECT_VERSION = 122;
 				DEVELOPMENT_TEAM = CUMP7ABFVY;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1241,7 +1241,7 @@
 					"$(inherited)",
 					"$(SDKROOT)/usr/lib/swift",
 				);
-				MARKETING_VERSION = 1.8.1;
+				MARKETING_VERSION = 1.8.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "au.com.newint.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -1257,7 +1257,7 @@
 				CODE_SIGN_ENTITLEMENTS = "New Internationalist Magazine Australia/New Internationalist Magazine Australia.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 121;
+				CURRENT_PROJECT_VERSION = 122;
 				DEVELOPMENT_TEAM = CUMP7ABFVY;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1275,7 +1275,7 @@
 					"$(inherited)",
 					"$(SDKROOT)/usr/lib/swift",
 				);
-				MARKETING_VERSION = 1.8.1;
+				MARKETING_VERSION = 1.8.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "au.com.newint.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -1334,7 +1334,7 @@
 				CODE_SIGN_ENTITLEMENTS = "New Internationalist Magazine Australia Extension/New Internationalist Magazine Australia Extension.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 118;
+				CURRENT_PROJECT_VERSION = 122;
 				DEVELOPMENT_TEAM = CUMP7ABFVY;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = NO;
@@ -1353,7 +1353,7 @@
 					"$(inherited)",
 					"$(SDKROOT)/usr/lib/swift",
 				);
-				MARKETING_VERSION = 1.7.0;
+				MARKETING_VERSION = 1.8.2;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "au.com.newint.New-Internationalist-Magazine-Australia.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1369,7 +1369,7 @@
 				CODE_SIGN_ENTITLEMENTS = "New Internationalist Magazine Australia Extension/New Internationalist Magazine Australia Extension.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 118;
+				CURRENT_PROJECT_VERSION = 122;
 				DEVELOPMENT_TEAM = CUMP7ABFVY;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = NO;
@@ -1384,7 +1384,7 @@
 					"$(inherited)",
 					"$(SDKROOT)/usr/lib/swift",
 				);
-				MARKETING_VERSION = 1.7.0;
+				MARKETING_VERSION = 1.8.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = "au.com.newint.New-Internationalist-Magazine-Australia.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
